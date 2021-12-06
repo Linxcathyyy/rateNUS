@@ -1,16 +1,25 @@
-package com.rateNUS.backend.model;
+package com.rateNUS.backend.hostel;
 
 import java.util.Objects;
 
-public class Canteen {
+public class Hostel {
     private long id;
     private String name;
+    private double rating;
     private String location;
     private String description;
 
-    public Canteen(long id, String name, String location, String description) {
+    public Hostel(String name, double rating, String location, String description) {
+        this.name = name;
+        this.rating = rating;
+        this.location = location;
+        this.description = description;
+    }
+
+    public Hostel(long id, String name, double rating, String location, String description) {
         this.id = id;
         this.name = name;
+        this.rating = rating;
         this.location = location;
         this.description = description;
     }
@@ -29,6 +38,14 @@ public class Canteen {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
     }
 
     public String getLocation() {
@@ -50,25 +67,27 @@ public class Canteen {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof Canteen)) return false;
+        if (!(obj instanceof Hostel)) return false;
 
-        Canteen canteen = (Canteen) obj;
-        return id == canteen.id
-                && Objects.equals(name, canteen.name)
-                && Objects.equals(location, canteen.location)
-                && Objects.equals(description, canteen.description);
+        Hostel hostel = (Hostel) obj;
+        return id == hostel.id
+                && Double.compare(hostel.rating, rating) == 0
+                && Objects.equals(name, hostel.name)
+                && Objects.equals(location, hostel.location)
+                && Objects.equals(description, hostel.description);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, location, description);
+        return Objects.hash(id, name, rating, location, description);
     }
 
     @Override
     public String toString() {
-        return "Canteen{" +
+        return "Hostel{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", rating=" + rating +
                 ", location='" + location + '\'' +
                 ", description='" + description + '\'' +
                 '}';
