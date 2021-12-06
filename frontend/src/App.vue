@@ -1,18 +1,18 @@
 <template>
   <div id="app">
-    <HostelList/>
+    <HostelList />
   </div>
 </template>
 
 <script>
-import HostelList from './components/HostelList.vue'
+import HostelList from "./components/HostelList.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HostelList
-  }
-}
+    HostelList,
+  },
+};
 </script>
 
 <style>
