@@ -2,8 +2,10 @@
     <div>
         <h1>Hostel List</h1>
         <div v-for="hostel in hostelList" :key="hostel.id">
-            <h3>{{hostel.id}}. {{hostel.title}}</h3>
-            <!-- <p>{{hostel.location}}</p> -->
+            <h3>{{hostel.id}}. {{hostel.name}}</h3>
+            <p>Rating: {{hostel.rating}}/5</p>
+            <p>Location: {{hostel.location}}</p>
+            <p>Description: {{hostel.description}}</p>
         </div>
     </div>
 </template>
@@ -21,22 +23,14 @@ export default {
         getHostelList() {
             HostelRequest.getHostelList().then((response) => {
                 console.log(response.data);
-                this.hostelList = response.data.slice(0, 2);
+                this.hostelList = response.data;
             }).catch(error => {
                 console.log(error);
             })
         }
     },
     mounted() {
-
         this.getHostelList();
-        // "https://jsonplaceholder.typicode.com/posts"
-        // axios.get("http://127.0.0.1:8080").then((response) => {
-        //     console.log(response);
-        //     this.hostelList = response.data.slice(0, 2);
-        // }).catch(error => {
-        //     console.log(error);
-        // })
     },
 }
 </script>
