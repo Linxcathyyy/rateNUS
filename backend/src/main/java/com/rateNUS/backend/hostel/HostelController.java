@@ -1,6 +1,5 @@
-package com.rateNUS.backend.controller;
+package com.rateNUS.backend.hostel;
 
-import com.rateNUS.backend.model.Hostel;
 import com.rateNUS.backend.util.DummyData;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

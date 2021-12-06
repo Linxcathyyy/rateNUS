@@ -1,4 +1,4 @@
-package com.rateNUS.backend.model;
+package com.rateNUS.backend.hostel;
 
 import java.util.Objects;
 
