@@ -4,18 +4,27 @@
     <div v-for="hostel in hostelList" :key="hostel.id" class="hostel">
       <div class="hostel-info">
         <h3>{{ hostel.id }}. {{ hostel.name }}</h3>
-        <p>Location: {{ hostel.location }}</p>
-        <p>Rating: {{ hostel.rating }}/5</p>
+        <Location :location="hostel.location" />
+        <Rating :score="hostel.rating" />
       </div>
-      <p class="hostel-description">{{ hostel.description }}</p>
+      <Description :description="hostel.description" />
     </div>
   </div>
 </template>
 
 <script>
 import HostelRequest from "../httpRequests/HostelRequest";
+import Rating from "./Rating.vue";
+import Location from "./Location.vue";
+import Description from "./Description.vue";
+
 export default {
   name: "HostelList",
+  components: {
+    Rating,
+    Location,
+    Description,
+  },
   data() {
     return {
       hostelList: [],
@@ -54,12 +63,5 @@ export default {
   flex-shrink: 0;
   width: 20%;
   padding: 10px 40px;
-}
-
-.hostel-description {
-  border-left: 3px solid darkgray;
-  padding: 10px 30px;
-  text-align: left;
-  line-height: 200%;
 }
 </style>
