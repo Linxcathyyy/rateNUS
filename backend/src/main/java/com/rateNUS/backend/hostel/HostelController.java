@@ -1,26 +1,29 @@
-package com.rateNUS.backend.controller;
-
-import java.util.List;
+package com.rateNUS.backend.hostel;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rateNUS.backend.model.Hostel;
-import com.rateNUS.backend.util.DummyData;
+import java.util.List;
 
 /**
- * This class serves as the API layer for Hostels.
+ * Serves as the API layer for Hostels.
  */
 @RestController
 @RequestMapping(path = "hostel")
 @CrossOrigin("http://localhost:8081/")
 public class HostelController {
+    private final HostelService hostelService;
+
+    @Autowired
+    public HostelController(HostelService hostelService) {
+        this.hostelService = hostelService;
+    }
 
     @GetMapping
     public List<Hostel> getAllHostel() {
-        return DummyData.hostelList;
+        return hostelService.getAllHostel();
     }
-
 }
