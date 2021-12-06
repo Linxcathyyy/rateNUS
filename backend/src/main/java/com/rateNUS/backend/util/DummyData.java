@@ -1,6 +1,6 @@
 package com.rateNUS.backend.util;
 
-import com.rateNUS.backend.model.Hostel;
+import com.rateNUS.backend.hostel.Hostel;
 
 import java.util.List;
 
