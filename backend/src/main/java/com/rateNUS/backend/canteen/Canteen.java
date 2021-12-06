@@ -1,4 +1,4 @@
-package com.rateNUS.backend.model;
+package com.rateNUS.backend.canteen;
 
 import java.util.Objects;
 
