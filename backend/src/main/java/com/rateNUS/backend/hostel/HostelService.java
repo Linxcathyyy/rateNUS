@@ -1,6 +1,7 @@
 package com.rateNUS.backend.hostel;
 
 import com.rateNUS.backend.util.DummyData;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,7 +11,14 @@ import java.util.List;
  */
 @Service
 public class HostelService {
+    private final HostelRepository hostelRepository;
+
+    @Autowired
+    public HostelService(HostelRepository hostelRepository) {
+        this.hostelRepository = hostelRepository;
+    }
+
     public List<Hostel> getAllHostel() {
-        return DummyData.hostelList;
+        return hostelRepository.findAll();
     }
 }
