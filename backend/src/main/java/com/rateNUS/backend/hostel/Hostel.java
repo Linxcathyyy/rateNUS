@@ -9,6 +9,13 @@ public class Hostel {
     private String location;
     private String description;
 
+    public Hostel(String name, double rating, String location, String description) {
+        this.name = name;
+        this.rating = rating;
+        this.location = location;
+        this.description = description;
+    }
+
     public Hostel(long id, String name, double rating, String location, String description) {
         this.id = id;
         this.name = name;
