@@ -1,5 +1,6 @@
 package com.rateNUS.backend.hostel;
 
+import com.rateNUS.backend.comment.Comment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,5 +31,12 @@ public class HostelService {
         }
 
         return hostelOptional.get();
+    }
+
+    public List<Comment<Hostel>> getComments(long hostelId) {
+        return List.of(
+                new Comment<>(1, hostelId, 4.5, "nice hostel :)"),
+                new Comment<>(2, hostelId, 5.0, "close to bus station, buildings are a bit old.")
+        );
     }
 }
