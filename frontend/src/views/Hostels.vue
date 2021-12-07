@@ -2,8 +2,11 @@
   <div>
     <h1>Hostel List</h1>
     <div v-for="hostel in hostelList" :key="hostel.id">
-      <Hostel :hostel="hostel" />
+      <div @click="goToViewMorePage(hostel.id)">
+        <Hostel :hostel="hostel"/>
+      </div>
     </div>
+    
   </div>
 </template>
 
@@ -32,16 +35,9 @@ export default {
           console.log(error);
         });
     },
-    // getIndividualHostel(id) {
-    //   HostelRequest.getIndividualHostel(id)
-    //     .then((response) => {
-    //       console.log(response.data);
-    //       this.hostelList = response.data;
-    //     })
-    //     .catch((error) => {
-    //       console.log(error);
-    //     });
-    // }
+    goToViewMorePage(hostelId) {
+      this.$router.push("/hostels/" + hostelId);
+    }
   },
   mounted() {
     this.getHostelList();

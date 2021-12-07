@@ -7,9 +7,10 @@ class HostelRequest {
     getHostelList() {
         return axios.get(HOSTEL_API_BASE_URL);
     }
-    // getIndividualHostel(id) {
-    //     return axios.get(HOSTEL_API_BASE_URL + "/" + id);
-    // }
+    // Get individual hostel data from server
+    getIndividualHostel(hostelId) {
+        return axios.get(HOSTEL_API_BASE_URL + "/" + hostelId);
+    }
     // postHostelComment() {
 
     // }
