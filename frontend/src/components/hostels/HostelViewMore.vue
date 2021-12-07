@@ -1,20 +1,21 @@
 <template>
   <div v-if="hostel != null">
-      <h1>Hostel View More with Id {{ $route.params.hostelId }}</h1>
-      <p>Name: {{ hostel.name }}</p>
-      <p>Rating: {{ hostel.rating }}/5</p>
-      <p>Location: {{ hostel.location }}</p>
-      <p>Description: {{ hostel.description }}</p>
+    <h1>Hostel View More with Id {{ $route.params.hostelId }}</h1>
+    <p>Name: {{ hostel.name }}</p>
+    <p>Rating: {{ hostel.rating }}/5</p>
+    <p>Location: {{ hostel.location }}</p>
+    <p>Description: {{ hostel.description }}</p>
+    <Hostel :hostel="this.hostel" />
   </div>
 </template>
 
 <script>
 import HostelRequest from "../../httpRequests/HostelRequest";
+import Hostel from "./Hostel.vue";
 
 export default {
   name: "HostelViewMore",
-  components: {
-  },
+  components: { Hostel },
   data() {
     return {
       hostel: null,
@@ -24,8 +25,7 @@ export default {
     getIndividualHostel() {
       HostelRequest.getIndividualHostel(this.$route.params.hostelId)
         .then((response) => {
-          console.log(response.data);
-          this.hostel = response.data;
+          this.hostel = response.data.hostel;
         })
         .catch((error) => {
           console.log(error);
@@ -38,5 +38,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
