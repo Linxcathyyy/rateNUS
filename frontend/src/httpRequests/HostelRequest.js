@@ -1,12 +1,19 @@
 import axios from 'axios';
 
-// "https://jsonplaceholder.typicode.com/posts"
 const HOSTEL_API_BASE_URL= "http://localhost:8080/hostel";
 
 class HostelRequest {
+    // Get a complete list of hostels from the server
     getHostelList() {
         return axios.get(HOSTEL_API_BASE_URL);
     }
+    // Get individual hostel data from server
+    getIndividualHostel(hostelId) {
+        return axios.get(HOSTEL_API_BASE_URL + "/" + hostelId);
+    }
+    // postHostelComment() {
+
+    // }
 }
 
 export default new HostelRequest();

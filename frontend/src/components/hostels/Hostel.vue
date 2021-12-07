@@ -1,7 +1,6 @@
 <template>
   <div>
-    <h1>Hostel List</h1>
-    <div v-for="hostel in hostelList" :key="hostel.id" class="hostel">
+    <div :key="hostel.id" class="hostel">
       <div class="hostel-info">
         <h3>{{ hostel.id }}. {{ hostel.name }}</h3>
         <Location :location="hostel.location" />
@@ -13,37 +12,19 @@
 </template>
 
 <script>
-import HostelRequest from "../httpRequests/HostelRequest";
 import Rating from "./Rating.vue";
 import Location from "./Location.vue";
 import Description from "./Description.vue";
 
 export default {
-  name: "HostelList",
+  name: "Hostel",
   components: {
     Rating,
     Location,
     Description,
   },
-  data() {
-    return {
-      hostelList: [],
-    };
-  },
-  methods: {
-    getHostelList() {
-      HostelRequest.getHostelList()
-        .then((response) => {
-          console.log(response.data);
-          this.hostelList = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    },
-  },
-  mounted() {
-    this.getHostelList();
+  props: {
+    hostel: Object,
   },
 };
 </script>
@@ -52,8 +33,8 @@ export default {
 .hostel {
   list-style-type: none;
   background: rgba(201, 218, 241, 0.5);
-  margin: 20px 50px;
-  border-radius: 15px;
+  margin: 20px 0px;
+  border-radius: 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
