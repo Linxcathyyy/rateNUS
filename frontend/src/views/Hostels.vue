@@ -2,7 +2,7 @@
   <div>
     <h1>Hostel List</h1>
     <div v-for="hostel in hostelList" :key="hostel.id" class="hostel">
-      <div class="hostel-info">
+      <div class="hostel-info" @click="getIndividualHostel(hostel.id)">
         <h3>{{ hostel.id }}. {{ hostel.name }}</h3>
         <Location :location="hostel.location" />
         <Rating :score="hostel.rating" />
@@ -41,6 +41,16 @@ export default {
           console.log(error);
         });
     },
+    getIndividualHostel(id) {
+      HostelRequest.getIndividualHostel(id)
+        .then((response) => {
+          console.log(response.data);
+          this.hostelList = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   },
   mounted() {
     this.getHostelList();
