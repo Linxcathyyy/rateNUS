@@ -49,8 +49,13 @@ public class Canteen {
 
     @Override
     public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (!(obj instanceof Canteen)) return false;
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Canteen)) {
+            return false;
+        }
 
         Canteen canteen = (Canteen) obj;
         return id == canteen.id
