@@ -34,6 +34,7 @@ public class HostelService {
         return hostelOptional.get();
     }
 
+
     public List<Hostel> findHostel(String keyword) {
         return getAllHostel()
                 .stream()
@@ -41,10 +42,10 @@ public class HostelService {
                 .collect(Collectors.toList());
     }
 
-    public List<Comment<Hostel>> getComments(long hostelId) {
+    public List<Comment> getComments(long hostelId) {
         return List.of(
-                new Comment<>(1, hostelId, 4.5, "nice hostel :)"),
-                new Comment<>(2, hostelId, 5.0, "close to bus station, buildings are a bit old.")
+                new Comment(1, hostelId, 4.5, "nice hostel :)", Comment.Type.hostel),
+                new Comment(2, hostelId, 5.0, "close to bus station, buildings are a bit old.", Comment.Type.hostel)
         );
     }
 }

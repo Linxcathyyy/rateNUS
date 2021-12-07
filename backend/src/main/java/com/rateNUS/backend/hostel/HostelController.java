@@ -1,5 +1,6 @@
 package com.rateNUS.backend.hostel;
 
+import com.rateNUS.backend.util.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(path = "hostel")
-@CrossOrigin("http://localhost:8081/")
+@CrossOrigin(Config.frontendURL)
 public class HostelController {
     private final HostelService hostelService;
 
