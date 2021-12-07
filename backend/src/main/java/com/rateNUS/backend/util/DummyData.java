@@ -1,5 +1,6 @@
 package com.rateNUS.backend.util;
 
+import com.rateNUS.backend.comment.Comment;
 import com.rateNUS.backend.hostel.Hostel;
 
 import java.util.List;
@@ -40,5 +41,14 @@ public class DummyData {
                     "they hold numerous thoughtful discussions in the Master’s Commons, floors lounges, suites and " +
                     "their common lounge – fondly known as Chatterbox.");
 
+    public static Comment c1 = new Comment(1, 3, 4.5,
+            "nice hostel :)",
+            Comment.Type.hostel);
+
+    public static Comment c2 = new Comment(2, 2, 5.0,
+            "close to bus station, buildings are a bit old.",
+            Comment.Type.hostel);
+
     public static List<Hostel> hostelList = List.of(h1, h2, h3);
+    public static List<Comment> commentList = List.of(c1, c2);
 }
