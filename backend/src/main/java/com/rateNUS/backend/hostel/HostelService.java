@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Provides the services required by the API layer for Hostels.
+ * Provides the services required by {@code HostelController}.
  */
 @Service
 public class HostelService {
