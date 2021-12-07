@@ -1,6 +1,5 @@
 package com.rateNUS.backend.comment;
 
-import com.rateNUS.backend.util.DummyData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +20,7 @@ public class CommentService {
     public List<Comment> getComments(long targetId) {
         System.out.println(commentRepository.findAllCommentsByTargetId(targetId));
 
-        return DummyData.commentList;
-        // return commentRepository.findAllCommentsByTargetId(targetId);
+        return commentRepository.findAllCommentsByTargetId(targetId);
     }
 
     public void addComment(Comment comment) {
