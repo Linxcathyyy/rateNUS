@@ -7,12 +7,12 @@ class HostelRequest {
     getHostelList() {
         return axios.get(HOSTEL_API_BASE_URL);
     }
-    getIndividualHostel(id) {
-        return axios.get(HOSTEL_API_BASE_URL + "/" + id);
-    }
-    postHostelComment() {
+    // getIndividualHostel(id) {
+    //     return axios.get(HOSTEL_API_BASE_URL + "/" + id);
+    // }
+    // postHostelComment() {
 
-    }
+    // }
 }
 
 export default new HostelRequest();
