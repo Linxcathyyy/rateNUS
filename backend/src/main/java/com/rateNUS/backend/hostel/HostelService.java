@@ -1,6 +1,5 @@
 package com.rateNUS.backend.hostel;
 
-import com.rateNUS.backend.util.DummyData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,13 +23,10 @@ public class HostelService {
     }
 
     public Hostel getHostel(long hostelId) {
-        Optional<Hostel> hostelOptional = getAllHostel().stream()
-                .filter(hostel -> hostel.getId() == hostelId)
-                .findFirst();
+        Optional<Hostel> hostelOptional = hostelRepository.findById(hostelId);
 
         if (hostelOptional.isEmpty()) {
-            System.out.println("Hostel with ID \" + hostelId + \" does not exists.");
-            // throw new Exception("Hostel with ID " + hostelId + " does not exists.");
+            throw new IllegalStateException("Hostel with ID " + hostelId + " does not exists.");
         }
 
         return hostelOptional.get();
