@@ -20,10 +20,13 @@ public class Hostel {
 
     @Column(name = "name", nullable = false, columnDefinition = "TEXT")
     private String name;
+
     @Column(name = "rating")
     private double rating;
+
     @Column(name = "location", nullable = false, columnDefinition = "TEXT")
     private String location;
+
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 

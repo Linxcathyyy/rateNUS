@@ -22,13 +22,17 @@ public class Comment {
 
     @Column(name = "targetId", nullable = false, updatable = false)
     private long targetId;
+
     @Column(name = "rating", nullable = false)
     private double rating;
+
     @Column(name = "text", nullable = false)
     private String text;
+
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
     private Type type;
+
     @Column(name = "timestamp", updatable = false)
     @CreationTimestamp
     private Timestamp timestamp;
