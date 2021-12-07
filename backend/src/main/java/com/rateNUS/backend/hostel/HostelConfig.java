@@ -12,8 +12,6 @@ import org.springframework.context.annotation.Configuration;
 public class HostelConfig {
     @Bean
     CommandLineRunner commandLineRunner(HostelRepository hostelRepository) {
-        return args -> {
-            hostelRepository.saveAll(DummyData.hostelList);
-        };
+        return args -> hostelRepository.saveAll(DummyData.hostelList);
     }
 }

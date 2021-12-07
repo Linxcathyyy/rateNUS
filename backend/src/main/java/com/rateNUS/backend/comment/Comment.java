@@ -11,14 +11,13 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 @Entity
 @Table
 public class Comment {
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE
-    )
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private long id;
 
     @Column(name = "targetId", nullable = false, updatable = false)
@@ -37,15 +36,15 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(long id, long targetId, double rating, String text, Type type) {
-        this.id = id;
+    public Comment(long targetId, double rating, String text, Type type) {
         this.targetId = targetId;
         this.rating = rating;
         this.text = text;
         this.type = type;
     }
 
-    public Comment(long targetId, double rating, String text, Type type) {
+    public Comment(long id, long targetId, double rating, String text, Type type) {
+        this.id = id;
         this.targetId = targetId;
         this.rating = rating;
         this.text = text;
@@ -98,6 +97,30 @@ public class Comment {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Comment)) {
+            return false;
+        }
+
+        Comment comment = (Comment) obj;
+        return id == comment.id
+                && targetId == comment.targetId
+                && Double.compare(comment.rating, rating) == 0
+                && Objects.equals(text, comment.text)
+                && type == comment.type
+                && Objects.equals(timestamp, comment.timestamp);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, targetId, rating, text, type, timestamp);
     }
 
     @Override

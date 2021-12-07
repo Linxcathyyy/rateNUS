@@ -34,7 +34,6 @@ public class HostelService {
         return hostelOptional.get();
     }
 
-
     public List<Hostel> findHostel(String keyword) {
         return getAllHostel()
                 .stream()

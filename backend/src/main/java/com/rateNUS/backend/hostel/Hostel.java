@@ -13,43 +13,18 @@ import java.util.Objects;
 @Table
 public class Hostel {
     @Id
-    @SequenceGenerator(
-            name = "hostel_sequence",
-            sequenceName = "hostel_sequence",
-            allocationSize = 1
-    )
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "hostel_sequence"
-    )
-    @Column(
-            name = "id",
-            updatable = false
-    )
+    @SequenceGenerator(name = "hostel_sequence", sequenceName = "hostel_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hostel_sequence")
+    @Column(name = "id", updatable = false)
     private long id;
 
-    @Column(
-            name = "name",
-            nullable = false,
-            columnDefinition = "TEXT"
-    )
+    @Column(name = "name", nullable = false, columnDefinition = "TEXT")
     private String name;
-
     @Column(name = "rating")
     private double rating;
-
-    @Column(
-            name = "location",
-            nullable = false,
-            columnDefinition = "TEXT"
-    )
+    @Column(name = "location", nullable = false, columnDefinition = "TEXT")
     private String location;
-
-    @Column(
-            name = "description",
-            nullable = false,
-            columnDefinition = "TEXT"
-    )
+    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
     public Hostel() {

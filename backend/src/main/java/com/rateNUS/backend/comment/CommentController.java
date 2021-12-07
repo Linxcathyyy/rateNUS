@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Serves as the API layer for Comments.
+ */
 @RestController
 @RequestMapping(path = "comment")
 @CrossOrigin(Config.frontendURL)
 public class CommentController {
-
     private final CommentService commentService;
 
     @Autowired
