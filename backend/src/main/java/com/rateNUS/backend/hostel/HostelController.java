@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -32,16 +31,13 @@ public class HostelController {
         return hostelService.getAllHostel();
     }
 
+    @GetMapping(path = "{hostelId}")
+    public Hostel getHostel(@PathVariable("hostelId") long hostelId) {
+        return hostelService.getHostel(hostelId);
+    }
+
     @PostMapping
     public List<Hostel> findHostel(@RequestBody String keyword) {
         return hostelService.findHostel(keyword);
-    }
-
-    @GetMapping(path = "{hostelId}")
-    public HashMap<String, Object> getHostel(@PathVariable("hostelId") long hostelId) {
-        HashMap<String, Object> hashMap = new HashMap<>();
-        hashMap.put("hostel", hostelService.getHostel(hostelId));
-        hashMap.put("comments", hostelService.getComments(hostelId));
-        return hashMap;
     }
 }
