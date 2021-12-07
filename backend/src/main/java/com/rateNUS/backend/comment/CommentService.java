@@ -18,11 +18,11 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public List<Comment> getComments(long hostelId) {
-        System.out.println(commentRepository.findAllCommentsByTargetId(hostelId));
-        
+    public List<Comment> getComments(long targetId) {
+        System.out.println(commentRepository.findAllCommentsByTargetId(targetId));
+
         return DummyData.commentList;
-        // return commentRepository.findAllCommentsByTargetId(hostelId);
+        // return commentRepository.findAllCommentsByTargetId(targetId);
     }
 
     public void addComment(Comment comment) {

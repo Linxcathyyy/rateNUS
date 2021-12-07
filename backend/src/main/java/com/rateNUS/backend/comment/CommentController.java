@@ -26,9 +26,9 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping(path = "{hostelId}")
-    public List<Comment> getComments(@PathVariable("hostelId") long hostelId) {
-        return commentService.getComments(hostelId);
+    @GetMapping(path = "{targetId}")
+    public List<Comment> getComments(@PathVariable("targetId") long targetId) {
+        return commentService.getComments(targetId);
     }
 
     @PostMapping
