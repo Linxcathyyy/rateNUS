@@ -1,5 +1,6 @@
 package com.rateNUS.backend.comment;
 
+import com.rateNUS.backend.util.Type;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
@@ -140,9 +141,5 @@ public class Comment {
                 ", type=" + type +
                 ", timestamp=" + timestamp +
                 '}';
-    }
-
-    public enum Type {
-        hostel, canteen, studyArea
     }
 }

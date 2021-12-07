@@ -43,11 +43,11 @@ public class DummyData {
 
     public static Comment c1 = new Comment(1, 3, 4.5,
             "nice hostel :)",
-            Comment.Type.hostel);
+            Type.hostel);
 
     public static Comment c2 = new Comment(2, 2, 5.0,
             "close to bus station, buildings are a bit old.",
-            Comment.Type.hostel);
+            Type.hostel);
 
     public static List<Hostel> hostelList = List.of(h1, h2, h3);
     public static List<Comment> commentList = List.of(c1, c2);
