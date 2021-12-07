@@ -1,8 +1,5 @@
 package com.rateNUS.backend.comment;
 
-import com.rateNUS.backend.util.DummyData;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -10,8 +7,8 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class CommentConfig {
-    @Bean
-    CommandLineRunner commandLineRunner(CommentRepository commentRepository) {
-        return args -> commentRepository.saveAll(DummyData.commentList);
-    }
+//    @Bean
+//    CommandLineRunner commandLineRunner(CommentRepository commentRepository) {
+//        return args -> commentRepository.saveAll(DummyData.commentList);
+//    }
 }

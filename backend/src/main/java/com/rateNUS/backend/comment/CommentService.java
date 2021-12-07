@@ -19,6 +19,8 @@ public class CommentService {
     }
 
     public List<Comment> getComments(long hostelId) {
+        System.out.println(commentRepository.findAllCommentsByTargetId(hostelId));
+        
         return DummyData.commentList;
         // return commentRepository.findAllCommentsByTargetId(hostelId);
     }
