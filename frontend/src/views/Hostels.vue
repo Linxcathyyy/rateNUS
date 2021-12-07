@@ -2,11 +2,10 @@
   <div>
     <h1>Hostel List</h1>
     <div v-for="hostel in hostelList" :key="hostel.id">
-      <div @click="goToViewMorePage(hostel.id)">
-        <Hostel :hostel="hostel"/>
+      <div @click="goToViewMorePage(hostel.id)" id="hostel-click">
+        <Hostel :hostel="hostel" />
       </div>
     </div>
-    
   </div>
 </template>
 
@@ -17,7 +16,7 @@ import Hostel from "../components/hostels/Hostel.vue";
 export default {
   name: "Hostels",
   components: {
-    Hostel
+    Hostel,
   },
   data() {
     return {
@@ -37,7 +36,7 @@ export default {
     },
     goToViewMorePage(hostelId) {
       this.$router.push("/hostels/" + hostelId);
-    }
+    },
   },
   mounted() {
     this.getHostelList();
@@ -45,5 +44,8 @@ export default {
 };
 </script>
 
-<style>
+<style scope>
+#hostel-click:hover {
+  cursor: pointer;
+}
 </style>

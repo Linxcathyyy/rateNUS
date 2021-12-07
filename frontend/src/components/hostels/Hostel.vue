@@ -24,8 +24,8 @@ export default {
     Description,
   },
   props: {
-      hostel: Object,
-  }
+    hostel: Object,
+  },
 };
 </script>
 
@@ -33,8 +33,8 @@ export default {
 .hostel {
   list-style-type: none;
   background: rgba(201, 218, 241, 0.5);
-  margin: 20px 50px;
-  border-radius: 15px;
+  margin: 20px 0px;
+  border-radius: 30px;
   display: flex;
   align-items: center;
   justify-content: space-between;
