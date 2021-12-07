@@ -14,12 +14,12 @@
 
 <script>
 import HostelRequest from "../httpRequests/HostelRequest";
-import Rating from "./Rating.vue";
-import Location from "./Location.vue";
-import Description from "./Description.vue";
+import Rating from "../components/hostels/Rating.vue";
+import Location from "../components/hostels/Location.vue";
+import Description from "../components/hostels/Description.vue";
 
 export default {
-  name: "HostelList",
+  name: "Hostels",
   components: {
     Rating,
     Location,

@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <HostelList />
+    <h1>Rate NUS!</h1>
+    <hr>
+    <router-link to="/hostels"> Hostels </router-link>
+    <router-link to="/canteens"> Canteens </router-link>
+    <router-link to="/studyAreas"> Study Areas </router-link>
+    <hr>
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HostelList from "./components/HostelList.vue";
-
 export default {
   name: "App",
   components: {
-    HostelList,
   },
 };
 </script>
