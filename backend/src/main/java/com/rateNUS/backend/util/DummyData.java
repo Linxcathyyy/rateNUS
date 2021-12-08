@@ -7,7 +7,6 @@ import java.util.List;
 
 public class DummyData {
     public static Hostel h1 = new Hostel(
-            1,
             "UTown Residence",
             5.0,
             "NUS University Town",
@@ -15,10 +14,10 @@ public class DummyData {
                     "graduate students. The design of the complex emphasizes open common areas, and the architecture " +
                     "fosters a sense of community and cross-disciplinary discussion. Resident ADvisors (RADs) will " +
                     "also be living alongside the graduate residents. The UTown Residence is equipped with seminar " +
-                    "rooms and student lounges."
+                    "rooms and student lounges.",
+            1
     );
     public static Hostel h2 = new Hostel(
-            2,
             "Prince George's Park Residences",
             5.0,
             "Kent Ridge",
@@ -26,12 +25,12 @@ public class DummyData {
                     "Catering to undergraduates as well as graduates, PGPR is designed to maximise the potential for " +
                     "interaction amongst its residents. The single rooms are grouped into clusters of 15, and every " +
                     "resident in the cluster is entrusted with collective responsibility for shared facilities such " +
-                    "as a kitchen, dining area, and bathroom facilities."
+                    "as a kitchen, dining area, and bathroom facilities.",
+            2
     );
     public static Hostel h3 = new Hostel(
-            3,
             "Cinnamon College",
-            5.0,
+            4.0,
             "NUS University Town",
             "USP is located in NUS University Town, where it has its very own residential college – " +
                     "Cinnamon College (USP). Within this unique space, USP students develop a sense of belonging " +
@@ -39,16 +38,34 @@ public class DummyData {
                     "take classes at the learn lobes adjacent to the college block; they share meals with peers and " +
                     "professors, and sometimes, alumni too; they play sports and organise events in the halls; and " +
                     "they hold numerous thoughtful discussions in the Master’s Commons, floors lounges, suites and " +
-                    "their common lounge – fondly known as Chatterbox.");
+                    "their common lounge – fondly known as Chatterbox.",
+            2
+    );
 
-    public static Comment c1 = new Comment(1, 3, 4.5,
-            "nice hostel :)",
+    public static Comment c1 = new Comment(3, 4.0,
+            "Cinnamon College: nice hostel :)",
             Type.hostel);
 
-    public static Comment c2 = new Comment(2, 2, 5.0,
-            "close to bus station, buildings are a bit old.",
+    public static Comment c2 = new Comment(2, 5.0,
+            "Prince George's Park Residences: close to bus station, buildings are a bit old.",
             Type.hostel);
+
+    public static Comment c3 = new Comment(1, 5.0,
+            "UTown: Many food here.",
+            Type.hostel);
+
+    public static Comment c4 = new Comment(2, 5.0,
+            "Prince George's Park Residences: Very chill residence, not much hustle",
+            Type.hostel);
+
+    public static Comment c5 = new Comment(3, 4.0,
+            "Cinnamon College: Near StarBucks, where I can go study.",
+            Type.hostel);
+
+    public static Comment c6 = new Comment(3, 5.0,
+            "Dummy canteen comment",
+            Type.canteen);
 
     public static List<Hostel> hostelList = List.of(h1, h2, h3);
-    public static List<Comment> commentList = List.of(c1, c2);
+    public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6);
 }

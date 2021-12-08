@@ -1,6 +1,8 @@
 package com.rateNUS.backend.comment;
 
+import com.rateNUS.backend.hostel.HostelService;
 import com.rateNUS.backend.util.Config;
+import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,19 +22,22 @@ import java.util.List;
 @CrossOrigin(Config.frontendURL)
 public class CommentController {
     private final CommentService commentService;
+    private final HostelService hostelService;
 
     @Autowired
-    public CommentController(CommentService commentService) {
+    public CommentController(CommentService commentService, HostelService hostelService) {
         this.commentService = commentService;
+        this.hostelService = hostelService;
     }
 
-    @GetMapping(path = "{targetId}")
-    public List<Comment> getComments(@PathVariable("targetId") long targetId) {
-        return commentService.getComments(targetId);
+    @GetMapping(path = "{type}/{targetId}")
+    public List<Comment> getComments(@PathVariable("type") Type type, @PathVariable("targetId") long targetId) {
+        return commentService.getComments(type, targetId);
     }
 
     @PostMapping
     public void addComment(@RequestBody Comment comment) {
         commentService.addComment(comment);
+        hostelService.updateHostel(comment.getTargetId(), comment.getRating(), true);
     }
 }

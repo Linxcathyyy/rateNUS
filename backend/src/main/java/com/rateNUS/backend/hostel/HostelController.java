@@ -37,7 +37,7 @@ public class HostelController {
     }
 
     @PostMapping
-    public List<Hostel> findHostel(@RequestBody String keyword) {
-        return hostelService.findHostel(keyword);
+    public List<Hostel> findHostel(@RequestBody String keywordJson) {
+        return hostelService.findHostel(keywordJson);
     }
 }
