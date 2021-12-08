@@ -64,5 +64,6 @@ export default {
   width: 100%;
   padding-left: 7rem;
   padding-right: 1rem;
+  margin-bottom: 30px;
 }
 </style>
