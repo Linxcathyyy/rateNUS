@@ -13,7 +13,7 @@
 <script>
 import HostelRequest from "../httpRequests/HostelRequest";
 import Hostel from "../components/hostels/Hostel.vue";
-import SearchBar from "../components/util/SearchBar.vue"
+import SearchBar from "../components/util/SearchBar"
 
 export default {
   name: "Hostels",
@@ -46,7 +46,15 @@ export default {
 
     handleSearch(keyword) {
       console.log("hostel search:", keyword);
-      
+      HostelRequest.findHostels(keyword).then(
+        (response) => {
+          console.log("search result" + response.data);
+          this.hostelList = response.data;
+        }
+      )
+      .catch((error) => {
+          console.log(error);
+        });
     }
   },
 

@@ -14,6 +14,12 @@ class HostelRequest {
     // postHostelComment() {
 
     // }
+
+    findHostels(keyword) {
+        return axios.post(HOSTEL_API_BASE_URL, {
+            keyword: keyword
+        });
+    }
 }
 
 export default new HostelRequest();

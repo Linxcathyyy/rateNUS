@@ -1,9 +1,14 @@
 package com.rateNUS.backend.hostel;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -33,10 +38,20 @@ public class HostelService {
         return hostelOptional.get();
     }
 
-    public List<Hostel> findHostel(String keyword) {
-        return getAllHostel()
-                .stream()
-                .filter(hostel -> hostel.getName().contains(keyword))
-                .collect(Collectors.toList());
+    public List<Hostel> findHostel(String keywordJson) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, Object> map
+                    = objectMapper.readValue(keywordJson, new TypeReference<Map<String,Object>>(){});
+            String keyword = (String) map.get("keyword");
+            System.out.printf("Search for %s\n", keyword);
+            return getAllHostel()
+                    .stream()
+                    .filter(hostel -> hostel.getName().contains(keyword))
+                    .collect(Collectors.toList());
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 }
