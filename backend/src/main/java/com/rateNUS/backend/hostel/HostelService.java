@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 /**
  * Provides the services required by {@code HostelController}.
  */
@@ -54,5 +56,23 @@ public class HostelService {
             e.printStackTrace();
         }
         return new ArrayList<>();
+    }
+
+    @Transactional
+    public void updateHostel(long hostelId, double rating, boolean hasNewComment) {
+        Hostel hostel = hostelRepository.findById(hostelId)
+                .orElseThrow(() -> new IllegalStateException("Hostel with ID " + hostelId + " does not exist."));
+        if (!hasNewComment) {
+            return;
+        }
+        int currentCommentCount = hostel.getCommentCount();
+        if (currentCommentCount == 0) {
+            hostel.setRating(rating);
+        } else {
+            double currentRating = hostel.getRating();
+            double updatedRating = (currentCommentCount * currentRating + rating) / (currentCommentCount + 1);
+            hostel.setRating(updatedRating);
+        }
+        hostel.setCommentCount(currentCommentCount + 1);
     }
 }
