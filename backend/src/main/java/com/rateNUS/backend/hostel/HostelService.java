@@ -64,6 +64,6 @@ public class HostelService {
         }
 
         hostel.setRating(updatedRating);
-        hostel.setCommentCount(currentCommentCount + 1);
+        hostel.incCommentCountByOne();
     }
 }

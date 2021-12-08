@@ -100,6 +100,10 @@ public class Hostel {
     public void setCommentCount(int commentCount) {
         this.commentCount = commentCount;
     }
+ 
+    public void incCommentCountByOne() {
+        commentCount++;
+    }
 
     @Override
     public boolean equals(Object obj) {
