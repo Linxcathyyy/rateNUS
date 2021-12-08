@@ -34,10 +34,11 @@ export default {
           console.log(error);
         });
     },
-    postHostelComment() {
-      HostelRequest.postHostelComment(this.$route.params.hostelId)
+    getCommentList() {
+      HostelRequest.getCommentList(this.$route.params.hostelId)
         .then((response) => {
           this.commentList = response.data;
+          console.log(this.commentList);
         })
         .catch((error) => {
           console.log(error);
@@ -46,7 +47,7 @@ export default {
   },
   mounted() {
     this.getIndividualHostel();
-    this.postHostelComment();
+    this.getCommentList();
   },
 };
 </script>
