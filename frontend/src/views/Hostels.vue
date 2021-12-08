@@ -1,5 +1,6 @@
 <template>
   <div>
+    <SearchBar @handle-search="handleSearch" searchHint="Search for hostels" type="hostel" />
     <h1>Hostel List</h1>
     <div v-for="hostel in hostelList" :key="hostel.id">
       <div @click="goToViewMorePage(hostel.id)" id="hostel-click">
@@ -12,17 +13,21 @@
 <script>
 import HostelRequest from "../httpRequests/HostelRequest";
 import Hostel from "../components/hostels/Hostel.vue";
+import SearchBar from "../components/util/SearchBar.vue"
 
 export default {
   name: "Hostels",
   components: {
     Hostel,
+    SearchBar
   },
+
   data() {
     return {
       hostelList: [],
     };
   },
+
   methods: {
     getHostelList() {
       HostelRequest.getHostelList()
@@ -34,13 +39,22 @@ export default {
           console.log(error);
         });
     },
+
     goToViewMorePage(hostelId) {
       this.$router.push("/hostels/" + hostelId);
     },
+
+    handleSearch(keyword) {
+      console.log("hostel search:", keyword);
+      
+    }
   },
+
   mounted() {
     this.getHostelList();
   },
+
+  emits: ["handle-search"]
 };
 </script>
 
