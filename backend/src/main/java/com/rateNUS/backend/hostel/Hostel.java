@@ -100,7 +100,7 @@ public class Hostel {
     public void setCommentCount(int commentCount) {
         this.commentCount = commentCount;
     }
- 
+
     public void incCommentCountByOne() {
         commentCount++;
     }
