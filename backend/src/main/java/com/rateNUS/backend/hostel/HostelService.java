@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Provides the services required by {@code HostelController}.
@@ -46,10 +45,11 @@ public class HostelService {
             });
             String keyword = (String) map.get("keyword");
             System.out.printf("Search for %s\n", keyword);
-            return getAllHostel()
-                    .stream()
-                    .filter(hostel -> hostel.getName().contains(keyword))
-                    .collect(Collectors.toList());
+//            return getAllHostel()
+//                    .stream()
+//                    .filter(hostel -> hostel.getName().contains(keyword))
+//                    .collect(Collectors.toList());
+            return hostelRepository.findByNameIgnoreCaseContaining(keyword);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
