@@ -15,7 +15,8 @@ public class DummyData {
                     "graduate students. The design of the complex emphasizes open common areas, and the architecture " +
                     "fosters a sense of community and cross-disciplinary discussion. Resident ADvisors (RADs) will " +
                     "also be living alongside the graduate residents. The UTown Residence is equipped with seminar " +
-                    "rooms and student lounges."
+                    "rooms and student lounges.",
+            0
     );
     public static Hostel h2 = new Hostel(
             2,
@@ -26,7 +27,8 @@ public class DummyData {
                     "Catering to undergraduates as well as graduates, PGPR is designed to maximise the potential for " +
                     "interaction amongst its residents. The single rooms are grouped into clusters of 15, and every " +
                     "resident in the cluster is entrusted with collective responsibility for shared facilities such " +
-                    "as a kitchen, dining area, and bathroom facilities."
+                    "as a kitchen, dining area, and bathroom facilities.",
+            0
     );
     public static Hostel h3 = new Hostel(
             3,
@@ -39,7 +41,9 @@ public class DummyData {
                     "take classes at the learn lobes adjacent to the college block; they share meals with peers and " +
                     "professors, and sometimes, alumni too; they play sports and organise events in the halls; and " +
                     "they hold numerous thoughtful discussions in the Master’s Commons, floors lounges, suites and " +
-                    "their common lounge – fondly known as Chatterbox.");
+                    "their common lounge – fondly known as Chatterbox.",
+            0
+    );
 
     public static Comment c1 = new Comment(1, 3, 4.5,
             "nice hostel :)",
