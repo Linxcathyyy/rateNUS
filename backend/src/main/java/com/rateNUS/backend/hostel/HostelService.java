@@ -44,7 +44,7 @@ public class HostelService {
     }
 
     @Transactional
-    public void updateHostel(long hostelId, double rating, boolean hasNewComment) {
+    public void updateHostel(long hostelId, int rating, boolean hasNewComment) {
         if (!hasNewComment) {
             return;
         }

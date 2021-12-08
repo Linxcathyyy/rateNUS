@@ -42,27 +42,27 @@ public class DummyData {
             2
     );
 
-    public static Comment c1 = new Comment(3, 4.0,
+    public static Comment c1 = new Comment(3, 4,
             "Cinnamon College: nice hostel :)",
             Type.hostel);
 
-    public static Comment c2 = new Comment(2, 5.0,
+    public static Comment c2 = new Comment(2, 5,
             "Prince George's Park Residences: close to bus station, buildings are a bit old.",
             Type.hostel);
 
-    public static Comment c3 = new Comment(1, 5.0,
+    public static Comment c3 = new Comment(1, 5,
             "UTown: Many food here.",
             Type.hostel);
 
-    public static Comment c4 = new Comment(2, 5.0,
+    public static Comment c4 = new Comment(2, 5,
             "Prince George's Park Residences: Very chill residence, not much hustle",
             Type.hostel);
 
-    public static Comment c5 = new Comment(3, 4.0,
+    public static Comment c5 = new Comment(3, 4,
             "Cinnamon College: Near StarBucks, where I can go study.",
             Type.hostel);
 
-    public static Comment c6 = new Comment(3, 5.0,
+    public static Comment c6 = new Comment(3, 5,
             "Dummy canteen comment",
             Type.canteen);
 
