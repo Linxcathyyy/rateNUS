@@ -18,7 +18,7 @@ public class CommentService {
     }
 
     public List<Comment> getComments(long targetId) {
-        return commentRepository.findAllCommentsByTargetId(targetId);
+        return commentRepository.findByTargetId(targetId);
     }
 
     public void addComment(Comment comment) {
