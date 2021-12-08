@@ -17,10 +17,11 @@ import CommentForm from "../CommentForm.vue";
 
 export default {
   name: "HostelViewMore",
-  components: { Hostel, CommentForm },
+  components: { Hostel, CommentForm},
   data() {
     return {
       hostel: null,
+      commentList: []
     };
   },
   methods: {
@@ -33,9 +34,19 @@ export default {
           console.log(error);
         });
     },
+    postHostelComment() {
+      HostelRequest.postHostelComment(this.$route.params.hostelId)
+        .then((response) => {
+          this.commentList = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   },
   mounted() {
     this.getIndividualHostel();
+    this.postHostelComment();
   },
 };
 </script>

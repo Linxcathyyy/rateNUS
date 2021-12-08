@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const HOSTEL_API_BASE_URL = "http://localhost:8080/hostel";
+const COMMENT_API_BASE_URL = "http://localhost:8080/comment";
 
 class HostelRequest {
   // Get a complete list of hostels from the server
@@ -13,29 +14,36 @@ class HostelRequest {
     return axios.get(HOSTEL_API_BASE_URL + "/" + hostelId);
   }
 
+  // Get a complete list of comments for a specific hostel from server
+  getCommentList(hostelId) {
+    return axios.get(COMMENT_API_BASE_URL + "/hostel/" + hostelId);
+  }
+
   // Post individual hostel comment to server
-  postHostelComment(id, comment, rating) {
+  postHostelComment(hostelId, comment, rating) {
     // below is temp implementation to see post content
-    if (id.hostelId == undefined) {
+    if (hostelId == undefined) {
       // check id is hostel id
       throw new Error(
         "Invalid id argument. Id must be a hostelId.\nId received: ",
-        id
+        hostelId
       );
     }
-    var req = {
-      hostelId: id.hostelId,
-      comment: comment,
+    const req = {
+      targetId: hostelId,
       rating: rating,
+      text: comment,
+      type: "hostel"
     };
-    return req;
-    // todo: post hostel comment with hostelId to backend
+    return axios.post(COMMENT_API_BASE_URL, req);
   }
-   findHostels(keyword) {
-        return axios.post(HOSTEL_API_BASE_URL, {
-            keyword: keyword
-        });
-   }
+
+  // Find hostels based on keywords
+  findHostels(keyword) {
+      return axios.post(HOSTEL_API_BASE_URL, {
+          keyword: keyword
+      });
+  }
 }
 
 export default new HostelRequest();
