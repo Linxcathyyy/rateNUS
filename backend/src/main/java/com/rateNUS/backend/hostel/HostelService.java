@@ -42,7 +42,8 @@ public class HostelService {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
             Map<String, Object> map
-                    = objectMapper.readValue(keywordJson, new TypeReference<Map<String,Object>>(){});
+                    = objectMapper.readValue(keywordJson, new TypeReference<Map<String, Object>>() {
+            });
             String keyword = (String) map.get("keyword");
             System.out.printf("Search for %s\n", keyword);
             return getAllHostel()

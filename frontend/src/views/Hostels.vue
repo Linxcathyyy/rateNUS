@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SearchBar @handle-search="handleSearch" searchHint="Search for hostels" type="hostel" />
+    <SearchBar @handle-search="handleSearch" searchHint="Search for hostels"/>
     <h1>Hostel List</h1>
     <div v-for="hostel in hostelList" :key="hostel.id">
       <div @click="goToViewMorePage(hostel.id)" id="hostel-click">
@@ -45,7 +45,6 @@ export default {
     },
 
     handleSearch(keyword) {
-      console.log("hostel search:", keyword);
       HostelRequest.findHostels(keyword).then(
         (response) => {
           console.log("search result" + response.data);

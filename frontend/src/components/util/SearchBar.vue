@@ -1,7 +1,7 @@
 <template>
     <div>
         <input id="search-bar" type="text" v-model="keyword" name="search-bar" :placeholder=searchHint />
-        <button @click="handleSearch()"></button>
+        <button id="search-button" @click="handleSearch()">Search</button>
     </div>
     
 </template>
@@ -11,7 +11,6 @@ export default {
     name: 'SearchBar',
     props: {
         searchHint: String,
-        type: String
     },
     data() {
        return {
