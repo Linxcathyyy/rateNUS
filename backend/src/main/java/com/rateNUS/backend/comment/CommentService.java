@@ -18,8 +18,6 @@ public class CommentService {
     }
 
     public List<Comment> getComments(long targetId) {
-        System.out.println(commentRepository.findAllCommentsByTargetId(targetId));
-
         return commentRepository.findAllCommentsByTargetId(targetId);
     }
 
