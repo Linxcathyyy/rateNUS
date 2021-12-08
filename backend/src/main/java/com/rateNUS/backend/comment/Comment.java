@@ -1,27 +1,62 @@
 package com.rateNUS.backend.comment;
 
-public class Comment<T> {
+import com.rateNUS.backend.util.Type;
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import java.sql.Timestamp;
+import java.util.Objects;
+
+@Entity
+@Table
+public class Comment {
+    @Id
+    @SequenceGenerator(name = "comment_sequence", sequenceName = "comment_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_sequence")
+    @Column(name = "id", updatable = false)
     private long id;
 
-    // Id of the target (type T).
+    @Column(name = "targetId", nullable = false, updatable = false)
     private long targetId;
+
+    @Column(name = "rating", nullable = false)
     private double rating;
+
+    @Column(name = "text", nullable = false)
     private String text;
+
+    @Column(name = "type", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Type type;
+
+    @Column(name = "timestamp", updatable = false)
+    @CreationTimestamp
+    private Timestamp timestamp;
 
     public Comment() {
     }
 
-    public Comment(long id, long targetId, double rating, String text) {
+    public Comment(long targetId, double rating, String text, Type type) {
+        this.targetId = targetId;
+        this.rating = rating;
+        this.text = text;
+        this.type = type;
+    }
+
+    public Comment(long id, long targetId, double rating, String text, Type type) {
         this.id = id;
         this.targetId = targetId;
         this.rating = rating;
         this.text = text;
-    }
-
-    public Comment(long targetId, double rating, String text) {
-        this.targetId = targetId;
-        this.rating = rating;
-        this.text = text;
+        this.type = type;
     }
 
     public long getId() {
@@ -56,6 +91,46 @@ public class Comment<T> {
         this.text = text;
     }
 
+    public Type getType() {
+        return type;
+    }
+
+    public void setType(Type type) {
+        this.type = type;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Timestamp timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (!(obj instanceof Comment)) {
+            return false;
+        }
+
+        Comment comment = (Comment) obj;
+        return id == comment.id
+                && targetId == comment.targetId
+                && Double.compare(comment.rating, rating) == 0
+                && Objects.equals(text, comment.text)
+                && type == comment.type
+                && Objects.equals(timestamp, comment.timestamp);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, targetId, rating, text, type, timestamp);
+    }
+
     @Override
     public String toString() {
         return "Comment{" +
@@ -63,6 +138,8 @@ public class Comment<T> {
                 ", targetId=" + targetId +
                 ", rating=" + rating +
                 ", text='" + text + '\'' +
+                ", type=" + type +
+                ", timestamp=" + timestamp +
                 '}';
     }
 }
