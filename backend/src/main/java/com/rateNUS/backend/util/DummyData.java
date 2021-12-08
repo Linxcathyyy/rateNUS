@@ -7,7 +7,6 @@ import java.util.List;
 
 public class DummyData {
     public static Hostel h1 = new Hostel(
-            1,
             "UTown Residence",
             5.0,
             "NUS University Town",
@@ -19,7 +18,6 @@ public class DummyData {
             0
     );
     public static Hostel h2 = new Hostel(
-            2,
             "Prince George's Park Residences",
             5.0,
             "Kent Ridge",
@@ -31,7 +29,6 @@ public class DummyData {
             1
     );
     public static Hostel h3 = new Hostel(
-            3,
             "Cinnamon College",
             4.5,
             "NUS University Town",
@@ -45,27 +42,27 @@ public class DummyData {
             1
     );
 
-    public static Comment c1 = new Comment(1, 3, 4.5,
+    public static Comment c1 = new Comment(3, 4.5,
             "Cinnamon College: nice hostel :)",
             Type.hostel);
 
-    public static Comment c2 = new Comment(2, 2, 5.0,
+    public static Comment c2 = new Comment(2, 5.0,
             "Prince George's Park Residences: close to bus station, buildings are a bit old.",
             Type.hostel);
 
-    public static Comment c3 = new Comment(3, 1, 5.0,
+    public static Comment c3 = new Comment(1, 5.0,
             "UTown: Many food here.",
             Type.hostel);
 
-    public static Comment c4 = new Comment(4, 2, 5.0,
+    public static Comment c4 = new Comment(2, 5.0,
             "Prince George's Park Residences: Very chill residence, not much hustle",
             Type.hostel);
 
-    public static Comment c5 = new Comment(5, 3, 5.0,
+    public static Comment c5 = new Comment(3, 5.0,
             "Cinnamon College: Near StarBucks, where I can go study.",
             Type.hostel);
 
-    public static Comment c6 = new Comment(5, 3, 5.0,
+    public static Comment c6 = new Comment(3, 5.0,
             "Dummy canteen comment",
             Type.canteen);
 
