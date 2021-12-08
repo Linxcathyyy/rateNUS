@@ -53,10 +53,11 @@ public class HostelService {
         int currentCommentCount = hostel.getCommentCount();
         if (currentCommentCount == 0) {
             hostel.setRating(rating);
+        } else {
+            double currentRating = hostel.getRating();
+            double updatedRating = (currentCommentCount * currentRating + rating) / (currentCommentCount + 1);
+            hostel.setRating(updatedRating);
         }
-        double currentRating = hostel.getRating();
-        double updatedRating = (currentCommentCount * currentRating + rating) / (currentCommentCount + 1);
-        hostel.setRating(updatedRating);
         hostel.setCommentCount(currentCommentCount + 1);
     }
 }
