@@ -15,7 +15,7 @@ public class DummyData {
                     "fosters a sense of community and cross-disciplinary discussion. Resident ADvisors (RADs) will " +
                     "also be living alongside the graduate residents. The UTown Residence is equipped with seminar " +
                     "rooms and student lounges.",
-            0
+            1
     );
     public static Hostel h2 = new Hostel(
             "Prince George's Park Residences",
@@ -26,11 +26,11 @@ public class DummyData {
                     "interaction amongst its residents. The single rooms are grouped into clusters of 15, and every " +
                     "resident in the cluster is entrusted with collective responsibility for shared facilities such " +
                     "as a kitchen, dining area, and bathroom facilities.",
-            1
+            2
     );
     public static Hostel h3 = new Hostel(
             "Cinnamon College",
-            4.5,
+            4.0,
             "NUS University Town",
             "USP is located in NUS University Town, where it has its very own residential college – " +
                     "Cinnamon College (USP). Within this unique space, USP students develop a sense of belonging " +
@@ -39,10 +39,10 @@ public class DummyData {
                     "professors, and sometimes, alumni too; they play sports and organise events in the halls; and " +
                     "they hold numerous thoughtful discussions in the Master’s Commons, floors lounges, suites and " +
                     "their common lounge – fondly known as Chatterbox.",
-            1
+            2
     );
 
-    public static Comment c1 = new Comment(3, 4.5,
+    public static Comment c1 = new Comment(3, 4.0,
             "Cinnamon College: nice hostel :)",
             Type.hostel);
 
@@ -58,7 +58,7 @@ public class DummyData {
             "Prince George's Park Residences: Very chill residence, not much hustle",
             Type.hostel);
 
-    public static Comment c5 = new Comment(3, 5.0,
+    public static Comment c5 = new Comment(3, 4.0,
             "Cinnamon College: Near StarBucks, where I can go study.",
             Type.hostel);
 
