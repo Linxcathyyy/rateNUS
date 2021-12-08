@@ -6,16 +6,18 @@
     <p>Location: {{ hostel.location }}</p>
     <p>Description: {{ hostel.description }}</p>
     <Hostel :hostel="this.hostel" />
+    <CommentForm />
   </div>
 </template>
 
 <script>
 import HostelRequest from "../../httpRequests/HostelRequest";
 import Hostel from "./Hostel.vue";
+import CommentForm from "../CommentForm.vue";
 
 export default {
   name: "HostelViewMore",
-  components: { Hostel },
+  components: { Hostel, CommentForm },
   data() {
     return {
       hostel: null,
@@ -25,7 +27,7 @@ export default {
     getIndividualHostel() {
       HostelRequest.getIndividualHostel(this.$route.params.hostelId)
         .then((response) => {
-          this.hostel = response.data.hostel;
+          this.hostel = response.data;
         })
         .catch((error) => {
           console.log(error);
