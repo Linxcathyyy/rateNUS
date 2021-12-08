@@ -1,8 +1,8 @@
 <template>
   <nav>
     <ul>
-      <router-link to="/hostels"> <li>Hostels</li> </router-link>
-      <router-link to="/canteens"> <li>Canteens</li> </router-link>
+      <router-link to="/hostels" > <li>Hostels</li> </router-link>
+      <router-link to="/canteens" > <li>Canteens</li> </router-link>
       <router-link to="/studyAreas"> <li>Study Areas</li> </router-link>
     </ul>
   </nav>
