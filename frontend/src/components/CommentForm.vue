@@ -42,7 +42,12 @@ export default {
       var id = this.$route.params.hostelId;
       try {
         HostelRequest.postHostelComment(id, comment, rating);
-        console.log("Successfully added a comment!");
+        // reset comment inputs
+        this.comment = "";
+        this.rating = 5;
+        window.confirm("Successfully added a comment!");
+        // reload current page
+        location.reload();
       } catch (error) {
         console.log(error);
       }
