@@ -13,8 +13,8 @@ import java.util.logging.Logger;
  */
 @Service
 public class CommentService {
-    private final CommentRepository commentRepository;
     private static final Logger logger = Logger.getLogger(CommentService.class.getName());
+    private final CommentRepository commentRepository;
 
     @Autowired
     public CommentService(CommentRepository commentRepository) {
@@ -23,7 +23,9 @@ public class CommentService {
 
     public List<Comment> getComments(Type type, long targetId) {
         List<Comment> comments = commentRepository.findByTypeAndTargetId(type, targetId);
+
         logger.log(Level.INFO, String.format("Found %d comments", comments.size()));
+
         return comments;
     }
 
