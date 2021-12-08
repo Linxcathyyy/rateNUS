@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import javax.transaction.Transactional;
 
@@ -36,10 +35,12 @@ public class HostelService {
     }
 
     public List<Hostel> findHostel(String keyword) {
-        return getAllHostel()
-                .stream()
-                .filter(hostel -> hostel.getName().contains(keyword))
-                .collect(Collectors.toList());
+        return hostelRepository.findByNameIgnoreCaseContaining(keyword);
+
+//        return getAllHostel()
+//                .stream()
+//                .filter(hostel -> hostel.getName().contains(keyword))
+//                .collect(Collectors.toList());
     }
 
     @Transactional
