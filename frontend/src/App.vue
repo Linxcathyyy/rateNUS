@@ -8,6 +8,7 @@
     <hr /> -->
 
     <div class="content">
+     
       <Navigation id="navigation" />
       <router-view id="router-view" />
     </div>

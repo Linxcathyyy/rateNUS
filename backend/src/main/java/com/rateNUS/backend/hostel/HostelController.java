@@ -1,5 +1,8 @@
 package com.rateNUS.backend.hostel;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.rateNUS.backend.util.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Serves as the API layer for Hostels.
@@ -37,7 +41,9 @@ public class HostelController {
     }
 
     @PostMapping
-    public List<Hostel> findHostel(@RequestBody String keyword) {
-        return hostelService.findHostel(keyword);
+    public List<Hostel> findHostel(@RequestBody String keywordJson) {
+        List<Hostel> foundHostels = hostelService.findHostel(keywordJson);
+        System.out.printf("Found %d hostels%n", foundHostels.size());
+        return foundHostels;
     }
 }
