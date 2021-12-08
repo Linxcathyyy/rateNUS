@@ -6,6 +6,9 @@
     <p>Location: {{ hostel.location }}</p>
     <p>Description: {{ hostel.description }}</p>
     <Hostel :hostel="this.hostel" />
+    <div v-for="comment in commentList" :key="comment.id">
+      <Comment :comment="comment" />
+    </div>
     <CommentForm />
   </div>
 </template>
@@ -13,14 +16,16 @@
 <script>
 import HostelRequest from "../../httpRequests/HostelRequest";
 import Hostel from "./Hostel.vue";
+import Comment from "./Comment.vue";
 import CommentForm from "../CommentForm.vue";
 
 export default {
   name: "HostelViewMore",
-  components: { Hostel, CommentForm },
+  components: { Hostel, Comment, CommentForm},
   data() {
     return {
       hostel: null,
+      commentList: []
     };
   },
   methods: {
@@ -33,9 +38,20 @@ export default {
           console.log(error);
         });
     },
+    getCommentList() {
+      HostelRequest.getCommentList(this.$route.params.hostelId)
+        .then((response) => {
+          this.commentList = response.data;
+          console.log(this.commentList);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   },
   mounted() {
     this.getIndividualHostel();
+    this.getCommentList();
   },
 };
 </script>
