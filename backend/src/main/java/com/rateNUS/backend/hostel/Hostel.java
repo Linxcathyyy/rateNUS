@@ -30,22 +30,27 @@ public class Hostel {
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "commentCount")
+    private int commentCount;
+
     public Hostel() {
     }
 
-    public Hostel(String name, double rating, String location, String description) {
+    public Hostel(String name, double rating, String location, String description, int commentCount) {
         this.name = name;
         this.rating = rating;
         this.location = location;
         this.description = description;
+        this.commentCount = commentCount;
     }
 
-    public Hostel(long id, String name, double rating, String location, String description) {
+    public Hostel(long id, String name, double rating, String location, String description, int commentCount) {
         this.id = id;
         this.name = name;
         this.rating = rating;
         this.location = location;
         this.description = description;
+        this.commentCount = commentCount;
     }
 
     public long getId() {
@@ -88,6 +93,14 @@ public class Hostel {
         this.description = description;
     }
 
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -103,12 +116,13 @@ public class Hostel {
                 && Double.compare(hostel.rating, rating) == 0
                 && Objects.equals(name, hostel.name)
                 && Objects.equals(location, hostel.location)
-                && Objects.equals(description, hostel.description);
+                && Objects.equals(description, hostel.description)
+                && commentCount == hostel.commentCount;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, rating, location, description);
+        return Objects.hash(id, name, rating, location, description, commentCount);
     }
 
     @Override
@@ -119,6 +133,7 @@ public class Hostel {
                 ", rating=" + rating +
                 ", location='" + location + '\'' +
                 ", description='" + description + '\'' +
+                ", commentCount='" + commentCount + '\'' +
                 '}';
     }
 }

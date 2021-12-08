@@ -1,6 +1,7 @@
 package com.rateNUS.backend.comment;
 
 import com.rateNUS.backend.util.Config;
+import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -26,9 +27,9 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @GetMapping(path = "{targetId}")
-    public List<Comment> getComments(@PathVariable("targetId") long targetId) {
-        return commentService.getComments(targetId);
+    @GetMapping(path = "{type}/{targetId}")
+    public List<Comment> getComments(@PathVariable("type") Type type, @PathVariable("targetId") long targetId) {
+        return commentService.getComments(type, targetId);
     }
 
     @PostMapping
