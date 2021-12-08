@@ -5,6 +5,7 @@
         <Rating :score="comment.rating" />
       </div>
       <Description :description="comment.text" />
+      <p>Date Posted: {{ comment.timestamp}}</p>
     </div>
   </div>
 </template>
@@ -26,19 +27,4 @@ export default {
 </script>
 
 <style>
-.comment {
-  list-style-type: none;
-  background: rgba(201, 218, 241, 0.5);
-  margin: 20px 0px;
-  border-radius: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.comment-info {
-  flex-shrink: 0;
-  width: 20%;
-  padding: 10px 40px;
-}
 </style>

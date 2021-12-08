@@ -6,6 +6,9 @@
     <p>Location: {{ hostel.location }}</p>
     <p>Description: {{ hostel.description }}</p>
     <Hostel :hostel="this.hostel" />
+    <div v-for="comment in commentList" :key="comment.id">
+      <Comment :comment="comment" />
+    </div>
     <CommentForm />
   </div>
 </template>
@@ -13,11 +16,12 @@
 <script>
 import HostelRequest from "../../httpRequests/HostelRequest";
 import Hostel from "./Hostel.vue";
+import Comment from "./Comment.vue";
 import CommentForm from "../CommentForm.vue";
 
 export default {
   name: "HostelViewMore",
-  components: { Hostel, CommentForm},
+  components: { Hostel, Comment, CommentForm},
   data() {
     return {
       hostel: null,
