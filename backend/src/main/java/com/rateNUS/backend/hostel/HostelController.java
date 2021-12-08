@@ -48,10 +48,4 @@ public class HostelController {
         System.out.printf("Found %d hostels%n", foundHostels.size());
         return foundHostels;
     }
-
-    @PutMapping(path = "{hostelId}")
-    public void updateHostel(@PathVariable("hostelId") long hostelId,
-                             @RequestParam(required = false) double rating, boolean hasNewComment) {
-        hostelService.updateHostel(hostelId, rating, hasNewComment);
-    }
 }
