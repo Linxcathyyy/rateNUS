@@ -14,10 +14,17 @@ class HostelRequest {
   }
 
   // Post individual hostel comment to server
-  postHostelComment(hostelId, comment, rating) {
+  postHostelComment(id, comment, rating) {
     // below is temp implementation to see post content
+    if (id.hostelId == undefined) {
+      // check id is hostel id
+      throw new Error(
+        "Invalid id argument. Id must be a hostelId.\nId received: ",
+        id
+      );
+    }
     var req = {
-      hostelId: hostelId,
+      hostelId: id.hostelId,
       comment: comment,
       rating: rating,
     };

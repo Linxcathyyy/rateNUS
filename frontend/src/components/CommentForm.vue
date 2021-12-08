@@ -39,9 +39,9 @@ export default {
   },
   methods: {
     handleSubmit(comment, rating) {
-      var id = this.$route.params.hostelId;
+      var id = this.$route.params;
       HostelRequest.postHostelComment(id, comment, rating);
-      // console.log(HostelRequest.postHostelComment(id, comment, rating););
+      // console.log(HostelRequest.postHostelComment(id, comment, rating));
     },
   },
 };
