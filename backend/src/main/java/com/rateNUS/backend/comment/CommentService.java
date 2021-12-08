@@ -1,9 +1,12 @@
 package com.rateNUS.backend.comment;
 
+import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Provides the services required by {@code CommentController}.
@@ -11,14 +14,17 @@ import java.util.List;
 @Service
 public class CommentService {
     private final CommentRepository commentRepository;
+    private static final Logger logger = Logger.getLogger(CommentService.class.getName());
 
     @Autowired
     public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
     }
 
-    public List<Comment> getComments(long targetId) {
-        return commentRepository.findByTargetId(targetId);
+    public List<Comment> getComments(Type type, long targetId) {
+        List<Comment> comments = commentRepository.findByTypeAndTargetId(type, targetId);
+        logger.log(Level.INFO, String.format("Found %d comments", comments.size()));
+        return comments;
     }
 
     public void addComment(Comment comment) {

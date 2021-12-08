@@ -46,13 +46,29 @@ public class DummyData {
     );
 
     public static Comment c1 = new Comment(1, 3, 4.5,
-            "nice hostel :)",
+            "Cinnamon College: nice hostel :)",
             Type.hostel);
 
     public static Comment c2 = new Comment(2, 2, 5.0,
-            "close to bus station, buildings are a bit old.",
+            "Prince George's Park Residences: close to bus station, buildings are a bit old.",
             Type.hostel);
 
+    public static Comment c3 = new Comment(3, 1, 5.0,
+            "UTown: Many food here.",
+            Type.hostel);
+
+    public static Comment c4 = new Comment(4, 2, 5.0,
+            "Prince George's Park Residences: Very chill residence, not much hustle",
+            Type.hostel);
+
+    public static Comment c5 = new Comment(5, 3, 5.0,
+            "Cinnamon College: Near StarBucks, where I can go study.",
+            Type.hostel);
+
+    public static Comment c6 = new Comment(5, 3, 5.0,
+            "Dummy canteen comment",
+            Type.canteen);
+
     public static List<Hostel> hostelList = List.of(h1, h2, h3);
-    public static List<Comment> commentList = List.of(c1, c2);
+    public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6);
 }
