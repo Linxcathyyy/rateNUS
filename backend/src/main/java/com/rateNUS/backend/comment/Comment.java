@@ -1,5 +1,6 @@
 package com.rateNUS.backend.comment;
 
+import com.rateNUS.backend.util.Type;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Column;
@@ -9,6 +10,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -17,18 +19,24 @@ import java.util.Objects;
 @Table
 public class Comment {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "comment_sequence", sequenceName = "comment_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "comment_sequence")
+    @Column(name = "id", updatable = false)
     private long id;
 
     @Column(name = "targetId", nullable = false, updatable = false)
     private long targetId;
+
     @Column(name = "rating", nullable = false)
     private double rating;
+
     @Column(name = "text", nullable = false)
     private String text;
+
     @Column(name = "type", nullable = false)
     @Enumerated(EnumType.STRING)
     private Type type;
+
     @Column(name = "timestamp", updatable = false)
     @CreationTimestamp
     private Timestamp timestamp;
@@ -133,9 +141,5 @@ public class Comment {
                 ", type=" + type +
                 ", timestamp=" + timestamp +
                 '}';
-    }
-
-    public enum Type {
-        hostel, canteen, studyArea
     }
 }

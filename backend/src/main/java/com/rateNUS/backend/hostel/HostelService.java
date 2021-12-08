@@ -1,12 +1,17 @@
 package com.rateNUS.backend.hostel;
 
-import com.rateNUS.backend.comment.Comment;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 /**
  * Provides the services required by {@code HostelController}.
@@ -34,17 +39,40 @@ public class HostelService {
         return hostelOptional.get();
     }
 
-    public List<Hostel> findHostel(String keyword) {
-        return getAllHostel()
-                .stream()
-                .filter(hostel -> hostel.getName().contains(keyword))
-                .collect(Collectors.toList());
+    public List<Hostel> findHostel(String keywordJson) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            Map<String, Object> map
+                    = objectMapper.readValue(keywordJson, new TypeReference<Map<String, Object>>() {
+            });
+            String keyword = (String) map.get("keyword");
+            System.out.printf("Search for %s\n", keyword);
+//            return getAllHostel()
+//                    .stream()
+//                    .filter(hostel -> hostel.getName().contains(keyword))
+//                    .collect(Collectors.toList());
+            return hostelRepository.findByNameIgnoreCaseContaining(keyword);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>();
     }
 
-    public List<Comment> getComments(long hostelId) {
-        return List.of(
-                new Comment(1, hostelId, 4.5, "nice hostel :)", Comment.Type.hostel),
-                new Comment(2, hostelId, 5.0, "close to bus station, buildings are a bit old.", Comment.Type.hostel)
-        );
+    @Transactional
+    public void updateHostel(long hostelId, double rating, boolean hasNewComment) {
+        Hostel hostel = hostelRepository.findById(hostelId)
+                .orElseThrow(() -> new IllegalStateException("Hostel with ID " + hostelId + " does not exist."));
+        if (!hasNewComment) {
+            return;
+        }
+        int currentCommentCount = hostel.getCommentCount();
+        if (currentCommentCount == 0) {
+            hostel.setRating(rating);
+        } else {
+            double currentRating = hostel.getRating();
+            double updatedRating = (currentCommentCount * currentRating + rating) / (currentCommentCount + 1);
+            hostel.setRating(updatedRating);
+        }
+        hostel.setCommentCount(currentCommentCount + 1);
     }
 }
