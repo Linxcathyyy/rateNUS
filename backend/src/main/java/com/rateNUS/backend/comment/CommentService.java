@@ -23,12 +23,12 @@ public class CommentService {
     }
 
     public List<Comment> getComments(long targetId, Type type) {
-        List<Comment> comments = commentRepository.findByTargetIdAndType(targetId, type);
-        comments.sort(Comparator.comparing(Comment::getTimestamp).reversed());
+        List<Comment> commentList = commentRepository.findByTargetIdAndType(targetId, type);
+        commentList.sort(Comparator.comparing(Comment::getTimestamp).reversed());
 
-        logger.log(Level.INFO, String.format("Found %d comments", comments.size()));
+        logger.log(Level.INFO, String.format("Found %d comments", commentList.size()));
 
-        return comments;
+        return commentList;
     }
 
     public void addComment(Comment comment) {
