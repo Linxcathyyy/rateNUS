@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -21,6 +22,13 @@ import java.util.List;
 @RequestMapping(path = "comment")
 @CrossOrigin(Config.frontendURL)
 public class CommentController {
+    // Latest to oldest
+    private static final Comparator<Comment> COMMENT_COMPARATOR_BY_TIMESTAMP =
+            Comparator.comparing(Comment::getTimestamp).reversed();
+
+    // Lowest to highest
+    private static final Comparator<Comment> COMMENT_COMPARATOR_BY_RATING = Comparator.comparing(Comment::getRating);
+
     private final CommentService commentService;
     private final HostelService hostelService;
 
@@ -32,7 +40,18 @@ public class CommentController {
 
     @GetMapping(path = "{type}/{targetId}")
     public List<Comment> getComments(@PathVariable("targetId") long targetId, @PathVariable("type") Type type) {
-        return commentService.getComments(targetId, type);
+        return commentService.getComments(targetId, type, COMMENT_COMPARATOR_BY_TIMESTAMP);
+    }
+
+    @GetMapping(path = "{type}/{targetId}/{isHighToLow}")
+    public List<Comment> getComments(@PathVariable("targetId") long targetId,
+                                     @PathVariable("type") Type type,
+                                     @PathVariable("isHighToLow") boolean isHighToLow) {
+        Comparator<Comment> commentComparator = isHighToLow
+                ? COMMENT_COMPARATOR_BY_RATING.reversed()
+                : COMMENT_COMPARATOR_BY_RATING;
+
+        return commentService.getComments(targetId, type, commentComparator);
     }
 
     @PostMapping
