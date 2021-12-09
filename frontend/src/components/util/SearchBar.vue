@@ -1,6 +1,13 @@
 <template>
     <div>
-        <input id="search-bar" type="text" v-model="keyword" name="search-bar" :placeholder=searchHint />
+        <input 
+            id="search-bar" 
+            type="text" 
+            v-model="keyword" 
+            name="search-bar" 
+            :placeholder=searchHint 
+            v-on:keypress.enter="handleSearch"
+            />
         <button id="search-button" @click="handleSearch()">Search</button>
     </div>
     
@@ -20,7 +27,7 @@ export default {
     methods: {
         handleSearch() {
             this.$emit("handle-search", this.keyword);
-        }
+        },
     }
 }
 </script>
