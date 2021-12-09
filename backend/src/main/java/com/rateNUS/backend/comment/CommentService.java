@@ -4,6 +4,7 @@ import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +24,7 @@ public class CommentService {
 
     public List<Comment> getComments(long targetId, Type type) {
         List<Comment> comments = commentRepository.findByTargetIdAndType(targetId, type);
+        comments.sort(Comparator.comparing(Comment::getTimestamp).reversed());
 
         logger.log(Level.INFO, String.format("Found %d comments", comments.size()));
 
