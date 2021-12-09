@@ -1,6 +1,6 @@
 <template>
   <div>
-    <SearchBar @handle-search="handleSearch" searchHint="Search for hostels"/>
+    <SearchBar  class="search-bar" @handle-search="handleSearch" searchHint="Search for hostels"/>
     <h1>Hostel List</h1>
     <div v-for="hostel in hostelList" :key="hostel.id">
       <div @click="goToViewMorePage(hostel.id)" id="hostel-click">
@@ -68,5 +68,9 @@ export default {
 <style scope>
 #hostel-click:hover {
   cursor: pointer;
+}
+
+.search-bar {
+  float: right;
 }
 </style>
