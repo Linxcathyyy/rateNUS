@@ -22,9 +22,9 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public List<Comment> getComments(long targetId, Type type) {
+    public List<Comment> getComments(long targetId, Type type, Comparator<Comment> commentComparator) {
         List<Comment> commentList = commentRepository.findByTargetIdAndType(targetId, type);
-        commentList.sort(Comparator.comparing(Comment::getTimestamp).reversed());
+        commentList.sort(commentComparator);
 
         logger.log(Level.INFO, String.format("Found %d comments", commentList.size()));
 
