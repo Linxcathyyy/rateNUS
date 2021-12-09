@@ -33,24 +33,29 @@ public class Hostel {
     @Column(name = "commentCount")
     private int commentCount;
 
+    @Column(name = "imageUrl", nullable = false, columnDefinition = "TEXT")
+    private String imageUrl;
+
     public Hostel() {
     }
 
-    public Hostel(String name, double rating, String location, String description, int commentCount) {
+    public Hostel(String name, double rating, String location, String description, int commentCount, String imageUrl) {
         this.name = name;
         this.rating = rating;
         this.location = location;
         this.description = description;
         this.commentCount = commentCount;
+        this.imageUrl = imageUrl;
     }
 
-    public Hostel(long id, String name, double rating, String location, String description, int commentCount) {
+    public Hostel(long id, String name, double rating, String location, String description, int commentCount, String imageUrl) {
         this.id = id;
         this.name = name;
         this.rating = rating;
         this.location = location;
         this.description = description;
         this.commentCount = commentCount;
+        this.imageUrl = imageUrl;
     }
 
     public long getId() {
@@ -105,6 +110,14 @@ public class Hostel {
         commentCount++;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -121,12 +134,13 @@ public class Hostel {
                 && Objects.equals(name, hostel.name)
                 && Objects.equals(location, hostel.location)
                 && Objects.equals(description, hostel.description)
-                && commentCount == hostel.commentCount;
+                && commentCount == hostel.commentCount
+                && Objects.equals(imageUrl, hostel.imageUrl);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, rating, location, description, commentCount);
+        return Objects.hash(id, name, rating, location, description, commentCount, imageUrl);
     }
 
     @Override
@@ -138,6 +152,7 @@ public class Hostel {
                 ", location='" + location + '\'' +
                 ", description='" + description + '\'' +
                 ", commentCount='" + commentCount + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
                 '}';
     }
 }
