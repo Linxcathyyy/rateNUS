@@ -46,7 +46,15 @@ public class HostelService {
 
         String keyword = map.get("keyword");
         List<Hostel> hostelList = hostelRepository.findByNameIgnoreCaseContaining(keyword);
-        hostelList.sort(Comparator.comparing(Hostel::getName));
+        hostelList.sort((h1, h2) -> {
+            boolean h1BeginsWithKeyword = h1.getName().startsWith(keyword);
+            boolean h2BeginsWithKeyword = h2.getName().startsWith(keyword);
+
+            if (h1BeginsWithKeyword && !h2BeginsWithKeyword) return -1;
+            if (!h1BeginsWithKeyword && h2BeginsWithKeyword) return 1;
+            return h1.getName().compareTo(h2.getName());
+        });
+
         return hostelList;
     }
 
