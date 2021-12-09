@@ -50,9 +50,13 @@ public class HostelService {
             boolean h1BeginsWithKeyword = h1.getName().startsWith(keyword);
             boolean h2BeginsWithKeyword = h2.getName().startsWith(keyword);
 
-            if (h1BeginsWithKeyword && !h2BeginsWithKeyword) return -1;
-            if (!h1BeginsWithKeyword && h2BeginsWithKeyword) return 1;
-            return h1.getName().compareTo(h2.getName());
+            if (h1BeginsWithKeyword && !h2BeginsWithKeyword) {
+                return -1;
+            } else if (!h1BeginsWithKeyword && h2BeginsWithKeyword) {
+                return 1;
+            } else {
+                return h1.getName().compareTo(h2.getName());
+            }
         });
 
         return hostelList;
