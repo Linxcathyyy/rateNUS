@@ -21,8 +21,8 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public List<Comment> getComments(Type type, long targetId) {
-        List<Comment> comments = commentRepository.findByTypeAndTargetId(type, targetId);
+    public List<Comment> getComments(long targetId, Type type) {
+        List<Comment> comments = commentRepository.findByTargetIdAndType(targetId, type);
 
         logger.log(Level.INFO, String.format("Found %d comments", comments.size()));
 

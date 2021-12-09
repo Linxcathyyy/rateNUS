@@ -31,8 +31,8 @@ public class CommentController {
     }
 
     @GetMapping(path = "{type}/{targetId}")
-    public List<Comment> getComments(@PathVariable("type") Type type, @PathVariable("targetId") long targetId) {
-        return commentService.getComments(type, targetId);
+    public List<Comment> getComments(@PathVariable("targetId") long targetId, @PathVariable("type") Type type) {
+        return commentService.getComments(targetId, type);
     }
 
     @PostMapping

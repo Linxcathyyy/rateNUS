@@ -3,6 +3,7 @@ package com.rateNUS.backend.hostel;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rateNUS.backend.exception.HostelNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class HostelService {
 
     public Hostel getHostel(long hostelId) {
         return hostelRepository.findById(hostelId)
-                .orElseThrow(() -> new IllegalStateException("Hostel with ID " + hostelId + " does not exist."));
+                .orElseThrow(() -> new HostelNotFoundException(hostelId));
     }
 
     public List<Hostel> findHostel(String keywordJson) {
@@ -44,13 +45,13 @@ public class HostelService {
     }
 
     @Transactional
-    public void updateHostel(long hostelId, double rating, boolean hasNewComment) {
+    public void updateHostel(long hostelId, int rating, boolean hasNewComment) {
         if (!hasNewComment) {
             return;
         }
 
         Hostel hostel = hostelRepository.findById(hostelId)
-                .orElseThrow(() -> new IllegalStateException("Hostel with ID " + hostelId + " does not exist."));
+                .orElseThrow(() -> new HostelNotFoundException(hostelId));
 
         int currentCommentCount = hostel.getCommentCount();
         double updatedRating;
@@ -63,6 +64,6 @@ public class HostelService {
         }
 
         hostel.setRating(updatedRating);
-        hostel.setCommentCount(currentCommentCount + 1);
+        hostel.incCommentCountByOne();
     }
 }
