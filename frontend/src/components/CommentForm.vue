@@ -1,7 +1,7 @@
 <template>
   <div class="comment-form">
     <form>
-      <div id="rating-section">
+      <div>
         <label class="rating-label"> Rating: </label>
         {{ rating }} / 5
         <div class="rating-display">
@@ -15,20 +15,8 @@
           />
         </div>
       </div>
-  
-      <label>Add your comment:</label>
-      <!-- <textarea
-        class="comment"
-        type="text"
-        required
-        
-        :rows="rowsNum"
-        @focus="onFocus()"
-        @blur="onBlur()"
-        @keypress="expandBox()"
-      /> -->
         <textarea-autosize
-        class="comment"
+          class="comment"
           placeholder="Join the discussion..."
           ref="myTextarea"
           type="text"
@@ -101,7 +89,7 @@ label {
   background: transparent;
   display: block;
   font-size: 120%;
-  
+  padding: 15px 0px 0px 0px;
   border: none;
   border-bottom: 1px solid #999;
   color: #555;

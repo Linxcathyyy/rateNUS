@@ -6,19 +6,20 @@
           Posted on: {{ date }} {{ time }}
         </p>
     </div>
-    <Description :description="comment.text" class="description" />
+    <p class="description">
+      {{ comment.text }}
+    </p>
+    
   </div>
 </template>
 
 <script>
 import Rating from "./hostels/Rating.vue";
-import Description from "./hostels/Description.vue";
 
 export default {
   name: "Comment",
   components: {
     Rating,
-    Description,
   },
   props: {
     comment: Object,
@@ -37,6 +38,11 @@ export default {
 </script>
 
 <style scoped>
+
+.description {
+  text-align: left;
+}
+
 .comment {
   border-bottom: 1px solid darkgray;
 }
