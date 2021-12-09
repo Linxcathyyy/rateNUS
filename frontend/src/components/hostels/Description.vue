@@ -10,9 +10,9 @@ export default {
 
 <style scope>
 .hostel-description {
-  border-left: 3px solid darkgray;
-  padding: 10px 30px;
+  /* border-left: 3px solid darkgray; */
+  /* padding: 10px 30px; */
   text-align: left;
-  line-height: 200%;
+  /* line-height: 200%; */
 }
 </style>

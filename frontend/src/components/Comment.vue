@@ -1,11 +1,10 @@
 <template>
   <div :key="comment.id" class="comment">
     <div class="comment-info">
-      <Rating :score="comment.rating" />
-      <p>
-        Posted on:<br />
-        {{ date }} {{ time }}
-      </p>
+        <Rating :score="comment.rating" />
+        <p>
+          Posted on: {{ date }} {{ time }}
+        </p>
     </div>
     <Description :description="comment.text" class="description" />
   </div>
@@ -39,12 +38,12 @@ export default {
 
 <style scoped>
 .comment {
-  display: flex;
+  border-bottom: 1px solid darkgray;
 }
 
 .comment-info {
-  flex-shrink: 0;
-  width: 18.5%;
-  padding: 10px 40px;
+  text-align: start;
+  font-size: 0.83em;
 }
+
 </style>
