@@ -12,6 +12,9 @@ Gradle > Tasks > application > bootRun
     * Get All Hostels
         * Give: nothing
         * Path: `hostel`
+    * Get All Hostels, sorted by rating
+        * Give: `@PathVariable("isHighToLow") boolean isHighToLow`
+        * Path: `hostel/{isHighToLow}`
     * Get Hostel by Hostel's ID
         * Give: `@PathVariable("hostelId") long hostelId`
         * Path: `hostel/{hostelId}`

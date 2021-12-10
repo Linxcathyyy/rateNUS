@@ -24,9 +24,9 @@ public class HostelService {
         this.hostelRepository = hostelRepository;
     }
 
-    public List<Hostel> getAllHostel() {
+    public List<Hostel> getHostels(Comparator<Hostel> hostelComparator) {
         List<Hostel> hostelList = hostelRepository.findAll();
-        hostelList.sort(Comparator.comparing(Hostel::getId));
+        hostelList.sort(hostelComparator);
 
         return hostelList;
     }
