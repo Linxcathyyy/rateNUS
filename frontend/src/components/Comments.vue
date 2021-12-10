@@ -1,5 +1,8 @@
 <template>
   <div class="comment-list">
+    <button @click="resetCommentsSorting(comment, rating)">Reset</button>
+    <button @click="sortCommentsFromLowestToHighestRating(comment, rating)">Low -> High</button>
+    <button @click="sortCommentsFromHighestToLowestRating(comment, rating)">High -> Low</button>
     <div v-for="comment in commentList" :key="comment.id">
       <Comment :comment="comment" />
     </div>
@@ -24,7 +27,33 @@ export default {
       HostelRequest.getCommentList(this.$route.params.hostelId)
         .then((response) => {
           this.commentList = response.data;
-          console.log(this.commentList);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    sortCommentsFromLowestToHighestRating() {
+      HostelRequest.sortCommentsFromLowestToHighestRating(this.$route.params.hostelId)
+        .then((response) => {
+          this.commentList = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    sortCommentsFromHighestToLowestRating() {
+      HostelRequest.sortCommentsFromHighestToLowestRating(this.$route.params.hostelId)
+        .then((response) => {
+          this.commentList = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    resetCommentsSorting() {
+      HostelRequest.resetCommentsSorting(this.$route.params.hostelId)
+        .then((response) => {
+          this.commentList = response.data;
         })
         .catch((error) => {
           console.log(error);

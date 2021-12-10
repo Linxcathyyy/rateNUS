@@ -28,7 +28,7 @@
         />
       <div class="submit">
           <button @click="handleSubmit(comment, rating)">Submit</button>
-        </div>
+      </div>
       
     </form>
    
