@@ -12,7 +12,8 @@
 
 ### Frontend
 
-`./run` executes a bash script that runs frontend at [localhost:8081/](localhost:8081/)
+- `./install` executes a bash script that installs the dependencies required for `./run`.
+- `./run` executes a bash script that runs frontend at [localhost:8081/](localhost:8081/)
 
 ### Backend
 
