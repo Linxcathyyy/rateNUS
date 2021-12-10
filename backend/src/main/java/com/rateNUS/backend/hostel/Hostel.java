@@ -1,13 +1,22 @@
 package com.rateNUS.backend.hostel;
 
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
+import java.util.List;
 import java.util.Objects;
+
+import com.rateNUS.backend.util.Facility;
 
 @Entity
 @Table
@@ -33,24 +42,39 @@ public class Hostel {
     @Column(name = "commentCount")
     private int commentCount;
 
+    @Column(name = "imageUrl", nullable = false, columnDefinition = "TEXT")
+    private String imageUrl;
+
+    @ElementCollection(targetClass = Facility.class)
+    @JoinTable(name = "facilities", joinColumns = @JoinColumn(name = "hostel_id"))
+    @Column(name = "facility", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private List<Facility> facilities;
+
     public Hostel() {
     }
 
-    public Hostel(String name, double rating, String location, String description, int commentCount) {
+    public Hostel(String name, double rating, String location, String description, int commentCount,
+                  String imageUrl, List<Facility> facilities) {
         this.name = name;
         this.rating = rating;
         this.location = location;
         this.description = description;
         this.commentCount = commentCount;
+        this.imageUrl = imageUrl;
+        this.facilities = facilities;
     }
 
-    public Hostel(long id, String name, double rating, String location, String description, int commentCount) {
+    public Hostel(long id, String name, double rating, String location, String description, int commentCount,
+                  String imageUrl, List<Facility> facilities) {
         this.id = id;
         this.name = name;
         this.rating = rating;
         this.location = location;
         this.description = description;
         this.commentCount = commentCount;
+        this.imageUrl = imageUrl;
+        this.facilities = facilities;
     }
 
     public long getId() {
@@ -105,6 +129,22 @@ public class Hostel {
         commentCount++;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public List<Facility> getFacilities() {
+        return facilities;
+    }
+
+    public void setFacilities(List<Facility> facilities) {
+        this.facilities = facilities;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -121,12 +161,14 @@ public class Hostel {
                 && Objects.equals(name, hostel.name)
                 && Objects.equals(location, hostel.location)
                 && Objects.equals(description, hostel.description)
-                && commentCount == hostel.commentCount;
+                && commentCount == hostel.commentCount
+                && Objects.equals(imageUrl, hostel.imageUrl)
+                && facilities.equals(hostel.facilities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, rating, location, description, commentCount);
+        return Objects.hash(id, name, rating, location, description, commentCount, imageUrl, facilities);
     }
 
     @Override
@@ -138,6 +180,8 @@ public class Hostel {
                 ", location='" + location + '\'' +
                 ", description='" + description + '\'' +
                 ", commentCount='" + commentCount + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", facilities='" + facilities + '\'' +
                 '}';
     }
 }
