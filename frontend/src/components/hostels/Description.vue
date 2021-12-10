@@ -8,7 +8,7 @@ export default {
 };
 </script>
 
-<style scope>
+<style>
 .hostel-description {
   border-left: 3px solid darkgray;
   padding: 10px 30px;

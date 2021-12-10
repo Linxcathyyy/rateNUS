@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -24,7 +25,10 @@ public class HostelService {
     }
 
     public List<Hostel> getAllHostel() {
-        return hostelRepository.findAll();
+        List<Hostel> hostelList = hostelRepository.findAll();
+        hostelList.sort(Comparator.comparing(Hostel::getId));
+
+        return hostelList;
     }
 
     public Hostel getHostel(long hostelId) {
@@ -41,7 +45,21 @@ public class HostelService {
         }
 
         String keyword = map.get("keyword");
-        return hostelRepository.findByNameIgnoreCaseContaining(keyword);
+        List<Hostel> hostelList = hostelRepository.findByNameIgnoreCaseContaining(keyword);
+        hostelList.sort((h1, h2) -> {
+            boolean h1BeginsWithKeyword = h1.getName().startsWith(keyword);
+            boolean h2BeginsWithKeyword = h2.getName().startsWith(keyword);
+
+            if (h1BeginsWithKeyword && !h2BeginsWithKeyword) {
+                return -1;
+            } else if (!h1BeginsWithKeyword && h2BeginsWithKeyword) {
+                return 1;
+            } else {
+                return h1.getName().compareTo(h2.getName());
+            }
+        });
+
+        return hostelList;
     }
 
     @Transactional

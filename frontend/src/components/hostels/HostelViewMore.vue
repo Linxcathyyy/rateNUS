@@ -2,8 +2,8 @@
   <div v-if="hostel != null">
     <h1>Hostel View More with Id {{ $route.params.hostelId }}</h1>
     <Hostel :hostel="this.hostel" />
-    <Comments />
     <CommentForm />
+    <Comments />
   </div>
 </template>
 
