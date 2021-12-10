@@ -1,7 +1,10 @@
 <template>
   <div v-if="hostel != null">
-    <h1>Hostel View More with Id {{ $route.params.hostelId }}</h1>
     <Hostel :hostel="this.hostel" />
+    <img :src="hostel.imageUrl" alt="hostel image">
+    <div v-for="facility in hostel.facilities" :key="facility">
+        <p> {{ facility }} </p>
+    </div>
     <CommentForm />
     <Comments />
   </div>
@@ -26,6 +29,7 @@ export default {
     getIndividualHostel() {
       HostelRequest.getIndividualHostel(this.$route.params.hostelId)
         .then((response) => {
+          console.log(response.data);
           this.hostel = response.data;
         })
         .catch((error) => {
