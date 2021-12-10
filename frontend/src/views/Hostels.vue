@@ -68,4 +68,8 @@ export default {
 #hostel-click:hover {
   cursor: pointer;
 }
+
+.search-bar {
+  float: right;
+}
 </style>
