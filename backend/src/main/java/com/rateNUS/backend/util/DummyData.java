@@ -16,8 +16,9 @@ public class DummyData {
                     "also be living alongside the graduate residents. The UTown Residence is equipped with seminar " +
                     "rooms and student lounges.",
             1,
-            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/08/fr0g1ut2about.jpg"
-            );
+            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/08/fr0g1ut2about.jpg",
+            List.of(Facility.lounge, Facility.laundry, Facility.swimmingPool)
+    );
     public static Hostel h2 = new Hostel(
             "Prince George's Park Residences",
             5.0,
@@ -28,8 +29,9 @@ public class DummyData {
                     "resident in the cluster is entrusted with collective responsibility for shared facilities such " +
                     "as a kitchen, dining area, and bathroom facilities.",
             2,
-            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr01.jpg"
-            );
+            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr01.jpg",
+            List.of(Facility.lounge, Facility.laundry, Facility.gym, Facility.carPark)
+    );
     public static Hostel h3 = new Hostel(
             "Cinnamon College",
             4.0,
@@ -42,8 +44,9 @@ public class DummyData {
                     "they hold numerous thoughtful discussions in the Master’s Commons, floors lounges, suites and " +
                     "their common lounge – fondly known as Chatterbox.",
             2,
-            "https://www.usp.nus.edu.sg/wp-content/uploads/2019/07/Cinnamon-College.jpg"
-            );
+            "https://www.usp.nus.edu.sg/wp-content/uploads/2019/07/Cinnamon-College.jpg",
+            List.of(Facility.lounge, Facility.laundry)
+    );
 
     public static Comment c1 = new Comment(3, 4,
             "Cinnamon College: nice hostel :)",
