@@ -1,7 +1,7 @@
 <template>
   <div>
-    <SearchBar @handle-search="handleSearch" searchHint="Search for hostels"/>
     <h1>Hostel List</h1>
+    <SearchBar @handle-search="handleSearch" searchHint="Search for hostels" />
     <div v-for="hostel in hostelList" :key="hostel.id">
       <div @click="goToViewMorePage(hostel.id)" id="hostel-click">
         <Hostel :hostel="hostel" />
@@ -13,13 +13,13 @@
 <script>
 import HostelRequest from "../httpRequests/HostelRequest";
 import Hostel from "../components/hostels/Hostel.vue";
-import SearchBar from "../components/util/SearchBar"
+import SearchBar from "../components/util/SearchBar";
 
 export default {
   name: "Hostels",
   components: {
     Hostel,
-    SearchBar
+    SearchBar,
   },
 
   data() {
@@ -45,23 +45,22 @@ export default {
     },
 
     handleSearch(keyword) {
-      HostelRequest.findHostels(keyword).then(
-        (response) => {
+      HostelRequest.findHostels(keyword)
+        .then((response) => {
           console.log("search result" + response.data);
           this.hostelList = response.data;
-        }
-      )
-      .catch((error) => {
+        })
+        .catch((error) => {
           console.log(error);
         });
-    }
+    },
   },
 
   mounted() {
     this.getHostelList();
   },
 
-  emits: ["handle-search"]
+  emits: ["handle-search"],
 };
 </script>
 
