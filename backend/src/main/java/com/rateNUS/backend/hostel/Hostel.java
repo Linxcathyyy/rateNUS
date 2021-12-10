@@ -54,7 +54,8 @@ public class Hostel {
     public Hostel() {
     }
 
-    public Hostel(String name, double rating, String location, String description, int commentCount, String imageUrl, List<Facility> facilities) {
+    public Hostel(String name, double rating, String location, String description, int commentCount,
+                  String imageUrl, List<Facility> facilities) {
         this.name = name;
         this.rating = rating;
         this.location = location;
@@ -64,7 +65,8 @@ public class Hostel {
         this.facilities = facilities;
     }
 
-    public Hostel(long id, String name, double rating, String location, String description, int commentCount, String imageUrl, List<Facility> facilities) {
+    public Hostel(long id, String name, double rating, String location, String description, int commentCount,
+                  String imageUrl, List<Facility> facilities) {
         this.id = id;
         this.name = name;
         this.rating = rating;
