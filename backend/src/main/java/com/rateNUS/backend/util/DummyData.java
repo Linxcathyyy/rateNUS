@@ -8,7 +8,7 @@ import java.util.List;
 public class DummyData {
     public static Hostel h1 = new Hostel(
             "UTown Residence",
-            5.0,
+            4.0,
             "NUS University Town",
             "The UTown Residence can house up to 1,700 residents, with units for single and married " +
                     "graduate students. The design of the complex emphasizes open common areas, and the architecture " +
@@ -34,7 +34,7 @@ public class DummyData {
     );
     public static Hostel h3 = new Hostel(
             "Cinnamon College",
-            4.0,
+            3.0,
             "NUS University Town",
             "USP is located in NUS University Town, where it has its very own residential college – " +
                     "Cinnamon College (USP). Within this unique space, USP students develop a sense of belonging " +
