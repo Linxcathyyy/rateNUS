@@ -25,7 +25,6 @@ public class CommentController {
     // Latest to oldest
     private static final Comparator<Comment> COMMENT_COMPARATOR_BY_TIMESTAMP =
             Comparator.comparing(Comment::getTimestamp).reversed();
-
     // Lowest to highest
     private static final Comparator<Comment> COMMENT_COMPARATOR_BY_RATING = Comparator.comparing(Comment::getRating);
 

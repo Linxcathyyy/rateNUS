@@ -1,5 +1,7 @@
 package com.rateNUS.backend.hostel;
 
+import com.rateNUS.backend.util.Facility;
+
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -12,11 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
 import java.util.List;
 import java.util.Objects;
-
-import com.rateNUS.backend.util.Facility;
 
 @Entity
 @Table
