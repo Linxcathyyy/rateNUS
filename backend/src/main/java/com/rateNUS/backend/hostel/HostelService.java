@@ -3,10 +3,12 @@ package com.rateNUS.backend.hostel;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rateNUS.backend.exception.HostelNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -23,12 +25,15 @@ public class HostelService {
     }
 
     public List<Hostel> getAllHostel() {
-        return hostelRepository.findAll();
+        List<Hostel> hostelList = hostelRepository.findAll();
+        hostelList.sort(Comparator.comparing(Hostel::getId));
+
+        return hostelList;
     }
 
     public Hostel getHostel(long hostelId) {
         return hostelRepository.findById(hostelId)
-                .orElseThrow(() -> new IllegalStateException("Hostel with ID " + hostelId + " does not exist."));
+                .orElseThrow(() -> new HostelNotFoundException(hostelId));
     }
 
     public List<Hostel> findHostel(String keywordJson) {
@@ -40,17 +45,31 @@ public class HostelService {
         }
 
         String keyword = map.get("keyword");
-        return hostelRepository.findByNameIgnoreCaseContaining(keyword);
+        List<Hostel> hostelList = hostelRepository.findByNameIgnoreCaseContaining(keyword);
+        hostelList.sort((h1, h2) -> {
+            boolean h1BeginsWithKeyword = h1.getName().startsWith(keyword);
+            boolean h2BeginsWithKeyword = h2.getName().startsWith(keyword);
+
+            if (h1BeginsWithKeyword && !h2BeginsWithKeyword) {
+                return -1;
+            } else if (!h1BeginsWithKeyword && h2BeginsWithKeyword) {
+                return 1;
+            } else {
+                return h1.getName().compareTo(h2.getName());
+            }
+        });
+
+        return hostelList;
     }
 
     @Transactional
-    public void updateHostel(long hostelId, double rating, boolean hasNewComment) {
+    public void updateHostel(long hostelId, int rating, boolean hasNewComment) {
         if (!hasNewComment) {
             return;
         }
 
         Hostel hostel = hostelRepository.findById(hostelId)
-                .orElseThrow(() -> new IllegalStateException("Hostel with ID " + hostelId + " does not exist."));
+                .orElseThrow(() -> new HostelNotFoundException(hostelId));
 
         int currentCommentCount = hostel.getCommentCount();
         double updatedRating;
@@ -63,6 +82,6 @@ public class HostelService {
         }
 
         hostel.setRating(updatedRating);
-        hostel.setCommentCount(currentCommentCount + 1);
+        hostel.incCommentCountByOne();
     }
 }

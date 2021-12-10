@@ -4,6 +4,7 @@ import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,12 +22,13 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public List<Comment> getComments(Type type, long targetId) {
-        List<Comment> comments = commentRepository.findByTypeAndTargetId(type, targetId);
+    public List<Comment> getComments(long targetId, Type type, Comparator<Comment> commentComparator) {
+        List<Comment> commentList = commentRepository.findByTargetIdAndType(targetId, type);
+        commentList.sort(commentComparator);
 
-        logger.log(Level.INFO, String.format("Found %d comments", comments.size()));
+        logger.log(Level.INFO, String.format("Found %d comments", commentList.size()));
 
-        return comments;
+        return commentList;
     }
 
     public void addComment(Comment comment) {

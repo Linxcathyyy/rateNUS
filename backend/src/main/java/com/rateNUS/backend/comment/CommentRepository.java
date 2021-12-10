@@ -11,5 +11,5 @@ import java.util.List;
  */
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
-    List<Comment> findByTypeAndTargetId(Type type, long targetId);
+    List<Comment> findByTargetIdAndType(long targetId, Type type);
 }

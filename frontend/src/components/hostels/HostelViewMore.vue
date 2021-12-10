@@ -1,31 +1,25 @@
 <template>
   <div v-if="hostel != null">
     <h1>Hostel View More with Id {{ $route.params.hostelId }}</h1>
-    <p>Name: {{ hostel.name }}</p>
-    <p>Rating: {{ hostel.rating }}/5</p>
-    <p>Location: {{ hostel.location }}</p>
-    <p>Description: {{ hostel.description }}</p>
     <Hostel :hostel="this.hostel" />
-    <div v-for="comment in commentList" :key="comment.id">
-      <Comment :comment="comment" />
-    </div>
     <CommentForm />
+    <Comments />
   </div>
 </template>
 
 <script>
 import HostelRequest from "../../httpRequests/HostelRequest";
 import Hostel from "./Hostel.vue";
-import Comment from "./Comment.vue";
+import Comments from "../Comments.vue";
 import CommentForm from "../CommentForm.vue";
 
 export default {
   name: "HostelViewMore",
-  components: { Hostel, Comment, CommentForm},
+  components: { Hostel, Comments, CommentForm },
   data() {
     return {
       hostel: null,
-      commentList: []
+      commentList: [],
     };
   },
   methods: {
@@ -38,20 +32,9 @@ export default {
           console.log(error);
         });
     },
-    getCommentList() {
-      HostelRequest.getCommentList(this.$route.params.hostelId)
-        .then((response) => {
-          this.commentList = response.data;
-          console.log(this.commentList);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
   },
   mounted() {
     this.getIndividualHostel();
-    this.getCommentList();
   },
 };
 </script>
