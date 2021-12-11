@@ -26,7 +26,8 @@ export default {
   },
   methods: {
     handleSearch() {
-      this.$emit("handle-search", this.keyword);
+      if (this.keyword) this.$emit("handle-search", this.keyword);
+     
     },
   },
 };
