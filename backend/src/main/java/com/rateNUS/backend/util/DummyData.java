@@ -19,7 +19,7 @@ public class DummyData {
             List.of("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/12/Screen-Shot-2018-12-03-at-9.51.14-AM.png",
                     "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/08/fr0g1ut2about.jpg",
                     "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2020/05/UTown-Single-Room.jpg"),
-            List.of(Facility.lounge, Facility.laundry, Facility.swimmingPool)
+            List.of(Facility.campusSecurity, Facility.laundry, Facility.lounge, Facility.swimmingPool, Facility.WiFi)
     );
     public static Hostel h2 = new Hostel(
             "Prince George's Park Residences",
@@ -34,7 +34,9 @@ public class DummyData {
             List.of("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr01.jpg",
                     "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr04.jpg",
                     "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr11.jpg"),
-            List.of(Facility.lounge, Facility.laundry, Facility.gym, Facility.carPark)
+            List.of(Facility.basketballCourt, Facility.carPark, Facility.campusSecurity, Facility.convenienceStore,
+                    Facility.fitnessCentre, Facility.laundry, Facility.lounge, Facility.multipurposeHall,
+                    Facility.musicRoom, Facility.WiFi)
     );
     public static Hostel h3 = new Hostel(
             "Cinnamon College",
@@ -49,7 +51,7 @@ public class DummyData {
                     "their common lounge – fondly known as Chatterbox.",
             2,
             List.of("https://www.usp.nus.edu.sg/wp-content/uploads/2019/07/Cinnamon-College.jpg"),
-            List.of(Facility.lounge, Facility.laundry)
+            List.of(Facility.laundry, Facility.lounge)
     );
 
     public static Comment c1 = new Comment(3, 4,
