@@ -53,8 +53,8 @@ public class HostelController {
         return hostelService.getHostel(hostelId);
     }
 
-    @PostMapping
-    public List<Hostel> findHostel(@RequestBody String keywordJson) {
-        return hostelService.findHostel(keywordJson);
+    @PostMapping(path = "search")
+    public List<Hostel> findHostel(@RequestBody Map<String, String> jsonInput) {
+        return hostelService.findHostel(jsonInput.get("keyword"));
     }
 }

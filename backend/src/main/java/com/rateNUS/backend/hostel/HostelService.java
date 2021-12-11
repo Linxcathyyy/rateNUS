@@ -1,8 +1,5 @@
 package com.rateNUS.backend.hostel;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.rateNUS.backend.exception.HostelNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,7 +7,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Provides the services required by {@code HostelController}.
@@ -44,15 +40,7 @@ public class HostelService {
                 .orElseThrow(() -> new HostelNotFoundException(hostelId));
     }
 
-    public List<Hostel> findHostel(String keywordJson) {
-        Map<String, String> map;
-        try {
-            map = new ObjectMapper().readValue(keywordJson, new TypeReference<>() {});
-        } catch (JsonProcessingException e) {
-            throw new IllegalStateException("Json Processing Failed");
-        }
-
-        String keyword = map.get("keyword");
+    public List<Hostel> findHostel(String keyword) {
         List<Hostel> hostelList = hostelRepository.findByNameIgnoreCaseContaining(keyword);
         hostelList.sort((h1, h2) -> {
             boolean h1BeginsWithKeyword = h1.getName().startsWith(keyword);
