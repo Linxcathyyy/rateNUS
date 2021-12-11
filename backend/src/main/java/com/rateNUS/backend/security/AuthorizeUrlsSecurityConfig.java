@@ -15,17 +15,11 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/", "/hostel").permitAll()
-                .anyRequest().authenticated()
+        http.authorizeRequests()
+                .antMatchers("/comment")
+                .hasRole("USER")
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll();
+                .formLogin();
     }
 
     @Bean
