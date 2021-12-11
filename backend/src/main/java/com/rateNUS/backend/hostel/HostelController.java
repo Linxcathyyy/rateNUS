@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 
@@ -21,11 +20,6 @@ import java.util.Map;
 @RequestMapping(path = "hostel")
 @CrossOrigin(Config.frontendURL)
 public class HostelController {
-    // Lowest to highest
-    private static final Comparator<Hostel> HOSTEL_COMPARATOR_BY_ID = Comparator.comparing(Hostel::getId);
-    // Lowest to highest
-    private static final Comparator<Hostel> HOSTEL_COMPARATOR_BY_RATING = Comparator.comparing(Hostel::getRating);
-
     private final HostelService hostelService;
 
     @Autowired
@@ -35,17 +29,13 @@ public class HostelController {
 
     @PostMapping
     public List<Hostel> getHostels(@RequestBody Map<String, Integer> jsonInput) {
-        return hostelService.getHostels(HOSTEL_COMPARATOR_BY_ID, jsonInput.get("pageNum"));
+        return hostelService.getHostels("id", true, jsonInput.get("pageNum"), jsonInput.get("pageSize"));
     }
 
-    @PostMapping(path = "isHighToLow/{isHighToLow}")
-    public List<Hostel> getHostels(@PathVariable("isHighToLow") boolean isHighToLow,
+    @PostMapping(path = "isLowToHigh/{isLowToHigh}")
+    public List<Hostel> getHostels(@PathVariable("isLowToHigh") boolean isLowToHigh,
                                    @RequestBody Map<String, Integer> jsonInput) {
-        Comparator<Hostel> hostelComparator = isHighToLow
-                ? HOSTEL_COMPARATOR_BY_RATING.reversed()
-                : HOSTEL_COMPARATOR_BY_RATING;
-
-        return hostelService.getHostels(hostelComparator, jsonInput.get("pageNum"));
+        return hostelService.getHostels("rating", isLowToHigh, jsonInput.get("pageNum"), jsonInput.get("pageSize"));
     }
 
     @GetMapping(path = "{hostelId}")
