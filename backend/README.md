@@ -10,17 +10,35 @@ Gradle > Tasks > application > bootRun
 
 * Hostel
     * Get All Hostels
-        * Give: nothing
+        * Give: `@RequestBody Map<String, Integer> jsonInput`
+          ```
+          {
+            "pageNum": 1
+          }
+          ```
         * Path: `hostel`
+        * Note:
+            * Page number starts from 1
+            * Exception will be thrown for out of bound pages (e.g. pg 0)
     * Get All Hostels, sorted by rating
-        * Give: `@PathVariable("isHighToLow") boolean isHighToLow`
-        * Path: `hostel/{isHighToLow}`
+        * Give: `@PathVariable("isHighToLow") boolean isHighToLow`, `@RequestBody Map<String, Integer> jsonInput`
+          ```
+          {
+            "pageNum": 1
+          }
+          ```
+        * Path: `hostel/isHighToLow/{isHighToLow}`
     * Get Hostel by Hostel's ID
         * Give: `@PathVariable("hostelId") long hostelId`
         * Path: `hostel/{hostelId}`
     * Find Hostel by keyword
-        * Give: `@RequestBody String keywordJson`
-        * Path: `hostel`
+        * Give: `@RequestBody Map<String, String> jsonInput`
+          ```
+          {
+            "keyword": "utown"
+          }
+          ```
+        * Path: `hostel/search`
 * Comment
     * Get Comment by Type and Comment's target ID
         * Give: `@PathVariable("type") Type type`, `@PathVariable("targetId") long targetId`
