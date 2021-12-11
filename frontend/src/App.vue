@@ -6,7 +6,7 @@
     <router-link to="/canteens"> Canteens </router-link>
     <router-link to="/studyAreas"> Study Areas </router-link>
     <hr /> -->
-
+    <LoginButton />
     <div class="content">
      
       <Navigation id="navigation" />
@@ -17,11 +17,13 @@
 
 <script>
 import Navigation from "./components/Navigation.vue";
+import LoginButton from "./components/authentication/LoginButton.vue"
 
 export default {
   name: "App",
   components: {
     Navigation,
+    LoginButton
   },
 };
 </script>
