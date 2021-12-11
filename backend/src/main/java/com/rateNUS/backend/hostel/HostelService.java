@@ -1,6 +1,7 @@
 package com.rateNUS.backend.hostel;
 
 import com.rateNUS.backend.exception.HostelNotFoundException;
+import com.rateNUS.backend.exception.PageOutOfBoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class HostelService {
 
         int startIndex = (pageNum - 1) * numEntriesPerPage;
         if (startIndex < 0 || startIndex > hostelList.size()) {
-            throw new IllegalStateException("Page out of bound");
+            throw new PageOutOfBoundException(pageNum);
         }
 
         int endIndex = Math.min(hostelList.size(), startIndex + numEntriesPerPage);
