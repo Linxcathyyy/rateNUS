@@ -1,12 +1,20 @@
 package com.rateNUS.backend.hostel;
 
+import com.rateNUS.backend.util.Facility;
+
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -30,22 +38,44 @@ public class Hostel {
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "commentCount")
+    private int commentCount;
+
+    @ElementCollection
+    @JoinTable(name = "images", joinColumns = @JoinColumn(name = "hostel_id"))
+    @Column(name = "imageUrl", nullable = false)
+    private List<String> imageUrl;
+
+    @ElementCollection(targetClass = Facility.class)
+    @JoinTable(name = "facilities", joinColumns = @JoinColumn(name = "hostel_id"))
+    @Column(name = "facility", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private List<Facility> facilities;
+
     public Hostel() {
     }
 
-    public Hostel(String name, double rating, String location, String description) {
+    public Hostel(String name, double rating, String location, String description, int commentCount,
+                  List<String> imageUrl, List<Facility> facilities) {
         this.name = name;
         this.rating = rating;
         this.location = location;
         this.description = description;
+        this.commentCount = commentCount;
+        this.imageUrl = imageUrl;
+        this.facilities = facilities;
     }
 
-    public Hostel(long id, String name, double rating, String location, String description) {
+    public Hostel(long id, String name, double rating, String location, String description, int commentCount,
+                  List<String> imageUrl, List<Facility> facilities) {
         this.id = id;
         this.name = name;
         this.rating = rating;
         this.location = location;
         this.description = description;
+        this.commentCount = commentCount;
+        this.imageUrl = imageUrl;
+        this.facilities = facilities;
     }
 
     public long getId() {
@@ -88,6 +118,34 @@ public class Hostel {
         this.description = description;
     }
 
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public void incCommentCountByOne() {
+        commentCount++;
+    }
+
+    public List<String> getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(List<String> imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public List<Facility> getFacilities() {
+        return facilities;
+    }
+
+    public void setFacilities(List<Facility> facilities) {
+        this.facilities = facilities;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -103,12 +161,15 @@ public class Hostel {
                 && Double.compare(hostel.rating, rating) == 0
                 && Objects.equals(name, hostel.name)
                 && Objects.equals(location, hostel.location)
-                && Objects.equals(description, hostel.description);
+                && Objects.equals(description, hostel.description)
+                && commentCount == hostel.commentCount
+                && Objects.equals(imageUrl, hostel.imageUrl)
+                && facilities.equals(hostel.facilities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, rating, location, description);
+        return Objects.hash(id, name, rating, location, description, commentCount, imageUrl, facilities);
     }
 
     @Override
@@ -119,6 +180,9 @@ public class Hostel {
                 ", rating=" + rating +
                 ", location='" + location + '\'' +
                 ", description='" + description + '\'' +
+                ", commentCount='" + commentCount + '\'' +
+                ", imageUrl='" + imageUrl + '\'' +
+                ", facilities='" + facilities + '\'' +
                 '}';
     }
 }

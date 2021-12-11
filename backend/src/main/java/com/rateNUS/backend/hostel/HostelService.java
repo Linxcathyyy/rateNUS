@@ -1,10 +1,16 @@
 package com.rateNUS.backend.hostel;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.rateNUS.backend.exception.HostelNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
+import java.util.Map;
 
 /**
  * Provides the services required by {@code HostelController}.
@@ -18,26 +24,64 @@ public class HostelService {
         this.hostelRepository = hostelRepository;
     }
 
-    public List<Hostel> getAllHostel() {
-        return hostelRepository.findAll();
+    public List<Hostel> getHostels(Comparator<Hostel> hostelComparator) {
+        List<Hostel> hostelList = hostelRepository.findAll();
+        hostelList.sort(hostelComparator);
+
+        return hostelList;
     }
 
     public Hostel getHostel(long hostelId) {
-        Optional<Hostel> hostelOptional = hostelRepository.findById(hostelId);
-
-        if (hostelOptional.isEmpty()) {
-            throw new IllegalStateException("Hostel with ID " + hostelId + " does not exists.");
-        }
-
-        return hostelOptional.get();
+        return hostelRepository.findById(hostelId)
+                .orElseThrow(() -> new HostelNotFoundException(hostelId));
     }
 
-    public List<Hostel> findHostel(String keyword) {
-        return hostelRepository.findByNameIgnoreCaseContaining(keyword);
+    public List<Hostel> findHostel(String keywordJson) {
+        Map<String, String> map;
+        try {
+            map = new ObjectMapper().readValue(keywordJson, new TypeReference<>() {});
+        } catch (JsonProcessingException e) {
+            throw new IllegalStateException("Json Processing Failed");
+        }
 
-//        return getAllHostel()
-//                .stream()
-//                .filter(hostel -> hostel.getName().contains(keyword))
-//                .collect(Collectors.toList());
+        String keyword = map.get("keyword");
+        List<Hostel> hostelList = hostelRepository.findByNameIgnoreCaseContaining(keyword);
+        hostelList.sort((h1, h2) -> {
+            boolean h1BeginsWithKeyword = h1.getName().startsWith(keyword);
+            boolean h2BeginsWithKeyword = h2.getName().startsWith(keyword);
+
+            if (h1BeginsWithKeyword && !h2BeginsWithKeyword) {
+                return -1;
+            } else if (!h1BeginsWithKeyword && h2BeginsWithKeyword) {
+                return 1;
+            } else {
+                return h1.getName().compareTo(h2.getName());
+            }
+        });
+
+        return hostelList;
+    }
+
+    @Transactional
+    public void updateHostel(long hostelId, int rating, boolean hasNewComment) {
+        if (!hasNewComment) {
+            return;
+        }
+
+        Hostel hostel = hostelRepository.findById(hostelId)
+                .orElseThrow(() -> new HostelNotFoundException(hostelId));
+
+        int currentCommentCount = hostel.getCommentCount();
+        double updatedRating;
+
+        if (currentCommentCount == 0) {
+            updatedRating = rating;
+        } else {
+            double currentRating = hostel.getRating();
+            updatedRating = (currentCommentCount * currentRating + rating) / (currentCommentCount + 1);
+        }
+
+        hostel.setRating(updatedRating);
+        hostel.incCommentCountByOne();
     }
 }

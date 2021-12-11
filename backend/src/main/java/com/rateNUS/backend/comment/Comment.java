@@ -28,7 +28,7 @@ public class Comment {
     private long targetId;
 
     @Column(name = "rating", nullable = false)
-    private double rating;
+    private int rating;
 
     @Column(name = "text", nullable = false)
     private String text;
@@ -44,14 +44,14 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(long targetId, double rating, String text, Type type) {
+    public Comment(long targetId, int rating, String text, Type type) {
         this.targetId = targetId;
         this.rating = rating;
         this.text = text;
         this.type = type;
     }
 
-    public Comment(long id, long targetId, double rating, String text, Type type) {
+    public Comment(long id, long targetId, int rating, String text, Type type) {
         this.id = id;
         this.targetId = targetId;
         this.rating = rating;
@@ -75,11 +75,11 @@ public class Comment {
         this.targetId = targetId;
     }
 
-    public double getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 
@@ -120,7 +120,7 @@ public class Comment {
         Comment comment = (Comment) obj;
         return id == comment.id
                 && targetId == comment.targetId
-                && Double.compare(comment.rating, rating) == 0
+                && rating == comment.rating
                 && Objects.equals(text, comment.text)
                 && type == comment.type
                 && Objects.equals(timestamp, comment.timestamp);
