@@ -2,11 +2,16 @@ import axios from "axios";
 
 const HOSTEL_API_BASE_URL = "http://localhost:8080/hostel";
 const COMMENT_API_BASE_URL = "http://localhost:8080/comment";
+const COMMENT_SORT_API_BASE_URL = "http://localhost:8080/comment/hostel";
 
 class HostelRequest {
   // Get a complete list of hostels from the server
   getHostelList() {
     return axios.get(HOSTEL_API_BASE_URL);
+  }
+
+  getSortedHostelList(isHighToLow) {
+    return axios.get(HOSTEL_API_BASE_URL + "/isHighToLow/" + isHighToLow);
   }
 
   // Get individual hostel data from server
@@ -43,6 +48,30 @@ class HostelRequest {
       return axios.post(HOSTEL_API_BASE_URL, {
           keyword: keyword
       });
+  }
+
+  // sortHostelsFromLowestToHighestRating(keyword) {
+
+  // }
+
+  // sortHostelsFromHighestToLowestRating(keyword) {
+
+  // }
+
+  // resetHostelsSorting(keyword) {
+
+  // }
+
+  sortCommentsFromLowestToHighestRating(hostelId) {
+    return axios.get(COMMENT_SORT_API_BASE_URL + "/" + hostelId + "/" + false);
+  }
+
+  sortCommentsFromHighestToLowestRating(hostelId) {
+    return axios.get(COMMENT_SORT_API_BASE_URL + "/" + hostelId + "/" + true);
+  }
+
+  resetCommentsSorting(hostelId) {
+    return axios.get(COMMENT_SORT_API_BASE_URL + "/" + hostelId);
   }
 }
 
