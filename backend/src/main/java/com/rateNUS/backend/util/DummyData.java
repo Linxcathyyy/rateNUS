@@ -19,7 +19,7 @@ public class DummyData {
             List.of("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/12/Screen-Shot-2018-12-03-at-9.51.14-AM.png",
                     "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/08/fr0g1ut2about.jpg",
                     "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2020/05/UTown-Single-Room.jpg"),
-            List.of(Facility.campusSecurity, Facility.laundry, Facility.lounge, Facility.swimmingPool, Facility.WiFi)
+            List.of(Facility.campusSecurity, Facility.laundry, Facility.lounge, Facility.swimmingPool, Facility.wifi)
     );
     public static Hostel h2 = new Hostel(
             "Prince George's Park Residences",
@@ -36,7 +36,7 @@ public class DummyData {
                     "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr11.jpg"),
             List.of(Facility.basketballCourt, Facility.carPark, Facility.campusSecurity, Facility.convenienceStore,
                     Facility.fitnessCentre, Facility.laundry, Facility.lounge, Facility.multipurposeHall,
-                    Facility.musicRoom, Facility.WiFi)
+                    Facility.musicRoom, Facility.wifi)
     );
     public static Hostel h3 = new Hostel(
             "Cinnamon College",

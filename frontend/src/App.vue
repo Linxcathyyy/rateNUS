@@ -1,11 +1,21 @@
 <template>
-  <div id="app">
-    <h1 id="ratenus">Rate NUS!</h1>
-    <div class="content">
-      <Navigation id="navigation" />
-      <router-view id="router-view" />
-    </div>
-  </div>
+  <v-app>
+    <v-main>
+      <div id="app">
+        <h1 id="ratenus">Rate NUS!</h1>
+        <!-- <hr />
+      <router-link to="/hostels"> Hostels </router-link>
+      <router-link to="/canteens"> Canteens </router-link>
+      <router-link to="/studyAreas"> Study Areas </router-link>
+      <hr /> -->
+
+        <div class="content">
+          <Navigation id="navigation" />
+          <router-view id="router-view" />
+        </div>
+      </div>
+    </v-main>
+  </v-app>
 </template>
 
 <script>
@@ -16,6 +26,7 @@ export default {
   components: {
     Navigation,
   },
+  data: () => ({}),
 };
 </script>
 
@@ -28,7 +39,6 @@ export default {
   color: #2c3e50;
   margin-top: 4rem;
 }
-
 #ratenus {
   position: fixed;
   top: 0;
@@ -42,11 +52,9 @@ export default {
   background: #f5f5f7;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
-
 .content {
   display: flex;
 }
-
 #navigation {
   flex: 1;
   margin-top: 6rem;
@@ -61,7 +69,6 @@ export default {
   padding-top: 20px;
   /* background: pink; */
 }
-
 #router-view {
   margin-left: 150px;
   flex: 7 auto;

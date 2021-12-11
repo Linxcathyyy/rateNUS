@@ -7,36 +7,52 @@
         <Hostel :hostel="hostel" />
       </div>
     </div>
+    <div class="text-center">
+      <v-pagination
+        v-model="currentPage"
+        :length="4"
+        circle
+      ></v-pagination>
+    </div>
+    <!-- <Pagination :items="hostelList" :currentPage="currentPage" :pageSize="pageSize" v-on:page:update="updatePage"/> -->
   </div>
 </template>
+
 
 <script>
 import HostelRequest from "../httpRequests/HostelRequest";
 import Hostel from "../components/hostels/Hostel.vue";
 import SearchBar from "../components/util/SearchBar";
+// import Pagination from "../components/util/Pagination.vue";
 
 export default {
   name: "Hostels",
   components: {
     Hostel,
     SearchBar,
+    // Pagination
   },
 
   data() {
     return {
       hostelList: [],
+      currentPage: 1,
+      pageSize: 1,
     };
   },
 
   methods: {
-    getHostelList() {
-      HostelRequest.getHostelList()
+    async getHostelList(pageNum) {
+      HostelRequest.getHostelList(pageNum)
         .then((response) => {
-          console.log(response.data);
           this.hostelList = response.data;
+          console.log(this.hostelList);
+          // if (this.hostelList.length == 0 && this.currentPage > 1) {
+          //   this.updatePage(this.currentPage - 1);
+          // }
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data);
         });
     },
 
@@ -54,10 +70,15 @@ export default {
           console.log(error);
         });
     },
+ 
+    async updatePage(pageNumber) {
+      this.currentPage = pageNumber;
+      await this.getHostelList(pageNumber);
+    },
   },
 
-  mounted() {
-    this.getHostelList();
+  async mounted() { 
+    await this.getHostelList(this.currentPage);
   },
 
   emits: ["handle-search"],

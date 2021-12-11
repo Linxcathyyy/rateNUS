@@ -1,12 +1,18 @@
 <template>
+  <v-app>
   <nav>
     <li><router-link to="/hostels"> Hostels </router-link></li>
     <li><router-link to="/canteens"> Canteens</router-link></li>
     <li><router-link to="/studyAreas"> Study Areas </router-link></li>
   </nav>
+  </v-app>
 </template>
 
-<script></script>
+<script>
+export default {
+  name: "Navigation",
+};
+</script>
 
 <style scoped>
 nav {

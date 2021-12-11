@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Serves as the API layer for Hostels.
@@ -20,11 +20,6 @@ import java.util.List;
 @RequestMapping(path = "hostel")
 @CrossOrigin(Config.frontendURL)
 public class HostelController {
-    // Lowest to highest
-    private static final Comparator<Hostel> HOSTEL_COMPARATOR_BY_ID = Comparator.comparing(Hostel::getId);
-    // Lowest to highest
-    private static final Comparator<Hostel> HOSTEL_COMPARATOR_BY_RATING = Comparator.comparing(Hostel::getRating);
-
     private final HostelService hostelService;
 
     @Autowired
@@ -32,18 +27,15 @@ public class HostelController {
         this.hostelService = hostelService;
     }
 
-    @GetMapping
-    public List<Hostel> getHostels() {
-        return hostelService.getHostels(HOSTEL_COMPARATOR_BY_ID);
+    @PostMapping
+    public List<Hostel> getHostels(@RequestBody Map<String, Integer> jsonInput) {
+        return hostelService.getHostels("id", true, jsonInput.get("pageNum"), jsonInput.get("pageSize"));
     }
 
-    @GetMapping(path = "isHighToLow/{isHighToLow}")
-    public List<Hostel> getHostels(@PathVariable("isHighToLow") boolean isHighToLow) {
-        Comparator<Hostel> hostelComparator = isHighToLow
-                ? HOSTEL_COMPARATOR_BY_RATING.reversed()
-                : HOSTEL_COMPARATOR_BY_RATING;
-
-        return hostelService.getHostels(hostelComparator);
+    @PostMapping(path = "isLowToHigh/{isLowToHigh}")
+    public List<Hostel> getHostels(@PathVariable("isLowToHigh") boolean isLowToHigh,
+                                   @RequestBody Map<String, Integer> jsonInput) {
+        return hostelService.getHostels("rating", isLowToHigh, jsonInput.get("pageNum"), jsonInput.get("pageSize"));
     }
 
     @GetMapping(path = "{hostelId}")
@@ -51,8 +43,8 @@ public class HostelController {
         return hostelService.getHostel(hostelId);
     }
 
-    @PostMapping
-    public List<Hostel> findHostel(@RequestBody String keywordJson) {
-        return hostelService.findHostel(keywordJson);
+    @PostMapping(path = "search")
+    public List<Hostel> findHostel(@RequestBody Map<String, String> jsonInput) {
+        return hostelService.findHostel(jsonInput.get("keyword"));
     }
 }
