@@ -3,10 +3,10 @@ package com.rateNUS.backend.hostel;
 import com.rateNUS.backend.exception.HostelNotFoundException;
 import com.rateNUS.backend.exception.PageOutOfBoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -22,9 +22,9 @@ public class HostelService {
         this.hostelRepository = hostelRepository;
     }
 
-    public List<Hostel> getHostels(Comparator<Hostel> hostelComparator, int pageNum) {
-        List<Hostel> hostelList = hostelRepository.findAll();
-        hostelList.sort(hostelComparator);
+    public List<Hostel> getHostels(String orderBy, boolean isAscending, int pageNum) {
+        Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
+        List<Hostel> hostelList = hostelRepository.findAll(Sort.by(direction, orderBy));
 
         int startIndex = (pageNum - 1) * numEntriesPerPage;
         if (startIndex < 0 || startIndex > hostelList.size()) {

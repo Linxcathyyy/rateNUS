@@ -21,7 +21,7 @@ Gradle > Tasks > application > bootRun
             * Page number starts from 1
             * Exception will be thrown for out of bound pages (e.g. pg 0)
     * Get All Hostels, sorted by rating
-        * Give: `@PathVariable("isHighToLow") boolean isHighToLow`, `@RequestBody Map<String, Integer> jsonInput`
+        * Give: `@PathVariable("isLowToHigh") boolean isLowToHigh`, `@RequestBody Map<String, Integer> jsonInput`
           ```
           {
             "pageNum": 1
