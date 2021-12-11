@@ -32,3 +32,4 @@ Gradle > Tasks > application > bootRun
     * Add Comment
         * Give: `@RequestBody Comment comment`
         * Path: `comment`
+        * Requires Role == "USER" to add comment
