@@ -17,6 +17,7 @@ import java.util.Map;
  */
 @Service
 public class HostelService {
+    private final int numEntriesPerPage = 5;
     private final HostelRepository hostelRepository;
 
     @Autowired
@@ -24,11 +25,18 @@ public class HostelService {
         this.hostelRepository = hostelRepository;
     }
 
-    public List<Hostel> getHostels(Comparator<Hostel> hostelComparator) {
+    public List<Hostel> getHostels(Comparator<Hostel> hostelComparator, int pageNum) {
         List<Hostel> hostelList = hostelRepository.findAll();
         hostelList.sort(hostelComparator);
 
-        return hostelList;
+        int startIndex = (pageNum - 1) * numEntriesPerPage;
+        if (startIndex < 0 || startIndex > hostelList.size()) {
+            throw new IllegalStateException("Page out of bound");
+        }
+
+        int endIndex = Math.min(hostelList.size(), startIndex + numEntriesPerPage);
+        
+        return hostelList.subList(startIndex, endIndex);
     }
 
     public Hostel getHostel(long hostelId) {

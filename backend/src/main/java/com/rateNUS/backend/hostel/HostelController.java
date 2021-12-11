@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Serves as the API layer for Hostels.
@@ -32,18 +33,19 @@ public class HostelController {
         this.hostelService = hostelService;
     }
 
-    @GetMapping
-    public List<Hostel> getHostels() {
-        return hostelService.getHostels(HOSTEL_COMPARATOR_BY_ID);
+    @PostMapping
+    public List<Hostel> getHostels(@RequestBody Map<String, Integer> jsonInput) {
+        return hostelService.getHostels(HOSTEL_COMPARATOR_BY_ID, jsonInput.get("pageNum"));
     }
 
-    @GetMapping(path = "isHighToLow/{isHighToLow}")
-    public List<Hostel> getHostels(@PathVariable("isHighToLow") boolean isHighToLow) {
+    @PostMapping(path = "isHighToLow/{isHighToLow}")
+    public List<Hostel> getHostels(@PathVariable("isHighToLow") boolean isHighToLow,
+                                   @RequestBody Map<String, Integer> jsonInput) {
         Comparator<Hostel> hostelComparator = isHighToLow
                 ? HOSTEL_COMPARATOR_BY_RATING.reversed()
                 : HOSTEL_COMPARATOR_BY_RATING;
 
-        return hostelService.getHostels(hostelComparator);
+        return hostelService.getHostels(hostelComparator, jsonInput.get("pageNum"));
     }
 
     @GetMapping(path = "{hostelId}")
