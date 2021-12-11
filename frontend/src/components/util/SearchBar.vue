@@ -6,8 +6,8 @@
             v-model="keyword" 
             name="search-bar" 
             :placeholder=searchHint 
-            v-on:keypress.enter="handleSearch"
-            />
+            v-on:keypress="handleSearch"
+        />
         <button id="search-button" @click="handleSearch()">Search</button>
     </div>
     
