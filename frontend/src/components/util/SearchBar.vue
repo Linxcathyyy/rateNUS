@@ -1,16 +1,15 @@
 <template>
-    <div>
-        <input 
-            id="search-bar" 
-            type="text" 
-            v-model="keyword" 
-            name="search-bar" 
-            :placeholder=searchHint 
-            v-on:keypress.enter="handleSearch"
-            />
-        <button id="search-button" @click="handleSearch()">Search</button>
-    </div>
-    
+  <div class="search">
+    <input
+      id="search-bar"
+      type="text"
+      v-model="keyword"
+      name="search-bar"
+      :placeholder="searchHint"
+      v-on:keypress.enter="handleSearch"
+    />
+    <button id="search-button" @click="handleSearch()">Search</button>
+  </div>
 </template>
 
 <script>
@@ -27,21 +26,24 @@ export default {
   methods: {
     handleSearch() {
       if (this.keyword) this.$emit("handle-search", this.keyword);
-     
     },
   },
 };
 </script>
 
 <style scoped>
+.search {
+  display: flex;
+}
+
 #search-bar {
-  width: 75%;
   height: 2rem;
   margin: 1rem;
   border: 0;
   border-bottom: 1px solid #999;
   outline: 0;
   font-size: 1rem;
+  flex-grow: 1;
 }
 
 #search-bar:focus {

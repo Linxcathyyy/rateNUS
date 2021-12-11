@@ -1,9 +1,14 @@
 <template>
   <div v-if="hostel != null">
     <Hostel :hostel="this.hostel" />
-    <img :src="hostel.imageUrl" alt="hostel image">
-    <div v-for="facility in hostel.facilities" :key="facility">
-        <p> {{ facility }} </p>
+    <div class="facilities-and-image">
+      <div class="facilities">
+        <div>Facilities available:</div>
+        <div v-for="facility in hostel.facilities" :key="facility">
+          <li>{{ facility }}</li>
+        </div>
+      </div>
+      <img :src="hostel.imageUrl" alt="hostel image" class="hostel-image" />
     </div>
     <CommentForm />
     <Comments />
@@ -43,4 +48,22 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+.hostel-image {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+}
+
+.facilities-and-image {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  margin: 20px 30px;
+}
+
+.facilities > div {
+  text-align: left;
+  margin: 20px 30px;
+  font-size: 20px;
+}
+</style>

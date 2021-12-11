@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="hostels">
     <h1>Hostel List</h1>
     <SearchBar @handle-search="handleSearch" searchHint="Search for hostels" />
-    <div v-for="hostel in hostelList" :key="hostel.id">
+    <div v-for="hostel in hostelList" :key="hostel.id" class="hostel-list">
       <div @click="goToViewMorePage(hostel.id)" id="hostel-click">
         <Hostel :hostel="hostel" />
       </div>
@@ -65,6 +65,14 @@ export default {
 </script>
 
 <style scope>
+.hostels {
+  padding: 2rem 4rem;
+}
+
+.hostel-list {
+  margin: auto;
+}
+
 #hostel-click:hover {
   cursor: pointer;
 }
