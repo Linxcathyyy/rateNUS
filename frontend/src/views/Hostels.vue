@@ -7,44 +7,52 @@
         <Hostel :hostel="hostel" />
       </div>
     </div>
-    <Pagination :items="hostelList" :currentPage="currentPage" :pageSize="pageSize" v-on:page:update="updatePage"/>
+    <div class="text-center">
+      <v-pagination
+        v-model="currentPage"
+        :length="4"
+        circle
+      ></v-pagination>
+    </div>
+    <!-- <Pagination :items="hostelList" :currentPage="currentPage" :pageSize="pageSize" v-on:page:update="updatePage"/> -->
   </div>
 </template>
+
 
 <script>
 import HostelRequest from "../httpRequests/HostelRequest";
 import Hostel from "../components/hostels/Hostel.vue";
 import SearchBar from "../components/util/SearchBar";
-import Pagination from "../components/util/Pagination.vue";
+// import Pagination from "../components/util/Pagination.vue";
 
 export default {
   name: "Hostels",
   components: {
     Hostel,
     SearchBar,
-    Pagination
+    // Pagination
   },
 
   data() {
     return {
       hostelList: [],
-      currentPage: 0,
+      currentPage: 1,
       pageSize: 1,
     };
   },
 
   methods: {
-    async getHostelList(startIndex, endIndex) {
-      HostelRequest.getHostelList(startIndex, endIndex)
+    async getHostelList(pageNum) {
+      HostelRequest.getHostelList(pageNum)
         .then((response) => {
           this.hostelList = response.data;
           console.log(this.hostelList);
-          if (this.hostelList.length == 0 && this.currentPage > 0) {
-            this.updatePage(this.currentPage - 1);
-          }
+          // if (this.hostelList.length == 0 && this.currentPage > 1) {
+          //   this.updatePage(this.currentPage - 1);
+          // }
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data);
         });
     },
 
@@ -63,14 +71,14 @@ export default {
         });
     },
  
-    updatePage(pageNumber) {
+    async updatePage(pageNumber) {
       this.currentPage = pageNumber;
-      this.updateVisibleHostels(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize);
+      await this.getHostelList(pageNumber);
     },
   },
 
   async mounted() { 
-    await this.getHostelList(0, 1);
+    await this.getHostelList(this.currentPage);
   },
 
   emits: ["handle-search"],
