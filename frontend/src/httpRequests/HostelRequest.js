@@ -48,7 +48,7 @@ class HostelRequest {
 
   // Find hostels based on keywords
   findHostels(keyword) {
-      return axios.post(HOSTEL_API_BASE_URL, {
+      return axios.post(HOSTEL_API_BASE_URL + "/search", {
           keyword: keyword
       });
   }
