@@ -1,3 +1,4 @@
 #!/bin/bash
-cd frontend/
+
+cd frontend/ || exit
 npm run serve -- --port 8081
