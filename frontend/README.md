@@ -27,3 +27,7 @@ npm run lint
 ### Customize configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+### API references
+
+- [@chenfengyuan/vue-carousel](https://ssense.github.io/vue-carousel/api/)
