@@ -1,7 +1,12 @@
 <template>
   <div v-if="hostel != null">
+
     <Hostel :hostel="this.hostel" />
-    <img :src="hostel.imageUrl" alt="hostel image">
+      <carousel perPage=1 autoplay=true>
+      <slide v-for="url in hostel.imageUrl" :key="url">
+        <img :src="url">
+      </slide>
+    </carousel>
     <div v-for="facility in hostel.facilities" :key="facility">
         <p> {{ facility }} </p>
     </div>
@@ -15,10 +20,17 @@ import HostelRequest from "../../httpRequests/HostelRequest";
 import Hostel from "./Hostel.vue";
 import Comments from "../Comments.vue";
 import CommentForm from "../CommentForm.vue";
+import { Carousel, Slide } from "vue-carousel";
 
 export default {
   name: "HostelViewMore",
-  components: { Hostel, Comments, CommentForm },
+  components: { 
+    Hostel,
+    Comments, 
+    CommentForm, 
+    Carousel,
+    Slide
+    },
   data() {
     return {
       hostel: null,
@@ -43,4 +55,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped>
+img {
+
+  height: 300px;
+}
+</style>
