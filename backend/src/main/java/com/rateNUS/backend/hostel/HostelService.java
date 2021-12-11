@@ -31,7 +31,7 @@ public class HostelService {
         }
 
         int endIndex = Math.min(hostelList.size(), startIndex + numEntriesPerPage);
-        
+
         return hostelList.subList(startIndex, endIndex);
     }
 
