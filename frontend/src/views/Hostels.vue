@@ -7,6 +7,7 @@
         <Hostel :hostel="hostel" />
       </div>
     </div>
+    <Pagination :items="hostelList" :currentPage="currentPage" :pageSize="pageSize" v-on:page:update="updatePage"/>
   </div>
 </template>
 
@@ -14,26 +15,33 @@
 import HostelRequest from "../httpRequests/HostelRequest";
 import Hostel from "../components/hostels/Hostel.vue";
 import SearchBar from "../components/util/SearchBar";
+import Pagination from "../components/util/Pagination.vue";
 
 export default {
   name: "Hostels",
   components: {
     Hostel,
     SearchBar,
+    Pagination
   },
 
   data() {
     return {
       hostelList: [],
+      currentPage: 0,
+      pageSize: 1,
     };
   },
 
   methods: {
-    getHostelList() {
-      HostelRequest.getHostelList()
+    async getHostelList(startIndex, endIndex) {
+      HostelRequest.getHostelList(startIndex, endIndex)
         .then((response) => {
-          console.log(response.data);
           this.hostelList = response.data;
+          console.log(this.hostelList);
+          if (this.hostelList.length == 0 && this.currentPage > 0) {
+            this.updatePage(this.currentPage - 1);
+          }
         })
         .catch((error) => {
           console.log(error);
@@ -54,10 +62,15 @@ export default {
           console.log(error);
         });
     },
+ 
+    updatePage(pageNumber) {
+      this.currentPage = pageNumber;
+      this.updateVisibleHostels(this.currentPage * this.pageSize, (this.currentPage * this.pageSize) + this.pageSize);
+    },
   },
 
-  mounted() {
-    this.getHostelList();
+  async mounted() { 
+    await this.getHostelList(0, 1);
   },
 
   emits: ["handle-search"],

@@ -5,9 +5,12 @@ const COMMENT_API_BASE_URL = "http://localhost:8080/comment";
 const COMMENT_SORT_API_BASE_URL = "http://localhost:8080/comment/hostel";
 
 class HostelRequest {
-  // Get a complete list of hostels from the server
-  getHostelList() {
-    return axios.get(HOSTEL_API_BASE_URL);
+  // Get a partial list of hostels base on startIndex and endIndex
+  async getHostelList(startIndex, endIndex) {
+    return await axios.post(HOSTEL_API_BASE_URL, {
+      startIndex: startIndex,
+      endIndex: endIndex,
+    });
   }
 
   // Get individual hostel data from server
@@ -18,7 +21,7 @@ class HostelRequest {
   // Get a complete list of comments for a specific hostel from server
   getCommentList(hostelId) {
     return axios.get(COMMENT_API_BASE_URL + "/hostel/" + hostelId);
-  }
+  }z
 
   // Post individual hostel comment to server
   postHostelComment(hostelId, comment, rating) {
