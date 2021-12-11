@@ -50,7 +50,7 @@ export default {
 #navigation {
   flex: 1;
   margin-top: 6rem;
-  margin-left: 2rem;
+  margin-left: 1rem;
   height: 100%; /* Full-height: remove this if you want "auto" height */
   width: 10%; /* Set the width of the sidebar */
   min-width: 100px;
