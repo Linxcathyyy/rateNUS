@@ -37,7 +37,7 @@ public class HostelController {
         return hostelService.getHostels(HOSTEL_COMPARATOR_BY_ID);
     }
 
-    @GetMapping(path = "{isHighToLow}")
+    @GetMapping(path = "isHighToLow/{isHighToLow}")
     public List<Hostel> getHostels(@PathVariable("isHighToLow") boolean isHighToLow) {
         Comparator<Hostel> hostelComparator = isHighToLow
                 ? HOSTEL_COMPARATOR_BY_RATING.reversed()

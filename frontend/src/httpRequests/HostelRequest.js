@@ -13,6 +13,10 @@ class HostelRequest {
     });
   }
 
+  getSortedHostelList(isHighToLow) {
+    return axios.get(HOSTEL_API_BASE_URL + "/isHighToLow/" + isHighToLow);
+  }
+
   // Get individual hostel data from server
   getIndividualHostel(hostelId) {
     return axios.get(HOSTEL_API_BASE_URL + "/" + hostelId);
