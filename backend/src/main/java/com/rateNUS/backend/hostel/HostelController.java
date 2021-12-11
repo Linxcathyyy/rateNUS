@@ -29,13 +29,13 @@ public class HostelController {
 
     @PostMapping
     public List<Hostel> getHostels(@RequestBody Map<String, Integer> jsonInput) {
-        return hostelService.getHostels("id", true, jsonInput.get("pageNum"));
+        return hostelService.getHostels("id", true, jsonInput.get("pageNum"), jsonInput.get("pageSize"));
     }
 
     @PostMapping(path = "isLowToHigh/{isLowToHigh}")
     public List<Hostel> getHostels(@PathVariable("isLowToHigh") boolean isLowToHigh,
                                    @RequestBody Map<String, Integer> jsonInput) {
-        return hostelService.getHostels("rating", isLowToHigh, jsonInput.get("pageNum"));
+        return hostelService.getHostels("rating", isLowToHigh, jsonInput.get("pageNum"), jsonInput.get("pageSize"));
     }
 
     @GetMapping(path = "{hostelId}")

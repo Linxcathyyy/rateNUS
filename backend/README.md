@@ -13,21 +13,22 @@ Gradle > Tasks > application > bootRun
         * Give: `@RequestBody Map<String, Integer> jsonInput`
           ```
           {
-            "pageNum": 1
+            "pageNum": 0
+            "pageSize": 5
           }
           ```
         * Path: `hostel`
-        * Note:
-            * Page number starts from 1
-            * Exception will be thrown for out of bound pages (e.g. pg 0)
+        * Note: page number starts from 0
     * Get All Hostels, sorted by rating
         * Give: `@PathVariable("isLowToHigh") boolean isLowToHigh`, `@RequestBody Map<String, Integer> jsonInput`
           ```
           {
-            "pageNum": 1
+            "pageNum": 0
+            "pageSize": 5
           }
           ```
-        * Path: `hostel/isHighToLow/{isHighToLow}`
+        * Path: `hostel/isLowToHigh/{isLowToHigh}`
+        * Note: page number starts from 0
     * Get Hostel by Hostel's ID
         * Give: `@PathVariable("hostelId") long hostelId`
         * Path: `hostel/{hostelId}`

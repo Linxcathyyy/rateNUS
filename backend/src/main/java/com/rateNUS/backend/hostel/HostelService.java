@@ -1,8 +1,8 @@
 package com.rateNUS.backend.hostel;
 
 import com.rateNUS.backend.exception.HostelNotFoundException;
-import com.rateNUS.backend.exception.PageOutOfBoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +14,6 @@ import java.util.List;
  */
 @Service
 public class HostelService {
-    private final int numEntriesPerPage = 5;
     private final HostelRepository hostelRepository;
 
     @Autowired
@@ -22,18 +21,10 @@ public class HostelService {
         this.hostelRepository = hostelRepository;
     }
 
-    public List<Hostel> getHostels(String orderBy, boolean isAscending, int pageNum) {
+    public List<Hostel> getHostels(String orderBy, boolean isAscending, int pageNum, int numEntriesPerPage) {
         Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
-        List<Hostel> hostelList = hostelRepository.findAll(Sort.by(direction, orderBy));
-
-        int startIndex = (pageNum - 1) * numEntriesPerPage;
-        if (startIndex < 0 || startIndex > hostelList.size()) {
-            throw new PageOutOfBoundException(pageNum);
-        }
-
-        int endIndex = Math.min(hostelList.size(), startIndex + numEntriesPerPage);
-
-        return hostelList.subList(startIndex, endIndex);
+        PageRequest pageRequest = PageRequest.of(pageNum, numEntriesPerPage, Sort.by(direction, orderBy));
+        return hostelRepository.findAll(pageRequest).getContent();
     }
 
     public Hostel getHostel(long hostelId) {
