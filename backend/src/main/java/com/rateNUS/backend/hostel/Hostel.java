@@ -1,5 +1,7 @@
 package com.rateNUS.backend.hostel;
 
+import com.rateNUS.backend.util.Facility;
+
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -12,11 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
 import java.util.List;
 import java.util.Objects;
-
-import com.rateNUS.backend.util.Facility;
 
 @Entity
 @Table
@@ -42,8 +41,10 @@ public class Hostel {
     @Column(name = "commentCount")
     private int commentCount;
 
-    @Column(name = "imageUrl", nullable = false, columnDefinition = "TEXT")
-    private String imageUrl;
+    @ElementCollection
+    @JoinTable(name = "images", joinColumns = @JoinColumn(name = "hostel_id"))
+    @Column(name = "imageUrl", nullable = false)
+    private List<String> imageUrl;
 
     @ElementCollection(targetClass = Facility.class)
     @JoinTable(name = "facilities", joinColumns = @JoinColumn(name = "hostel_id"))
@@ -55,7 +56,7 @@ public class Hostel {
     }
 
     public Hostel(String name, double rating, String location, String description, int commentCount,
-                  String imageUrl, List<Facility> facilities) {
+                  List<String> imageUrl, List<Facility> facilities) {
         this.name = name;
         this.rating = rating;
         this.location = location;
@@ -66,7 +67,7 @@ public class Hostel {
     }
 
     public Hostel(long id, String name, double rating, String location, String description, int commentCount,
-                  String imageUrl, List<Facility> facilities) {
+                  List<String> imageUrl, List<Facility> facilities) {
         this.id = id;
         this.name = name;
         this.rating = rating;
@@ -129,11 +130,11 @@ public class Hostel {
         commentCount++;
     }
 
-    public String getImageUrl() {
+    public List<String> getImageUrl() {
         return imageUrl;
     }
 
-    public void setImageUrl(String imageUrl) {
+    public void setImageUrl(List<String> imageUrl) {
         this.imageUrl = imageUrl;
     }
 

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Serves as the API layer for Hostels.
@@ -26,9 +27,15 @@ public class HostelController {
         this.hostelService = hostelService;
     }
 
-    @GetMapping
-    public List<Hostel> getAllHostel() {
-        return hostelService.getAllHostel();
+    @PostMapping
+    public List<Hostel> getHostels(@RequestBody Map<String, Integer> jsonInput) {
+        return hostelService.getHostels("id", true, jsonInput.get("pageNum"), jsonInput.get("pageSize"));
+    }
+
+    @PostMapping(path = "isLowToHigh/{isLowToHigh}")
+    public List<Hostel> getHostels(@PathVariable("isLowToHigh") boolean isLowToHigh,
+                                   @RequestBody Map<String, Integer> jsonInput) {
+        return hostelService.getHostels("rating", isLowToHigh, jsonInput.get("pageNum"), jsonInput.get("pageSize"));
     }
 
     @GetMapping(path = "{hostelId}")
@@ -36,8 +43,8 @@ public class HostelController {
         return hostelService.getHostel(hostelId);
     }
 
-    @PostMapping
-    public List<Hostel> findHostel(@RequestBody String keywordJson) {
-        return hostelService.findHostel(keywordJson);
+    @PostMapping(path = "search")
+    public List<Hostel> findHostel(@RequestBody Map<String, String> jsonInput) {
+        return hostelService.findHostel(jsonInput.get("keyword"));
     }
 }

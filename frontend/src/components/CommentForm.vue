@@ -23,12 +23,11 @@
           required
           :min-height="30"
           :max-height="350"
-          @blur.native="onBlurTextarea"
           v-model="comment"
         />
       <div class="submit">
           <button @click="handleSubmit(comment, rating)">Submit</button>
-        </div>
+      </div>
       
     </form>
    

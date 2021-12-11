@@ -1,5 +1,6 @@
 package com.rateNUS.backend.util;
 
 public enum Facility {
-    lounge, laundry, gym, swimmingPool, carPark
+    basketballCourt, carPark, campusSecurity, convenienceStore, fitnessCentre, laundry, lounge,
+    multipurposeHall, musicRoom, swimmingPool, tennisCourt, wifi
 }
