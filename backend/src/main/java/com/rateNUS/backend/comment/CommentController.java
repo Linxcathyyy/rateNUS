@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -22,12 +21,6 @@ import java.util.List;
 @RequestMapping(path = "comment")
 @CrossOrigin(Config.frontendURL)
 public class CommentController {
-    // Latest to oldest
-    private static final Comparator<Comment> COMMENT_COMPARATOR_BY_TIMESTAMP =
-            Comparator.comparing(Comment::getTimestamp).reversed();
-    // Lowest to highest
-    private static final Comparator<Comment> COMMENT_COMPARATOR_BY_RATING = Comparator.comparing(Comment::getRating);
-
     private final CommentService commentService;
     private final HostelService hostelService;
 
