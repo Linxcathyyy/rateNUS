@@ -4,16 +4,19 @@
     <v-main>
     <div id="app">
       <h1 id="ratenus">Rate NUS!</h1>
+   
       <!-- <hr />
       <router-link to="/hostels"> Hostels </router-link>
       <router-link to="/canteens"> Canteens </router-link>
       <router-link to="/studyAreas"> Study Areas </router-link>
       <hr /> -->
-      <LoginButton />
+      
+      <LoginForm />
       <div class="content">
         <Navigation id="navigation" />
         <router-view id="router-view" />
       </div>
+      
     </div>
     </v-main>
   </v-app>
@@ -21,13 +24,14 @@
 
 <script>
 import Navigation from "./components/Navigation.vue";
-import LoginButton from "./components/authentication/LoginButton.vue"
+import LoginForm from "./components/authentication/LoginForm.vue"
 
 export default {
   name: 'App',
   components: {
     Navigation,
-    LoginButton
+    LoginForm,
+
   },
   data: () => ({
   }),
