@@ -1,4 +1,5 @@
 #!/bin/bash
-cd frontend/
+
+cd frontend/ || exit
 npm install
 npm run lint
