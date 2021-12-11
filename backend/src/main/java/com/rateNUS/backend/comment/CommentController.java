@@ -39,18 +39,14 @@ public class CommentController {
 
     @GetMapping(path = "{type}/{targetId}")
     public List<Comment> getComments(@PathVariable("targetId") long targetId, @PathVariable("type") Type type) {
-        return commentService.getComments(targetId, type, COMMENT_COMPARATOR_BY_TIMESTAMP);
+        return commentService.getComments(targetId, type, "timestamp", false);
     }
 
-    @GetMapping(path = "{type}/{targetId}/{isHighToLow}")
+    @GetMapping(path = "{type}/{targetId}/{isLowToHigh}")
     public List<Comment> getComments(@PathVariable("targetId") long targetId,
                                      @PathVariable("type") Type type,
-                                     @PathVariable("isHighToLow") boolean isHighToLow) {
-        Comparator<Comment> commentComparator = isHighToLow
-                ? COMMENT_COMPARATOR_BY_RATING.reversed()
-                : COMMENT_COMPARATOR_BY_RATING;
-
-        return commentService.getComments(targetId, type, commentComparator);
+                                     @PathVariable("isLowToHigh") boolean isLowToHigh) {
+        return commentService.getComments(targetId, type, "rating", isLowToHigh);
     }
 
     @PostMapping

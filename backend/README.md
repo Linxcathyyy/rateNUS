@@ -27,8 +27,8 @@ Gradle > Tasks > application > bootRun
         * Path: `comment/{type}/{targetId}`
     * Get Comment by Type and Comment's target ID, sorted by rating
         * Give: `@PathVariable("type") Type type`, `@PathVariable("targetId") long targetId`
-          , `@PathVariable("isHighToLow") boolean isHighToLow`
-        * Path: `comment/{type}/{targetId}/{isHighToLow}`
+          , `@PathVariable("isLowToHigh") boolean isLowToHigh`
+        * Path: `comment/{type}/{targetId}/{isLowToHigh}`
     * Add Comment
         * Give: `@RequestBody Comment comment`
         * Path: `comment`
