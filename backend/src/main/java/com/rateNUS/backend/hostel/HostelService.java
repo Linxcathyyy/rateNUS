@@ -3,6 +3,7 @@ package com.rateNUS.backend.hostel;
 import com.rateNUS.backend.exception.HostelNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -33,7 +34,7 @@ public class HostelService {
                 .orElseThrow(() -> new HostelNotFoundException(hostelId));
     }
 
-    public List<Hostel> findHostel(String keyword) {
+    public Page<Hostel> findHostel(String keyword, int pageNum, int pageSize) {
         List<Hostel> hostelList = hostelRepository.findByNameIgnoreCaseContaining(keyword);
         hostelList.sort((h1, h2) -> {
             boolean h1BeginsWithKeyword = h1.getName().startsWith(keyword);
@@ -48,7 +49,12 @@ public class HostelService {
             }
         });
 
-        return hostelList;
+        PageRequest pageRequest = PageRequest.of(pageNum, pageSize);
+        int start = (int) pageRequest.getOffset();
+        int end = Math.min(start + pageSize, hostelList.size());
+        List<Hostel> content = hostelList.subList(start, end);
+
+        return new PageImpl<>(content, pageRequest, hostelList.size());
     }
 
     @Transactional
