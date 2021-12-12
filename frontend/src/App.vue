@@ -6,7 +6,7 @@
           <h1 id="ratenus">Rate NUS!</h1>
           <LoginButton id="login-button" />
         </header>
-        
+
         <!-- <hr />
       <router-link to="/hostels"> Hostels </router-link>
       <router-link to="/canteens"> Canteens </router-link>
