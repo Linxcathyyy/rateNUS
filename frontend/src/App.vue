@@ -1,41 +1,37 @@
 <template>
   <v-app>
-    
     <v-main>
-    <div id="app">
-      <header>
-        <h1 id="ratenus">Rate NUS!</h1>
-        <LoginButton id="login-button"/>
-      </header>
+      <div id="app">
+        <header>
+          <h1 id="ratenus">Rate NUS!</h1>
+          <LoginButton />
+        </header>
 
-      <!-- <hr />
+        <!-- <hr />
       <router-link to="/hostels"> Hostels </router-link>
       <router-link to="/canteens"> Canteens </router-link>
       <router-link to="/studyAreas"> Study Areas </router-link>
       <hr /> -->
-      
-      <div class="content">
-        <Navigation id="navigation" />
-        <router-view id="router-view" />
+        <div class="content">
+          <Navigation id="navigation" />
+          <router-view id="router-view" />
+        </div>
       </div>
-      
-    </div>
     </v-main>
   </v-app>
 </template>
 
 <script>
 import Navigation from "./components/Navigation.vue";
-import LoginButton from "./components/authentication/LoginButton.vue"
+import LoginButton from "./components/authentication/LoginButton.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     Navigation,
-    LoginButton
+    LoginButton,
   },
-  data: () => ({
-  }),
+  data: () => ({}),
 };
 </script>
 

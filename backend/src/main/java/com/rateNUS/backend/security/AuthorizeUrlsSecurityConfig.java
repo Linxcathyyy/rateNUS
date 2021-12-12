@@ -22,7 +22,7 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors();
 
-        http.csrf().disable().authorizeRequests()
+        http.authorizeRequests()
                 .antMatchers("/comment")
                 .hasRole("USER")
                 .and()

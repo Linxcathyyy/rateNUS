@@ -1,36 +1,16 @@
 <template>
-    <v-menu
-        :close-on-content-click="false"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            color="primary"
-            dark
-            v-bind="attrs"
-            v-on="on"
-          >
-            Log In
-          </v-btn>
-        </template>
-        <v-list>
-          <v-list-item>
-             <LoginForm />
-          </v-list-item>
-        </v-list>
-      </v-menu>
+  <v-btn color="primary" dark @click="this.directToLogin"> Log In </v-btn>
 </template>
 
 <script>
-import { defineComponent } from '@vue/composition-api';
-import LoginForm from "./LoginForm.vue";
+import { defineComponent } from "@vue/composition-api";
 
 export default defineComponent({
-    name: "LoginButton",
-    setup() {
-        
+  name: "LoginButton",
+  methods: {
+    directToLogin() {
+      this.$router.push("/login");
     },
-    components: {
-        LoginForm
-    }
-})
+  },
+});
 </script>
