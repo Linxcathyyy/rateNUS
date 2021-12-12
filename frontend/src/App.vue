@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <div id="app">
-        <h1 id="ratenus">Rate NUS!</h1>
+        <h1 id="ratenus" class="blue accent-3">Rate NUS!</h1>
         <!-- <hr />
       <router-link to="/hostels"> Hostels </router-link>
       <router-link to="/canteens"> Canteens </router-link>
@@ -49,7 +49,8 @@ export default {
   align-items: center;
   height: 4rem;
   margin: 0;
-  background: #f5f5f7;
+  /* background: #f5f5f7; */
+  color: #f5f5f7;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 .content {
@@ -57,7 +58,6 @@ export default {
 }
 #navigation {
   flex: 1;
-  margin-top: 6rem;
   margin-left: 1rem;
   height: 100%; /* Full-height: remove this if you want "auto" height */
   width: 10%; /* Set the width of the sidebar */

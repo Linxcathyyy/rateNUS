@@ -52,8 +52,9 @@ export default {
 
 #search-button {
   height: 3rem;
-  margin: 1rem;
-  padding: 15px;
+  width: 6rem;
+  margin: auto;
+  padding: auto;
   border: 0;
   border-radius: 30px;
   outline: 0;

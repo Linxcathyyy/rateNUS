@@ -39,4 +39,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.mx-auto {
+  border-radius: 0px;
+}
+</style>
