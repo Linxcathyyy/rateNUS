@@ -26,7 +26,7 @@
         :disabled="!valid"
         color="success"
         class="mr-4"
-        @click="validate"
+        @click="onSubmit"
       >
         Log In
       </v-btn>
@@ -35,6 +35,8 @@
 </template>
 
 <script>
+import AuthenticationRequest from "../../httpRequests/AuthenticationRequest.js";
+
 export default ({
     name: "LoginForm",
     data: () => ({
@@ -42,7 +44,6 @@ export default ({
     name: '',
     nameRules: [
       v => !!v || 'Username is required',
-      v => (v && v.length <= 10) || 'Name must be less than 10 characters',
     ],
     password: '',
     showPassword: false,
@@ -52,14 +53,10 @@ export default ({
   }),
 
   methods: {
-    validate () {
-      this.$refs.form.validate()
-    },
-    reset () {
-      this.$refs.form.reset()
-    },
-    resetValidation () {
-      this.$refs.form.resetValidation()
+    async onSubmit() {
+      if (this.$refs.form.validate()) {
+        await AuthenticationRequest.processLoginForm();
+      }
     },
   },
 })

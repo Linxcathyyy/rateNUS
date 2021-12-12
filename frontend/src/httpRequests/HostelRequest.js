@@ -25,7 +25,7 @@ class HostelRequest {
   // Get a complete list of comments for a specific hostel from server
   getCommentList(hostelId) {
     return axios.get(COMMENT_API_BASE_URL + "/hostel/" + hostelId);
-  }z
+  }
 
   // Post individual hostel comment to server
   postHostelComment(hostelId, comment, rating) {
