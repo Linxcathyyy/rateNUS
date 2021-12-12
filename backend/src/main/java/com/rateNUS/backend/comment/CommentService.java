@@ -2,9 +2,9 @@ package com.rateNUS.backend.comment;
 
 import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,9 +22,10 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public List<Comment> getComments(long targetId, Type type, Comparator<Comment> commentComparator) {
-        List<Comment> commentList = commentRepository.findByTargetIdAndType(targetId, type);
-        commentList.sort(commentComparator);
+    public List<Comment> getComments(long targetId, Type type, String orderBy, boolean isAscending) {
+        Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Sort sort = Sort.by(direction, orderBy);
+        List<Comment> commentList = commentRepository.findByTargetIdAndType(targetId, type, sort);
 
         logger.log(Level.INFO, String.format("Found %d comments", commentList.size()));
 

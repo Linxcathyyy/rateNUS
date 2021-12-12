@@ -1,4 +1,5 @@
 <template>
+  <v-app>
   <nav>
     <ul>
       <router-link to="/hostels" > <li>Hostels</li> </router-link>
@@ -6,9 +7,14 @@
       <router-link to="/studyAreas"> <li>Study Areas</li> </router-link>
     </ul>
   </nav>
+  </v-app>
 </template>
 
-<script></script>
+<script>
+export default {
+  name: "Navigation",
+};
+</script>
 
 <style scoped>
 ul {
