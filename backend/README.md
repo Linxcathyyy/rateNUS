@@ -50,4 +50,6 @@ Gradle > Tasks > application > bootRun
         * Path: `comment/{type}/{targetId}/{isLowToHigh}`
     * Add Comment
         * Give: `@RequestBody Comment comment`
-        * Path: `comment`
+        * Path:
+            * role == "USER": `comment`
+            * role != "USER": `login`
