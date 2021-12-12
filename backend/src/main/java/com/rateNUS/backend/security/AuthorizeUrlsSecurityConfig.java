@@ -26,8 +26,7 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/comment")
                 .hasRole("USER")
                 .and()
-                .formLogin()
-                .defaultSuccessUrl("/canteen");
+                .formLogin();
     }
 
     @Bean
