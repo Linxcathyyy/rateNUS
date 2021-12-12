@@ -6,9 +6,10 @@ const COMMENT_SORT_API_BASE_URL = "http://localhost:8080/comment/hostel";
 
 class HostelRequest {
   // Get a partial list of hostels base on startIndex and endIndex
-  async getHostelList(pageNum) {
+  async getHostelList(pageNum, pageSize) {
     return await axios.post(HOSTEL_API_BASE_URL, {
-      pageNum: pageNum
+      pageNum: pageNum,
+      pageSize: pageSize
     });
   }
 
@@ -47,7 +48,7 @@ class HostelRequest {
 
   // Find hostels based on keywords
   findHostels(keyword) {
-      return axios.post(HOSTEL_API_BASE_URL, {
+      return axios.post(HOSTEL_API_BASE_URL + "/search", {
           keyword: keyword
       });
   }

@@ -8,13 +8,23 @@
       </div>
     </div>
     <div class="text-center">
-      <v-pagination
-        v-model="currentPage"
-        :length="4"
-        circle
-      ></v-pagination>
+      <v-container>
+        <v-row justify="center">
+          <v-col cols="8">
+            <v-container class="max-width">
+              <v-pagination
+                @input="updatePage"
+                v-model="currentPage"
+                class="my-4"
+                :length="getTotalPages"
+                prev-icon="mdi-menu-left"
+                next-icon="mdi-menu-right"
+              ></v-pagination>
+            </v-container>
+          </v-col>
+        </v-row>
+      </v-container>
     </div>
-    <!-- <Pagination :items="hostelList" :currentPage="currentPage" :pageSize="pageSize" v-on:page:update="updatePage"/> -->
   </div>
 </template>
 
@@ -23,37 +33,45 @@
 import HostelRequest from "../httpRequests/HostelRequest";
 import Hostel from "../components/hostels/Hostel.vue";
 import SearchBar from "../components/util/SearchBar";
-// import Pagination from "../components/util/Pagination.vue";
 
 export default {
   name: "Hostels",
   components: {
     Hostel,
     SearchBar,
-    // Pagination
   },
 
   data() {
     return {
       hostelList: [],
       currentPage: 1,
-      pageSize: 1,
+      pageSize: 2,
+      totalNumberOfHostels: 3,
     };
   },
-
+  computed: {
+    getTotalPages() {
+      return Math.ceil(this.totalNumberOfHostels / this.pageSize);
+    },
+  },
   methods: {
-    async getHostelList(pageNum) {
-      HostelRequest.getHostelList(pageNum)
-        .then((response) => {
+    async getHostelList(pageNum, pageSize) {
+      await HostelRequest.getHostelList(pageNum, pageSize)
+        .then(async (response) => {
           this.hostelList = response.data;
           console.log(this.hostelList);
-          // if (this.hostelList.length == 0 && this.currentPage > 1) {
-          //   this.updatePage(this.currentPage - 1);
-          // }
+          if (this.hostelList.length == 0 && this.currentPage > 1) {
+            await this.updatePage(this.currentPage - 1);
+          }
         })
         .catch((error) => {
           console.log(error.response.data);
         });
+    },
+
+    async updatePage(pageNumber) {
+      this.currentPage = pageNumber;
+      await this.getHostelList(pageNumber - 1, this.pageSize);
     },
 
     goToViewMorePage(hostelId) {
@@ -70,15 +88,17 @@ export default {
           console.log(error);
         });
     },
- 
-    async updatePage(pageNumber) {
-      this.currentPage = pageNumber;
-      await this.getHostelList(pageNumber);
-    },
+
+  },
+
+  watch: {
+      "currentPage": (newPage) => {
+          this.updatePage(newPage);
+      }
   },
 
   async mounted() { 
-    await this.getHostelList(this.currentPage);
+    await this.getHostelList(this.currentPage - 1, this.pageSize);
   },
 
   emits: ["handle-search"],

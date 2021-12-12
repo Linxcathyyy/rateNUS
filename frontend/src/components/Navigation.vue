@@ -1,45 +1,42 @@
 <template>
-  <v-app>
-  <nav>
-    <li><router-link to="/hostels"> Hostels </router-link></li>
-    <li><router-link to="/canteens"> Canteens</router-link></li>
-    <li><router-link to="/studyAreas"> Study Areas </router-link></li>
-  </nav>
-  </v-app>
+  <v-card class="mx-auto" height="100%" width="180">
+    <v-navigation-drawer class="blue accent-4" dark permanent>
+      <v-list>
+        <v-list-item
+          :to="item.route"
+          v-for="item in items"
+          :key="item.title"
+          link=""
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-navigation-drawer>
+  </v-card>
 </template>
 
 <script>
 export default {
-  name: "Navigation",
+  data() {
+    return {
+      items: [
+        { title: "Hostels", icon: "mdi-bed", route: "/hostels" },
+        { title: "Canteens", icon: "mdi-food", route: "/canteens" },
+        {
+          title: "Study Areas",
+          icon: "mdi-book-open-page-variant-outline",
+          route: "/studyAreas",
+        },
+      ],
+    };
+  },
 };
 </script>
 
-<style scoped>
-nav {
-  align-items: center;
-  justify-content: center;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  margin: 1rem auto;
-  padding: 0;
-  height: 5rem;
-  width: 80%;
-  border-radius: 2rem;
-  background: #f1f4fc;
-  box-shadow: 0 0 20px #ccc;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-a {
-  text-decoration: none;
-  color: rgb(0, 9, 61);
-}
-</style>
+<style scoped></style>

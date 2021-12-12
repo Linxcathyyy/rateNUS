@@ -65,12 +65,14 @@ export default {
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   top: 0; /* Stay at the top */
   left: 0;
-  overflow-x: hidden; /* Disable horizontal scroll */
-  padding-top: 20px;
-  /* background: pink; */
+  top: 4rem;
+  bottom: 0;
 }
 #router-view {
-  margin-left: 150px;
-  flex: 7 auto;
+  width: 100%;
+  padding-left: 10rem;
+  padding-right: 1rem;
+  margin-bottom: 30px;
+  margin-left: 2rem;
 }
 </style>
