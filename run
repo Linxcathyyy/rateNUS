@@ -1,4 +1,4 @@
 #!/bin/bash
 
 cd frontend/ || exit
-npm run serve -- --port 8081
+npm run serve
