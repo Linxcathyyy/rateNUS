@@ -1,5 +1,8 @@
 package com.rateNUS.backend.security;
 
+import static com.rateNUS.backend.security.ApplicationUserRole.ADMIN;
+import static com.rateNUS.backend.security.ApplicationUserRole.USER;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,7 +30,7 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/comment")
-                .hasRole("USER")
+                .hasAnyRole(USER.name(), ADMIN.name())
                 .and()
                 .formLogin();
     }
@@ -39,9 +42,16 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
                 User.builder()
                         .username("user")
                         .password(passwordEncoder.encode("password"))
-                        .roles("USER")
+                        .roles(USER.name())
                         .build();
 
-        return new InMemoryUserDetailsManager(user);
+        UserDetails admin =
+                User.builder()
+                        .username("admin")
+                        .password(passwordEncoder.encode("password123"))
+                        .roles(ADMIN.name())
+                        .build();
+
+        return new InMemoryUserDetailsManager(user, admin);
     }
 }
