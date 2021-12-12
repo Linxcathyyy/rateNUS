@@ -70,13 +70,14 @@ header {
 #navigation {
   position: fixed;
   left: 0;
-  top: 7rem;
+  top: 4rem;
   bottom: 0;
 }
 #router-view {
   width: 100%;
-  padding-left: 7rem;
+  padding-left: 10rem;
   padding-right: 1rem;
   margin-bottom: 30px;
+  margin-left: 2rem;
 }
 </style>
