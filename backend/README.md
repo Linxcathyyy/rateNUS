@@ -13,33 +13,43 @@ Gradle > Tasks > application > bootRun
         * Give: `@RequestBody Map<String, Integer> jsonInput`
           ```
           {
-            "pageNum": 0
+            "pageNum": 0,
             "pageSize": 5
           }
           ```
         * Path: `hostel`
-        * Note: page number starts from 0
+        * Note:
+            * Page number starts from 0
+            * If not specified, the above example will be the default value
     * Get All Hostels, sorted by rating
         * Give: `@PathVariable("isLowToHigh") boolean isLowToHigh`, `@RequestBody Map<String, Integer> jsonInput`
           ```
           {
-            "pageNum": 0
+            "pageNum": 0,
             "pageSize": 5
           }
           ```
         * Path: `hostel/isLowToHigh/{isLowToHigh}`
-        * Note: page number starts from 0
+        * Note:
+            * Page number starts from 0
+            * If not specified, the above example will be the default value
     * Get Hostel by Hostel's ID
         * Give: `@PathVariable("hostelId") long hostelId`
         * Path: `hostel/{hostelId}`
     * Find Hostel by keyword
-        * Give: `@RequestBody Map<String, String> jsonInput`
+        * Give: `@RequestBody Map<String, Object> jsonInput`
           ```
           {
-            "keyword": "utown"
+            "keyword": "utown",
+            "pageNum": 0,
+            "pageSize": 5
           }
           ```
         * Path: `hostel/search`
+        * Note:
+            * Page number starts from 0
+            * If not specified, the above example will be the default value, except `keyword` which will be an empty
+              string <code />
 * Comment
     * Get Comment by Type and Comment's target ID
         * Give: `@PathVariable("type") Type type`, `@PathVariable("targetId") long targetId`
@@ -50,4 +60,6 @@ Gradle > Tasks > application > bootRun
         * Path: `comment/{type}/{targetId}/{isLowToHigh}`
     * Add Comment
         * Give: `@RequestBody Comment comment`
-        * Path: `comment`
+        * Path:
+            * role == "USER": `comment`
+            * role != "USER": `login`

@@ -2,12 +2,6 @@
 
 **rateNUS** is a web application that rates things worth rating in the NUS community.
 
-## Routing
-
-### Hostels
-
-`localhost:8080/hostel`
-
 ## Resources
 
 ### Frontend

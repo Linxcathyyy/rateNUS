@@ -7,8 +7,27 @@
         <Hostel :hostel="hostel" />
       </div>
     </div>
+    <div class="text-center">
+      <v-container>
+        <v-row justify="center">
+          <v-col cols="8">
+            <v-container class="max-width">
+              <v-pagination
+                @input="updatePage"
+                v-model="currentPage"
+                class="my-4"
+                :length="getTotalPages"
+                prev-icon="mdi-menu-left"
+                next-icon="mdi-menu-right"
+              ></v-pagination>
+            </v-container>
+          </v-col>
+        </v-row>
+      </v-container>
+    </div>
   </div>
 </template>
+
 
 <script>
 import HostelRequest from "../httpRequests/HostelRequest";
@@ -25,19 +44,34 @@ export default {
   data() {
     return {
       hostelList: [],
+      currentPage: 1,
+      pageSize: 2,
+      totalNumberOfHostels: 3,
     };
   },
-
+  computed: {
+    getTotalPages() {
+      return Math.ceil(this.totalNumberOfHostels / this.pageSize);
+    },
+  },
   methods: {
-    getHostelList() {
-      HostelRequest.getHostelList()
-        .then((response) => {
-          console.log(response.data);
+    async getHostelList(pageNum, pageSize) {
+      await HostelRequest.getHostelList(pageNum, pageSize)
+        .then(async (response) => {
           this.hostelList = response.data;
+          console.log(this.hostelList);
+          if (this.hostelList.length == 0 && this.currentPage > 1) {
+            await this.updatePage(this.currentPage - 1);
+          }
         })
         .catch((error) => {
-          console.log(error);
+          console.log(error.response.data);
         });
+    },
+
+    async updatePage(pageNumber) {
+      this.currentPage = pageNumber;
+      await this.getHostelList(pageNumber - 1, this.pageSize);
     },
 
     goToViewMorePage(hostelId) {
@@ -54,10 +88,17 @@ export default {
           console.log(error);
         });
     },
+
   },
 
-  mounted() {
-    this.getHostelList();
+  watch: {
+      "currentPage": (newPage) => {
+          this.updatePage(newPage);
+      }
+  },
+
+  async mounted() { 
+    await this.getHostelList(this.currentPage - 1, this.pageSize);
   },
 
   emits: ["handle-search"],
