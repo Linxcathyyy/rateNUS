@@ -57,7 +57,7 @@ export default {
 }
 #navigation {
   flex: 1;
-  margin-top: 6rem;
+  margin-top: 4rem;
   margin-left: 1rem;
   height: 100%; /* Full-height: remove this if you want "auto" height */
   width: 10%; /* Set the width of the sidebar */
@@ -65,7 +65,6 @@ export default {
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   top: 0; /* Stay at the top */
   left: 0;
-  top: 4rem;
   bottom: 0;
 }
 #router-view {
