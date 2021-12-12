@@ -27,7 +27,7 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasRole("USER")
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/hostel/1");
+                .defaultSuccessUrl("/canteen");
     }
 
     @Bean

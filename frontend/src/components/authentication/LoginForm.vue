@@ -55,7 +55,7 @@ export default ({
   methods: {
     async onSubmit() {
       if (this.$refs.form.validate()) {
-        await AuthenticationRequest.processLoginForm();
+        await AuthenticationRequest.processLoginForm(this.name, this.password);
       }
     },
   },
