@@ -8,7 +8,6 @@
     >
       <v-text-field
         v-model="name"
-        :counter="10"
         :rules="nameRules"
         label="Username"
         required
@@ -42,7 +41,7 @@ export default ({
     valid: true,
     name: '',
     nameRules: [
-      v => !!v || 'UserName is required',
+      v => !!v || 'Username is required',
       v => (v && v.length <= 10) || 'Name must be less than 10 characters',
     ],
     password: '',

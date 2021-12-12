@@ -3,13 +3,17 @@
     
     <v-main>
     <div id="app">
-      <h1 id="ratenus">Rate NUS!</h1>
+      <header>
+        <h1 id="ratenus">Rate NUS!</h1>
+        <LoginButton id="login-button"/>
+      </header>
+
       <!-- <hr />
       <router-link to="/hostels"> Hostels </router-link>
       <router-link to="/canteens"> Canteens </router-link>
       <router-link to="/studyAreas"> Study Areas </router-link>
       <hr /> -->
-      <LoginButton />
+      
       <div class="content">
         <Navigation id="navigation" />
         <router-view id="router-view" />
@@ -29,7 +33,6 @@ export default {
   components: {
     Navigation,
     LoginButton
-
   },
   data: () => ({
   }),
@@ -45,7 +48,7 @@ export default {
   color: #2c3e50;
   margin-top: 4rem;
 }
-#ratenus {
+header {
   position: fixed;
   top: 0;
   right: 0;
@@ -57,6 +60,9 @@ export default {
   margin: 0;
   background: #f5f5f7;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+#ratenus {
+  padding: 15px;
 }
 .content {
   display: flex;
