@@ -1,5 +1,5 @@
 import axios from "axios";
-const LOGIN_URL = "http://localhost:8080/comment"
+const LOGIN_URL = "http://localhost:8080/login"
 
 class AuthenticationRequest {
 

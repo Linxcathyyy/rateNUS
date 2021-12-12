@@ -21,11 +21,13 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors();
-        http.authorizeRequests()
+
+        http.csrf().disable().authorizeRequests()
                 .antMatchers("/comment")
                 .hasRole("USER")
                 .and()
-                .formLogin();
+                .formLogin()
+                .defaultSuccessUrl("/hostel/1");
     }
 
     @Bean
