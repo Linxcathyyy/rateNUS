@@ -2,6 +2,7 @@ package com.rateNUS.backend.hostel;
 
 import com.rateNUS.backend.util.Config;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,14 +29,14 @@ public class HostelController {
     }
 
     @PostMapping
-    public List<Hostel> getHostels(@RequestBody Map<String, Integer> jsonInput) {
+    public Page<Hostel> getHostels(@RequestBody Map<String, Integer> jsonInput) {
         int pageNum = jsonInput.getOrDefault("pageNum", 0);
         int pageSize = jsonInput.getOrDefault("pageSize", 5);
         return hostelService.getHostels("id", true, pageNum, pageSize);
     }
 
     @PostMapping(path = "isLowToHigh/{isLowToHigh}")
-    public List<Hostel> getHostels(@PathVariable("isLowToHigh") boolean isLowToHigh,
+    public Page<Hostel> getHostels(@PathVariable("isLowToHigh") boolean isLowToHigh,
                                    @RequestBody Map<String, Integer> jsonInput) {
         int pageNum = jsonInput.getOrDefault("pageNum", 0);
         int pageSize = jsonInput.getOrDefault("pageSize", 5);
