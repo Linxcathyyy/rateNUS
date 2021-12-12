@@ -1,6 +1,6 @@
 <template>
-    <div id="app">
-  <v-app id="inspire">
+    <div>
+  
     <v-form
       ref="form"
       v-model="valid"
@@ -23,14 +23,6 @@
         label="Password"
         @click:append="showPassword = !showPassword"
       ></v-text-field>
-  
-      <!-- <v-text-field
-        v-model="email"
-        :rules="emailRules"
-        label="E-mail"
-        required
-      ></v-text-field> -->
-  
       <v-btn
         :disabled="!valid"
         color="success"
@@ -40,7 +32,6 @@
         Log In
       </v-btn>
     </v-form>
-  </v-app>
 </div>
 </template>
 
@@ -54,11 +45,6 @@ export default ({
       v => !!v || 'UserName is required',
       v => (v && v.length <= 10) || 'Name must be less than 10 characters',
     ],
-    // email: '',
-    // emailRules: [
-    //   v => !!v || 'E-mail is required',
-    //   v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-    // ],
     password: '',
     showPassword: false,
      rules: {
