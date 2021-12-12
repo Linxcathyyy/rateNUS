@@ -6,15 +6,8 @@
           <h1 id="ratenus">Rate NUS!</h1>
           <LoginButton id="login-button" />
         </header>
-
-        <!-- <hr />
-      <router-link to="/hostels"> Hostels </router-link>
-      <router-link to="/canteens"> Canteens </router-link>
-      <router-link to="/studyAreas"> Study Areas </router-link>
-      <hr /> -->
-
+        <Navigation id="navigation" />
         <div class="content">
-          <Navigation id="navigation" />
           <router-view id="router-view" />
         </div>
       </div>
@@ -70,22 +63,21 @@ header {
 }
 #navigation {
   flex: 1;
-  margin-top: 6rem;
+  margin-top: 4rem;
   margin-left: 1rem;
   height: 100%; /* Full-height: remove this if you want "auto" height */
   width: 10%; /* Set the width of the sidebar */
-  min-width: 100px;
+  /* min-width: 100px; */
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   top: 0; /* Stay at the top */
   left: 0;
-  top: 4rem;
   bottom: 0;
 }
 #router-view {
   width: 100%;
-  padding-left: 10rem;
+  /* padding-left: 10rem;
   padding-right: 1rem;
-  margin-bottom: 30px;
-  margin-left: 2rem;
+  margin-bottom: 30px; */
+  margin-left: 10%;
 }
 </style>

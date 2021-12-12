@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" height="100%" width="180">
+  <v-card class="mx-auto" height="100%">
     <v-navigation-drawer class="blue accent-4" dark permanent>
       <v-list>
         <v-list-item
@@ -8,13 +8,10 @@
           :key="item.title"
           link=""
         >
-          <v-list-item-icon>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>{{ item.title }}</v-list-item-title>
-          </v-list-item-content>
+          <v-icon>{{ item.icon }}</v-icon>
+          
+          <v-list-item-title class="title">{{ item.title }}</v-list-item-title>
+          
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -39,4 +36,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.title{
+  padding: 10px;
+}
+</style>
