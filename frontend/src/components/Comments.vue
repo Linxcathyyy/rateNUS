@@ -1,10 +1,20 @@
 <template>
   <div class="comment-list">
-    <button @click="resetCommentsSorting(comment, rating)">Reset</button>
-    <button @click="sortCommentsFromLowestToHighestRating(comment, rating)">Low -> High</button>
-    <button @click="sortCommentsFromHighestToLowestRating(comment, rating)">High -> Low</button>
-    <div v-for="comment in commentList" :key="comment.id">
-      <Comment :comment="comment" />
+    <div class="comment-title">Comments</div>
+    <div class="sorting-buttons">
+      <button @click="resetCommentsSorting(comment, rating)">Reset</button>
+      <button @click="sortCommentsFromLowestToHighestRating(comment, rating)">
+        Low -> High
+      </button>
+      <button @click="sortCommentsFromHighestToLowestRating(comment, rating)">
+        High -> Low
+      </button>
+    </div>
+
+    <div class="comments">
+      <div v-for="comment in commentList" :key="comment.id">
+        <Comment :comment="comment" />
+      </div>
     </div>
   </div>
 </template>
@@ -33,7 +43,9 @@ export default {
         });
     },
     sortCommentsFromLowestToHighestRating() {
-      HostelRequest.sortCommentsFromLowestToHighestRating(this.$route.params.hostelId)
+      HostelRequest.sortCommentsFromLowestToHighestRating(
+        this.$route.params.hostelId
+      )
         .then((response) => {
           this.commentList = response.data;
         })
@@ -42,7 +54,9 @@ export default {
         });
     },
     sortCommentsFromHighestToLowestRating() {
-      HostelRequest.sortCommentsFromHighestToLowestRating(this.$route.params.hostelId)
+      HostelRequest.sortCommentsFromHighestToLowestRating(
+        this.$route.params.hostelId
+      )
         .then((response) => {
           this.commentList = response.data;
         })
@@ -68,9 +82,35 @@ export default {
 
 <style scoped>
 .comment-list {
-  padding: 20px 30px;
+  padding: 40px 40px;
   margin: 20px 0px;
   background: rgba(214, 238, 245, 0.5);
   border-radius: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.comment-title {
+  text-align: left;
+  margin: 0 0 auto 0;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.sorting-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.sorting-buttons > button {
+  background: transparent;
+  border-radius: 10px;
+  padding: 5px;
+  margin: 10px;
+}
+
+.comments {
+  grid-column-start: 1;
+  grid-column-end: 3;
 }
 </style>
