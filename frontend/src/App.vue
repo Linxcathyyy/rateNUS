@@ -4,9 +4,9 @@
       <div id="app">
         <header>
           <h1 id="ratenus">Rate NUS!</h1>
-          <LoginButton />
+          <LoginButton id="login-button" />
         </header>
-
+        
         <!-- <hr />
       <router-link to="/hostels"> Hostels </router-link>
       <router-link to="/canteens"> Canteens </router-link>
@@ -60,6 +60,10 @@ header {
 }
 #ratenus {
   padding: 15px;
+}
+#login-button {
+  position: absolute;
+  margin: 0% 0% 0% 85%;
 }
 .content {
   display: flex;
