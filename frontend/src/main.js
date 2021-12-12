@@ -3,6 +3,7 @@ import App from './App.vue';
 import router from './router/index';
 import vuetify from './plugins/vuetify';
 import VueCarousel from 'vue-carousel';
+import 'material-design-icons-iconfont/dist/material-design-icons.css';
 
 Vue.config.productionTip = false;
 Vue.use(VueCarousel);
