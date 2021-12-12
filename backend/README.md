@@ -10,29 +10,27 @@ Gradle > Tasks > application > bootRun
 
 * Hostel
     * Get All Hostels
-        * Give: `@RequestBody Map<String, Integer> jsonInput`
+        * Give: `@RequestBody Map<String, Object> jsonInput`
           ```
           {
-            "pageNum": 0,
-            "pageSize": 5
+            "orderBy": "rating",
+            "isLowToHigh": false,
+            "pageNum": 1,
+            "pageSize": 2
           }
           ```
         * Path: `hostel`
         * Note:
             * Page number starts from 0
-            * If not specified, the above example will be the default value
-    * Get All Hostels, sorted by rating
-        * Give: `@PathVariable("isLowToHigh") boolean isLowToHigh`, `@RequestBody Map<String, Integer> jsonInput`
-          ```
-          {
-            "pageNum": 0,
-            "pageSize": 5
-          }
-          ```
-        * Path: `hostel/isLowToHigh/{isLowToHigh}`
-        * Note:
-            * Page number starts from 0
-            * If not specified, the above example will be the default value
+            * If not specified, the default values are:
+              ```
+              {
+                "orderBy": "id",
+                "isLowToHigh": true,
+                "pageNum": 0,
+                "pageSize": 5
+              }
+              ```
     * Get Hostel by Hostel's ID
         * Give: `@PathVariable("hostelId") long hostelId`
         * Path: `hostel/{hostelId}`
@@ -41,23 +39,45 @@ Gradle > Tasks > application > bootRun
           ```
           {
             "keyword": "utown",
-            "pageNum": 0,
-            "pageSize": 5
+            "pageNum": 1,
+            "pageSize": 2
           }
           ```
         * Path: `hostel/search`
         * Note:
             * Page number starts from 0
-            * If not specified, the above example will be the default value, except `keyword` which will be an empty
-              string <code />
+            * If not specified, the default values are:
+            ```
+            {
+              "keyword": "",
+              "pageNum": 0,
+              "pageSize": 5
+            }
+            ```
 * Comment
     * Get Comment by Type and Comment's target ID
         * Give: `@PathVariable("type") Type type`, `@PathVariable("targetId") long targetId`
+          , `@RequestBody Map<String, Object> jsonInput`
+          ```
+          {
+            "orderBy": "rating",
+            "isLowToHigh": true,
+            "pageNum": 1,
+            "pageSize": 2
+          }
+          ```
         * Path: `comment/{type}/{targetId}`
-    * Get Comment by Type and Comment's target ID, sorted by rating
-        * Give: `@PathVariable("type") Type type`, `@PathVariable("targetId") long targetId`
-          , `@PathVariable("isLowToHigh") boolean isLowToHigh`
-        * Path: `comment/{type}/{targetId}/{isLowToHigh}`
+        * Note:
+            * Page number starts from 0
+            * If not specified, the default values are:
+              ```
+              {
+                "orderBy": "timestamp",
+                "isLowToHigh": false,
+                "pageNum": 0,
+                "pageSize": 5
+              }
+              ```
     * Add Comment
         * Give: `@RequestBody Comment comment`
         * Path:
