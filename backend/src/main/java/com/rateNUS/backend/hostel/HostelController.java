@@ -29,13 +29,17 @@ public class HostelController {
 
     @PostMapping
     public List<Hostel> getHostels(@RequestBody Map<String, Integer> jsonInput) {
-        return hostelService.getHostels("id", true, jsonInput.get("pageNum"), jsonInput.get("pageSize"));
+        int pageNum = jsonInput.getOrDefault("pageNum", 0);
+        int pageSize = jsonInput.getOrDefault("pageSize", 5);
+        return hostelService.getHostels("id", true, pageNum, pageSize);
     }
 
     @PostMapping(path = "isLowToHigh/{isLowToHigh}")
     public List<Hostel> getHostels(@PathVariable("isLowToHigh") boolean isLowToHigh,
                                    @RequestBody Map<String, Integer> jsonInput) {
-        return hostelService.getHostels("rating", isLowToHigh, jsonInput.get("pageNum"), jsonInput.get("pageSize"));
+        int pageNum = jsonInput.getOrDefault("pageNum", 0);
+        int pageSize = jsonInput.getOrDefault("pageSize", 5);
+        return hostelService.getHostels("rating", isLowToHigh, pageNum, pageSize);
     }
 
     @GetMapping(path = "{hostelId}")
@@ -45,6 +49,7 @@ public class HostelController {
 
     @PostMapping(path = "search")
     public List<Hostel> findHostel(@RequestBody Map<String, String> jsonInput) {
-        return hostelService.findHostel(jsonInput.get("keyword"));
+        String keyword = jsonInput.getOrDefault("keyword", "");
+        return hostelService.findHostel(keyword);
     }
 }
