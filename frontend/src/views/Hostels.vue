@@ -28,7 +28,6 @@
   </div>
 </template>
 
-
 <script>
 import HostelRequest from "../httpRequests/HostelRequest";
 import Hostel from "../components/hostels/Hostel.vue";
@@ -88,16 +87,15 @@ export default {
           console.log(error);
         });
     },
-
   },
 
   watch: {
-      "currentPage": (newPage) => {
-          this.updatePage(newPage);
-      }
+    currentPage: (newPage) => {
+      this.updatePage(newPage);
+    },
   },
 
-  async mounted() { 
+  async mounted() {
     await this.getHostelList(this.currentPage - 1, this.pageSize);
   },
 
@@ -106,10 +104,6 @@ export default {
 </script>
 
 <style scope>
-.hostels {
-  padding: 2rem 4rem;
-}
-
 .hostel-list {
   margin: auto;
 }

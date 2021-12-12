@@ -9,7 +9,7 @@ class HostelRequest {
   async getHostelList(pageNum, pageSize) {
     return await axios.post(HOSTEL_API_BASE_URL, {
       pageNum: pageNum,
-      pageSize: pageSize
+      pageSize: pageSize,
     });
   }
 
@@ -25,7 +25,7 @@ class HostelRequest {
   // Get a complete list of comments for a specific hostel from server
   getCommentList(hostelId) {
     return axios.get(COMMENT_API_BASE_URL + "/hostel/" + hostelId);
-  }z
+  }
 
   // Post individual hostel comment to server
   postHostelComment(hostelId, comment, rating) {
@@ -41,16 +41,16 @@ class HostelRequest {
       targetId: hostelId,
       rating: rating,
       text: comment,
-      type: "hostel"
+      type: "hostel",
     };
     return axios.post(COMMENT_API_BASE_URL, req);
   }
 
   // Find hostels based on keywords
   findHostels(keyword) {
-      return axios.post(HOSTEL_API_BASE_URL + "/search", {
-          keyword: keyword
-      });
+    return axios.post(HOSTEL_API_BASE_URL + "/search", {
+      keyword: keyword,
+    });
   }
 
   // sortHostelsFromLowestToHighestRating(keyword) {
