@@ -28,18 +28,13 @@ public class HostelController {
     }
 
     @PostMapping
-    public Page<Hostel> getHostels(@RequestBody Map<String, Integer> jsonInput) {
-        int pageNum = jsonInput.getOrDefault("pageNum", 0);
-        int pageSize = jsonInput.getOrDefault("pageSize", 5);
-        return hostelService.getHostels("id", true, pageNum, pageSize);
-    }
+    public Page<Hostel> getHostels(@RequestBody Map<String, Object> jsonInput) {
+        String orderBy = (String) jsonInput.getOrDefault("orderBy", "id");
+        boolean isLowToHigh = (boolean) jsonInput.getOrDefault("isLowToHigh", true);
+        int pageNum = (int) jsonInput.getOrDefault("pageNum", 0);
+        int pageSize = (int) jsonInput.getOrDefault("pageSize", 5);
 
-    @PostMapping(path = "isLowToHigh/{isLowToHigh}")
-    public Page<Hostel> getHostels(@PathVariable("isLowToHigh") boolean isLowToHigh,
-                                   @RequestBody Map<String, Integer> jsonInput) {
-        int pageNum = jsonInput.getOrDefault("pageNum", 0);
-        int pageSize = jsonInput.getOrDefault("pageSize", 5);
-        return hostelService.getHostels("rating", isLowToHigh, pageNum, pageSize);
+        return hostelService.getHostels(orderBy, isLowToHigh, pageNum, pageSize);
     }
 
     @GetMapping(path = "{hostelId}")

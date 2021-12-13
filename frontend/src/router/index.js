@@ -7,6 +7,8 @@ import HostelViewMore from "../components/hostels/HostelViewMore.vue";
 
 Vue.use(VueRouter);
 
+const BACKEND_BASE_URL = "http://localhost:8080";
+
 const routes = [
   {
     path: '/hostels',
@@ -27,11 +29,17 @@ const routes = [
     path: '/hostels/:hostelId',
     name: 'HostelViewMore',
     component: HostelViewMore
+  },
+  {
+    path: '/login',
+    beforeEnter() {
+      window.location.href = BACKEND_BASE_URL + "/login";
+    }
   }
 ]
 
 const router = new VueRouter({
-    routes: routes
-  });
+  routes: routes
+});
 
 export default router

@@ -8,7 +8,7 @@
       :placeholder="searchHint"
       v-on:keypress.enter="handleSearch"
     />
-    <button id="search-button" @click="handleSearch()">Search</button>
+    <v-btn class="" id="search-button" @click="handleSearch()">Search</v-btn>
   </div>
 </template>
 
@@ -59,9 +59,7 @@ export default {
   border-radius: 30px;
   outline: 0;
   background: #428dff;
-  text-align: center;
   color: white;
-  font-size: 1rem;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 }
 
