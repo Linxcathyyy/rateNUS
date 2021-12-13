@@ -33,9 +33,10 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .authorizeRequests()
-                .antMatchers("/comment").hasAuthority(COMMENT_WRITE.getPermission())
+        http.cors();
+        http.csrf().disable().authorizeRequests()
+                .antMatchers("/comment")
+                .hasAuthority(COMMENT_WRITE.getPermission())
                 .and()
                 .formLogin();
     }

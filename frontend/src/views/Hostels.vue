@@ -1,8 +1,8 @@
 <template>
-  <div>
+  <div class="hostels">
     <h1>Hostel List</h1>
     <SearchBar @handle-search="handleSearch" searchHint="Search for hostels" />
-    <div v-for="hostel in hostelList" :key="hostel.id">
+    <div v-for="hostel in hostelList" :key="hostel.id" class="hostel-list">
       <div @click="goToViewMorePage(hostel.id)" id="hostel-click">
         <Hostel :hostel="hostel" />
       </div>
@@ -16,7 +16,7 @@
                 @input="updatePage"
                 v-model="currentPage"
                 class="my-4"
-                :length="getTotalPages"
+                :length="totalPages"
                 prev-icon="mdi-menu-left"
                 next-icon="mdi-menu-right"
               ></v-pagination>
@@ -45,24 +45,16 @@ export default {
     return {
       hostelList: [],
       currentPage: 1,
-      pageSize: 2,
-      totalNumberOfHostels: 3,
+      pageSize: 1,
+      totalPages: 0
     };
-  },
-  computed: {
-    getTotalPages() {
-      return Math.ceil(this.totalNumberOfHostels / this.pageSize);
-    },
   },
   methods: {
     async getHostelList(pageNum, pageSize) {
       await HostelRequest.getHostelList(pageNum, pageSize)
         .then(async (response) => {
-          this.hostelList = response.data;
-          console.log(this.hostelList);
-          if (this.hostelList.length == 0 && this.currentPage > 1) {
-            await this.updatePage(this.currentPage - 1);
-          }
+          this.hostelList = response.data.content;
+          this.totalPages = response.data.totalPages;
         })
         .catch((error) => {
           console.log(error.response.data);
@@ -79,22 +71,19 @@ export default {
     },
 
     handleSearch(keyword) {
-      HostelRequest.findHostels(keyword)
+      console.log("currentPage: " + this.currentPage);
+      console.log("pageSize: " + this.pageSize);
+      HostelRequest.findHostels(keyword, 0, this.pageSize)
         .then((response) => {
-          console.log("search result" + response.data);
-          this.hostelList = response.data;
+          console.log(response.data);
+          this.hostelList = response.data.content;
+          this.totalPages = response.data.totalPages;
         })
         .catch((error) => {
           console.log(error);
         });
     },
 
-  },
-
-  watch: {
-      "currentPage": (newPage) => {
-          this.updatePage(newPage);
-      }
   },
 
   async mounted() { 
@@ -106,6 +95,14 @@ export default {
 </script>
 
 <style scope>
+.hostels {
+  padding: 2rem 4rem;
+}
+
+.hostel-list {
+  margin: auto;
+}
+
 #hostel-click:hover {
   cursor: pointer;
 }
