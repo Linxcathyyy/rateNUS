@@ -2,19 +2,53 @@
   <div class="comment-list">
     <div class="comment-title">Comments</div>
     <div class="sorting-buttons">
-      <button @click="resetCommentsSorting(comment, rating)">Reset</button>
-      <button @click="sortCommentsFromLowestToHighestRating(comment, rating)">
+      <!-- <button @click="sortCommentsFromLowestToHighestRating(true)">sort-ascending</button>
+      <button @click="sortCommentsFromLowestToHighestRating(true)">
         Low -> High
       </button>
-      <button @click="sortCommentsFromHighestToLowestRating(comment, rating)">
+      <button @click="sortCommentsFromLowestToHighestRating(false)">
         High -> Low
-      </button>
+      </button> -->
+      <v-layout>
+        <v-spacer></v-spacer>
+        <v-row> 
+          <v-col cols="12" sm="2">
+            <v-btn icon color="primary" @click="sortCommentsFromLowestToHighestRating(true)">
+              <v-icon>mdi-sort-ascending</v-icon>
+            </v-btn>
+          </v-col>
+
+          <v-col cols="12" sm="2">
+            <v-btn icon color="primary" @click="sortCommentsFromLowestToHighestRating(false)">
+              <v-icon>mdi-sort-descending</v-icon>
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-layout>
     </div>
 
     <div class="comments">
       <div v-for="comment in commentList" :key="comment.id">
         <Comment :comment="comment" />
       </div>
+    </div>
+    <div class="text-center">
+      <v-container>
+        <v-row justify="center">
+          <v-col cols="8">
+            <v-container class="max-width">
+              <v-pagination
+                @input="updatePage"
+                v-model="currentPage"
+                class="my-4"
+                :length="totalPages"
+                prev-icon="mdi-menu-left"
+                next-icon="mdi-menu-right"
+              ></v-pagination>
+            </v-container>
+          </v-col>
+        </v-row>
+      </v-container>
     </div>
   </div>
 </template>
@@ -27,55 +61,45 @@ export default {
   data() {
     return {
       commentList: [],
+      pageSize: 1,
+      currentPage: 1,
+      totalPages: 0
     };
   },
   components: {
     Comment,
   },
   methods: {
-    getCommentList() {
-      HostelRequest.getCommentList(this.$route.params.hostelId)
+    async getCommentList(pageNum, pageSize) {
+      HostelRequest.getCommentList(this.$route.params.hostelId, pageNum, pageSize)
         .then((response) => {
-          this.commentList = response.data;
+          this.commentList = response.data.content;
+          this.totalPages = response.data.totalPages;
         })
         .catch((error) => {
           console.log(error);
         });
     },
-    sortCommentsFromLowestToHighestRating() {
-      HostelRequest.sortCommentsFromLowestToHighestRating(
-        this.$route.params.hostelId
-      )
-        .then((response) => {
-          this.commentList = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    async updatePage(pageNumber) {
+      this.currentPage = pageNumber;
+      await this.getCommentList(pageNumber - 1, this.pageSize);
     },
-    sortCommentsFromHighestToLowestRating() {
-      HostelRequest.sortCommentsFromHighestToLowestRating(
-        this.$route.params.hostelId
-      )
-        .then((response) => {
-          this.commentList = response.data;
+
+    async sortCommentsFromLowestToHighestRating(isLowToHigh) {
+      HostelRequest.sortCommentsByRating(
+        this.$route.params.hostelId, isLowToHigh, this.currentPage - 1, this.pageSize
+      ).then((response) => {
+        console.log(response.data);
+          this.commentList = response.data.content;
+          this.totalPages = response.data.totalPages;
         })
         .catch((error) => {
-          console.log(error);
-        });
-    },
-    resetCommentsSorting() {
-      HostelRequest.resetCommentsSorting(this.$route.params.hostelId)
-        .then((response) => {
-          this.commentList = response.data;
-        })
-        .catch((error) => {
-          console.log(error);
+          console.log(error.response.data);
         });
     },
   },
-  mounted() {
-    this.getCommentList();
+  async mounted() {
+    await this.getCommentList(this.currentPage - 1, this.pageSize);
   },
 };
 </script>

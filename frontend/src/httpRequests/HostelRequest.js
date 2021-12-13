@@ -8,6 +8,8 @@ class HostelRequest {
   // Get a partial list of hostels base on startIndex and endIndex
   async getHostelList(pageNum, pageSize) {
     return await axios.post(HOSTEL_API_BASE_URL, {
+      orderBy: "id",
+      isLowToHigh: true,
       pageNum: pageNum,
       pageSize: pageSize
     });
@@ -20,11 +22,6 @@ class HostelRequest {
   // Get individual hostel data from server
   getIndividualHostel(hostelId) {
     return axios.get(HOSTEL_API_BASE_URL + "/" + hostelId);
-  }
-
-  // Get a complete list of comments for a specific hostel from server
-  getCommentList(hostelId) {
-    return axios.get(COMMENT_API_BASE_URL + "/hostel/" + hostelId);
   }
 
   // Post individual hostel comment to server
@@ -47,9 +44,11 @@ class HostelRequest {
   }
 
   // Find hostels based on keywords
-  findHostels(keyword) {
+  findHostels(keyword, pageNum, pageSize) {
       return axios.post(HOSTEL_API_BASE_URL + "/search", {
-          keyword: keyword
+          keyword: keyword,
+          pageNum: pageNum,
+          pageSize: pageSize
       });
   }
 
@@ -65,17 +64,25 @@ class HostelRequest {
 
   // }
 
-  sortCommentsFromLowestToHighestRating(hostelId) {
-    return axios.get(COMMENT_SORT_API_BASE_URL + "/" + hostelId + "/" + false);
+  // Get a partial list of comments base on startIndex and endIndex
+  async getCommentList(hostelId, pageNum, pageSize) {
+    return await axios.post(COMMENT_SORT_API_BASE_URL + "/" + hostelId, {
+      orderBy: "timestamp",
+      isLowToHigh: false,
+      pageNum: pageNum,
+      pageSize: pageSize
+    });
   }
 
-  sortCommentsFromHighestToLowestRating(hostelId) {
-    return axios.get(COMMENT_SORT_API_BASE_URL + "/" + hostelId + "/" + true);
+  async sortCommentsByRating(hostelId, isLowToHigh, pageNum, pageSize) {
+    return await axios.post(COMMENT_SORT_API_BASE_URL + "/" + hostelId, {
+      orderBy: "rating",
+      isLowToHigh: isLowToHigh,
+      pageNum: pageNum,
+      pageSize: pageSize
+    });
   }
 
-  resetCommentsSorting(hostelId) {
-    return axios.get(COMMENT_SORT_API_BASE_URL + "/" + hostelId);
-  }
 }
 
 export default new HostelRequest();
