@@ -1,7 +1,5 @@
 package com.rateNUS.backend.security;
 
-import static com.rateNUS.backend.security.ApplicationUserPermission.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,7 +42,7 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors();
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/comment")
-                .hasAuthority(COMMENT_WRITE.getPermission())
+                .hasRole("USER")
                 .and()
                 .formLogin();
     }

@@ -6,6 +6,8 @@ import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +17,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
-import com.rateNUS.backend.role.Role;
+import com.rateNUS.backend.security.ApplicationUserRole;
 import com.rateNUS.backend.security.PasswordConfig;
 
 @Entity
@@ -40,11 +42,10 @@ public class User {
     private String password;
 
     @ElementCollection
-    @JoinTable(name = "user_roles",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "roles", nullable = false)
-    private Set<Role> roles = new HashSet<>();
+    @Enumerated(EnumType.STRING)
+    private Set<ApplicationUserRole> roles = new HashSet<>();
 
     public User() {
     }
@@ -53,6 +54,7 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = new PasswordConfig().passwordEncoder().encode(password);
+        this.roles.add(ApplicationUserRole.USER);
     }
 
     public long getId() {
@@ -87,11 +89,11 @@ public class User {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
+    public Set<ApplicationUserRole> getRoles() {
         return roles;
     }
 
-    public void setRoles(Set<Role> roles) {
+    public void setRoles(Set<ApplicationUserRole> roles) {
         this.roles = roles;
     }
 }
