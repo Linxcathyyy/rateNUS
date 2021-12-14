@@ -5,6 +5,7 @@
         Login Failed
       </v-alert>
       <v-text-field
+        autofocus
         v-model="username"
         :rules="nameRules"
         label="Username"
