@@ -4,7 +4,11 @@
       <div id="app">
         <header>
           <h1 id="ratenus">Rate NUS!</h1>
-          <LoginButton id="login-button" />
+          <LoginButton
+            v-if="!this.isLoggedIn"
+            @logged-in="loggedIn"
+            @id="login - button"
+          />
         </header>
         <Navigation id="navigation" />
         <div class="content">
@@ -25,7 +29,18 @@ export default {
     Navigation,
     LoginButton,
   },
-  data: () => ({}),
+  data() {
+    return {
+      isLoggedIn: false,
+    };
+  },
+  methods: {
+    loggedIn(response) {
+      console.log("at app.vue" + response);
+      this.isLoggedIn = true;
+    },
+  },
+  emits: ["logged-in"],
 };
 </script>
 
@@ -50,7 +65,7 @@ header {
   margin: 0;
   background: #f5f5f7;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  z-index:99; /* header stays on top */
+  z-index: 99; /* header stays on top */
 }
 #ratenus {
   padding: 15px;

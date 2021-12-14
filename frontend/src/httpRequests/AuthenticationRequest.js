@@ -9,17 +9,17 @@ class AuthenticationRequest {
     //             headers: {
     //                 crossorigin:true
     //             }
-               
+
     //         }
     //     );
     // }
 
     // async processLoginForm(username, password) {
-       
+
     //     var res = await this.sendLoginRequest();
     //     console.log(res);
     //     var token = this.getCSRFtoken(res.data);
-    
+
     //     await this.loginWithCredentials(username, password, token);
 
     // }
@@ -45,18 +45,17 @@ class AuthenticationRequest {
         console.log(`login with username: ${username} 
         \npassword: ${password}`);
 
-        await axios.post(LOGIN_URL, {
+        var response = await axios.post(LOGIN_URL, {
             "username": username,
             "password": password
         })
-          .then(function (response) {
-            //handle success
-            console.log(response);
-          })
-          .catch(function (response) {
-            //handle error
-            console.log(response);
-          });
+            .then(function (response) {
+                //handle success
+                console.log(response);
+                return response;
+            })
+        return response;
+
     }
 
 }

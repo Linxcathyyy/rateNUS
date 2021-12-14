@@ -42,8 +42,10 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors();
         http.csrf().disable().authorizeRequests()
                 .antMatchers("/comment")
-                .hasRole("USER")
-                .and()
-                .formLogin();
+                .authenticated()
+//                .hasRole("USER")
+//                .and()
+//                .formLogin()
+                ;
     }
 }
