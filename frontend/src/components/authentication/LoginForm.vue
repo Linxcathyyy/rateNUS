@@ -6,10 +6,10 @@
       </v-alert>
       <v-text-field
         v-model="username"
-        :counter="10"
         :rules="nameRules"
         label="Username"
         required
+        v-on:keydown.enter="submitLoginCredentials"
       ></v-text-field>
       <v-text-field
         v-model="password"
@@ -19,6 +19,7 @@
         name="input-10-1"
         label="Password"
         @click:append="showPassword = !showPassword"
+        v-on:keydown.enter="submitLoginCredentials"
       ></v-text-field>
       <v-btn
         :disabled="!valid"
@@ -40,12 +41,9 @@ export default {
   data: () => ({
     valid: true,
     username: "",
-    nameRules: [
-      (v) => !!v || "UserName is required",
-      (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
-    ],
+    nameRules: [(v) => !!v || "UserName is required"],
     password: "",
-    showPassword: true,
+    showPassword: false,
     rules: {
       required: (value) => !!value || "Password is required.",
     },

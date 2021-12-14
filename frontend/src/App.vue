@@ -9,6 +9,13 @@
             @logged-in="loggedIn"
             @id="login - button"
           />
+          <UserProfile
+            v-else
+            :initials="this.initials"
+            :fullName="this.fullName"
+            :email="this.email"
+            @logout="logout"
+          />
         </header>
         <Navigation id="navigation" />
         <div class="content">
@@ -22,25 +29,39 @@
 <script>
 import Navigation from "./components/Navigation.vue";
 import LoginButton from "./components/authentication/LoginButton.vue";
+import UserProfile from "./components/authentication/UserProfile.vue";
+import UserUtil from "./components/authentication/UserUtil";
 
 export default {
   name: "App",
   components: {
     Navigation,
     LoginButton,
+    UserProfile,
   },
   data() {
     return {
       isLoggedIn: false,
+      initials: "",
+      fullName: "",
+      email: "",
     };
   },
   methods: {
     loggedIn(response) {
       console.log("at app.vue" + response);
       this.isLoggedIn = true;
+      this.initials = UserUtil.getInitials(response.data.username);
+      this.fullName = response.data.username;
+      this.email = response.data.email;
+    },
+    logout() {
+      if (window.confirm("Are you sure you want to log out?")) {
+        this.isLoggedIn = false;
+      }
     },
   },
-  emits: ["logged-in"],
+  emits: ["logged-in", "logout"],
 };
 </script>
 
