@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -21,11 +22,14 @@ import com.rateNUS.backend.security.JwtUtils;
 import com.rateNUS.backend.security.UserDetailsImpl;
 import com.rateNUS.backend.user.UserRepository;
 
+/**
+ * Serves as the API for authentication.
+ */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/")
+@RequestMapping("/auth")
 public class AuthController {
-
+    @Autowired
     AuthenticationManager authenticateManager;
 
     @Autowired
@@ -37,10 +41,10 @@ public class AuthController {
     @Autowired
     PasswordEncoder encoder;
 
-
+    @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping("login")
+    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticateManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())

@@ -5,10 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/")
+@RequestMapping("/auth")
 public class TemplateController {
 
-    @GetMapping("login")
+    @GetMapping("/login")
     public String getLogin() {
         return "login";
     }
