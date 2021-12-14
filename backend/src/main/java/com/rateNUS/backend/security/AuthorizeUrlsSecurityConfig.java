@@ -46,7 +46,6 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/comment")
                 .hasAuthority(COMMENT_WRITE.getPermission())
                 .and()
-                .formLogin()
-                .loginPage("/auth/login");
+                .formLogin();
     }
 }
