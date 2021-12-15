@@ -1,10 +1,10 @@
 <template>
   <div class="hostels">
-    <h1>Hostel List</h1>
     <SearchBar @handle-search="handleSearch" searchHint="Search for hostels" />
     <div v-for="hostel in hostelList" :key="hostel.id" class="hostel-list">
       <div @click="goToViewMorePage(hostel.id)" id="hostel-click">
-        <Hostel :hostel="hostel" />
+        <!-- <Hostel :hostel="hostel" /> -->
+        <HostelCard :hostel="hostel"/>
       </div>
     </div>
     <div class="text-center">
@@ -31,13 +31,13 @@
 
 <script>
 import HostelRequest from "../httpRequests/HostelRequest";
-import Hostel from "../components/hostels/Hostel.vue";
+import HostelCard from "../components/hostels/HostelCard";
 import SearchBar from "../components/util/SearchBar";
 
 export default {
   name: "Hostels",
   components: {
-    Hostel,
+    HostelCard,
     SearchBar,
   },
 
@@ -55,6 +55,7 @@ export default {
     async getHostelList(pageNum, pageSize) {
       await HostelRequest.getHostelList(pageNum, pageSize)
         .then(async (response) => {
+          console.log(response.data.content);
           this.hostelList = response.data.content;
           this.totalPages = response.data.totalPages;
         })
