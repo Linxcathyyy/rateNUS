@@ -52,20 +52,18 @@ public class Hostel {
     @Enumerated(EnumType.STRING)
     private List<Facility> facilities;
 
-    public Hostel() {
-    }
+    public Hostel() {}
 
-    public Hostel(String name, double rating, String location, String description, int commentCount,
-                  List<String> imageUrl, List<Facility> facilities) {
+    // For dummy data
+    public Hostel(String name, String location, String description, List<String> imageUrl, List<Facility> facilities) {
         this.name = name;
-        this.rating = rating;
         this.location = location;
         this.description = description;
-        this.commentCount = commentCount;
         this.imageUrl = imageUrl;
         this.facilities = facilities;
     }
 
+    // For HostelRepository
     public Hostel(long id, String name, double rating, String location, String description, int commentCount,
                   List<String> imageUrl, List<Facility> facilities) {
         this.id = id;
