@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rateNUS.backend.security.JwtUtils;
+import com.rateNUS.backend.security.jwt.JwtUtils;
 import com.rateNUS.backend.security.UserDetailsImpl;
 import com.rateNUS.backend.user.UserRepository;
 
