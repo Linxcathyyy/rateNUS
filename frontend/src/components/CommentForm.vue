@@ -15,37 +15,35 @@
           />
         </div>
       </div>
-        <textarea-autosize
-          class="comment"
-          placeholder="Join the discussion..."
-          ref="myTextarea"
-          type="text"
-          required
-          :min-height="30"
-          :max-height="350"
-          v-model="comment"
-        />
+      <textarea-autosize
+        class="comment"
+        placeholder="Join the discussion..."
+        ref="myTextarea"
+        type="text"
+        required
+        :min-height="30"
+        :max-height="350"
+        v-model="comment"
+      />
       <div class="submit">
-          <button @click="handleSubmit(comment, rating)">Submit</button>
+        <button @click="handleSubmit(comment, rating)">Submit</button>
       </div>
-      
     </form>
-   
   </div>
 </template>
 
 <script>
 import HostelRequest from "../httpRequests/HostelRequest";
-import Vue from 'vue'
-import TextareaAutosize from 'vue-textarea-autosize'
-Vue.use(TextareaAutosize)
+import Vue from "vue";
+import TextareaAutosize from "vue-textarea-autosize";
+Vue.use(TextareaAutosize);
 export default {
   data() {
     return {
       comment: "",
       rating: 5,
       rowsNum: 1,
-      isExpanded: false
+      isExpanded: false,
     };
   },
   methods: {
@@ -73,7 +71,7 @@ export default {
   background: rgba(214, 238, 245, 0.5);
   text-align: left;
   border-radius: 30px;
-  padding: 0.5rem 2rem;
+  padding: 30px 40px;
 }
 
 label {

@@ -1,8 +1,8 @@
 <template>
   <div v-if="hostel != null">
     <Hostel :hostel="this.hostel" />
-    <ImageSlideShow :imageUrls="hostel.imageUrl"/>
-    <Facilities :facilities="this.hostel.facilities"/>
+    <ImageSlideShow :imageUrls="hostel.imageUrl" />
+    <Facilities :facilities="this.hostel.facilities" />
     <CommentForm />
     <Comments />
   </div>
@@ -16,16 +16,15 @@ import CommentForm from "../CommentForm.vue";
 import Facilities from "./Facilities.vue";
 import ImageSlideShow from "../ImageSlideShow.vue";
 
-
 export default {
   name: "HostelViewMore",
-  components: { 
+  components: {
     Hostel,
-    Comments, 
-    CommentForm, 
+    Comments,
+    CommentForm,
     Facilities,
-    ImageSlideShow
-    },
+    ImageSlideShow,
+  },
   data() {
     return {
       hostel: null,
@@ -43,7 +42,7 @@ export default {
           console.log(error);
         });
     },
-   },
+  },
 
   mounted() {
     this.getIndividualHostel();
