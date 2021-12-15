@@ -70,10 +70,14 @@ public class DummyData {
             "Cinnamon College: Near StarBucks, where I can go study.",
             Type.hostel);
 
-    public static Comment c6 = new Comment(3, 5,
+    public static Comment c6 = new Comment(1, 3,
             "Dummy canteen comment",
             Type.canteen);
 
+    public static Comment c7 = new Comment(1, 0,
+            "I dun wanna study alr...",
+            Type.studyArea);
+
     public static List<Hostel> hostelList = List.of(h1, h2, h3);
-    public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6);
+    public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6, c7);
 }
