@@ -9,7 +9,6 @@
           link=""
         >
           <v-icon class="icon">{{ item.icon }}</v-icon>
-          
           <v-list-item-title class="title">{{ item.title }}</v-list-item-title>
           
         </v-list-item>

@@ -1,14 +1,16 @@
 <template>
-  <div class="search">
-    <input
-      id="search-bar"
-      type="text"
-      v-model="keyword"
-      name="search-bar"
-      :placeholder="searchHint"
-      v-on:keypress.enter="handleSearch"
-    />
-    <v-btn class="" id="search-button" @click="handleSearch()">Search</v-btn>
+  <div>
+      <v-text-field
+        solo
+        v-model="keyword"
+        name="search-bar"
+        :placeholder="searchHint"
+        color="grey darken-3"
+        :append-icon="searchIcon"
+        v-on:keypress.enter="handleSearch"
+        @click:append="handleSearch()"
+      >
+      </v-text-field>
   </div>
 </template>
 
@@ -21,6 +23,7 @@ export default {
   data() {
     return {
       keyword: "",
+      searchIcon: "mdi-magnify"
     };
   },
   methods: {

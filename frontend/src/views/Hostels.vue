@@ -1,10 +1,10 @@
 <template>
   <div class="hostels">
-    <h1>Hostel List</h1>
     <SearchBar @handle-search="handleSearch" searchHint="Search for hostels" />
     <div v-for="hostel in hostelList" :key="hostel.id" class="hostel-list">
       <div @click="goToViewMorePage(hostel.id)" id="hostel-click">
-        <Hostel :hostel="hostel" />
+        <!-- <Hostel :hostel="hostel" /> -->
+        <HostelCard :hostel="hostel"/>
       </div>
     </div>
     <div class="text-center">
@@ -31,13 +31,13 @@
 
 <script>
 import HostelRequest from "../httpRequests/HostelRequest";
-import Hostel from "../components/hostels/Hostel.vue";
+import HostelCard from "../components/hostels/HostelCard";
 import SearchBar from "../components/util/SearchBar";
 
 export default {
   name: "Hostels",
   components: {
-    Hostel,
+    HostelCard,
     SearchBar,
   },
 
@@ -46,13 +46,16 @@ export default {
       hostelList: [],
       currentPage: 1,
       pageSize: 1,
-      totalPages: 0
+      totalPages: 0,
+      currentKeyword: "",
+      hasBeenSearched: false
     };
   },
   methods: {
     async getHostelList(pageNum, pageSize) {
       await HostelRequest.getHostelList(pageNum, pageSize)
         .then(async (response) => {
+          console.log(response.data.content);
           this.hostelList = response.data.content;
           this.totalPages = response.data.totalPages;
         })
@@ -63,21 +66,37 @@ export default {
 
     async updatePage(pageNumber) {
       this.currentPage = pageNumber;
-      await this.getHostelList(pageNumber - 1, this.pageSize);
+      if (this.hasBeenSearched) {
+        await this.handleSearch(this.currentKeyword);
+      } else {
+        await this.getHostelList(pageNumber - 1, this.pageSize);
+      }
     },
 
     goToViewMorePage(hostelId) {
       this.$router.push("/hostels/" + hostelId);
     },
 
-    handleSearch(keyword) {
-      console.log("currentPage: " + this.currentPage);
-      console.log("pageSize: " + this.pageSize);
-      HostelRequest.findHostels(keyword, 0, this.pageSize)
+    async handleSearch(keyword) {
+      console.log("keyword: " + keyword);
+      var page;
+      if (this.currentKeyword != keyword) {
+        // first search
+        console.log("first search");
+        page = 0;
+      } else {
+        page = this.currentPage - 1;
+      }
+      console.log("currentKeyword: " + this.currentKeyword);
+      console.log("page: " + page);
+      HostelRequest.findHostels(keyword, page, this.pageSize)
         .then((response) => {
           console.log(response.data);
+          this.currentPage = page + 1;
           this.hostelList = response.data.content;
           this.totalPages = response.data.totalPages;
+          this.currentKeyword = keyword;
+          this.hasBeenSearched = true;
         })
         .catch((error) => {
           console.log(error);
@@ -86,7 +105,7 @@ export default {
 
   },
 
-  async mounted() { 
+  async created() { 
     await this.getHostelList(this.currentPage - 1, this.pageSize);
   },
 

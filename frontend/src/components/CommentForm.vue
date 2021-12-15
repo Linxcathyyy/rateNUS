@@ -1,4 +1,5 @@
 <template>
+<v-card flat class="mx-16 mb-12">
   <div class="comment-form">
     <form>
       <div>
@@ -30,6 +31,7 @@
       </div>
     </form>
   </div>
+</v-card>
 </template>
 
 <script>
@@ -68,7 +70,7 @@ export default {
 <style scoped>
 .comment-form {
   max-width: 100%;
-  background: rgba(214, 238, 245, 0.5);
+  /* background: rgba(214, 238, 245, 0.5); */
   text-align: left;
   border-radius: 30px;
   padding: 30px 40px;

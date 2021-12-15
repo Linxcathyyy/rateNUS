@@ -1,14 +1,8 @@
 <template>
+  <v-card flat class="mx-16 mb-12">
   <div class="comment-list">
     <div class="comment-title">Comments</div>
     <div class="sorting-buttons">
-      <!-- <button @click="sortCommentsFromLowestToHighestRating(true)">sort-ascending</button>
-      <button @click="sortCommentsFromLowestToHighestRating(true)">
-        Low -> High
-      </button>
-      <button @click="sortCommentsFromLowestToHighestRating(false)">
-        High -> Low
-      </button> -->
       <v-layout>
         <v-spacer></v-spacer>
         <v-row> 
@@ -51,6 +45,7 @@
       </v-container>
     </div>
   </div>
+  </v-card>
 </template>
 
 <script>
@@ -108,7 +103,7 @@ export default {
 .comment-list {
   padding: 40px 40px;
   margin: 20px 0px;
-  background: rgba(214, 238, 245, 0.5);
+  /* background: rgba(214, 238, 245, 0.5); */
   border-radius: 30px;
   display: grid;
   grid-template-columns: 1fr 1fr;
