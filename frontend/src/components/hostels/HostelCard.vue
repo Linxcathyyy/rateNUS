@@ -39,9 +39,10 @@
       </v-row>
 
         <v-row align="center" class="mx-0">
-        <div class="my-4 text-subtitle-1">
-            {{ hostel.location }}
-        </div>
+          <v-icon class="icon">mdi-map-marker</v-icon>
+          <div class="my-4 text-subtitle-1">
+              {{ hostel.location }}
+          </div>
         </v-row>
         <v-row align="center" class="mx-0">
             <div class="mb-4 text-left">
