@@ -2,29 +2,22 @@ package com.rateNUS.backend.auth;
 
 import java.util.List;
 
-public class JwtResponse {
-    private String token;
+public class JwtResponseBody {
+
     private String type = "Bearer";
     private long id;
     private String username;
     private String email;
     private List<String> roles;
 
-    public JwtResponse(String token, long id, String username, String email, List<String> roles) {
-        this.token = token;
+    public JwtResponseBody(long id, String username, String email, List<String> roles) {
+
         this.id = id;
         this.username = username;
         this.email = email;
         this.roles = roles;
     }
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
 
     public String getType() {
         return type;
