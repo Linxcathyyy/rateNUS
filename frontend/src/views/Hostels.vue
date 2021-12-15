@@ -46,7 +46,9 @@ export default {
       hostelList: [],
       currentPage: 1,
       pageSize: 1,
-      totalPages: 0
+      totalPages: 0,
+      currentKeyword: "",
+      hasBeenSearched: false
     };
   },
   methods: {
@@ -63,21 +65,37 @@ export default {
 
     async updatePage(pageNumber) {
       this.currentPage = pageNumber;
-      await this.getHostelList(pageNumber - 1, this.pageSize);
+      if (this.hasBeenSearched) {
+        await this.handleSearch(this.currentKeyword);
+      } else {
+        await this.getHostelList(pageNumber - 1, this.pageSize);
+      }
     },
 
     goToViewMorePage(hostelId) {
       this.$router.push("/hostels/" + hostelId);
     },
 
-    handleSearch(keyword) {
-      console.log("currentPage: " + this.currentPage);
-      console.log("pageSize: " + this.pageSize);
-      HostelRequest.findHostels(keyword, 0, this.pageSize)
+    async handleSearch(keyword) {
+      console.log("keyword: " + keyword);
+      var page;
+      if (this.currentKeyword != keyword) {
+        // first search
+        console.log("first search");
+        page = 0;
+      } else {
+        page = this.currentPage - 1;
+      }
+      console.log("currentKeyword: " + this.currentKeyword);
+      console.log("page: " + page);
+      HostelRequest.findHostels(keyword, page, this.pageSize)
         .then((response) => {
           console.log(response.data);
+          this.currentPage = page + 1;
           this.hostelList = response.data.content;
           this.totalPages = response.data.totalPages;
+          this.currentKeyword = keyword;
+          this.hasBeenSearched = true;
         })
         .catch((error) => {
           console.log(error);
@@ -86,7 +104,7 @@ export default {
 
   },
 
-  async mounted() { 
+  async created() { 
     await this.getHostelList(this.currentPage - 1, this.pageSize);
   },
 
