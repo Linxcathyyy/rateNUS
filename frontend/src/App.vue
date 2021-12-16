@@ -4,7 +4,16 @@
       <div id="app">
         <header>
           <h1 id="ratenus">Rate NUS!</h1>
-          <LoginButton id="login-button" />
+          <LoginButton
+            v-if="!this.$store.getters.isLoggedIn"
+            id="login-button"
+          />
+          <UserProfile
+            v-else
+            :initials="this.$store.getters.initials"
+            :fullName="this.$store.getters.fullName"
+            :email="this.$store.getters.email"
+          />
         </header>
         <div id="nav-router-view">
           <Navigation id="navigation" />
@@ -20,14 +29,19 @@
 <script>
 import Navigation from "./components/Navigation.vue";
 import LoginButton from "./components/authentication/LoginButton.vue";
+import UserProfile from "./components/authentication/UserProfile.vue";
 
 export default {
   name: "App",
   components: {
     Navigation,
     LoginButton,
+    UserProfile,
   },
-  data: () => ({}),
+  data() {
+    return {};
+  },
+  methods: {},
 };
 </script>
 

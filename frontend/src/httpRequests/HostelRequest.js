@@ -25,7 +25,7 @@ class HostelRequest {
   }
 
   // Post individual hostel comment to server
-  postHostelComment(hostelId, comment, rating) {
+  postHostelComment(hostelId, comment, rating, jwtToken) {
     // below is temp implementation to see post content
     if (hostelId == undefined) {
       // check id is hostel id
@@ -34,13 +34,19 @@ class HostelRequest {
         hostelId
       );
     }
+    const headers = {
+      Authorization: "Bearer " + jwtToken,
+    };
+
     const req = {
       targetId: hostelId,
       rating: rating,
       text: comment,
       type: "hostel",
     };
-    return axios.post(COMMENT_API_BASE_URL, req);
+    return axios.post(COMMENT_API_BASE_URL, req, {
+      headers: headers,
+    });
   }
 
   // Find hostels based on keywords
