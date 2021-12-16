@@ -51,7 +51,7 @@ public class CommentController {
                 hostelService.updateHostel(comment.getTargetId(), comment.getRating(), true);
                 break;
 
-            case canteen:
+            case stall:
 
                 break;
 

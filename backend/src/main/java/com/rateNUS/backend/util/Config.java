@@ -3,6 +3,7 @@ package com.rateNUS.backend.util;
 import com.rateNUS.backend.comment.Comment;
 import com.rateNUS.backend.comment.CommentController;
 import com.rateNUS.backend.hostel.HostelRepository;
+import com.rateNUS.backend.stall.StallRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,9 +16,12 @@ public class Config {
     public static final String frontendURL = "http://localhost:8081/";
 
     @Bean
-    CommandLineRunner commandLineRunner(HostelRepository hostelRepository, CommentController commentController) {
+    CommandLineRunner commandLineRunner(HostelRepository hostelRepository,
+                                        StallRepository stallRepository,
+                                        CommentController commentController) {
         return args -> {
             hostelRepository.saveAll(DummyData.hostelList);
+            stallRepository.saveAll(DummyData.stallList);
 
             for (Comment comment : DummyData.commentList) {
                 commentController.addComment(comment);
