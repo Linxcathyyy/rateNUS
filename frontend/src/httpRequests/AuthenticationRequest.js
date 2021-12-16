@@ -1,68 +1,62 @@
-// import axios from "axios";
-// const LOGIN_URL = "http://localhost:8080/login"
+import axios from "axios";
+const LOGIN_URL = "http://localhost:8080/login"
 
-// class AuthenticationRequest {
+class AuthenticationRequest {
 
-//     async sendLoginRequest() {
-//         return await axios.get(LOGIN_URL,
-//             {
-//                 headers: {
-//                     crossorigin:true
-//                 }
-               
-//             }
-//         );
-//     }
+    // async sendLoginRequest() {
+    //     return await axios.get(LOGIN_URL,
+    //         {
+    //             headers: {
+    //                 crossorigin:true
+    //             }
 
-//     async processLoginForm(username, password) {
-       
-//         var res = await this.sendLoginRequest();
-//         console.log(res);
-//         var token = this.getCSRFtoken(res.data);
-    
-//         await this.loginWithCredentials(username, password, token);
+    //         }
+    //     );
+    // }
 
-//     }
+    // async processLoginForm(username, password) {
 
-//     getCSRFtoken(data) {
-//         var csrfIdx = data.indexOf("_csrf");
-//         var sliced = data.slice(csrfIdx);
-//         var startIdx = sliced.indexOf("value=") + 7;
-//         var endIdx = sliced.indexOf("\" />");
-//         var token = sliced.slice(startIdx, endIdx);
-//         console.log(token);
-//         return token;
-//     }
+    //     var res = await this.sendLoginRequest();
+    //     console.log(res);
+    //     var token = this.getCSRFtoken(res.data);
 
-//     // getJSESSIONIDCookie() {
-//     //     const cookie = this.$cookies.get("JSESSIONID");
-//     //     console.log("jsessionid cookie: " + cookie);
-//     //     return cookie;
-//     // }
+    //     await this.loginWithCredentials(username, password, token);
 
-//     async loginWithCredentials(username, password, csrfToken) {
+    // }
 
-//         console.log(`login with username: ${username} 
-//         \npassword: ${password}
-//         \ncsrf token: ${csrfToken}`);
+    // getCSRFtoken(data) {
+    //     var csrfIdx = data.indexOf("_csrf");
+    //     var sliced = data.slice(csrfIdx);
+    //     var startIdx = sliced.indexOf("value=") + 7;
+    //     var endIdx = sliced.indexOf("\" />");
+    //     var token = sliced.slice(startIdx, endIdx);
+    //     console.log(token);
+    //     return token;
+    // }
 
-//         await axios({
-//             method: "post",
-//             url: LOGIN_URL,
-//             data: "username="+username 
-//             + "&password=" + password
-//              +"&_csrf=" + csrfToken,
-//           })
-//           .then(function (response) {
-//             //handle success
-//             console.log(response);
-//           })
-//           .catch(function (response) {
-//             //handle error
-//             console.log(response);
-//           });
-//     }
+    // getJSESSIONIDCookie() {
+    //     const cookie = this.$cookies.get("JSESSIONID");
+    //     console.log("jsessionid cookie: " + cookie);
+    //     return cookie;
+    // }
 
-// }
+    async loginWithCredentials(username, password) {
 
-// export default new AuthenticationRequest();
+        console.log(`login with username: ${username} 
+        \npassword: ${password}`);
+
+        var response = await axios.post(LOGIN_URL, {
+            "username": username,
+            "password": password
+        })
+            .then(function (response) {
+                //handle success
+                console.log(response);
+                return response;
+            })
+        return response;
+    }
+
+}
+
+export default new AuthenticationRequest();

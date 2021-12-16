@@ -4,7 +4,16 @@
       <div id="app">
         <header>
           <h1 id="ratenus">Rate NUS!</h1>
-          <LoginButton id="login-button" />
+          <LoginButton
+            v-if="!this.$store.getters.isLoggedIn"
+            id="login-button"
+          />
+          <UserProfile
+            v-else
+            :initials="this.$store.getters.initials"
+            :fullName="this.$store.getters.fullName"
+            :email="this.$store.getters.email"
+          />
         </header>
         <Navigation id="navigation" />
         <div class="content">
@@ -18,14 +27,19 @@
 <script>
 import Navigation from "./components/Navigation.vue";
 import LoginButton from "./components/authentication/LoginButton.vue";
+import UserProfile from "./components/authentication/UserProfile.vue";
 
 export default {
   name: "App",
   components: {
     Navigation,
     LoginButton,
+    UserProfile,
   },
-  data: () => ({}),
+  data() {
+    return {};
+  },
+  methods: {},
 };
 </script>
 
@@ -50,7 +64,7 @@ header {
   margin: 0;
   background: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  z-index:99; /* header stays on top */
+  z-index: 99; /* header stays on top */
 }
 #ratenus {
   padding: 15px;
