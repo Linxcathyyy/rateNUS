@@ -7,12 +7,14 @@
           <LoginButton
             v-if="!this.$store.getters.isLoggedIn"
             id="login-button"
+            class="login-component"
           />
           <UserProfile
             v-else
             :initials="this.$store.getters.initials"
             :fullName="this.$store.getters.fullName"
             :email="this.$store.getters.email"
+            class="login-component"
           />
         </header>
         <div id="nav-router-view">
@@ -61,7 +63,7 @@ header {
   right: 0;
   left: 0;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 4rem;
   margin: 0;
@@ -72,11 +74,9 @@ header {
 #ratenus {
   padding: 15px;
 }
-#login-button {
-  position: absolute;
-  margin: 0% 0% 0% 85%;
+.login-component {
+  padding: 15px;
 }
-
 #navigation {
   margin-top: 4rem;
   height: 100%; /* Full-height: remove this if you want "auto" height */
