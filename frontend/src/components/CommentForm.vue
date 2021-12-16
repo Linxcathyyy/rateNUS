@@ -1,6 +1,29 @@
 <template>
 <div>
-  <v-snackbar top color="success" :value="successSnackbar">Success!</v-snackbar>
+  <v-row justify="center">
+    <v-dialog
+      v-model="successDialog"
+      persistent
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="text-h5">
+          Success
+        </v-card-title>
+        <v-card-text>You have added a comment successfully!</v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn
+            color="white darken-1"
+            text
+            @click="refreshPage"
+          >
+            Ok
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+  </v-row>
   <v-snackbar top color="red" :value="failureSnackbar">An unknown error has occured, please try again!</v-snackbar>
   <v-card flat class="mx-16 mb-12">
     <div class="comment-form">
@@ -56,7 +79,7 @@ setInteractionMode("passive");
 export default {
   components: {
     ValidationProvider,
-    ValidationObserver
+    ValidationObserver,
   },
   data() {
     return {
@@ -64,7 +87,7 @@ export default {
       rating: 5,
       rowsNum: 1,
       isExpanded: false,
-      successSnackbar:false,
+      successDialog:false,
       failureSnackbar: false
     };
   },
@@ -73,32 +96,27 @@ export default {
       return this.$refs.addCommentObserver.validate();
     },
     refreshPage() {
+      this.successDialog = false;
       // reset comment inputs
       this.comment = "";
       this.rating = 5;
       // reload current page
       location.reload();
     },
-    toggleSnackbar() {
-      this.successSnackbar = true;
-      this.refreshPage();
-      setTimeout(() => (this.successSnackbar = false), 1000);
-    },
     async handleSubmit(comment, rating) {
       const isValidated= await this.validate();
       var id = this.$route.params.hostelId;
       if (isValidated) {
-        try {
           var jwtToken = this.$store.getters.jwtToken;
           console.log("jwtToken", jwtToken);
-          // backend should return whether this action is successful
-          HostelRequest.postHostelComment(id, comment, rating, jwtToken);
-          this.toggleSnackbar();
-        } catch (error) {
-          console.log(error);
-          this.failureSnackbar = true;
-          setTimeout(() => (this.failureSnackbar = false), 1000);
-        }
+          HostelRequest.postHostelComment(id, comment, rating, jwtToken).then(() => {
+            this.successDialog = true;
+            console.log(this.successDialog);
+          }).catch((error) => {
+            console.log(error);
+            this.failureSnackbar = true;
+            setTimeout(() => (this.failureSnackbar = false), 5000);
+          })
       }
     },
   },

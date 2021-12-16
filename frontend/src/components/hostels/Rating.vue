@@ -15,7 +15,7 @@ export default {
   props: ["score"],
   data() {
     return {
-      scoreTo2dp: this.score.toPrecision(2)
+      scoreTo2dp: Number(this.score.toPrecision(2))
     }
   }
   };

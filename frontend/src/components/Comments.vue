@@ -116,18 +116,6 @@ export default {
   font-weight: bold;
 }
 
-.sorting-buttons {
-  /* display: flex; */
-  /* justify-content: flex-end; */
-}
-
-/* .sorting-buttons > button {
-  background: transparent;
-  border-radius: 10px;
-  padding: 5px;
-  margin: 10px;
-} */
-
 .comments {
   grid-column-start: 1;
   grid-column-end: 3;
