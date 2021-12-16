@@ -36,5 +36,6 @@ public class CommentService {
 
     public void addComment(Comment comment) {
         commentRepository.save(comment);
+        CommentService.logger.log(Level.INFO, "Added comment: " + comment);
     }
 }

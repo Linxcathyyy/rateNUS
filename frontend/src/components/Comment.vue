@@ -8,8 +8,7 @@
     </div>
     <p class="description">
       {{ comment.text }}
-    </p>
-    
+    </p> 
   </div>
 </template>
 

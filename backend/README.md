@@ -82,4 +82,4 @@ Gradle > Tasks > application > bootRun
         * Give: `@RequestBody Comment comment`
         * Path:
             * role == "USER": `comment`
-            * role != "USER": `login`
+            * role != "USER": `auth/login`

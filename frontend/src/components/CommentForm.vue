@@ -1,4 +1,5 @@
 <template>
+<v-card flat class="mx-16 mb-12">
   <div class="comment-form">
     <form>
       <div>
@@ -30,6 +31,7 @@
       </div>
     </form>
   </div>
+</v-card>
 </template>
 
 <script>
@@ -49,17 +51,22 @@ export default {
   methods: {
     handleSubmit(comment, rating) {
       var id = this.$route.params.hostelId;
-      try {
-        HostelRequest.postHostelComment(id, comment, rating);
-        // reset comment inputs
-        this.comment = "";
-        this.rating = 5;
-        window.confirm("Successfully added a comment!");
-        // reload current page
-        location.reload();
-      } catch (error) {
-        console.log(error);
-      }
+
+      var jwtToken = this.$store.getters.jwtToken;
+      console.log("jwtToken", jwtToken);
+      HostelRequest.postHostelComment(id, comment, rating, jwtToken)
+        .then(() => {
+          window.confirm("Successfully added a comment!");
+          // reload current page
+          location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+          window.confirm("Failed adding a comment");
+        });
+      // reset comment inputs
+      this.comment = "";
+      this.rating = 5;
     },
   },
 };
@@ -68,7 +75,7 @@ export default {
 <style scoped>
 .comment-form {
   max-width: 100%;
-  background: rgba(214, 238, 245, 0.5);
+  /* background: rgba(214, 238, 245, 0.5); */
   text-align: left;
   border-radius: 30px;
   padding: 30px 40px;

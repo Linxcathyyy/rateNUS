@@ -2,6 +2,7 @@ package com.rateNUS.backend.util;
 
 import com.rateNUS.backend.comment.Comment;
 import com.rateNUS.backend.hostel.Hostel;
+import com.rateNUS.backend.user.User;
 
 import java.util.List;
 
@@ -78,6 +79,9 @@ public class DummyData {
             "I dun wanna study alr...",
             Type.studyArea);
 
+    public static User u1 = new User("user1", "user@example.email", "password");
+
     public static List<Hostel> hostelList = List.of(h1, h2, h3);
     public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6, c7);
+    public static List<User> userList = List.of(u1);
 }
