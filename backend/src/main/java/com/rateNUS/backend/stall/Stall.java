@@ -1,13 +1,10 @@
 package com.rateNUS.backend.stall;
 
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.List;
@@ -36,28 +33,29 @@ public class Stall {
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @ElementCollection
-    @JoinTable(name = "images", joinColumns = @JoinColumn(name = "stall_id"))
-    @Column(name = "imageUrl", nullable = false)
-    private List<String> imageUrl;
+    // @ElementCollection
+    // @JoinTable(name = "images", joinColumns = @JoinColumn(name = "stall_id"))
+    // @Column(name = "imageUrl", nullable = false)
+    // private List<String> imageUrl;
 
-    @Column(name = "lowestPrice")
+    @Column(name = "lowestPrice", nullable = false)
     private double lowestPrice;
 
-    @Column(name = "highestPrice")
+    @Column(name = "highestPrice", nullable = false)
     private double highestPrice;
 
     public Stall() {}
 
     // For dummy data
-    public Stall(String name, String location, String description, List<String> imageUrl) {
+    public Stall(String name, String location, String description, List<String> imageUrl, double lowestPrice,
+                 double highestPrice) {
         this.name = name;
         this.rating = -1;
         this.location = location;
         this.description = description;
-        this.imageUrl = imageUrl;
-        this.lowestPrice = -1;
-        this.highestPrice = -1;
+        // this.imageUrl = imageUrl;
+        this.lowestPrice = lowestPrice;
+        this.highestPrice = highestPrice;
     }
 
     // For StallRepository
@@ -70,7 +68,7 @@ public class Stall {
         this.commentCount = commentCount;
         this.location = location;
         this.description = description;
-        this.imageUrl = imageUrl;
+        // this.imageUrl = imageUrl;
         this.lowestPrice = lowestPrice;
         this.highestPrice = highestPrice;
     }
@@ -127,13 +125,13 @@ public class Stall {
         this.description = description;
     }
 
-    public List<String> getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(List<String> imageUrl) {
-        this.imageUrl = imageUrl;
-    }
+//    public List<String> getImageUrl() {
+//        return imageUrl;
+//    }
+//
+//    public void setImageUrl(List<String> imageUrl) {
+//        this.imageUrl = imageUrl;
+//    }
 
     public double getLowestPrice() {
         return lowestPrice;
