@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Navigation from "./components/Navigation.vue";
+import Navigation from "./components/util/Navigation.vue";
 import LoginButton from "./components/authentication/LoginButton.vue";
 import UserProfile from "./components/authentication/UserProfile.vue";
 

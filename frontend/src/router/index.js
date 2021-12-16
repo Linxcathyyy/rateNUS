@@ -3,7 +3,7 @@ import VueRouter from "vue-router";
 import Hostels from "../views/Hostels.vue";
 import Canteens from "../views/Canteens.vue";
 import StudyAreas from "../views/StudyAreas.vue";
-import HostelViewMore from "../components/hostels/HostelViewMore.vue";
+import ItemViewMore from "../components/commons/ItemViewMore.vue";
 // import store from '@/store/index.js';
 Vue.use(VueRouter);
 
@@ -28,7 +28,18 @@ const routes = [
   {
     path: '/hostels/:hostelId',
     name: 'HostelViewMore',
-    component: HostelViewMore
+    component: ItemViewMore,
+    props: {
+      type: "hostel"
+    }
+  },
+  {
+    path: '/stalls/:stallId',
+    name: 'StallViewMore',
+    component: ItemViewMore,
+    props: {
+      type: "stall"
+    }
   },
   {
     path: '/login',
