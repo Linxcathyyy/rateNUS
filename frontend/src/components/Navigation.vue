@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto" height="100%">
-    <v-navigation-drawer class="blue accent-4" dark permanent>
+    <v-navigation-drawer app class="blue accent-4" dark permanent id="side-nav">
       <v-list>
         <v-list-item
           :to="item.route"
@@ -37,5 +37,10 @@ export default {
 <style scoped>
 .title {
   padding: 10px;
+}
+
+#side-nav {
+  padding-top: 4rem;
+  max-width: max-content;
 }
 </style>
