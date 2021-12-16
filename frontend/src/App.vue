@@ -14,6 +14,7 @@
             :initials="this.$store.getters.initials"
             :fullName="this.$store.getters.fullName"
             :email="this.$store.getters.email"
+            :profileColor="this.$store.getters.defaultProfileColor"
             class="login-component"
           />
         </header>

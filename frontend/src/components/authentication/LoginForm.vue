@@ -77,6 +77,7 @@ export default {
             this.$store.commit("changeEmail", email);
             this.$store.commit("updateJwtToken", token);
             this.$store.commit("logIn");
+            this.$store.commit("updateDefaultProfileColor");
           })
           .catch(function (response) {
             //handle error
