@@ -45,6 +45,19 @@ public class CommentController {
     @PostMapping
     public void addComment(@RequestBody Comment comment) {
         commentService.addComment(comment);
-        hostelService.updateHostel(comment.getTargetId(), comment.getRating(), true);
+
+        switch (comment.getType()) {
+            case hostel:
+                hostelService.updateHostel(comment.getTargetId(), comment.getRating(), true);
+                break;
+
+            case stall:
+
+                break;
+
+            case studyArea:
+
+                break;
+        }
     }
 }

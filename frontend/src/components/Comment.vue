@@ -8,8 +8,7 @@
     </div>
     <p class="description">
       {{ comment.text }}
-    </p>
-    
+    </p> 
   </div>
 </template>
 
@@ -45,6 +44,7 @@ export default {
 
 .comment {
   border-bottom: 1px solid darkgray;
+  margin-bottom: 1rem;
 }
 
 .comment-info {

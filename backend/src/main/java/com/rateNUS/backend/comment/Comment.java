@@ -30,7 +30,7 @@ public class Comment {
     @Column(name = "rating", nullable = false)
     private int rating;
 
-    @Column(name = "text", nullable = false)
+    @Column(name = "text", nullable = false, length = 2500)
     private String text;
 
     @Column(name = "type", nullable = false)
@@ -41,9 +41,9 @@ public class Comment {
     @CreationTimestamp
     private Timestamp timestamp;
 
-    public Comment() {
-    }
+    public Comment() {}
 
+    // For dummy data
     public Comment(long targetId, int rating, String text, Type type) {
         this.targetId = targetId;
         this.rating = rating;
@@ -51,6 +51,7 @@ public class Comment {
         this.type = type;
     }
 
+    // For CommentRepository
     public Comment(long id, long targetId, int rating, String text, Type type) {
         this.id = id;
         this.targetId = targetId;

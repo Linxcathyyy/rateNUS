@@ -32,17 +32,17 @@ public class Hostel {
     @Column(name = "rating")
     private double rating;
 
+    @Column(name = "commentCount")
+    private int commentCount;
+
     @Column(name = "location", nullable = false, columnDefinition = "TEXT")
     private String location;
 
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "commentCount")
-    private int commentCount;
-
     @ElementCollection
-    @JoinTable(name = "images", joinColumns = @JoinColumn(name = "hostel_id"))
+    @JoinTable(name = "hostelImages", joinColumns = @JoinColumn(name = "hostel_id"))
     @Column(name = "imageUrl", nullable = false)
     private List<String> imageUrl;
 
@@ -52,28 +52,27 @@ public class Hostel {
     @Enumerated(EnumType.STRING)
     private List<Facility> facilities;
 
-    public Hostel() {
-    }
+    public Hostel() {}
 
-    public Hostel(String name, double rating, String location, String description, int commentCount,
-                  List<String> imageUrl, List<Facility> facilities) {
+    // For dummy data
+    public Hostel(String name, String location, String description, List<String> imageUrl, List<Facility> facilities) {
         this.name = name;
-        this.rating = rating;
+        this.rating = -1;
         this.location = location;
         this.description = description;
-        this.commentCount = commentCount;
         this.imageUrl = imageUrl;
         this.facilities = facilities;
     }
 
-    public Hostel(long id, String name, double rating, String location, String description, int commentCount,
+    // For HostelRepository
+    public Hostel(long id, String name, double rating, int commentCount, String location, String description,
                   List<String> imageUrl, List<Facility> facilities) {
         this.id = id;
         this.name = name;
         this.rating = rating;
+        this.commentCount = commentCount;
         this.location = location;
         this.description = description;
-        this.commentCount = commentCount;
         this.imageUrl = imageUrl;
         this.facilities = facilities;
     }
@@ -102,6 +101,18 @@ public class Hostel {
         this.rating = rating;
     }
 
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
+    public void incCommentCountByOne() {
+        commentCount++;
+    }
+
     public String getLocation() {
         return location;
     }
@@ -116,18 +127,6 @@ public class Hostel {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public int getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
-    }
-
-    public void incCommentCountByOne() {
-        commentCount++;
     }
 
     public List<String> getImageUrl() {
@@ -159,17 +158,17 @@ public class Hostel {
         Hostel hostel = (Hostel) obj;
         return id == hostel.id
                 && Double.compare(hostel.rating, rating) == 0
+                && commentCount == hostel.commentCount
                 && Objects.equals(name, hostel.name)
                 && Objects.equals(location, hostel.location)
                 && Objects.equals(description, hostel.description)
-                && commentCount == hostel.commentCount
                 && Objects.equals(imageUrl, hostel.imageUrl)
-                && facilities.equals(hostel.facilities);
+                && Objects.equals(facilities, hostel.facilities);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, rating, location, description, commentCount, imageUrl, facilities);
+        return Objects.hash(id, name, rating, commentCount, location, description, imageUrl, facilities);
     }
 
     @Override
@@ -178,11 +177,11 @@ public class Hostel {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", rating=" + rating +
+                ", commentCount=" + commentCount +
                 ", location='" + location + '\'' +
                 ", description='" + description + '\'' +
-                ", commentCount='" + commentCount + '\'' +
-                ", imageUrl='" + imageUrl + '\'' +
-                ", facilities='" + facilities + '\'' +
+                ", imageUrl=" + imageUrl +
+                ", facilities=" + facilities +
                 '}';
     }
 }

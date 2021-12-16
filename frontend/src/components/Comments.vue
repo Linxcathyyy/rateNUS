@@ -1,16 +1,10 @@
 <template>
+  <v-card flat class="mx-16 mb-12">
   <div class="comment-list">
     <div class="comment-title">Comments</div>
-    <div class="sorting-buttons">
-      <!-- <button @click="sortCommentsFromLowestToHighestRating(true)">sort-ascending</button>
-      <button @click="sortCommentsFromLowestToHighestRating(true)">
-        Low -> High
-      </button>
-      <button @click="sortCommentsFromLowestToHighestRating(false)">
-        High -> Low
-      </button> -->
+    <!-- <div class="sorting-buttons"> -->
       <v-layout>
-        <v-spacer></v-spacer>
+        <!-- <v-spacer></v-spacer> -->
         <v-row> 
           <v-col cols="12" sm="2">
             <v-btn icon color="primary" @click="sortCommentsFromLowestToHighestRating(true)">
@@ -25,14 +19,14 @@
           </v-col>
         </v-row>
       </v-layout>
-    </div>
+    <!-- </div> -->
 
     <div class="comments">
       <div v-for="comment in commentList" :key="comment.id">
         <Comment :comment="comment" />
       </div>
     </div>
-    <div class="text-center">
+    <div class="comments text-center">
       <v-container>
         <v-row justify="center">
           <v-col cols="8">
@@ -51,6 +45,7 @@
       </v-container>
     </div>
   </div>
+  </v-card>
 </template>
 
 <script>
@@ -61,7 +56,7 @@ export default {
   data() {
     return {
       commentList: [],
-      pageSize: 1,
+      pageSize: 2,
       currentPage: 1,
       totalPages: 0
     };
@@ -108,7 +103,7 @@ export default {
 .comment-list {
   padding: 40px 40px;
   margin: 20px 0px;
-  background: rgba(214, 238, 245, 0.5);
+  /* background: rgba(214, 238, 245, 0.5); */
   border-radius: 30px;
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -119,18 +114,6 @@ export default {
   margin: 0 0 auto 0;
   font-size: 30px;
   font-weight: bold;
-}
-
-.sorting-buttons {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.sorting-buttons > button {
-  background: transparent;
-  border-radius: 10px;
-  padding: 5px;
-  margin: 10px;
 }
 
 .comments {

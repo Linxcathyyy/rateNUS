@@ -11,7 +11,7 @@ class HostelRequest {
       orderBy: "id",
       isLowToHigh: true,
       pageNum: pageNum,
-      pageSize: pageSize
+      pageSize: pageSize,
     });
   }
 
@@ -25,7 +25,7 @@ class HostelRequest {
   }
 
   // Post individual hostel comment to server
-  postHostelComment(hostelId, comment, rating) {
+  postHostelComment(hostelId, comment, rating, jwtToken) {
     // below is temp implementation to see post content
     if (hostelId == undefined) {
       // check id is hostel id
@@ -34,35 +34,29 @@ class HostelRequest {
         hostelId
       );
     }
+    const headers = {
+      Authorization: "Bearer " + jwtToken,
+    };
+
     const req = {
       targetId: hostelId,
       rating: rating,
       text: comment,
-      type: "hostel"
+      type: "hostel",
     };
-    return axios.post(COMMENT_API_BASE_URL, req);
+    return axios.post(COMMENT_API_BASE_URL, req, {
+      headers: headers,
+    });
   }
 
   // Find hostels based on keywords
   findHostels(keyword, pageNum, pageSize) {
-      return axios.post(HOSTEL_API_BASE_URL + "/search", {
-          keyword: keyword,
-          pageNum: pageNum,
-          pageSize: pageSize
-      });
+    return axios.post(HOSTEL_API_BASE_URL + "/search", {
+      keyword: keyword,
+      pageNum: pageNum,
+      pageSize: pageSize,
+    });
   }
-
-  // sortHostelsFromLowestToHighestRating(keyword) {
-
-  // }
-
-  // sortHostelsFromHighestToLowestRating(keyword) {
-
-  // }
-
-  // resetHostelsSorting(keyword) {
-
-  // }
 
   // Get a partial list of comments base on startIndex and endIndex
   async getCommentList(hostelId, pageNum, pageSize) {
@@ -70,7 +64,7 @@ class HostelRequest {
       orderBy: "timestamp",
       isLowToHigh: false,
       pageNum: pageNum,
-      pageSize: pageSize
+      pageSize: pageSize,
     });
   }
 
@@ -79,10 +73,9 @@ class HostelRequest {
       orderBy: "rating",
       isLowToHigh: isLowToHigh,
       pageNum: pageNum,
-      pageSize: pageSize
+      pageSize: pageSize,
     });
   }
-
 }
 
 export default new HostelRequest();
