@@ -44,6 +44,7 @@ export default {
 
 .comment {
   border-bottom: 1px solid darkgray;
+  margin-bottom: 1rem;
 }
 
 .comment-info {

@@ -58,18 +58,6 @@ class HostelRequest {
     });
   }
 
-  // sortHostelsFromLowestToHighestRating(keyword) {
-
-  // }
-
-  // sortHostelsFromHighestToLowestRating(keyword) {
-
-  // }
-
-  // resetHostelsSorting(keyword) {
-
-  // }
-
   // Get a partial list of comments base on startIndex and endIndex
   async getCommentList(hostelId, pageNum, pageSize) {
     return await axios.post(COMMENT_SORT_API_BASE_URL + "/" + hostelId, {

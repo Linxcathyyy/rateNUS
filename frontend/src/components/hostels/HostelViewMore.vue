@@ -17,7 +17,7 @@
           ></v-rating>
 
           <div class="grey--text ms-4">
-            {{ hostel.rating }} ({{ hostel.commentCount }} reviews)
+            {{ hostel.rating.toPrecision(2) }} ({{ hostel.commentCount }} reviews)
           </div>
         </v-row>
 

@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto" height="100%">
-    <v-navigation-drawer app class="blue accent-4" dark permanent id="side-nav">
+    <v-navigation-drawer app class="orange accent-4" dark permanent id="side-nav">
       <v-list>
         <v-list-item
           :to="item.route"
