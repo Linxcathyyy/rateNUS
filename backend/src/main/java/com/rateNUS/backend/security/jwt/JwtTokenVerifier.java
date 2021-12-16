@@ -28,7 +28,6 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
     @Value("${ratenus.app.jwt.jwtSecret}")
     private String jwtSecret;
 
-
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String authorizationHeader = request.getHeader("Authorization");

@@ -42,7 +42,7 @@ public class Hostel {
     private String description;
 
     @ElementCollection
-    @JoinTable(name = "images", joinColumns = @JoinColumn(name = "hostel_id"))
+    @JoinTable(name = "hostelImages", joinColumns = @JoinColumn(name = "hostel_id"))
     @Column(name = "imageUrl", nullable = false)
     private List<String> imageUrl;
 

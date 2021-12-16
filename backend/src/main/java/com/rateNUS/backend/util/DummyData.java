@@ -2,6 +2,7 @@ package com.rateNUS.backend.util;
 
 import com.rateNUS.backend.comment.Comment;
 import com.rateNUS.backend.hostel.Hostel;
+import com.rateNUS.backend.stall.Stall;
 import com.rateNUS.backend.user.User;
 
 import java.util.List;
@@ -51,6 +52,15 @@ public class DummyData {
             List.of(Facility.laundry, Facility.lounge)
     );
 
+    public static Stall s1 = new Stall(
+            "Dummy Stall 1",
+            "Dummy location",
+            "Dummy description",
+            List.of(),
+            3.21,
+            27.85
+    );
+
     public static Comment c1 = new Comment(3, 4,
             "Cinnamon College: nice hostel :)",
             Type.hostel);
@@ -73,7 +83,7 @@ public class DummyData {
 
     public static Comment c6 = new Comment(1, 3,
             "Dummy canteen comment",
-            Type.canteen);
+            Type.stall);
 
     public static Comment c7 = new Comment(1, 0,
             "I dun wanna study alr...",
@@ -82,6 +92,7 @@ public class DummyData {
     public static User u1 = new User("user1", "user@example.email", "password");
 
     public static List<Hostel> hostelList = List.of(h1, h2, h3);
+    public static List<Stall> stallList = List.of(s1);
     public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6, c7);
     public static List<User> userList = List.of(u1);
 }

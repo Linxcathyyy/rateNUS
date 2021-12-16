@@ -1,13 +1,15 @@
 package com.rateNUS.backend.security;
 
-import static com.rateNUS.backend.security.ApplicationUserPermission.*;
-
 import com.google.common.collect.Sets;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import static com.rateNUS.backend.security.ApplicationUserPermission.COMMENT_READ;
+import static com.rateNUS.backend.security.ApplicationUserPermission.COMMENT_WRITE;
+import static com.rateNUS.backend.security.ApplicationUserPermission.HOSTEL_READ;
+import static com.rateNUS.backend.security.ApplicationUserPermission.HOSTEL_WRITE;
 
 public enum ApplicationUserRole {
     USER(Sets.newHashSet(HOSTEL_READ, COMMENT_READ, COMMENT_WRITE)),

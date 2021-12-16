@@ -1,15 +1,14 @@
 package com.rateNUS.backend.security;
 
-import javax.transaction.Transactional;
-
+import com.rateNUS.backend.user.User;
+import com.rateNUS.backend.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.rateNUS.backend.user.User;
-import com.rateNUS.backend.user.UserRepository;
+import javax.transaction.Transactional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

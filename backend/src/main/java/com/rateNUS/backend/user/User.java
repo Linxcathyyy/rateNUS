@@ -1,7 +1,7 @@
 package com.rateNUS.backend.user;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.rateNUS.backend.security.ApplicationUserRole;
+import com.rateNUS.backend.security.PasswordConfig;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -16,14 +16,13 @@ import javax.persistence.JoinTable;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
-
-import com.rateNUS.backend.security.ApplicationUserRole;
-import com.rateNUS.backend.security.PasswordConfig;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users",
         uniqueConstraints = {
-            @UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email")
+                @UniqueConstraint(columnNames = "username"), @UniqueConstraint(columnNames = "email")
         })
 public class User {
     @Id

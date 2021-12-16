@@ -4,11 +4,11 @@ import java.util.List;
 
 public class JwtResponseBody {
 
+    private final List<String> roles;
     private String type = "Bearer";
     private long id;
     private String username;
     private String email;
-    private List<String> roles;
 
     public JwtResponseBody(long id, String username, String email, List<String> roles) {
 
@@ -17,7 +17,6 @@ public class JwtResponseBody {
         this.email = email;
         this.roles = roles;
     }
-
 
     public String getType() {
         return type;

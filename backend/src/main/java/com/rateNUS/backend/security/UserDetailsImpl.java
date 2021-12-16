@@ -1,24 +1,23 @@
 package com.rateNUS.backend.security;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.rateNUS.backend.user.User;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.rateNUS.backend.user.User;
-
 public class UserDetailsImpl implements UserDetails {
-    private long id;
-    private String username;
-    private String email;
+    private final long id;
+    private final String username;
+    private final String email;
     @JsonIgnore
-    private String password;
-    private Collection<? extends GrantedAuthority> authorities;
+    private final String password;
+    private final Collection<? extends GrantedAuthority> authorities;
 
     public UserDetailsImpl(long id, String username, String email, String password,
                            Collection<? extends GrantedAuthority> authorities) {
@@ -83,10 +82,12 @@ public class UserDetailsImpl implements UserDetails {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o)
+        if (this == o) {
             return true;
-        if (o == null || getClass() != o.getClass())
+        }
+        if (o == null || getClass() != o.getClass()) {
             return false;
+        }
         UserDetailsImpl user = (UserDetailsImpl) o;
         return Objects.equals(id, user.id);
     }
