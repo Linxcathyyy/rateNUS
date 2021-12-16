@@ -63,8 +63,8 @@ public class DummyData {
             List.of("https://middleclass.sg/wp-content/uploads/2021/08/CHOP-CHOP-by-PUTIEN-NUS-UTown-Exterior.jpg",
                     "https://middleclass.sg/wp-content/uploads/2021/08/chopchop_online_menu_Page_1.jpg",
                     "https://middleclass.sg/wp-content/uploads/2021/08/chopchop_online_menu_Page_2.jpg"),
-            3.21,
-            27.85
+            20,
+            300
     );
 
     public static Stall s2 = new Stall(
@@ -75,8 +75,8 @@ public class DummyData {
                     "Contact: 98202273",
             List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2021/08/Lejomo.jpg",
                     "https://lejomo.com/wp-content/uploads/bb-plugin/cache/WhatsApp-Image-2021-05-22-at-14.28.27-panorama.jpeg"),
-            3.21,
-            27.85
+            5.99,
+            29.99
     );
 
     public static Stall s3 = new Stall(
@@ -90,8 +90,8 @@ public class DummyData {
                     "Mon-Sat, 11.00am – 3.00pm\n" +
                     "Sun/PH closed",
             List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2021/02/Nine-Fresh-1-1024x684.jpg"),
-            3.21,
-            27.85
+            3.00,
+            6.50
     );
 
     public static Comment c1 = new Comment(3, 4,

@@ -2,7 +2,6 @@ package com.rateNUS.backend.security.jwt;
 
 import com.google.common.base.Strings;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,38 +23,40 @@ import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenVerifier extends OncePerRequestFilter {
-
     @Value("${ratenus.app.jwt.jwtSecret}")
     private String jwtSecret;
 
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
         String authorizationHeader = request.getHeader("Authorization");
         if (Strings.isNullOrEmpty(authorizationHeader) || !authorizationHeader.startsWith("Bearer")) {
             filterChain.doFilter(request, response);
             return;
         }
+
         String token = authorizationHeader.replace("Bearer ", "");
         try {
-
-            Jws<Claims> claimsJws = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
-            Claims body = claimsJws.getBody();
+            Claims body = Jwts.parser()
+                    .setSigningKey(jwtSecret)
+                    .parseClaimsJws(token)
+                    .getBody();
 
             String username = body.getSubject();
+
             var authorities = (List<Map<String, String>>) body.get("authorities");
-            List<SimpleGrantedAuthority> simpleGrantedAuthorities = authorities
-                    .stream()
-                    .map(authMap -> new SimpleGrantedAuthority(authMap.get("authority"))).collect(Collectors.toList());
+            List<SimpleGrantedAuthority> simpleGrantedAuthorities = authorities.stream()
+                    .map(authMap -> new SimpleGrantedAuthority(authMap.get("authority")))
+                    .collect(Collectors.toList());
+
             Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    username,
-                    null,
-                    simpleGrantedAuthorities
-            );
+                    username, null, simpleGrantedAuthorities);
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            response.setHeader("Access-Control-Allow-Headers", "Authorization, x-xsrf-token, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, " +
-                    "Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-
+            response.setHeader(
+                    "Access-Control-Allow-Headers",
+                    "Authorization, x-xsrf-token, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, "
+                            + "Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
         } catch (JwtException e) {
             throw new IllegalStateException(String.format("token %s cannot be trusted", token));
         }

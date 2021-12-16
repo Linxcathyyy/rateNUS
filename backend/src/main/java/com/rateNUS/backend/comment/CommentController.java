@@ -1,6 +1,7 @@
 package com.rateNUS.backend.comment;
 
 import com.rateNUS.backend.hostel.HostelService;
+import com.rateNUS.backend.stall.StallService;
 import com.rateNUS.backend.util.Config;
 import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,11 +24,15 @@ import java.util.Map;
 public class CommentController {
     private final CommentService commentService;
     private final HostelService hostelService;
+    private final StallService stallService;
 
     @Autowired
-    public CommentController(CommentService commentService, HostelService hostelService) {
+    public CommentController(CommentService commentService,
+                             HostelService hostelService,
+                             StallService stallService) {
         this.commentService = commentService;
         this.hostelService = hostelService;
+        this.stallService = stallService;
     }
 
     @PostMapping(path = "{type}/{targetId}")
@@ -48,15 +53,15 @@ public class CommentController {
 
         switch (comment.getType()) {
             case hostel:
-                hostelService.updateHostel(comment.getTargetId(), comment.getRating(), true);
+                hostelService.addComment(comment.getTargetId(), comment.getRating());
                 break;
 
             case stall:
-
+                stallService.addComment(comment.getTargetId(), comment.getRating());
                 break;
 
             case studyArea:
-
+                // studyAreaService.addComment(comment.getTargetId(), comment.getRating());
                 break;
         }
     }

@@ -22,19 +22,12 @@ import java.util.Map;
 public class StallController {
     private final StallService stallService;
 
+    private final int default_pageNum = 0;
+    private final int default_pageSize = 5;
+
     @Autowired
     public StallController(StallService stallService) {
         this.stallService = stallService;
-    }
-
-    @PostMapping
-    public Page<Stall> getStalls(@RequestBody Map<String, Object> jsonInput) {
-        String orderBy = (String) jsonInput.getOrDefault("orderBy", "id");
-        boolean isLowToHigh = (boolean) jsonInput.getOrDefault("isLowToHigh", true);
-        int pageNum = (int) jsonInput.getOrDefault("pageNum", 0);
-        int pageSize = (int) jsonInput.getOrDefault("pageSize", 5);
-
-        return stallService.getStalls(orderBy, isLowToHigh, pageNum, pageSize);
     }
 
     @GetMapping(path = "{stallId}")
@@ -42,11 +35,22 @@ public class StallController {
         return stallService.getStall(stallId);
     }
 
+    @PostMapping
+    public Page<Stall> getStalls(@RequestBody Map<String, Object> jsonInput) {
+        String orderBy = (String) jsonInput.getOrDefault("orderBy", "id");
+        boolean isLowToHigh = (boolean) jsonInput.getOrDefault("isLowToHigh", true);
+        int pageNum = (int) jsonInput.getOrDefault("pageNum", default_pageNum);
+        int pageSize = (int) jsonInput.getOrDefault("pageSize", default_pageSize);
+
+        return stallService.getStalls(orderBy, isLowToHigh, pageNum, pageSize);
+    }
+
     @PostMapping(path = "search")
     public Page<Stall> findStall(@RequestBody Map<String, Object> jsonInput) {
         String keyword = (String) jsonInput.getOrDefault("keyword", "");
-        int pageNum = (int) jsonInput.getOrDefault("pageNum", 0);
-        int pageSize = (int) jsonInput.getOrDefault("pageSize", 5);
+        int pageNum = (int) jsonInput.getOrDefault("pageNum", default_pageNum);
+        int pageSize = (int) jsonInput.getOrDefault("pageSize", default_pageSize);
+
         return stallService.findStall(keyword, pageNum, pageSize);
     }
 }

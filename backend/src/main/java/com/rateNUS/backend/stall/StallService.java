@@ -1,6 +1,7 @@
 package com.rateNUS.backend.stall;
 
-import com.rateNUS.backend.exception.StallNotFoundException;
+import com.rateNUS.backend.exception.TypeNotFoundException;
+import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,29 +24,29 @@ public class StallService {
         this.stallRepository = stallRepository;
     }
 
+    public Stall getStall(long stallId) {
+        return stallRepository.findById(stallId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.stall, stallId));
+    }
+
     public Page<Stall> getStalls(String orderBy, boolean isAscending, int pageNum, int numEntriesPerPage) {
         Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
         PageRequest pageRequest = PageRequest.of(pageNum, numEntriesPerPage, Sort.by(direction, orderBy));
         return stallRepository.findAll(pageRequest);
     }
 
-    public Stall getStall(long stallId) {
-        return stallRepository.findById(stallId)
-                .orElseThrow(() -> new StallNotFoundException(stallId));
-    }
-
     public Page<Stall> findStall(String keyword, int pageNum, int pageSize) {
         List<Stall> stallList = stallRepository.findByNameIgnoreCaseContaining(keyword);
-        stallList.sort((h1, h2) -> {
-            boolean h1BeginsWithKeyword = h1.getName().startsWith(keyword);
-            boolean h2BeginsWithKeyword = h2.getName().startsWith(keyword);
+        stallList.sort((s1, s2) -> {
+            boolean h1BeginsWithKeyword = s1.getName().startsWith(keyword);
+            boolean h2BeginsWithKeyword = s2.getName().startsWith(keyword);
 
             if (h1BeginsWithKeyword && !h2BeginsWithKeyword) {
                 return -1;
             } else if (!h1BeginsWithKeyword && h2BeginsWithKeyword) {
                 return 1;
             } else {
-                return h1.getName().compareTo(h2.getName());
+                return s1.getName().compareTo(s2.getName());
             }
         });
 
@@ -58,25 +59,9 @@ public class StallService {
     }
 
     @Transactional
-    public void updateStall(long stallId, int rating, boolean hasNewComment) {
-        if (!hasNewComment) {
-            return;
-        }
-
-        Stall stall = stallRepository.findById(stallId)
-                .orElseThrow(() -> new StallNotFoundException(stallId));
-
-        int currentCommentCount = stall.getCommentCount();
-        double updatedRating;
-
-        if (currentCommentCount == 0) {
-            updatedRating = rating;
-        } else {
-            double currentRating = stall.getRating();
-            updatedRating = (currentCommentCount * currentRating + rating) / (currentCommentCount + 1);
-        }
-
-        stall.setRating(updatedRating);
-        stall.incCommentCountByOne();
+    public void addComment(long stallId, int rating) {
+        stallRepository.findById(stallId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.stall, stallId))
+                .addComment(rating);
     }
 }

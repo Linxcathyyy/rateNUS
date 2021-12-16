@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 @Entity
 @Table
@@ -30,7 +29,7 @@ public class Comment {
     @Column(name = "rating", nullable = false)
     private int rating;
 
-    @Column(name = "text", nullable = false, length = 2500)
+    @Column(name = "text", nullable = false, columnDefinition = "TEXT")
     private String text;
 
     @Column(name = "type", nullable = false)
@@ -106,41 +105,5 @@ public class Comment {
 
     public void setTimestamp(Timestamp timestamp) {
         this.timestamp = timestamp;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (!(obj instanceof Comment)) {
-            return false;
-        }
-
-        Comment comment = (Comment) obj;
-        return id == comment.id
-                && targetId == comment.targetId
-                && rating == comment.rating
-                && Objects.equals(text, comment.text)
-                && type == comment.type
-                && Objects.equals(timestamp, comment.timestamp);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, targetId, rating, text, type, timestamp);
-    }
-
-    @Override
-    public String toString() {
-        return "Comment{" +
-                "id=" + id +
-                ", targetId=" + targetId +
-                ", rating=" + rating +
-                ", text='" + text + '\'' +
-                ", type=" + type +
-                ", timestamp=" + timestamp +
-                '}';
     }
 }

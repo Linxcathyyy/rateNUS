@@ -107,10 +107,6 @@ public class Stall {
         this.commentCount = commentCount;
     }
 
-    public void incCommentCountByOne() {
-        commentCount++;
-    }
-
     public String getLocation() {
         return location;
     }
@@ -149,5 +145,12 @@ public class Stall {
 
     public void setHighestPrice(double highestPrice) {
         this.highestPrice = highestPrice;
+    }
+
+    public void addComment(double rating) {
+        this.rating = commentCount == 0
+                ? rating
+                : (commentCount * this.rating + rating) / (commentCount + 1);
+        commentCount++;
     }
 }

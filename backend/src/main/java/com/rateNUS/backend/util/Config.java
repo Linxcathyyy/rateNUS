@@ -17,8 +17,10 @@ public class Config {
     public static final String frontendURL = "http://localhost:8081/";
 
     @Bean
-    CommandLineRunner commandLineRunner(HostelRepository hostelRepository, StallRepository stallRepository,
-                                        UserRepository userRepository, CommentController commentController) {
+    CommandLineRunner commandLineRunner(HostelRepository hostelRepository,
+                                        StallRepository stallRepository,
+                                        UserRepository userRepository,
+                                        CommentController commentController) {
         return args -> {
             userRepository.saveAll(DummyData.userList);
             hostelRepository.saveAll(DummyData.hostelList);
