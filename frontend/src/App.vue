@@ -67,7 +67,7 @@ header {
   margin-top: 4rem;
   margin-left: 1rem;
   height: 100%; /* Full-height: remove this if you want "auto" height */
-  width: 10%; /* Set the width of the sidebar */
+  width: 12%; /* Set the width of the sidebar */
   /* min-width: 100px; */
   position: fixed; /* Fixed Sidebar (stay in place on scroll) */
   top: 0; /* Stay at the top */

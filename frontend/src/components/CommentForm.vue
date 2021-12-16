@@ -1,66 +1,104 @@
 <template>
-<v-card flat class="mx-16 mb-12">
-  <div class="comment-form">
-    <form>
-      <div>
-        <label class="rating-label"> Rating: </label>
-        {{ rating }} / 5
-        <div class="rating-display">
-          <input
-            class="rating"
-            max="5"
-            step="1"
-            type="range"
-            value="3"
-            v-model="rating"
-          />
+<div>
+  <v-snackbar top color="success" :value="successSnackbar">Success!</v-snackbar>
+  <v-snackbar top color="red" :value="failureSnackbar">An unknown error has occured, please try again!</v-snackbar>
+  <v-card flat class="mx-16 mb-12">
+    <div class="comment-form">
+      <v-form>
+        <div>
+          <label class="rating-label"> Rating: </label>
+          {{ rating }} / 5
+          <div class="rating-display">
+            <input
+              class="rating"
+              max="5"
+              step="1"
+              type="range"
+              value="3"
+              v-model="rating"
+            />
+          </div>
         </div>
-      </div>
-      <textarea-autosize
-        class="comment"
-        placeholder="Join the discussion..."
-        ref="myTextarea"
-        type="text"
-        required
-        :min-height="30"
-        :max-height="350"
-        v-model="comment"
-      />
-      <div class="submit">
-        <button @click="handleSubmit(comment, rating)">Submit</button>
-      </div>
-    </form>
-  </div>
-</v-card>
+        <ValidationObserver ref="addCommentObserver">
+          <ValidationProvider name="Comment" rules="required" v-slot="{ errors }">
+            <v-textarea
+              label="Comment"
+              v-model="comment"
+              class="comment"
+              placeholder="Join the discussion..."
+              type="text"
+              :min-height="30"
+              :max-height="350"
+              auto-grow
+              :error-messages="errors"
+            />
+          </ValidationProvider>
+      
+        <div class="submit">
+          <button @click="handleSubmit(comment, rating)">Submit</button>
+        </div>
+        </ValidationObserver>
+      </v-form>
+    </div>
+  </v-card>
+</div>
 </template>
 
 <script>
 import HostelRequest from "../httpRequests/HostelRequest";
-import Vue from "vue";
-import TextareaAutosize from "vue-textarea-autosize";
-Vue.use(TextareaAutosize);
+import { ValidationProvider, extend, ValidationObserver, setInteractionMode } from 'vee-validate';
+import { required } from "vee-validate/dist/rules";
+extend("required", {
+  ...required,
+  message: "{_field_} cannot be empty",
+});
+setInteractionMode("passive");
 export default {
+  components: {
+    ValidationProvider,
+    ValidationObserver
+  },
   data() {
     return {
       comment: "",
       rating: 5,
       rowsNum: 1,
       isExpanded: false,
+      successSnackbar:false,
+      failureSnackbar: false
     };
   },
   methods: {
-    handleSubmit(comment, rating) {
+    async validate() {
+      return this.$refs.addCommentObserver.validate();
+    },
+    refreshPage() {
+      // reset comment inputs
+      this.comment = "";
+      this.rating = 5;
+      // reload current page
+      location.reload();
+    },
+    toggleSnackbar() {
+      this.successSnackbar = true;
+      this.refreshPage();
+      setTimeout(() => (this.successSnackbar = false), 1000);
+    },
+    async handleSubmit(comment, rating) {
+      const isValidated= await this.validate();
       var id = this.$route.params.hostelId;
-      try {
-        HostelRequest.postHostelComment(id, comment, rating);
-        // reset comment inputs
-        this.comment = "";
-        this.rating = 5;
-        window.confirm("Successfully added a comment!");
-        // reload current page
-        location.reload();
-      } catch (error) {
-        console.log(error);
+      console.log(comment);
+      console.log(rating);
+      if (isValidated) {
+        try {
+          // backend should return whether this action is successful
+          HostelRequest.postHostelComment(id, comment, rating);
+          this.toggleSnackbar();
+        } catch (error) {
+          console.log(error);
+          this.failureSnackbar = true;
+          setTimeout(() => (this.failureSnackbar = false), 1000);
+        }
       }
     },
   },
@@ -90,7 +128,6 @@ label {
   font-size: 120%;
   padding: 15px 0px 0px 0px;
   border: none;
-  border-bottom: 1px solid #999;
   color: #555;
   outline: none;
 }
