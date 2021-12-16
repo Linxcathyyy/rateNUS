@@ -21,7 +21,8 @@ export default new Vuex.Store({
             fullName: "",
             initials: "",
             email: "",
-            jwtToken: ""
+            jwtToken: "",
+            defaultProfileColor: "#ffffff"
         }
     },
     //Vuex getter properties are available to components on the store.getters object.
@@ -41,7 +42,10 @@ export default new Vuex.Store({
         },
         isLoggedIn: state => {
             return state.isLoggedIn;
-        }
+        },
+        defaultProfileColor: state => {
+            return state.defaultProfileColor;
+        },
     },
     mutations: {
         //call this method from our component using the store.commit method, with our payload as the second argument.
@@ -62,6 +66,9 @@ export default new Vuex.Store({
         logOut(state) {
             state.isLoggedIn = false;
             state.user.jwtToken = "";
+        },
+        updateDefaultProfileColor(state) {
+            state.defaultProfileColor = "#" + Math.floor(Math.random()*16777215).toString(16);
         }
         
     },
