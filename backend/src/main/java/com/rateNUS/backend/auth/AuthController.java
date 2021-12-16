@@ -47,17 +47,20 @@ public class AuthController {
         Authentication authentication = authenticateManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
         );
+
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
         List<String> roles = userDetails.getAuthorities().stream()
                 .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
         MultiValueMap<String, String> headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + jwt);
-        return new ResponseEntity(new JwtResponseBody(
-                userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles),
+
+        return new ResponseEntity<>(
+                new JwtResponseBody(userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles),
                 headers,
                 HttpStatus.OK);
     }

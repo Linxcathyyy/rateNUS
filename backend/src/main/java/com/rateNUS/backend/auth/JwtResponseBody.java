@@ -3,7 +3,6 @@ package com.rateNUS.backend.auth;
 import java.util.List;
 
 public class JwtResponseBody {
-
     private final List<String> roles;
     private String type = "Bearer";
     private long id;
@@ -11,7 +10,6 @@ public class JwtResponseBody {
     private String email;
 
     public JwtResponseBody(long id, String username, String email, List<String> roles) {
-
         this.id = id;
         this.username = username;
         this.email = email;

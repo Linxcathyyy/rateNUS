@@ -15,7 +15,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.List;
-import java.util.Objects;
 
 @Entity
 @Table
@@ -109,10 +108,6 @@ public class Hostel {
         this.commentCount = commentCount;
     }
 
-    public void incCommentCountByOne() {
-        commentCount++;
-    }
-
     public String getLocation() {
         return location;
     }
@@ -141,47 +136,10 @@ public class Hostel {
         return facilities;
     }
 
-    public void setFacilities(List<Facility> facilities) {
-        this.facilities = facilities;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (!(obj instanceof Hostel)) {
-            return false;
-        }
-
-        Hostel hostel = (Hostel) obj;
-        return id == hostel.id
-                && Double.compare(hostel.rating, rating) == 0
-                && commentCount == hostel.commentCount
-                && Objects.equals(name, hostel.name)
-                && Objects.equals(location, hostel.location)
-                && Objects.equals(description, hostel.description)
-                && Objects.equals(imageUrl, hostel.imageUrl)
-                && Objects.equals(facilities, hostel.facilities);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, rating, commentCount, location, description, imageUrl, facilities);
-    }
-
-    @Override
-    public String toString() {
-        return "Hostel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", rating=" + rating +
-                ", commentCount=" + commentCount +
-                ", location='" + location + '\'' +
-                ", description='" + description + '\'' +
-                ", imageUrl=" + imageUrl +
-                ", facilities=" + facilities +
-                '}';
+    public void addComment(double rating) {
+        this.rating = commentCount == 0
+                ? rating
+                : (commentCount * this.rating + rating) / (commentCount + 1);
+        commentCount++;
     }
 }

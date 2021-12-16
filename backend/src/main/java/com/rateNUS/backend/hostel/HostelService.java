@@ -1,6 +1,7 @@
 package com.rateNUS.backend.hostel;
 
-import com.rateNUS.backend.exception.HostelNotFoundException;
+import com.rateNUS.backend.exception.TypeNotFoundException;
+import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,15 +24,15 @@ public class HostelService {
         this.hostelRepository = hostelRepository;
     }
 
+    public Hostel getHostel(long hostelId) {
+        return hostelRepository.findById(hostelId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId));
+    }
+
     public Page<Hostel> getHostels(String orderBy, boolean isAscending, int pageNum, int numEntriesPerPage) {
         Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
         PageRequest pageRequest = PageRequest.of(pageNum, numEntriesPerPage, Sort.by(direction, orderBy));
         return hostelRepository.findAll(pageRequest);
-    }
-
-    public Hostel getHostel(long hostelId) {
-        return hostelRepository.findById(hostelId)
-                .orElseThrow(() -> new HostelNotFoundException(hostelId));
     }
 
     public Page<Hostel> findHostel(String keyword, int pageNum, int pageSize) {
@@ -58,25 +59,9 @@ public class HostelService {
     }
 
     @Transactional
-    public void updateHostel(long hostelId, int rating, boolean hasNewComment) {
-        if (!hasNewComment) {
-            return;
-        }
-
-        Hostel hostel = hostelRepository.findById(hostelId)
-                .orElseThrow(() -> new HostelNotFoundException(hostelId));
-
-        int currentCommentCount = hostel.getCommentCount();
-        double updatedRating;
-
-        if (currentCommentCount == 0) {
-            updatedRating = rating;
-        } else {
-            double currentRating = hostel.getRating();
-            updatedRating = (currentCommentCount * currentRating + rating) / (currentCommentCount + 1);
-        }
-
-        hostel.setRating(updatedRating);
-        hostel.incCommentCountByOne();
+    public void addComment(long hostelId, int rating) {
+        hostelRepository.findById(hostelId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
+                .addComment(rating);
     }
 }
