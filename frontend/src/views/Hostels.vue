@@ -4,7 +4,7 @@
     <div v-for="hostel in hostelList" :key="hostel.id" class="hostel-list">
       <div @click="goToViewMorePage(hostel.id)" id="hostel-click">
         <!-- <Hostel :hostel="hostel" /> -->
-        <HostelCard :hostel="hostel"/>
+        <HostelCard :hostel="hostel" />
       </div>
     </div>
     <div class="text-center">
@@ -28,7 +28,6 @@
   </div>
 </template>
 
-
 <script>
 import HostelRequest from "../httpRequests/HostelRequest";
 import HostelCard from "../components/hostels/HostelCard";
@@ -48,7 +47,7 @@ export default {
       pageSize: 1,
       totalPages: 0,
       currentKeyword: "",
-      hasBeenSearched: false
+      hasBeenSearched: false,
     };
   },
   methods: {
@@ -102,22 +101,11 @@ export default {
           console.log(error);
         });
     },
-
   },
-
-  async created() { 
-    await this.getHostelList(this.currentPage - 1, this.pageSize);
-  },
-
-  emits: ["handle-search"],
 };
 </script>
 
 <style scope>
-.hostels {
-  padding: 2rem 4rem;
-}
-
 .hostel-list {
   margin: auto;
 }

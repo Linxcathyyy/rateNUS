@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto" height="100%">
-    <v-navigation-drawer class="blue accent-4" dark permanent>
+    <v-navigation-drawer app class="blue accent-4" dark permanent id="side-nav">
       <v-list>
         <v-list-item
           :to="item.route"
@@ -10,7 +10,6 @@
         >
           <v-icon class="icon">{{ item.icon }}</v-icon>
           <v-list-item-title class="title">{{ item.title }}</v-list-item-title>
-          
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
@@ -36,7 +35,12 @@ export default {
 </script>
 
 <style scoped>
-.title{
+.title {
   padding: 10px;
+}
+
+#side-nav {
+  padding-top: 4rem;
+  max-width: max-content;
 }
 </style>

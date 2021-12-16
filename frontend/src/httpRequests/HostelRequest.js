@@ -11,7 +11,7 @@ class HostelRequest {
       orderBy: "id",
       isLowToHigh: true,
       pageNum: pageNum,
-      pageSize: pageSize
+      pageSize: pageSize,
     });
   }
 
@@ -35,17 +35,17 @@ class HostelRequest {
       );
     }
     const headers = {
-      'Authorization': "Bearer " + jwtToken
+      Authorization: "Bearer " + jwtToken,
     };
 
     const req = {
       targetId: hostelId,
       rating: rating,
       text: comment,
-      type: "hostel"
+      type: "hostel",
     };
     return axios.post(COMMENT_API_BASE_URL, req, {
-      headers: headers
+      headers: headers,
     });
   }
 
@@ -54,7 +54,7 @@ class HostelRequest {
     return axios.post(HOSTEL_API_BASE_URL + "/search", {
       keyword: keyword,
       pageNum: pageNum,
-      pageSize: pageSize
+      pageSize: pageSize,
     });
   }
 
@@ -76,7 +76,7 @@ class HostelRequest {
       orderBy: "timestamp",
       isLowToHigh: false,
       pageNum: pageNum,
-      pageSize: pageSize
+      pageSize: pageSize,
     });
   }
 
@@ -85,10 +85,9 @@ class HostelRequest {
       orderBy: "rating",
       isLowToHigh: isLowToHigh,
       pageNum: pageNum,
-      pageSize: pageSize
+      pageSize: pageSize,
     });
   }
-
 }
 
 export default new HostelRequest();
