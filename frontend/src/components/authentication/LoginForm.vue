@@ -36,6 +36,7 @@
 
 <script>
 import AuthenticationRequest from "../../httpRequests/AuthenticationRequest";
+import AuthenticationUtil from "./AuthenticationUtil";
 
 export default {
   name: "LoginForm",
@@ -66,8 +67,16 @@ export default {
           this.password
         )
           .then((response) => {
-            console.log("in login form:" + response);
-            this.$emit("logged-in", response);
+            var name = response.data.username;
+            var email = response.data.email;
+            var token = AuthenticationUtil.parseJWTToken(
+              response.headers["authorization"]
+            );
+            console.log(name, email, token);
+            this.$store.commit("changeName", name);
+            this.$store.commit("changeEmail", email);
+            this.$store.commit("updateJwtToken", token);
+            this.$store.commit("logIn");
           })
           .catch(function (response) {
             //handle error

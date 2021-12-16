@@ -49,17 +49,22 @@ export default {
   methods: {
     handleSubmit(comment, rating) {
       var id = this.$route.params.hostelId;
-      try {
-        HostelRequest.postHostelComment(id, comment, rating);
-        // reset comment inputs
-        this.comment = "";
-        this.rating = 5;
-        window.confirm("Successfully added a comment!");
-        // reload current page
-        //location.reload();
-      } catch (error) {
-        console.log(error);
-      }
+
+      var jwtToken = this.$store.getters.jwtToken;
+      console.log("jwtToken", jwtToken);
+      HostelRequest.postHostelComment(id, comment, rating, jwtToken)
+        .then(() => {
+          window.confirm("Successfully added a comment!");
+          // reload current page
+          location.reload();
+        })
+        .catch((err) => {
+          console.log(err);
+          window.confirm("Failed adding a comment");
+        });
+      // reset comment inputs
+      this.comment = "";
+      this.rating = 5;
     },
   },
 };

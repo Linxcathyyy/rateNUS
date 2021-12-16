@@ -40,7 +40,7 @@ export default defineComponent({
   },
   methods: {
     logout() {
-      this.$emit("logout");
+      this.$store.commit("logOut");
     },
   },
 });

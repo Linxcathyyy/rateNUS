@@ -19,7 +19,8 @@
     "vue-carousel": "^0.18.0",
     "vue-router": "^3.5.3",
     "vue-textarea-autosize": "^1.1.1",
-    "vuetify": "^2.6.1"
+    "vuetify": "^2.6.1",
+    "vuex": "^3.6.2"
   },
   "devDependencies": {
     "@mdi/font": "^6.5.95",

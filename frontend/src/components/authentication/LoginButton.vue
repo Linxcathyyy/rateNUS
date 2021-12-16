@@ -5,7 +5,7 @@
     </template>
     <v-list>
       <v-list-item>
-        <LoginForm @logged-in="loggedIn" />
+        <LoginForm />
       </v-list-item>
     </v-list>
   </v-menu>
@@ -17,14 +17,9 @@ import LoginForm from "./LoginForm.vue";
 export default defineComponent({
   name: "LoginButton",
   setup() {},
-  methods: {
-    loggedIn(response) {
-      this.$emit("logged-in", response);
-    },
-  },
+  methods: {},
   components: {
     LoginForm,
   },
-  emits: ["logged-in"],
 });
 </script>

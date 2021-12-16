@@ -5,16 +5,14 @@
         <header>
           <h1 id="ratenus">Rate NUS!</h1>
           <LoginButton
-            v-if="!this.isLoggedIn"
-            @logged-in="loggedIn"
-            @id="login - button"
+            v-if="!this.$store.getters.isLoggedIn"
+            id="login-button"
           />
           <UserProfile
             v-else
-            :initials="this.initials"
-            :fullName="this.fullName"
-            :email="this.email"
-            @logout="logout"
+            :initials="this.$store.getters.initials"
+            :fullName="this.$store.getters.fullName"
+            :email="this.$store.getters.email"
           />
         </header>
         <Navigation id="navigation" />
@@ -30,7 +28,6 @@
 import Navigation from "./components/Navigation.vue";
 import LoginButton from "./components/authentication/LoginButton.vue";
 import UserProfile from "./components/authentication/UserProfile.vue";
-import UserUtil from "./components/authentication/UserUtil";
 
 export default {
   name: "App",
@@ -40,28 +37,9 @@ export default {
     UserProfile,
   },
   data() {
-    return {
-      isLoggedIn: false,
-      initials: "",
-      fullName: "",
-      email: "",
-    };
+    return {};
   },
-  methods: {
-    loggedIn(response) {
-      console.log("at app.vue" + response);
-      this.isLoggedIn = true;
-      this.initials = UserUtil.getInitials(response.data.username);
-      this.fullName = response.data.username;
-      this.email = response.data.email;
-    },
-    logout() {
-      if (window.confirm("Are you sure you want to log out?")) {
-        this.isLoggedIn = false;
-      }
-    },
-  },
-  emits: ["logged-in", "logout"],
+  methods: {},
 };
 </script>
 

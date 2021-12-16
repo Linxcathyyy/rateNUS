@@ -4,7 +4,7 @@ import Hostels from "../views/Hostels.vue";
 import Canteens from "../views/Canteens.vue";
 import StudyAreas from "../views/StudyAreas.vue";
 import HostelViewMore from "../components/hostels/HostelViewMore.vue";
-
+// import store from '@/store/index.js';
 Vue.use(VueRouter);
 
 const BACKEND_BASE_URL = "http://localhost:8080";

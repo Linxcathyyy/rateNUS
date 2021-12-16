@@ -55,7 +55,6 @@ class AuthenticationRequest {
                 return response;
             })
         return response;
-
     }
 
 }
