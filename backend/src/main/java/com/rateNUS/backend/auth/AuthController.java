@@ -1,7 +1,9 @@
 package com.rateNUS.backend.auth;
 
+import com.rateNUS.backend.exception.InvalidInputException;
 import com.rateNUS.backend.security.UserDetailsImpl;
 import com.rateNUS.backend.security.jwt.JwtUtils;
+import com.rateNUS.backend.user.User;
 import com.rateNUS.backend.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -17,7 +19,6 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,7 +29,6 @@ import java.util.stream.Collectors;
  */
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/login")
 public class AuthController {
     @Autowired
     AuthenticationManager authenticateManager;
@@ -42,7 +42,7 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
         Authentication authentication = authenticateManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword())
@@ -60,8 +60,32 @@ public class AuthController {
         headers.add("Authorization", "Bearer " + jwt);
 
         return new ResponseEntity<>(
-                new JwtResponseBody(userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles),
+                new JwtResponse(userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles),
                 headers,
                 HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/signup", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
+        String username = signupRequest.getUsername();
+        String email = signupRequest.getEmail();
+        String password = signupRequest.getPassword();
+
+        if (userRepository.existsByEmail(email)) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Email has been registered."));
+        }
+        if (userRepository.existsByUsername(username)) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Username has been registered."));
+        }
+
+        User user = new User();
+        try {
+            user = new User(username, email, password);
+        } catch (InvalidInputException e) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: " + e.getMessage()));
+        }
+        userRepository.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("User registration is successful."));
     }
 }

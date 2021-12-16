@@ -13,6 +13,14 @@ public class SignupRequest {
     public SignupRequest() {
     }
 
+    // sign up request for a normal user.
+    public SignupRequest(String username, String email, String password) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+    }
+
+    // sign up request for an account with special roles.
     public SignupRequest(String username, String email, String password, Set<ApplicationUserRole> roles) {
         this.username = username;
         this.email = email;
