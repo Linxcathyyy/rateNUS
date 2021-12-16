@@ -30,7 +30,7 @@ public class Comment {
     @Column(name = "rating", nullable = false)
     private int rating;
 
-    @Column(name = "text", nullable = false)
+    @Column(name = "text", nullable = false, length = 2500)
     private String text;
 
     @Column(name = "type", nullable = false)
