@@ -87,12 +87,12 @@ export default {
     async handleSubmit(comment, rating) {
       const isValidated= await this.validate();
       var id = this.$route.params.hostelId;
-      console.log(comment);
-      console.log(rating);
       if (isValidated) {
         try {
+          var jwtToken = this.$store.getters.jwtToken;
+          console.log("jwtToken", jwtToken);
           // backend should return whether this action is successful
-          HostelRequest.postHostelComment(id, comment, rating);
+          HostelRequest.postHostelComment(id, comment, rating, jwtToken);
           this.toggleSnackbar();
         } catch (error) {
           console.log(error);
