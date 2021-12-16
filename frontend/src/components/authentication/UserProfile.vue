@@ -37,7 +37,7 @@ export default defineComponent({
     initials: String,
     fullName: String,
     email: String,
-    profileColor: String
+    profileColor: String,
   },
   methods: {
     logout() {

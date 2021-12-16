@@ -13,7 +13,7 @@ export default new Vuex.Store({
             getItem: key => ls.get(key),
             setItem: (key, value) => ls.set(key, value),
             removeItem: key => ls.remove(key)
-          }
+        }
     })],
     state: {
         isLoggedIn: false,
@@ -68,9 +68,8 @@ export default new Vuex.Store({
             state.user.jwtToken = "";
         },
         updateDefaultProfileColor(state) {
-            state.defaultProfileColor = "#" + Math.floor(Math.random()*16777215).toString(16);
+            state.defaultProfileColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
         }
-        
     },
     actions: {}
 });
