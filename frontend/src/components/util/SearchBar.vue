@@ -9,6 +9,7 @@
         :append-icon="searchIcon"
         v-on:keypress.enter="handleSearch"
         @click:append="handleSearch()"
+        autocomplete="off"
       >
       </v-text-field>
   </div>
