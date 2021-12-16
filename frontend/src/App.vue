@@ -48,9 +48,9 @@ header {
   align-items: center;
   height: 4rem;
   margin: 0;
-  /* background: #f5f5f7; */
-  color: #f5f5f7;
+  background: #ffffff;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  z-index: 99; /* header stays on top */
 }
 #ratenus {
   padding: 15px;

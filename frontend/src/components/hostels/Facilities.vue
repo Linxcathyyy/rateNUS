@@ -1,19 +1,23 @@
 <template>
-    <div class="facilities">
-        <h2>Facilities</h2>
-        <div v-for="facility in this.facilities" :key="facility" class="facility">
-            <p> {{ facility }} </p>
-        </div>
-    </div>
+      <v-card flat class="mx-16 mb-12">
+        <v-card-title>Facilities</v-card-title>
+        <v-card-text>
+          <v-row
+            align="center"
+            class="mx-0"
+          >
+            <div v-for="facility in this.facilities" :key="facility" class="facility">
+                <p> {{ facility }} </p>
+            </div>
+          </v-row>
+        </v-card-text>
+      </v-card>
 </template>
 
 <script>
 
 export default ({
     name: "Facilities",
-    components: {
-
-    },
     props: ["facilities"],
     methods: {
         camelCaseToNormalCase(text) {
