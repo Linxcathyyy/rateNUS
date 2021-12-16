@@ -53,10 +53,43 @@ public class DummyData {
     );
 
     public static Stall s1 = new Stall(
-            "Dummy Stall 1",
-            "Dummy location",
-            "Dummy description",
-            List.of(),
+            "Chop Chop by PUTIEN",
+            "Town Plaza",
+            "Seating Capacity: 40\n" +
+                    "Term Time & Vacation Operating Hours:\n" +
+                    "Mon-Sun, 11.00am-9.00pm (Last order 8.30pm)\n" +
+                    "Contact: 63340201\n" +
+                    "Nearest Carpark: CREATE Tower",
+            List.of("https://middleclass.sg/wp-content/uploads/2021/08/CHOP-CHOP-by-PUTIEN-NUS-UTown-Exterior.jpg",
+                    "https://middleclass.sg/wp-content/uploads/2021/08/chopchop_online_menu_Page_1.jpg",
+                    "https://middleclass.sg/wp-content/uploads/2021/08/chopchop_online_menu_Page_2.jpg"),
+            3.21,
+            27.85
+    );
+
+    public static Stall s2 = new Stall(
+            "Lejomo Cafe",
+            "Prince George’s Park Residences",
+            "Term Time & Vacation Operating Hours:\n" +
+                    "Mon-Sun, 11am to 9pm\n" +
+                    "Contact: 98202273",
+            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2021/08/Lejomo.jpg",
+                    "https://lejomo.com/wp-content/uploads/bb-plugin/cache/WhatsApp-Image-2021-05-22-at-14.28.27-panorama.jpeg"),
+            3.21,
+            27.85
+    );
+
+    public static Stall s3 = new Stall(
+            "Nine Fresh",
+            "Faculty of Science",
+            "Seating Capacity: 9\n" +
+                    "Term Time Operating Hours:\n" +
+                    "Mon-Sat, 11.00am – 8.00pm\n" +
+                    "Sun/PH closed\n" +
+                    "Vacation Operating Hours:\n" +
+                    "Mon-Sat, 11.00am – 3.00pm\n" +
+                    "Sun/PH closed",
+            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2021/02/Nine-Fresh-1-1024x684.jpg"),
             3.21,
             27.85
     );
@@ -92,7 +125,7 @@ public class DummyData {
     public static User u1 = new User("user1", "user@example.email", "password");
 
     public static List<Hostel> hostelList = List.of(h1, h2, h3);
-    public static List<Stall> stallList = List.of(s1);
+    public static List<Stall> stallList = List.of(s1, s2, s3);
     public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6, c7);
     public static List<User> userList = List.of(u1);
 }
