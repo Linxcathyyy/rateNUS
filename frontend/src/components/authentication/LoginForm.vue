@@ -55,10 +55,6 @@ export default {
       return this.$refs.login_form.validate();
     },
 
-    showSubmissionError() {
-      this.isErrorVisible = true;
-    },
-
     async submitLoginCredentials() {
       if (this.validate()) {
         await AuthenticationRequest.loginWithCredentials(
