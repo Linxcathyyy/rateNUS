@@ -43,13 +43,19 @@
         @click:append="showPassword = !showPassword"
       ></v-text-field>
 
-      <v-btn :disabled="!valid" color="success" class="mr-4"> Sign Up </v-btn>
+      <v-btn 
+      :disabled="!valid" 
+      color="success" 
+      class="mr-4"
+      @click="this.submitSignUpCredentials"
+      > Sign Up </v-btn>
     </v-form>
   </div>
 </template>
 
 <script>
 import { defineComponent } from "@vue/composition-api";
+import AuthenticationRequest from "../../httpRequests/AuthenticationRequest";
 
 export default defineComponent({
   setup() {},
