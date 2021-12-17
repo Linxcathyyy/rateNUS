@@ -8,7 +8,7 @@
         autofocus
         v-model="username"
         :rules="nameRules"
-        label="Username"
+        label="User Name"
         required
       ></v-text-field>
 
@@ -22,20 +22,28 @@
       <v-text-field
         v-model="password"
         :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
-        :rules="passwordRules"
+        :rules="[notEmpty, containsNumber, containsChar, lengthMoreThanSix]"
         :type="showPassword ? 'text' : 'password'"
-        name="input-10-1"
         label="Password"
         @click:append="showPassword = !showPassword"
       ></v-text-field>
-      <v-btn
-        :disabled="!valid"
-        color="success"
-        class="mr-4"
-        @click="this.submitLoginCredentials"
-      >
-        Sign Up
-      </v-btn>
+
+      <v-text-field
+        v-model="confirmPassword"
+        :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+        :rules="[
+          notEmpty,
+          containsNumber,
+          containsChar,
+          lengthMoreThanSix,
+          passwordMatch,
+        ]"
+        :type="showPassword ? 'text' : 'password'"
+        label="Confirm Password"
+        @click:append="showPassword = !showPassword"
+      ></v-text-field>
+
+      <v-btn :disabled="!valid" color="success" class="mr-4"> Sign Up </v-btn>
     </v-form>
   </div>
 </template>
@@ -47,7 +55,7 @@ export default defineComponent({
   setup() {},
   name: "SignUpForm",
   data: () => ({
-    valid: true,
+    valid: false,
     username: "",
     nameRules: [
       (v) => !!v || "Name is required",
@@ -60,20 +68,40 @@ export default defineComponent({
     ],
     password: "",
     showPassword: false,
-    passwordRules: [
-      (v) => !!v || "Password is required.",
-      (v) => /[0-9]/.test(v) || "Password should contains at least one number",
-      (v) =>
-        /[A-Za-z]/.test(v) || "Password should contains at least one character",
-      (v) =>
-        (v && v.length >= 6) ||
-        "Password should be greater than or equal to 6 characters",
-    ],
+    confirmPassword: "",
     isErrorVisible: false,
   }),
+  computed: {
+    passwordMatch() {
+      return () =>
+        this.password === this.confirmPassword || "Password must match";
+    },
+  },
   methods: {
     validate() {
       return this.$refs.signup_form.validate();
+    },
+
+    //password validations
+    notEmpty(v) {
+      return !!v || "Password is required.";
+    },
+
+    containsNumber(v) {
+      return /[0-9]/.test(v) || "Password should contains at least one number";
+    },
+
+    containsChar(v) {
+      return (
+        /[A-Za-z]/.test(v) || "Password should contains at least one character"
+      );
+    },
+
+    lengthMoreThanSix(v) {
+      return (
+        (v && v.length >= 6) ||
+        "Password should be greater than or equal to 6 characters"
+      );
     },
   },
 });

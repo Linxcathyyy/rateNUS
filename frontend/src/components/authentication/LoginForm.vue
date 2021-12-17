@@ -41,7 +41,7 @@ import AuthenticationUtil from "./AuthenticationUtil";
 export default {
   name: "LoginForm",
   data: () => ({
-    valid: true,
+    valid: false,
     username: "",
     nameRules: [(v) => !!v || "UserName is required"],
     password: "",
