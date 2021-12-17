@@ -26,6 +26,9 @@ public class Comment {
     @Column(name = "targetId", nullable = false, updatable = false)
     private long targetId;
 
+    @Column(name = "userId", nullable = false, updatable = false)
+    private long userId;
+
     @Column(name = "rating", nullable = false)
     private int rating;
 
@@ -51,9 +54,10 @@ public class Comment {
     }
 
     // For CommentRepository
-    public Comment(long id, long targetId, int rating, String text, Type type) {
+    public Comment(long id, long targetId, long userId, int rating, String text, Type type) {
         this.id = id;
         this.targetId = targetId;
+        this.userId = userId;
         this.rating = rating;
         this.text = text;
         this.type = type;
@@ -73,6 +77,14 @@ public class Comment {
 
     public void setTargetId(long targetId) {
         this.targetId = targetId;
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public int getRating() {
