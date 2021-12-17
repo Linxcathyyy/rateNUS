@@ -23,11 +23,22 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public Page<Comment> getComments(long targetId, Type type, String orderBy, boolean isAscending, int pageNum,
-                                     int numEntriesPerPage) {
+    public Page<Comment> getCommentsOfRateable(long targetId, Type type, String orderBy, boolean isAscending,
+                                               int pageNum, int numEntriesPerPage) {
         Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
         PageRequest pageRequest = PageRequest.of(pageNum, numEntriesPerPage, Sort.by(direction, orderBy));
         Page<Comment> page = commentRepository.findByTargetIdAndType(targetId, type, pageRequest);
+
+        logger.log(Level.INFO, String.format("Found %d comments", page.getTotalElements()));
+
+        return page;
+    }
+
+    public Page<Comment> getCommentsOfUser(long userId, String orderBy, boolean isAscending, int pageNum,
+                                           int numEntriesPerPage) {
+        Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
+        PageRequest pageRequest = PageRequest.of(pageNum, numEntriesPerPage, Sort.by(direction, orderBy));
+        Page<Comment> page = commentRepository.findByUserId(userId, pageRequest);
 
         logger.log(Level.INFO, String.format("Found %d comments", page.getTotalElements()));
 

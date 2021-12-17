@@ -44,7 +44,18 @@ public class CommentController {
         int pageNum = (int) jsonInput.getOrDefault("pageNum", 0);
         int pageSize = (int) jsonInput.getOrDefault("pageSize", 5);
 
-        return commentService.getComments(targetId, type, orderBy, isLowToHigh, pageNum, pageSize);
+        return commentService.getCommentsOfRateable(targetId, type, orderBy, isLowToHigh, pageNum, pageSize);
+    }
+
+    @PostMapping(path = "user/{userId}")
+    public Page<Comment> getCommentsOfUser(@PathVariable("userId") long userId,
+                                           @RequestBody Map<String, Object> jsonInput) {
+        String orderBy = (String) jsonInput.getOrDefault("orderBy", "timestamp");
+        boolean isLowToHigh = (boolean) jsonInput.getOrDefault("isLowToHigh", false);
+        int pageNum = (int) jsonInput.getOrDefault("pageNum", 0);
+        int pageSize = (int) jsonInput.getOrDefault("pageSize", 5);
+
+        return commentService.getCommentsOfUser(userId, orderBy, isLowToHigh, pageNum, pageSize);
     }
 
     @PostMapping
