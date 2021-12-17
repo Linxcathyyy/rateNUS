@@ -1,5 +1,6 @@
 package com.rateNUS.backend.comment;
 
+import com.rateNUS.backend.exception.TypeNotFoundException;
 import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -7,6 +8,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,6 +26,10 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
+    public Optional<Comment> getComment(long commentId) {
+        return commentRepository.findById(commentId);
+    }
+
     public Page<Comment> getComments(long targetId, Type type, String orderBy, boolean isAscending, int pageNum,
                                      int numEntriesPerPage) {
         Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
@@ -34,8 +41,26 @@ public class CommentService {
         return page;
     }
 
-    public void addComment(Comment comment) {
-        commentRepository.save(comment);
+    public Comment addComment(Comment comment) {
         CommentService.logger.log(Level.INFO, "Added comment: " + comment);
+        return commentRepository.save(comment);
+    }
+
+    @Transactional
+    public Comment updateComment(long commentId, Comment newComment) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.comment, commentId));
+
+        comment.setRating(newComment.getRating());
+        comment.setText(newComment.getText());
+
+        return comment;
+    }
+
+    public Comment deleteComment(long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.comment, commentId));
+        commentRepository.deleteById(commentId);
+        return comment;
     }
 }

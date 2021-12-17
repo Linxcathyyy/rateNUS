@@ -64,4 +64,18 @@ public class HostelService {
                 .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
                 .addComment(rating);
     }
+
+    @Transactional
+    public void updateComment(long hostelId, int oldRating, int newRating) {
+        hostelRepository.findById(hostelId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
+                .updateComment(oldRating, newRating);
+    }
+
+    @Transactional
+    public void deleteComment(long hostelId, int rating) {
+        hostelRepository.findById(hostelId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
+                .deleteComment(rating);
+    }
 }

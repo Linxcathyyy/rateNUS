@@ -58,7 +58,7 @@ import Comment from "./Comment.vue";
 
 export default {
   props: {
-    type: String
+    type: String,
   },
   data() {
     return {
@@ -74,7 +74,11 @@ export default {
   methods: {
     async getCommentList(pageNum, pageSize) {
       if (this.type === "hostel") {
-        HostelRequest.getCommentList(this.$route.params.hostelId, pageNum, pageSize)
+        HostelRequest.getCommentList(
+          this.$route.params.hostelId,
+          pageNum,
+          pageSize
+        )
           .then((response) => {
             this.commentList = response.data.content;
             this.totalPages = response.data.totalPages;
@@ -83,7 +87,11 @@ export default {
             console.log(error);
           });
       } else if (this.type === "stall") {
-        StallRequest.getCommentList(this.$route.params.stallId, pageNum, pageSize)
+        StallRequest.getCommentList(
+          this.$route.params.stallId,
+          pageNum,
+          pageSize
+        )
           .then((response) => {
             this.commentList = response.data.content;
             this.totalPages = response.data.totalPages;
@@ -103,9 +111,13 @@ export default {
     async sortCommentsFromLowestToHighestRating(isLowToHigh) {
       if (this.type === "hostel") {
         HostelRequest.sortCommentsByRating(
-          this.$route.params.hostelId, isLowToHigh, this.currentPage - 1, this.pageSize
-        ).then((response) => {
-          console.log(response.data);
+          this.$route.params.hostelId,
+          isLowToHigh,
+          this.currentPage - 1,
+          this.pageSize
+        )
+          .then((response) => {
+            console.log(response.data);
             this.commentList = response.data.content;
             this.totalPages = response.data.totalPages;
           })
@@ -114,9 +126,13 @@ export default {
           });
       } else if (this.type === "stall") {
         StallRequest.sortCommentsByRating(
-          this.$route.params.stallId, isLowToHigh, this.currentPage - 1, this.pageSize
-        ).then((response) => {
-          console.log(response.data);
+          this.$route.params.stallId,
+          isLowToHigh,
+          this.currentPage - 1,
+          this.pageSize
+        )
+          .then((response) => {
+            console.log(response.data);
             this.commentList = response.data.content;
             this.totalPages = response.data.totalPages;
           })

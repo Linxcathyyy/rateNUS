@@ -1,6 +1,6 @@
 <template>
   <div v-if="item != null">
-    <v-card flat class="mx-16 mb-12">
+    <v-card flat class="my-4">
       <v-card-title>{{ item.name }}</v-card-title>
       <v-card-text>
         <v-row align="center" class="mx-0">
@@ -21,19 +21,20 @@
         <v-row align="center" class="mx-0">
           <v-icon class="icon">mdi-map-marker</v-icon>
           <div class="my-4 text-subtitle-1">
-              {{ item.location }}
+            {{ item.location }}
           </div>
         </v-row>
       </v-card-text>
     </v-card>
+
     <ImageSlideShow :imageUrls="item.imageUrl" />
-    <v-card flat class="mx-16 my-12">
+    <v-card flat class="my-4">
       <v-card-text>
-          <v-row align="center" class="mx-0">
-              <div class="mb-4 text-left">
-                  {{ item.description}}
-              </div>
-          </v-row>
+        <v-row align="center" class="mx-0">
+          <div class="mb-4 text-left">
+            {{ item.description }}
+          </div>
+        </v-row>
       </v-card-text>
     </v-card>
     <v-divider class="mx-16"></v-divider>
@@ -42,8 +43,8 @@
       <v-divider class="mx-16"></v-divider>
     </div>
     <CommentForm />
-    <v-divider class="mx-16"></v-divider>
-    <Comments :type="type"/>
+    <v-divider></v-divider>
+    <Comments :type="type" />
   </div>
 </template>
 
@@ -64,7 +65,7 @@ export default {
     ImageSlideShow,
   },
   props: {
-    type: String
+    type: String,
   },
   data() {
     return {
@@ -96,20 +97,20 @@ export default {
   },
 
   computed: {
-      getRating() {
-        if (this.item.rating === -1) {
-          return "No rating";
-        } else {
-          return this.item.rating.toPrecision(2);
-        }
-      },
-      getCommentCount() {
-        if (this.item.commentCount <= 1) {
-          return `(${this.item.commentCount} review)`;
-        } else {
-          return `(${this.item.commentCount} reviews)`;
-        }
+    getRating() {
+      if (this.item.rating === -1) {
+        return "No rating";
+      } else {
+        return this.item.rating.toPrecision(2);
       }
+    },
+    getCommentCount() {
+      if (this.item.commentCount <= 1) {
+        return `(${this.item.commentCount} review)`;
+      } else {
+        return `(${this.item.commentCount} reviews)`;
+      }
+    },
   },
 
   mounted() {
