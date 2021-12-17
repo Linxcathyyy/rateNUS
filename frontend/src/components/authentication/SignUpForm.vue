@@ -2,7 +2,7 @@
   <div>
     <v-form ref="signup_form" v-model="valid" lazy-validation>
       <v-alert dense outlined type="error" v-if="isErrorVisible">
-        Login Failed
+        Sign Up Failed
       </v-alert>
       <v-text-field
         autofocus
@@ -102,6 +102,43 @@ export default defineComponent({
         (v && v.length >= 6) ||
         "Password should be greater than or equal to 6 characters"
       );
+    },
+
+    showSubmissionError() {
+      this.isErrorVisible = true;
+    },
+
+    async submitSignUpCredentials() {
+      if (this.validate()) {
+        await AuthenticationRequest.signUpWithCredentials(
+          this.username,
+          this.password,
+          this.email
+        )
+          // .then((response) => {
+          //   handle success
+          //   var name = response.data.username;
+          //   var email = response.data.email;
+          //   var token = AuthenticationUtil.parseJWTToken(
+          //     response.headers["authorization"]
+          //   );
+          //   console.log(name, email, token);
+          //   this.$store.commit("changeName", name);
+          //   this.$store.commit("changeEmail", email);
+          //   this.$store.commit("updateJwtToken", token);
+          //   this.$store.commit("logIn");
+          //   this.$store.commit("updateDefaultProfileColor");
+          // })
+          .catch(function (response) {
+            //handle error
+            console.log("error occurred");
+            console.log(response);
+            //return response;
+          })
+          .then(() => {
+            this.showSubmissionError();
+          });
+      }
     },
   },
 });
