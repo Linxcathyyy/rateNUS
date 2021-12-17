@@ -136,10 +136,24 @@ public class Hostel {
         return facilities;
     }
 
-    public void addComment(double rating) {
+    public void addComment(int rating) {
         this.rating = commentCount == 0
                 ? rating
                 : (commentCount * this.rating + rating) / (commentCount + 1);
         commentCount++;
+    }
+
+    public void updateComment(int oldRating, int newRating) {
+        rating = (commentCount * rating - oldRating + newRating) / commentCount;
+    }
+
+    public void deleteComment(int rating) {
+        if (commentCount == 1) {
+            commentCount = 0;
+            this.rating = -1;
+        } else {
+            this.rating = (commentCount * this.rating - rating) / (commentCount - 1);
+            commentCount--;
+        }
     }
 }

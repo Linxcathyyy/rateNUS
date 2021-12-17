@@ -1,5 +1,5 @@
 package com.rateNUS.backend.util;
 
 public enum Type {
-    hostel, stall, studyArea
+    hostel, stall, studyArea, comment
 }

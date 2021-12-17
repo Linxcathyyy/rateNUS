@@ -32,7 +32,7 @@ public class Comment {
     @Column(name = "text", nullable = false, columnDefinition = "TEXT")
     private String text;
 
-    @Column(name = "type", nullable = false)
+    @Column(name = "type", nullable = false, updatable = false)
     @Enumerated(EnumType.STRING)
     private Type type;
 
