@@ -63,7 +63,7 @@
         label="Confirm Password"
         @click:append="showPassword = !showPassword"
       ></v-text-field>
-
+      
       <v-btn
         :disabled="!valid"
         color="success"
@@ -110,7 +110,7 @@ export default defineComponent({
   },
   methods: {
     validate() {
-      return this.$refs.signup_form.validate();
+      return this.$refs.signup_form.validate() && this.password === this.confirmPassword;
     },
 
     //password validations
