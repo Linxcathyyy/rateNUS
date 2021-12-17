@@ -46,8 +46,9 @@ public class Comment {
     public Comment() {}
 
     // For dummy data
-    public Comment(long targetId, int rating, String text, Type type) {
+    public Comment(long targetId, long userId, int rating, String text, Type type) {
         this.targetId = targetId;
+        this.userId = userId;
         this.rating = rating;
         this.text = text;
         this.type = type;
