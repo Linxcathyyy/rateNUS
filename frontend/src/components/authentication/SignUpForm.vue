@@ -152,27 +152,11 @@ export default defineComponent({
           .then((response) => {
             //handle success
             this.successDialog = true;
-            console.log(response);
-            // var name = response.data.username;
-            // var email = response.data.email;
-            // var token = AuthenticationUtil.parseJWTToken(
-            //   response.headers["authorization"]
-            // );
-            // console.log(name, email, token);
-            // this.$store.commit("changeName", name);
-            // this.$store.commit("changeEmail", email);
-            // this.$store.commit("updateJwtToken", token);
-            // this.$store.commit("logIn");
-            // this.$store.commit("updateDefaultProfileColor");
             return response;
           })
           .catch(function (err) {
             //handle error
             console.log("error occurred");
-            console.log(err.response);
-            console.log(err.response.status);
-            console.log(err.response.data);
-            console.log(err.response.message);
             return err.response;
             //return response;
           })
