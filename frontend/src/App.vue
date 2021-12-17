@@ -5,10 +5,16 @@
         <header>
           <h1 id="ratenus">Rate NUS!</h1>
           <div v-if="!this.$store.getters.isLoggedIn" class="login-component">
-            <v-row>
+            <v-row class="show-on-desktop">
               <LoginButton class="button" />
               <SignUpButton class="button" />
             </v-row>
+
+            <div class="show-on-mobile">
+              <v-app-bar-nav-icon
+                @click.stop="menu = !menu"
+              ></v-app-bar-nav-icon>
+            </div>
           </div>
           <UserProfile
             v-else
@@ -19,6 +25,17 @@
             class="login-component"
           />
         </header>
+        <div>
+          <v-dialog v-model="menu" width="15em">
+            <v-card>
+              <v-card-title> Welcome! </v-card-title>
+              <v-col align-content="space-around">
+                <LoginButton class="button" />
+                <SignUpButton class="button" />
+              </v-col>
+            </v-card>
+          </v-dialog>
+        </div>
         <div id="nav-router-view">
           <Navigation id="navigation" />
           <div class="mx-4">
@@ -45,13 +62,26 @@ export default {
     UserProfile,
   },
   data() {
-    return {};
+    return {
+      menu: false,
+    };
   },
   methods: {},
 };
 </script>
 
 <style>
+@media (min-width: 761px) {
+  .show-on-mobile {
+    display: none !important;
+  }
+}
+@media (max-width: 760px) {
+  .show-on-desktop {
+    display: none !important;
+  }
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
