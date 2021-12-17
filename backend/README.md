@@ -149,8 +149,14 @@ Gradle > Tasks > application > bootRun
             ```
     * Add Comment
         * Give: `@RequestBody Comment comment`
-        * Path:
+        * Path: `comment`
             * role == "USER": `comment`
+    * Edit Comment
+        * Give: `@PathVariable("commentId") long commentId`, `@RequestBody Comment comment`
+        * Path: `comment/{commentId}`
+    * Delete Comment
+        * Give: `@PathVariable("commentId") long commentId`
+        * Path: `comment/{commentId}`
 * Authentication
     * Post login request
         * Give: `@RequestBody LoginRequest loginRequest`

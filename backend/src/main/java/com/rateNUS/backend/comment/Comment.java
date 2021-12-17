@@ -35,7 +35,7 @@ public class Comment {
     @Column(name = "text", nullable = false, columnDefinition = "TEXT")
     private String text;
 
-    @Column(name = "type", nullable = false)
+    @Column(name = "type", nullable = false, updatable = false)
     @Enumerated(EnumType.STRING)
     private Type type;
 
@@ -64,20 +64,8 @@ public class Comment {
         this.type = type;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public long getTargetId() {
         return targetId;
-    }
-
-    public void setTargetId(long targetId) {
-        this.targetId = targetId;
     }
 
     public long getUserId() {
@@ -106,17 +94,5 @@ public class Comment {
 
     public Type getType() {
         return type;
-    }
-
-    public void setType(Type type) {
-        this.type = type;
-    }
-
-    public Timestamp getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(Timestamp timestamp) {
-        this.timestamp = timestamp;
     }
 }
