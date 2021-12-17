@@ -1,7 +1,18 @@
 <template>
   <v-card class="mx-auto" height="100%">
-    <v-navigation-drawer app class="orange accent-4" dark permanent id="side-nav">
+    <v-navigation-drawer
+      app
+      class="orange accent-4"
+      dark
+      :mini-variant.sync="mini"
+      permanent
+      id="side-nav"
+    >
       <v-list>
+        <v-btn icon @click.stop="mini = !mini">
+          <v-icon v-show="!mini">mdi-chevron-left</v-icon>
+          <v-icon v-show="mini">mdi-chevron-right</v-icon>
+        </v-btn>
         <v-list-item
           :to="item.route"
           v-for="item in items"
@@ -29,6 +40,7 @@ export default {
           route: "/studyAreas",
         },
       ],
+      mini: true,
     };
   },
 };
