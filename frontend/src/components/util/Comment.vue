@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Rating from "./hostels/Rating.vue";
+import Rating from "../commons/Rating.vue";
 
 export default {
   name: "Comment",

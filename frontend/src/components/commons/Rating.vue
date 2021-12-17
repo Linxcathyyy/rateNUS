@@ -7,7 +7,6 @@
     readonly
     size="14"
   ></v-rating>
-    <!-- <p class="rating">Rating: {{ scoreTo2dp }}/5.0 </p> -->
 </template>
 
 <script>
