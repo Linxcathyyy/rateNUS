@@ -1,14 +1,17 @@
 <template>
-  <v-menu :close-on-content-click="false">
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn color="primary" dark v-bind="attrs" v-on="on"> Sign Up </v-btn>
-    </template>
-    <v-list>
-      <v-list-item>
-        <SignUpForm />
-      </v-list-item>
-    </v-list>
-  </v-menu>
+  <div>
+    <v-btn color="primary" @click="showSignUpDialog"> Sign Up </v-btn>
+    <v-dialog v-model="isSignUpDialogShown" max-width="40%">
+      <v-card>
+        <v-card-title>
+          <span>Sign Up</span>
+        </v-card-title>
+        <v-container>
+          <SignUpForm />
+        </v-container>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>
@@ -17,9 +20,21 @@ import SignUpForm from "./SignUpForm.vue";
 export default defineComponent({
   name: "LoginButton",
   setup() {},
-  methods: {},
+  data() {
+    return {
+      isSignUpDialogShown: false,
+    };
+  },
   components: {
     SignUpForm,
+  },
+  methods: {
+    showSignUpDialog() {
+      this.isSignUpDialogShown = true;
+    },
+    quitSignUpDialog() {
+      this.isSignUpDialogShown = false;
+    },
   },
 });
 </script>

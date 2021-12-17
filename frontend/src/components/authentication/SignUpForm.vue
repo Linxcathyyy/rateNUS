@@ -1,11 +1,32 @@
 <template>
   <div>
+    <v-dialog v-model="successDialog" persistent max-width="290">
+      <v-card>
+        <v-card-title class="text-h5"> Success </v-card-title>
+        <v-card-text
+          >You have signed up successfully! Please proceed to log in with your
+          registered account.</v-card-text
+        >
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue" text @click="quitSuccessDialog"> Ok </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="isErrorVisible" persistent max-width="290">
+      <v-card>
+        <v-card-title> Sign Up Failed </v-card-title>
+        <v-card-text> {{ errorMessage }} </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue" text @click="quitFailureDialog"> Ok </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-form ref="signup_form" v-model="valid" lazy-validation>
-      <v-alert dense outlined type="error" v-if="isErrorVisible">
-        Sign Up Failed
-      </v-alert>
       <v-text-field
-        autofocus
         v-model="username"
         :rules="nameRules"
         label="User Name"
@@ -43,12 +64,14 @@
         @click:append="showPassword = !showPassword"
       ></v-text-field>
 
-      <v-btn 
-      :disabled="!valid" 
-      color="success" 
-      class="mr-4"
-      @click="this.submitSignUpCredentials"
-      > Sign Up </v-btn>
+      <v-btn
+        :disabled="!valid"
+        color="success"
+        class="mr-4"
+        @click="this.submitSignUpCredentials"
+      >
+        Sign Up
+      </v-btn>
     </v-form>
   </div>
 </template>
@@ -65,7 +88,7 @@ export default defineComponent({
     username: "",
     nameRules: [
       (v) => !!v || "Name is required",
-      (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
+      (v) => (v && v.length <= 20) || "Name must be less than 20 characters",
     ],
     email: "",
     emailRules: [
@@ -76,6 +99,8 @@ export default defineComponent({
     showPassword: false,
     confirmPassword: "",
     isErrorVisible: false,
+    successDialog: false,
+    errorMessage: "",
   }),
   computed: {
     passwordMatch() {
@@ -110,10 +135,13 @@ export default defineComponent({
       );
     },
 
-    showSubmissionError() {
-      this.isErrorVisible = true;
+    quitSuccessDialog() {
+      this.successDialog = false;
     },
 
+    quitFailureDialog() {
+      this.isErrorVisible = false;
+    },
     async submitSignUpCredentials() {
       if (this.validate()) {
         await AuthenticationRequest.signUpWithCredentials(
@@ -121,28 +149,40 @@ export default defineComponent({
           this.password,
           this.email
         )
-          // .then((response) => {
-          //   handle success
-          //   var name = response.data.username;
-          //   var email = response.data.email;
-          //   var token = AuthenticationUtil.parseJWTToken(
-          //     response.headers["authorization"]
-          //   );
-          //   console.log(name, email, token);
-          //   this.$store.commit("changeName", name);
-          //   this.$store.commit("changeEmail", email);
-          //   this.$store.commit("updateJwtToken", token);
-          //   this.$store.commit("logIn");
-          //   this.$store.commit("updateDefaultProfileColor");
-          // })
-          .catch(function (response) {
+          .then((response) => {
+            //handle success
+            this.successDialog = true;
+            console.log(response);
+            // var name = response.data.username;
+            // var email = response.data.email;
+            // var token = AuthenticationUtil.parseJWTToken(
+            //   response.headers["authorization"]
+            // );
+            // console.log(name, email, token);
+            // this.$store.commit("changeName", name);
+            // this.$store.commit("changeEmail", email);
+            // this.$store.commit("updateJwtToken", token);
+            // this.$store.commit("logIn");
+            // this.$store.commit("updateDefaultProfileColor");
+            return response;
+          })
+          .catch(function (err) {
             //handle error
             console.log("error occurred");
-            console.log(response);
+            console.log(err.response);
+            console.log(err.response.status);
+            console.log(err.response.data);
+            console.log(err.response.message);
+            return err.response;
             //return response;
           })
-          .then(() => {
-            this.showSubmissionError();
+          .then((response) => {
+            if (response.status != 200) {
+              this.isErrorVisible = true;
+              this.errorMessage = response.data.message;
+            } else {
+              this.successDialog = true;
+            }
           });
       }
     },

@@ -1,14 +1,17 @@
 <template>
-  <v-menu :close-on-content-click="false">
-    <template v-slot:activator="{ on, attrs }">
-      <v-btn color="primary" dark v-bind="attrs" v-on="on"> Log In </v-btn>
-    </template>
-    <v-list>
-      <v-list-item>
-        <LoginForm />
-      </v-list-item>
-    </v-list>
-  </v-menu>
+  <div>
+    <v-btn color="primary" @click="showLoginDialog"> Login </v-btn>
+    <v-dialog v-model="isLoginFormShown" max-width="40%">
+      <v-card>
+        <v-card-title>
+          <span>Login</span>
+        </v-card-title>
+        <v-container>
+          <LoginForm />
+        </v-container>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script>
@@ -17,7 +20,16 @@ import LoginForm from "./LoginForm.vue";
 export default defineComponent({
   name: "LoginButton",
   setup() {},
-  methods: {},
+  data() {
+    return {
+      isLoginFormShown: false,
+    };
+  },
+  methods: {
+    showLoginDialog() {
+      this.isLoginFormShown = true;
+    },
+  },
   components: {
     LoginForm,
   },

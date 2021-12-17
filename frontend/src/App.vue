@@ -5,8 +5,10 @@
         <header>
           <h1 id="ratenus">Rate NUS!</h1>
           <div v-if="!this.$store.getters.isLoggedIn" class="login-component">
-            <LoginButton />
-            <SignUpButton />
+            <v-row>
+              <LoginButton class="button" />
+              <SignUpButton class="button" />
+            </v-row>
           </div>
           <UserProfile
             v-else
@@ -80,7 +82,7 @@ header {
   padding: 15px;
 }
 .button {
-  padding: 15px;
+  padding: 5px;
 }
 #navigation {
   margin-top: 4rem;
