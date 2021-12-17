@@ -9,7 +9,9 @@
         >
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue" text @click="quitSuccessDialog"> Ok </v-btn>
+          <v-btn color="blue" text @click="quitSuccessDialogAndReloadPage">
+            Ok
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -63,7 +65,7 @@
         label="Confirm Password"
         @click:append="showPassword = !showPassword"
       ></v-text-field>
-      
+
       <v-btn
         :disabled="!valid"
         color="success"
@@ -138,8 +140,9 @@ export default defineComponent({
       );
     },
 
-    quitSuccessDialog() {
+    quitSuccessDialogAndReloadPage() {
       this.successDialog = false;
+      location.reload();
     },
 
     quitFailureDialog() {
@@ -169,6 +172,7 @@ export default defineComponent({
               this.errorMessage = response.data.message;
             } else {
               this.successDialog = true;
+              this.isErrorVisible = false;
             }
           });
       }
