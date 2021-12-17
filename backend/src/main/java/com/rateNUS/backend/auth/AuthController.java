@@ -1,6 +1,5 @@
 package com.rateNUS.backend.auth;
 
-import com.rateNUS.backend.exception.InvalidInputException;
 import com.rateNUS.backend.security.UserDetailsImpl;
 import com.rateNUS.backend.security.jwt.JwtUtils;
 import com.rateNUS.backend.user.User;
@@ -78,12 +77,7 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Username has been registered."));
         }
 
-        User user = new User();
-        try {
-            user = new User(username, email, password);
-        } catch (InvalidInputException e) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: " + e.getMessage()));
-        }
+        User user = new User(username, email, password);
         userRepository.save(user);
 
         return ResponseEntity.ok(new MessageResponse("User registration is successful."));
