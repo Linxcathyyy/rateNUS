@@ -71,7 +71,6 @@ export default {
             var token = AuthenticationUtil.parseJWTToken(
               response.headers["authorization"]
             );
-            console.log(name, email, token);
             this.$store.commit("changeName", name);
             this.$store.commit("changeEmail", email);
             this.$store.commit("updateJwtToken", token);

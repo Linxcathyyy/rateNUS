@@ -42,17 +42,12 @@ class AuthenticationRequest {
     // }
 
     async loginWithCredentials(username, password) {
-
-        console.log(`login with username: ${username} 
-        \npassword: ${password}`);
-
         var response = await axios.post(LOGIN_URL, {
             "username": username,
             "password": password
         })
             .then(function (response) {
                 //handle success
-                console.log(response);
                 return response;
             })
         return response;
@@ -66,7 +61,6 @@ class AuthenticationRequest {
         })
             .then(function (response) {
                 //handle success
-                console.log(response);
                 return response;
             })
         return response;
