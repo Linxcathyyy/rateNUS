@@ -4,20 +4,17 @@
       app
       class="orange accent-4"
       dark
-      :mini-variant.sync="mini"
+      :mini-variant="mini"
       permanent
       id="side-nav"
     >
       <v-list>
-        <v-btn icon @click.stop="mini = !mini">
-          <v-icon v-show="!mini">mdi-chevron-left</v-icon>
-          <v-icon v-show="mini">mdi-chevron-right</v-icon>
-        </v-btn>
         <v-list-item
           :to="item.route"
           v-for="item in items"
           :key="item.title"
           link=""
+          :title="item.title"
         >
           <v-icon class="icon">{{ item.icon }}</v-icon>
           <v-list-item-title class="title">{{ item.title }}</v-list-item-title>
@@ -42,6 +39,22 @@ export default {
       ],
       mini: true,
     };
+  },
+  created() {
+    window.addEventListener("resize", this.handleScreenResize);
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleScreenResize);
+  },
+  methods: {
+    handleScreenResize() {
+      var widthToHeightRatio = window.innerWidth / window.innerHeight;
+      if (widthToHeightRatio < 4 / 3) {
+        this.mini = true;
+      } else {
+        this.mini = false;
+      }
+    },
   },
 };
 </script>
