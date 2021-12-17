@@ -62,7 +62,7 @@
 </template>
 
 <script>
-import HostelRequest from "../httpRequests/HostelRequest";
+import HostelRequest from "../../httpRequests/HostelRequest";
 import {
   ValidationProvider,
   extend,

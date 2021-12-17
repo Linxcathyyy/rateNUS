@@ -3,8 +3,7 @@
     <SearchBar @handle-search="handleSearch" searchHint="Search for hostels" />
     <div v-for="hostel in hostelList" :key="hostel.id" class="hostel-list">
       <div @click="goToViewMorePage(hostel.id)" id="hostel-click">
-        <!-- <Hostel :hostel="hostel" /> -->
-        <HostelCard :hostel="hostel" />
+        <ItemCard type="hostel" :item="hostel" />
       </div>
     </div>
     <div class="text-center">
@@ -30,13 +29,13 @@
 
 <script>
 import HostelRequest from "../httpRequests/HostelRequest";
-import HostelCard from "../components/hostels/HostelCard";
+import ItemCard from "../components/commons/ItemCard";
 import SearchBar from "../components/util/SearchBar";
 
 export default {
   name: "Hostels",
   components: {
-    HostelCard,
+    ItemCard,
     SearchBar,
   },
 

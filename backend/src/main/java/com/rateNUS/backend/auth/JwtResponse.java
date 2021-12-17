@@ -2,14 +2,14 @@ package com.rateNUS.backend.auth;
 
 import java.util.List;
 
-public class JwtResponseBody {
+public class JwtResponse {
     private final List<String> roles;
     private String type = "Bearer";
     private long id;
     private String username;
     private String email;
 
-    public JwtResponseBody(long id, String username, String email, List<String> roles) {
+    public JwtResponse(long id, String username, String email, List<String> roles) {
         this.id = id;
         this.username = username;
         this.email = email;
