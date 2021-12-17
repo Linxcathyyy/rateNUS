@@ -1,13 +1,7 @@
 <template>
-<<<<<<< HEAD:frontend/src/components/hostels/HostelViewMore.vue
-  <div v-if="hostel != null">
-    <v-card flat class="mb-12">
-      <v-card-title>{{ hostel.name }}</v-card-title>
-=======
   <div v-if="item != null">
     <v-card flat class="mx-16 mb-12">
       <v-card-title>{{ item.name }}</v-card-title>
->>>>>>> e1a18cff77f899f8f5e71b5ef4b969b7d447a432:frontend/src/components/commons/ItemViewMore.vue
       <v-card-text>
         <v-row align="center" class="mx-0">
           <v-rating
@@ -20,54 +14,27 @@
           ></v-rating>
 
           <div class="grey--text ms-4">
-<<<<<<< HEAD:frontend/src/components/hostels/HostelViewMore.vue
-            {{ hostel.rating.toPrecision(2) }} ({{ hostel.commentCount }}
-            reviews)
-=======
             {{ getRating }} {{ getCommentCount }}
->>>>>>> e1a18cff77f899f8f5e71b5ef4b969b7d447a432:frontend/src/components/commons/ItemViewMore.vue
           </div>
         </v-row>
 
         <v-row align="center" class="mx-0">
           <v-icon class="icon">mdi-map-marker</v-icon>
           <div class="my-4 text-subtitle-1">
-<<<<<<< HEAD:frontend/src/components/hostels/HostelViewMore.vue
-            {{ hostel.location }}
-=======
-              {{ item.location }}
->>>>>>> e1a18cff77f899f8f5e71b5ef4b969b7d447a432:frontend/src/components/commons/ItemViewMore.vue
+            {{ item.location }}
           </div>
         </v-row>
       </v-card-text>
     </v-card>
-<<<<<<< HEAD:frontend/src/components/hostels/HostelViewMore.vue
-    <ImageSlideShow :imageUrls="hostel.imageUrl" />
-    <v-card flat class="my-12">
-      <v-card-text>
-        <v-row align="center" class="mx-0">
-          <div class="mb-4 text-left">
-            {{ hostel.description }}
-          </div>
-        </v-row>
-      </v-card-text>
-    </v-card>
-    <v-divider></v-divider>
-    <Facilities :facilities="this.hostel.facilities" />
-    <!-- The divider below is covered and had to add margin to show it. -->
-    <v-divider id="unseen-divider"></v-divider>
-    <CommentForm />
-    <v-divider></v-divider>
-    <Comments />
-=======
+
     <ImageSlideShow :imageUrls="item.imageUrl" />
     <v-card flat class="mx-16 my-12">
       <v-card-text>
-          <v-row align="center" class="mx-0">
-              <div class="mb-4 text-left">
-                  {{ item.description}}
-              </div>
-          </v-row>
+        <v-row align="center" class="mx-0">
+          <div class="mb-4 text-left">
+            {{ item.description }}
+          </div>
+        </v-row>
       </v-card-text>
     </v-card>
     <v-divider class="mx-16"></v-divider>
@@ -75,8 +42,7 @@
     <v-divider class="mx-16"></v-divider>
     <CommentForm />
     <v-divider class="mx-16"></v-divider>
-    <Comments :type="type"/>
->>>>>>> e1a18cff77f899f8f5e71b5ef4b969b7d447a432:frontend/src/components/commons/ItemViewMore.vue
+    <Comments :type="type" />
   </div>
 </template>
 
@@ -97,7 +63,7 @@ export default {
     ImageSlideShow,
   },
   props: {
-    type: String
+    type: String,
   },
   data() {
     return {
@@ -129,20 +95,20 @@ export default {
   },
 
   computed: {
-      getRating() {
-        if (this.item.rating === -1) {
-          return "No rating";
-        } else {
-          return this.item.rating.toPrecision(2);
-        }
-      },
-      getCommentCount() {
-        if (this.item.commentCount <= 1) {
-          return `(${this.item.commentCount} review)`;
-        } else {
-          return `(${this.item.commentCount} reviews)`;
-        }
+    getRating() {
+      if (this.item.rating === -1) {
+        return "No rating";
+      } else {
+        return this.item.rating.toPrecision(2);
       }
+    },
+    getCommentCount() {
+      if (this.item.commentCount <= 1) {
+        return `(${this.item.commentCount} review)`;
+      } else {
+        return `(${this.item.commentCount} reviews)`;
+      }
+    },
   },
 
   mounted() {
