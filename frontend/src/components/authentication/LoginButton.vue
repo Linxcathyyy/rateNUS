@@ -1,7 +1,9 @@
 <template>
   <v-menu :close-on-content-click="false">
     <template v-slot:activator="{ on, attrs }">
-      <v-btn color="primary" dark v-bind="attrs" v-on="on"> Log In </v-btn>
+      <v-btn color="primary" dark v-bind="attrs" v-on="on" class="mr-4">
+        Log In
+      </v-btn>
     </template>
     <v-list>
       <v-list-item>
