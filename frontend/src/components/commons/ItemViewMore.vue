@@ -3,10 +3,7 @@
     <v-card flat class="mx-16 mb-12">
       <v-card-title>{{ item.name }}</v-card-title>
       <v-card-text>
-        <v-row
-          align="center"
-          class="mx-0"
-        >
+        <v-row align="center" class="mx-0">
           <v-rating
             :value="item.rating"
             color="amber"
@@ -21,12 +18,12 @@
           </div>
         </v-row>
 
-          <v-row align="center" class="mx-0">
+        <v-row align="center" class="mx-0">
           <v-icon class="icon">mdi-map-marker</v-icon>
           <div class="my-4 text-subtitle-1">
               {{ item.location }}
           </div>
-          </v-row>
+        </v-row>
       </v-card-text>
     </v-card>
     <ImageSlideShow :imageUrls="item.imageUrl" />
@@ -125,8 +122,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* .content {
-  margin-top: 2rem;
-} */
-</style>
+<style scoped></style>
