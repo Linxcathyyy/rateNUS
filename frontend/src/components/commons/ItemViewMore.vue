@@ -1,6 +1,6 @@
 <template>
   <div v-if="item != null">
-    <v-card flat class="mx-16 mb-12">
+    <v-card flat class="my-4">
       <v-card-title>{{ item.name }}</v-card-title>
       <v-card-text>
         <v-row align="center" class="mx-0">
@@ -26,8 +26,9 @@
         </v-row>
       </v-card-text>
     </v-card>
+
     <ImageSlideShow :imageUrls="item.imageUrl" />
-    <v-card flat class="mx-10 my-12">
+    <v-card flat class="my-4">
       <v-card-text>
         <v-row align="center" class="mx-0">
           <div class="mb-4 text-left">
@@ -36,11 +37,11 @@
         </v-row>
       </v-card-text>
     </v-card>
-    <v-divider class="mx-16"></v-divider>
+    <v-divider></v-divider>
     <Facilities :facilities="this.item.facilities" />
-    <v-divider class="mx-16"></v-divider>
+    <v-divider></v-divider>
     <CommentForm />
-    <v-divider class="mx-16"></v-divider>
+    <v-divider></v-divider>
     <Comments :type="type" />
   </div>
 </template>
