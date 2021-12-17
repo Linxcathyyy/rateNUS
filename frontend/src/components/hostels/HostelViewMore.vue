@@ -1,12 +1,9 @@
 <template>
   <div v-if="hostel != null">
-    <v-card flat class="mx-16 mb-12">
+    <v-card flat class="mb-12">
       <v-card-title>{{ hostel.name }}</v-card-title>
       <v-card-text>
-        <v-row
-          align="center"
-          class="mx-0"
-        >
+        <v-row align="center" class="mx-0">
           <v-rating
             :value="hostel.rating"
             color="amber"
@@ -17,33 +14,35 @@
           ></v-rating>
 
           <div class="grey--text ms-4">
-            {{ hostel.rating.toPrecision(2) }} ({{ hostel.commentCount }} reviews)
+            {{ hostel.rating.toPrecision(2) }} ({{ hostel.commentCount }}
+            reviews)
           </div>
         </v-row>
 
-          <v-row align="center" class="mx-0">
+        <v-row align="center" class="mx-0">
           <v-icon class="icon">mdi-map-marker</v-icon>
           <div class="my-4 text-subtitle-1">
-              {{ hostel.location }}
+            {{ hostel.location }}
           </div>
-          </v-row>
+        </v-row>
       </v-card-text>
     </v-card>
     <ImageSlideShow :imageUrls="hostel.imageUrl" />
-    <v-card flat class="mx-16 my-12">
+    <v-card flat class="my-12">
       <v-card-text>
-          <v-row align="center" class="mx-0">
-              <div class="mb-4 text-left">
-                  {{ hostel.description}}
-              </div>
-          </v-row>
+        <v-row align="center" class="mx-0">
+          <div class="mb-4 text-left">
+            {{ hostel.description }}
+          </div>
+        </v-row>
       </v-card-text>
     </v-card>
-    <v-divider class="mx-16"></v-divider>
+    <v-divider></v-divider>
     <Facilities :facilities="this.hostel.facilities" />
-    <v-divider class="mx-16"></v-divider>
+    <!-- The divider below is covered and had to add margin to show it. -->
+    <v-divider id="unseen-divider"></v-divider>
     <CommentForm />
-    <v-divider class="mx-16"></v-divider>
+    <v-divider></v-divider>
     <Comments />
   </div>
 </template>
@@ -88,8 +87,4 @@ export default {
 };
 </script>
 
-<style scoped>
-/* .content {
-  margin-top: 2rem;
-} */
-</style>
+<style scoped></style>

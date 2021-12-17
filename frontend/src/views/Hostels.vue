@@ -107,7 +107,7 @@ export default {
     await this.getHostelList(this.currentPage - 1, this.pageSize);
   },
 
-  emits: ["handle-search"]
+  emits: ["handle-search"],
 };
 </script>
 
