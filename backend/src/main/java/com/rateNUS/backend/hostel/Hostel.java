@@ -1,13 +1,20 @@
 package com.rateNUS.backend.hostel;
 
+import com.rateNUS.backend.util.Facility;
+
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.util.Objects;
+import java.util.List;
 
 @Entity
 @Table
@@ -24,33 +31,49 @@ public class Hostel {
     @Column(name = "rating")
     private double rating;
 
+    @Column(name = "commentCount")
+    private int commentCount;
+
     @Column(name = "location", nullable = false, columnDefinition = "TEXT")
     private String location;
 
     @Column(name = "description", nullable = false, columnDefinition = "TEXT")
     private String description;
 
-    @Column(name = "commentCount")
-    private int commentCount;
+    @ElementCollection
+    @JoinTable(name = "hostelImages", joinColumns = @JoinColumn(name = "hostel_id"))
+    @Column(name = "imageUrl", nullable = false)
+    private List<String> imageUrl;
 
-    public Hostel() {
-    }
+    @ElementCollection(targetClass = Facility.class)
+    @JoinTable(name = "facilities", joinColumns = @JoinColumn(name = "hostel_id"))
+    @Column(name = "facility", nullable = false)
+    @Enumerated(EnumType.STRING)
+    private List<Facility> facilities;
 
-    public Hostel(String name, double rating, String location, String description, int commentCount) {
+    public Hostel() {}
+
+    // For dummy data
+    public Hostel(String name, String location, String description, List<String> imageUrl, List<Facility> facilities) {
         this.name = name;
-        this.rating = rating;
+        this.rating = -1;
         this.location = location;
         this.description = description;
-        this.commentCount = commentCount;
+        this.imageUrl = imageUrl;
+        this.facilities = facilities;
     }
 
-    public Hostel(long id, String name, double rating, String location, String description, int commentCount) {
+    // For HostelRepository
+    public Hostel(long id, String name, double rating, int commentCount, String location, String description,
+                  List<String> imageUrl, List<Facility> facilities) {
         this.id = id;
         this.name = name;
         this.rating = rating;
+        this.commentCount = commentCount;
         this.location = location;
         this.description = description;
-        this.commentCount = commentCount;
+        this.imageUrl = imageUrl;
+        this.facilities = facilities;
     }
 
     public long getId() {
@@ -77,6 +100,14 @@ public class Hostel {
         this.rating = rating;
     }
 
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
+    }
+
     public String getLocation() {
         return location;
     }
@@ -93,51 +124,22 @@ public class Hostel {
         this.description = description;
     }
 
-    public int getCommentCount() {
-        return commentCount;
+    public List<String> getImageUrl() {
+        return imageUrl;
     }
 
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
+    public void setImageUrl(List<String> imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
-    public void incCommentCountByOne() {
+    public List<Facility> getFacilities() {
+        return facilities;
+    }
+
+    public void addComment(double rating) {
+        this.rating = commentCount == 0
+                ? rating
+                : (commentCount * this.rating + rating) / (commentCount + 1);
         commentCount++;
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-
-        if (!(obj instanceof Hostel)) {
-            return false;
-        }
-
-        Hostel hostel = (Hostel) obj;
-        return id == hostel.id
-                && Double.compare(hostel.rating, rating) == 0
-                && Objects.equals(name, hostel.name)
-                && Objects.equals(location, hostel.location)
-                && Objects.equals(description, hostel.description)
-                && commentCount == hostel.commentCount;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, rating, location, description, commentCount);
-    }
-
-    @Override
-    public String toString() {
-        return "Hostel{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", rating=" + rating +
-                ", location='" + location + '\'' +
-                ", description='" + description + '\'' +
-                ", commentCount='" + commentCount + '\'' +
-                '}';
     }
 }

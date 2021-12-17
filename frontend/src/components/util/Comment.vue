@@ -1,25 +1,24 @@
 <template>
   <div :key="comment.id" class="comment">
     <div class="comment-info">
-      <Rating :score="comment.rating" />
-      <p>
-        Posted on:<br />
-        {{ date }} {{ time }}
-      </p>
+        <Rating :score="comment.rating" />
+        <p>
+          Posted on: {{ date }} {{ time }}
+        </p>
     </div>
-    <Description :description="comment.text" class="description" />
+    <p class="description">
+      {{ comment.text }}
+    </p> 
   </div>
 </template>
 
 <script>
-import Rating from "./hostels/Rating.vue";
-import Description from "./hostels/Description.vue";
+import Rating from "../commons/Rating.vue";
 
 export default {
   name: "Comment",
   components: {
     Rating,
-    Description,
   },
   props: {
     comment: Object,
@@ -38,13 +37,19 @@ export default {
 </script>
 
 <style scoped>
+
+.description {
+  text-align: left;
+}
+
 .comment {
-  display: flex;
+  border-bottom: 1px solid darkgray;
+  margin-bottom: 1rem;
 }
 
 .comment-info {
-  flex-shrink: 0;
-  width: 18.5%;
-  padding: 10px 40px;
+  text-align: start;
+  font-size: 0.83em;
 }
+
 </style>

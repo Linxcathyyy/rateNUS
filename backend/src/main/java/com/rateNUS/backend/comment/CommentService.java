@@ -2,9 +2,11 @@ package com.rateNUS.backend.comment;
 
 import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,15 +23,19 @@ public class CommentService {
         this.commentRepository = commentRepository;
     }
 
-    public List<Comment> getComments(long targetId, Type type) {
-        List<Comment> comments = commentRepository.findByTargetIdAndType(targetId, type);
+    public Page<Comment> getComments(long targetId, Type type, String orderBy, boolean isAscending, int pageNum,
+                                     int numEntriesPerPage) {
+        Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
+        PageRequest pageRequest = PageRequest.of(pageNum, numEntriesPerPage, Sort.by(direction, orderBy));
+        Page<Comment> page = commentRepository.findByTargetIdAndType(targetId, type, pageRequest);
 
-        logger.log(Level.INFO, String.format("Found %d comments", comments.size()));
+        logger.log(Level.INFO, String.format("Found %d comments", page.getTotalElements()));
 
-        return comments;
+        return page;
     }
 
     public void addComment(Comment comment) {
         commentRepository.save(comment);
+        CommentService.logger.log(Level.INFO, "Added comment: " + comment);
     }
 }
