@@ -37,7 +37,7 @@ export default {
           route: "/studyAreas",
         },
       ],
-      mini: true,
+      mini: false,
     };
   },
   created() {
@@ -45,6 +45,9 @@ export default {
   },
   destroyed() {
     window.removeEventListener("resize", this.handleScreenResize);
+  },
+  mounted() {
+    this.handleScreenResize();
   },
   methods: {
     handleScreenResize() {
