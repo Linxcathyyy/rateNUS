@@ -110,7 +110,10 @@ export default defineComponent({
   },
   methods: {
     validate() {
-      return this.$refs.signup_form.validate() && this.password === this.confirmPassword;
+      return (
+        this.$refs.signup_form.validate() &&
+        this.password === this.confirmPassword
+      );
     },
 
     //password validations
