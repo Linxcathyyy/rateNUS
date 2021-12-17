@@ -4,11 +4,12 @@
       <div id="app">
         <header>
           <h1 id="ratenus">Rate NUS!</h1>
-          <LoginButton
-            v-if="!this.$store.getters.isLoggedIn"
-            id="login-button"
-            class="login-component"
-          />
+          <div v-if="!this.$store.getters.isLoggedIn" class="login-component">
+            <v-row>
+              <LoginButton class="button" />
+              <SignUpButton class="button" />
+            </v-row>
+          </div>
           <UserProfile
             v-else
             :initials="this.$store.getters.initials"
@@ -32,6 +33,7 @@
 <script>
 import Navigation from "./components/util/Navigation.vue";
 import LoginButton from "./components/authentication/LoginButton.vue";
+import SignUpButton from "./components/authentication/SignUpButton.vue";
 import UserProfile from "./components/authentication/UserProfile.vue";
 
 export default {
@@ -39,6 +41,7 @@ export default {
   components: {
     Navigation,
     LoginButton,
+    SignUpButton,
     UserProfile,
   },
   data() {
@@ -77,6 +80,9 @@ header {
 }
 .login-component {
   padding: 15px;
+}
+.button {
+  padding: 5px;
 }
 #navigation {
   margin-top: 4rem;
