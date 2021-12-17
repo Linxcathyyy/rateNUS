@@ -18,6 +18,7 @@
                 :length="totalPages"
                 prev-icon="mdi-menu-left"
                 next-icon="mdi-menu-right"
+                color="orange accent-4"
               ></v-pagination>
             </v-container>
           </v-col>

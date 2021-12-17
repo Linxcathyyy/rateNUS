@@ -5,7 +5,7 @@
       <v-layout justify-end>
         <v-btn
           icon
-          color="primary"
+          color="orange accent-4"
           class="mx-1"
           @click="sortCommentsFromLowestToHighestRating(true)"
           title="ratings low to high"
@@ -14,7 +14,7 @@
         </v-btn>
         <v-btn
           icon
-          color="primary"
+          color="orange accent-4"
           class="mx-1"
           @click="sortCommentsFromLowestToHighestRating(false)"
           title="ratings high to low"
@@ -40,6 +40,7 @@
                   class="my-4"
                   prev-icon="mdi-menu-left"
                   next-icon="mdi-menu-right"
+                  color="orange accent-4"
                 ></v-pagination>
               </v-container>
             </v-col>

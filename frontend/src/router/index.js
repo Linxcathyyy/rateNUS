@@ -11,19 +11,33 @@ const BACKEND_BASE_URL = "http://localhost:8080";
 
 const routes = [
   {
-    path: '/hostels',
+    path: '/',
     name: 'Hostels',
     component: Hostels
   },
   {
+    path: '/hostels',
+    name: 'Hostels',
+    component: Hostels,
+    meta: {
+      title: "Hostels",
+    }
+  },
+  {
     path: '/canteens',
     name: 'Canteens',
-    component: Canteens
+    component: Canteens,
+    meta: {
+      title: "Canteens",
+    }
   },
   {
     path: '/studyAreas',
     name: 'StudyAreas',
-    component: StudyAreas
+    component: StudyAreas,
+    meta: {
+      title: "Study Areas",
+    }
   },
   {
     path: '/hostels/:hostelId',
@@ -31,6 +45,9 @@ const routes = [
     component: ItemViewMore,
     props: {
       type: "hostel"
+    },
+    meta: {
+      title: "Hostel",
     }
   },
   {
@@ -39,6 +56,9 @@ const routes = [
     component: ItemViewMore,
     props: {
       type: "stall"
+    },
+    meta: {
+      title: `stall`,
     }
   },
   {

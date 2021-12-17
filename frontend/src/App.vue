@@ -3,7 +3,9 @@
     <v-main>
       <div id="app">
         <header>
-          <h1 id="ratenus">Rate NUS!</h1>
+          <div @click="goToMainPage">
+            <h1 id="ratenus">RateNUS</h1>
+          </div>
           <div v-if="!this.$store.getters.isLoggedIn" class="login-component">
             <v-row>
               <LoginButton class="button" />
@@ -47,7 +49,16 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    goToMainPage() {
+      this.$router.push("/hostels");
+    }
+  },
+  watch: {
+  $route(to) {
+     document.title = `${to.meta.title} - RateNUS`;
+  }
+}
 };
 </script>
 
@@ -77,6 +88,10 @@ header {
 }
 #ratenus {
   padding: 15px;
+  color: #FF6D00;
+}
+#ratenus:hover {
+  cursor: pointer;
 }
 .login-component {
   padding: 15px;

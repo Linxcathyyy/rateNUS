@@ -37,9 +37,11 @@
         </v-row>
       </v-card-text>
     </v-card>
-    <v-divider></v-divider>
-    <Facilities :facilities="this.item.facilities" />
-    <v-divider></v-divider>
+    <v-divider class="mx-16"></v-divider>
+    <div v-if="type === 'hostel'">
+      <Facilities :facilities="this.item.facilities" />
+      <v-divider class="mx-16"></v-divider>
+    </div>
     <CommentForm />
     <v-divider></v-divider>
     <Comments :type="type" />
