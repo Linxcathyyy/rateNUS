@@ -64,4 +64,18 @@ public class StallService {
                 .orElseThrow(() -> new TypeNotFoundException(Type.stall, stallId))
                 .addComment(rating);
     }
+
+    @Transactional
+    public void updateComment(long stallId, int oldRating, int newRating) {
+        stallRepository.findById(stallId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.stall, stallId))
+                .updateComment(oldRating, newRating);
+    }
+
+    @Transactional
+    public void deleteComment(long stallId, int rating) {
+        stallRepository.findById(stallId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.stall, stallId))
+                .deleteComment(rating);
+    }
 }

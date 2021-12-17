@@ -1,5 +1,6 @@
 package com.rateNUS.backend.hostel;
 
+import com.rateNUS.backend.util.CommentUtil;
 import com.rateNUS.backend.util.Facility;
 
 import javax.persistence.Column;
@@ -76,70 +77,21 @@ public class Hostel {
         this.facilities = facilities;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public int getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<String> getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(List<String> imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public List<Facility> getFacilities() {
-        return facilities;
-    }
-
-    public void addComment(double rating) {
-        this.rating = commentCount == 0
-                ? rating
-                : (commentCount * this.rating + rating) / (commentCount + 1);
+    public void addComment(int newRating) {
+        rating = CommentUtil.addComment(rating, commentCount, newRating);
         commentCount++;
+    }
+
+    public void updateComment(int oldRating, int newRating) {
+        rating = CommentUtil.updateComment(rating, commentCount, oldRating, newRating);
+    }
+
+    public void deleteComment(int ratingToRemove) {
+        rating = CommentUtil.deleteComment(rating, commentCount, ratingToRemove);
+        commentCount--;
     }
 }
