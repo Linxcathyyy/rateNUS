@@ -62,13 +62,8 @@
 </template>
 
 <script>
-import HostelRequest from "../httpRequests/HostelRequest";
-import {
-  ValidationProvider,
-  extend,
-  ValidationObserver,
-  setInteractionMode,
-} from "vee-validate";
+import HostelRequest from "../../httpRequests/HostelRequest";
+import { ValidationProvider, extend, ValidationObserver, setInteractionMode } from 'vee-validate';
 import { required } from "vee-validate/dist/rules";
 extend("required", {
   ...required,

@@ -51,10 +51,14 @@
 </template>
 
 <script>
-import HostelRequest from "../httpRequests/HostelRequest";
+import HostelRequest from "../../httpRequests/HostelRequest";
+import StallRequest from "../../httpRequests/StallRequest";
 import Comment from "./Comment.vue";
 
 export default {
+  props: {
+    type: String
+  },
   data() {
     return {
       commentList: [],
@@ -68,18 +72,27 @@ export default {
   },
   methods: {
     async getCommentList(pageNum, pageSize) {
-      HostelRequest.getCommentList(
-        this.$route.params.hostelId,
-        pageNum,
-        pageSize
-      )
-        .then((response) => {
-          this.commentList = response.data.content;
-          this.totalPages = response.data.totalPages;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (this.type === "hostel") {
+        HostelRequest.getCommentList(this.$route.params.hostelId, pageNum, pageSize)
+          .then((response) => {
+            this.commentList = response.data.content;
+            this.totalPages = response.data.totalPages;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else if (this.type === "stall") {
+        StallRequest.getCommentList(this.$route.params.stallId, pageNum, pageSize)
+          .then((response) => {
+            this.commentList = response.data.content;
+            this.totalPages = response.data.totalPages;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        // study area
+      }
     },
     async updatePage(pageNumber) {
       this.currentPage = pageNumber;
@@ -87,20 +100,31 @@ export default {
     },
 
     async sortCommentsFromLowestToHighestRating(isLowToHigh) {
-      HostelRequest.sortCommentsByRating(
-        this.$route.params.hostelId,
-        isLowToHigh,
-        this.currentPage - 1,
-        this.pageSize
-      )
-        .then((response) => {
+      if (this.type === "hostel") {
+        HostelRequest.sortCommentsByRating(
+          this.$route.params.hostelId, isLowToHigh, this.currentPage - 1, this.pageSize
+        ).then((response) => {
           console.log(response.data);
-          this.commentList = response.data.content;
-          this.totalPages = response.data.totalPages;
-        })
-        .catch((error) => {
-          console.log(error.response.data);
-        });
+            this.commentList = response.data.content;
+            this.totalPages = response.data.totalPages;
+          })
+          .catch((error) => {
+            console.log(error.response.data);
+          });
+      } else if (this.type === "stall") {
+        StallRequest.sortCommentsByRating(
+          this.$route.params.stallId, isLowToHigh, this.currentPage - 1, this.pageSize
+        ).then((response) => {
+          console.log(response.data);
+            this.commentList = response.data.content;
+            this.totalPages = response.data.totalPages;
+          })
+          .catch((error) => {
+            console.log(error.response.data);
+          });
+      } else {
+        // study area
+      }
     },
   },
   async mounted() {

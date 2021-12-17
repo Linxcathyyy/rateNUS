@@ -128,4 +128,23 @@ Gradle > Tasks > application > bootRun
         * Give: `@RequestBody Comment comment`
         * Path:
             * role == "USER": `comment`
-            * role != "USER": `auth/login`
+* Authentication
+    * Post login request
+        * Give: `@RequestBody LoginRequest loginRequest`
+          ```
+          {
+            "username": "user1",
+            "password": "Password123!"
+          }
+          ```
+        * Path: `login`
+    * Post signup request
+        * Give: `@RequestBody SignupRequest signupRequest`
+          ```
+          {
+            "username": "user",
+            "email": "user.success@gmail.com",
+            "password": "Password123!"
+          }
+          ```
+        * Path: `signup`
