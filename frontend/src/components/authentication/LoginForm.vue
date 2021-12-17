@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-form ref="form" v-model="valid" lazy-validation>
+    <v-form ref="login_form" v-model="valid" lazy-validation>
       <v-alert dense outlined type="error" v-if="isErrorVisible">
         Login Failed
       </v-alert>
@@ -53,7 +53,7 @@ export default {
   }),
   methods: {
     validate() {
-      return this.$refs.form.validate();
+      return this.$refs.login_form.validate();
     },
 
     showSubmissionError() {
