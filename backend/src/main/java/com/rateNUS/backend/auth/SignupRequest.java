@@ -1,8 +1,8 @@
 package com.rateNUS.backend.auth;
 
-import java.util.Set;
-
 import com.rateNUS.backend.security.ApplicationUserRole;
+
+import java.util.Set;
 
 public class SignupRequest {
     private String username;

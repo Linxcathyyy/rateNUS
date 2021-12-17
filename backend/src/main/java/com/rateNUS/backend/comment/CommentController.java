@@ -73,6 +73,8 @@ public class CommentController {
     public void updateComment(@PathVariable("commentId") long commentId, @RequestBody Comment comment) {
         Comment oldComment = commentService.getComment(commentId)
                 .orElseThrow(() -> new TypeNotFoundException(Type.comment, commentId));
+
+        // The old rating must be recorded before updateComment() is called
         int oldRating = oldComment.getRating();
 
         Comment updatedComment = commentService.updateComment(commentId, comment);
