@@ -1,5 +1,6 @@
 import axios from "axios";
 const LOGIN_URL = "http://localhost:8080/login"
+const SIGNUP_URL = "http://localhost:8080/signup"
 
 class AuthenticationRequest {
 
@@ -41,17 +42,25 @@ class AuthenticationRequest {
     // }
 
     async loginWithCredentials(username, password) {
-
-        console.log(`login with username: ${username} 
-        \npassword: ${password}`);
-
         var response = await axios.post(LOGIN_URL, {
             "username": username,
             "password": password
         })
             .then(function (response) {
                 //handle success
-                console.log(response);
+                return response;
+            })
+        return response;
+    }
+
+    async signUpWithCredentials(username, password, email) {
+        var response = await axios.post(SIGNUP_URL, {
+            "username": username,
+            "password": password,
+            "email": email
+        })
+            .then(function (response) {
+                //handle success
                 return response;
             })
         return response;

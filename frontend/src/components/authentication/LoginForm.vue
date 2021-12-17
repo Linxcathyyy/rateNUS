@@ -1,11 +1,10 @@
 <template>
   <div>
-    <v-form ref="form" v-model="valid" lazy-validation>
+    <v-form ref="login_form" v-model="valid" lazy-validation>
       <v-alert dense outlined type="error" v-if="isErrorVisible">
         Login Failed
       </v-alert>
       <v-text-field
-        autofocus
         v-model="username"
         :rules="nameRules"
         label="Username"
@@ -41,7 +40,7 @@ import AuthenticationUtil from "./AuthenticationUtil";
 export default {
   name: "LoginForm",
   data: () => ({
-    valid: true,
+    valid: false,
     username: "",
     nameRules: [(v) => !!v || "UserName is required"],
     password: "",
@@ -53,7 +52,7 @@ export default {
   }),
   methods: {
     validate() {
-      return this.$refs.form.validate();
+      return this.$refs.login_form.validate();
     },
 
     showSubmissionError() {
@@ -72,7 +71,6 @@ export default {
             var token = AuthenticationUtil.parseJWTToken(
               response.headers["authorization"]
             );
-            console.log(name, email, token);
             this.$store.commit("changeName", name);
             this.$store.commit("changeEmail", email);
             this.$store.commit("updateJwtToken", token);
