@@ -1,5 +1,7 @@
 package com.rateNUS.backend.stall;
 
+import com.rateNUS.backend.util.CommentUtil;
+
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -75,96 +77,21 @@ public class Stall {
         this.highestPrice = highestPrice;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public int getCommentCount() {
-        return commentCount;
-    }
-
-    public void setCommentCount(int commentCount) {
-        this.commentCount = commentCount;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<String> getImageUrl() {
-        return imageUrl;
-    }
-
-    public void setImageUrl(List<String> imageUrl) {
-        this.imageUrl = imageUrl;
-    }
-
-    public double getLowestPrice() {
-        return lowestPrice;
-    }
-
-    public void setLowestPrice(double lowestPrice) {
-        this.lowestPrice = lowestPrice;
-    }
-
-    public double getHighestPrice() {
-        return highestPrice;
-    }
-
-    public void setHighestPrice(double highestPrice) {
-        this.highestPrice = highestPrice;
-    }
-
-    public void addComment(int rating) {
-        this.rating = commentCount == 0
-                ? rating
-                : (commentCount * this.rating + rating) / (commentCount + 1);
+    public void addComment(int newRating) {
+        rating = CommentUtil.addComment(rating, commentCount, newRating);
         commentCount++;
     }
 
     public void updateComment(int oldRating, int newRating) {
-        rating = (commentCount * rating - oldRating + newRating) / commentCount;
+        rating = CommentUtil.updateComment(rating, commentCount, oldRating, newRating);
     }
 
-    public void deleteComment(int rating) {
-        if (commentCount == 1) {
-            commentCount = 0;
-            this.rating = -1;
-        } else {
-            this.rating = (commentCount * this.rating - rating) / (commentCount - 1);
-            commentCount--;
-        }
+    public void deleteComment(int ratingToRemove) {
+        rating = CommentUtil.deleteComment(rating, commentCount, ratingToRemove);
+        commentCount--;
     }
 }
