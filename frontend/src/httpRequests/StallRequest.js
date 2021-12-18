@@ -5,7 +5,7 @@ const ADD_COMMENT_API_BASE_URL = "http://localhost:8080/comment";
 const GET_COMMENT_API_BASE_URL = "http://localhost:8080/comment/stall";
 
 class StallRequest {
-  // Get a partial list of stalls base on startIndex and endIndex
+  // Get a partial list of stalls based on startIndex and endIndex
   async getStallList(pageNum, pageSize) {
     return await axios.post(STALL_API_BASE_URL, {
       orderBy: "id",
