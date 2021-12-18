@@ -127,7 +127,6 @@ export default {
       location.reload();
     },
     async handleSubmit(comment, rating) {
-      console.log("handleSubmit#rating: ", rating);
       const isValidated = await this.validate();
       var id = this.$route.params.hostelId;
       if (isValidated) {
