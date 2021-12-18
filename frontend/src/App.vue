@@ -119,9 +119,12 @@ header {
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   z-index: 99; /* header stays on top */
 }
+
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700&display=swap');
 #ratenus {
   padding: 15px;
   color: #FF6D00;
+  font-family: 'Exo 2';
 }
 #ratenus:hover {
   cursor: pointer;
