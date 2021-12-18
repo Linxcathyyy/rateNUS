@@ -41,6 +41,17 @@ public class CommentService {
         return page;
     }
 
+    public Page<Comment> getCommentsOfUser(long userId, String orderBy, boolean isAscending, int pageNum,
+                                           int numEntriesPerPage) {
+        Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
+        PageRequest pageRequest = PageRequest.of(pageNum, numEntriesPerPage, Sort.by(direction, orderBy));
+        Page<Comment> page = commentRepository.findByUserId(userId, pageRequest);
+
+        logger.log(Level.INFO, String.format("Found %d comments", page.getTotalElements()));
+
+        return page;
+    }
+
     public Comment addComment(Comment comment) {
         CommentService.logger.log(Level.INFO, "Added comment: " + comment);
         return commentRepository.save(comment);
