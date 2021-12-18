@@ -24,6 +24,10 @@
     <v-snackbar top color="red" :value="failureSnackbar"
       >An unknown error has occured, please try again!</v-snackbar
     >
+    <v-snackbar top color="red" :value="notLoggedInSnackbar"
+      >You must be logged in to post comments. Please log in and try
+      again!</v-snackbar
+    >
     <v-card flat class="my-12">
       <div class="comment-form">
         <v-form>
@@ -106,6 +110,7 @@ export default {
       isExpanded: false,
       successDialog: false,
       failureSnackbar: false,
+      notLoggedInSnackbar: false,
       isCommentDisabled: false, // should be changed to true if not logged in
     };
   },
@@ -134,7 +139,16 @@ export default {
             console.log(this.successDialog);
           })
           .catch((error) => {
-            console.log(error);
+            var errorStatus = error.response.status;
+
+            if (errorStatus == 403) {
+              // user is not logged in
+              this.notLoggedInSnackbar = true;
+              setTimeout(() => (this.failureSnackbar = false), 5000);
+              return;
+            }
+
+            // other errors
             this.failureSnackbar = true;
             setTimeout(() => (this.failureSnackbar = false), 5000);
           });
