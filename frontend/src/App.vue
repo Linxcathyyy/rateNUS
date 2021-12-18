@@ -70,7 +70,10 @@ export default {
   },
   methods: {
     goToMainPage() {
-      this.$router.push("/hostels");
+      const currentPath = this.$router.history.current.path;
+      if (currentPath !== "/hostels") {
+        this.$router.push("/hostels");
+      }
     }
   },
   watch: {

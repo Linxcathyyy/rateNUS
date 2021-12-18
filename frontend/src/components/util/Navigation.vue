@@ -5,6 +5,7 @@
       class="orange accent-4"
       dark
       :mini-variant="mini"
+      width="200"
       permanent
       id="side-nav"
     >
@@ -30,7 +31,7 @@ export default {
     return {
       items: [
         { title: "Hostels", icon: "mdi-bed", route: "/hostels" },
-        { title: "Canteens", icon: "mdi-food", route: "/canteens" },
+        { title: "Food", icon: "mdi-food", route: "/stalls" },
         {
           title: "Study Areas",
           icon: "mdi-book-open-page-variant-outline",
@@ -69,6 +70,6 @@ export default {
 
 #side-nav {
   padding-top: 4rem;
-  max-width: max-content;
+  /* max-width: max-content; */
 }
 </style>

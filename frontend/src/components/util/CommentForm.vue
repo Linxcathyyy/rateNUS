@@ -121,7 +121,7 @@ export default {
     },
     async handleSubmit(comment, rating) {
       const isValidated = await this.validate();
-      var id = this.$route.params.hostelId;
+      var id = this.$route.params.id;
       if (isValidated) {
         var jwtToken = this.$store.getters.jwtToken;
         var userId = this.$store.getters.id;
