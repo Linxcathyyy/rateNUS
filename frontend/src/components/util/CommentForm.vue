@@ -7,14 +7,7 @@
           <v-card-text>You have added a comment successfully!</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn
-              color="darken-1"
-              class="orange accent-4"
-              dark
-              rounded
-              text
-              @click="refreshPage"
-            >
+            <v-btn color="orange accent-4" text @click="refreshPage">
               Ok
             </v-btn>
           </v-card-actions>
@@ -131,8 +124,9 @@ export default {
       var id = this.$route.params.hostelId;
       if (isValidated) {
         var jwtToken = this.$store.getters.jwtToken;
-        console.log("jwtToken", jwtToken);
-        HostelRequest.postHostelComment(id, comment, rating, jwtToken)
+        var userId = this.$store.getters.id;
+
+        HostelRequest.postHostelComment(id, comment, rating, jwtToken, userId)
           .then(() => {
             this.successDialog = true;
             console.log(this.successDialog);

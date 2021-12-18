@@ -62,11 +62,13 @@ export default {
           this.password
         )
           .then((response) => {
+            var id = response.data.id;
             var name = response.data.username;
             var email = response.data.email;
             var token = AuthenticationUtil.parseJWTToken(
               response.headers["authorization"]
             );
+            this.$store.commit("changeId", id);
             this.$store.commit("changeName", name);
             this.$store.commit("changeEmail", email);
             this.$store.commit("updateJwtToken", token);
