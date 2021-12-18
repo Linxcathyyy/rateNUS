@@ -37,6 +37,7 @@
                 hover
                 length="5"
                 v-model="rating"
+                :readonly="isCommentDisabled"
               ></v-rating>
             </div>
           </div>
@@ -47,7 +48,7 @@
               v-slot="{ errors }"
             >
               <v-textarea
-                label="Comment"
+                :label="isCommentDisabled ? 'Log in to comment' : 'Comment'"
                 v-model="comment"
                 class="comment"
                 placeholder="Join the discussion..."
@@ -56,6 +57,7 @@
                 :max-height="350"
                 auto-grow
                 :error-messages="errors"
+                :disabled="isCommentDisabled"
               />
             </ValidationProvider>
 
@@ -65,6 +67,7 @@
                 class="orange accent-4"
                 dark
                 rounded
+                :disabled="isCommentDisabled"
                 >Submit</v-btn
               >
             </div>
@@ -102,6 +105,7 @@ export default {
       isExpanded: false,
       successDialog: false,
       failureSnackbar: false,
+      isCommentDisabled: false, // should be changed to true if not logged in
     };
   },
   methods: {

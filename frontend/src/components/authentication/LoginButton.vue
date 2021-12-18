@@ -1,6 +1,8 @@
 <template>
   <div>
-    <v-btn color="primary" @click="showLoginDialog"> Login </v-btn>
+    <v-btn class="orange accent-4" color="primary" @click="showLoginDialog">
+      Login
+    </v-btn>
     <v-dialog v-model="isLoginFormShown" max-width="40em">
       <v-card>
         <v-card-title>
