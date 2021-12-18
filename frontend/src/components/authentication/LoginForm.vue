@@ -2,7 +2,7 @@
   <div>
     <v-form ref="login_form" v-model="valid" lazy-validation>
       <v-alert dense outlined type="error" v-if="isErrorVisible">
-        Login Failed
+        Login Failed. Please check your username and password.
       </v-alert>
       <v-text-field
         v-model="username"

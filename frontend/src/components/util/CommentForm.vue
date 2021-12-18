@@ -7,13 +7,19 @@
           <v-card-text>You have added a comment successfully!</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="orange accent-4" text @click="refreshPage"> Ok </v-btn>
+            <v-btn color="orange accent-4" text @click="refreshPage">
+              Ok
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
     </v-row>
     <v-snackbar top color="red" :value="failureSnackbar"
       >An unknown error has occured, please try again!</v-snackbar
+    >
+    <v-snackbar top color="red" :value="notLoggedInSnackbar"
+      >You must be logged in to post comments. Please log in and try
+      again!</v-snackbar
     >
     <v-card flat class="my-12">
       <div class="comment-form">
@@ -29,7 +35,7 @@
               dense
               half-increments
               hover
-              size="18"
+              size="30"
             ></v-rating>
           </div>
           <ValidationObserver ref="addCommentObserver">
@@ -39,7 +45,7 @@
               v-slot="{ errors }"
             >
               <v-textarea
-                label="Comment"
+                :label="isCommentDisabled ? 'Log in to comment' : 'Comment'"
                 v-model="comment"
                 class="comment"
                 placeholder="Join the discussion..."
@@ -50,6 +56,7 @@
                 outlined
                 color="orange accent-4"
                 :error-messages="errors"
+                :disabled="isCommentDisabled"
               />
             </ValidationProvider>
             <v-layout>
@@ -96,6 +103,8 @@ export default {
       isExpanded: false,
       successDialog: false,
       failureSnackbar: false,
+      notLoggedInSnackbar: false,
+      isCommentDisabled: false, // should be changed to true if not logged in
     };
   },
   methods: {
@@ -116,14 +125,23 @@ export default {
       if (isValidated) {
         var jwtToken = this.$store.getters.jwtToken;
         var userId = this.$store.getters.id;
-        
+
         HostelRequest.postHostelComment(id, comment, rating, jwtToken, userId)
           .then(() => {
             this.successDialog = true;
             console.log(this.successDialog);
           })
           .catch((error) => {
-            console.log(error);
+            var errorStatus = error.response.status;
+
+            if (errorStatus == 403) {
+              // user is not logged in
+              this.notLoggedInSnackbar = true;
+              setTimeout(() => (this.failureSnackbar = false), 5000);
+              return;
+            }
+
+            // other errors
             this.failureSnackbar = true;
             setTimeout(() => (this.failureSnackbar = false), 5000);
           });
