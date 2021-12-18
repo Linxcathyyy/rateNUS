@@ -3,7 +3,7 @@
     :perPage="one"
     autoplay="autoplay"
     paginationActiveColor="orange"
-    navigationEnabled="true"
+    :navigationEnabled="true"
     class="mx-8"
   >
     <slide v-for="url in this.imageUrls" :key="url">
