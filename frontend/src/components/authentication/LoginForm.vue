@@ -55,10 +55,6 @@ export default {
       return this.$refs.login_form.validate();
     },
 
-    showSubmissionError() {
-      this.isErrorVisible = true;
-    },
-
     async submitLoginCredentials() {
       if (this.validate()) {
         await AuthenticationRequest.loginWithCredentials(
@@ -76,15 +72,23 @@ export default {
             this.$store.commit("updateJwtToken", token);
             this.$store.commit("logIn");
             this.$store.commit("updateDefaultProfileColor");
+
+            return response;
           })
-          .catch(function (response) {
+          .catch(function (err) {
             //handle error
             console.log("error occurred");
-            console.log(response);
+            console.log("error occurred: " + err);
+            return err.response;
             //return response;
           })
-          .then(() => {
-            this.showSubmissionError();
+          .then((response) => {
+            if (response.status != 200) {
+              this.isErrorVisible = true;
+            } else {
+              this.isErrorVisible = false;
+              location.reload();
+            }
           });
       }
     },

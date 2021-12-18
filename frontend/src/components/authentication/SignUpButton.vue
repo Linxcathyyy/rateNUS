@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-btn color="primary" @click="showSignUpDialog"> Sign Up </v-btn>
-    <v-dialog v-model="isSignUpDialogShown" max-width="40%">
+    <v-dialog v-model="isSignUpDialogShown" max-width="40em">
       <v-card>
         <v-card-title>
           <span>Sign Up</span>
