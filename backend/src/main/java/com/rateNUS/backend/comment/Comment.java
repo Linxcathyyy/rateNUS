@@ -64,16 +64,16 @@ public class Comment {
         this.type = type;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public long getTargetId() {
         return targetId;
     }
 
     public long getUserId() {
         return userId;
-    }
-
-    public void setUserId(long userId) {
-        this.userId = userId;
     }
 
     public int getRating() {
@@ -94,5 +94,9 @@ public class Comment {
 
     public Type getType() {
         return type;
+    }
+
+    public Timestamp getTimestamp() {
+        return timestamp;
     }
 }
