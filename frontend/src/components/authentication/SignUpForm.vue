@@ -9,7 +9,7 @@
         >
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue" text @click="quitSuccessDialogAndReloadPage">
+          <v-btn color="orange accent-4" text @click="quitSuccessDialogAndReloadPage">
             Ok
           </v-btn>
         </v-card-actions>
@@ -22,13 +22,14 @@
         <v-card-text> {{ errorMessage }} </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue" text @click="quitFailureDialog"> Ok </v-btn>
+          <v-btn color="orange accent-4" text @click="quitFailureDialog"> Ok </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
 
     <v-form ref="signup_form" v-model="valid" lazy-validation>
       <v-text-field
+        color="orange accent-4"
         v-model="username"
         :rules="nameRules"
         label="User Name"
@@ -36,6 +37,7 @@
       ></v-text-field>
 
       <v-text-field
+        color="orange accent-4"
         v-model="email"
         :rules="emailRules"
         label="Email"
@@ -43,6 +45,7 @@
       ></v-text-field>
 
       <v-text-field
+        color="orange accent-4"
         v-model="password"
         :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="[notEmpty, containsNumber, containsChar, lengthMoreThanSix]"
@@ -52,6 +55,7 @@
       ></v-text-field>
 
       <v-text-field
+        color="orange accent-4"
         v-model="confirmPassword"
         :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="[
@@ -67,9 +71,10 @@
       ></v-text-field>
 
       <v-btn
+        depressed
         :disabled="!valid"
-        color="success"
-        class="mr-4"
+        color="primary"
+        class="mr-4 orange accent-4"
         @click="this.submitSignUpCredentials"
       >
         Sign Up

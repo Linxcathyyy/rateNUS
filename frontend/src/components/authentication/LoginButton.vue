@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-btn class="orange accent-4" color="primary" @click="showLoginDialog">
+    <v-btn outlined depressed color="orange accent-4" @click="showLoginDialog">
       Login
     </v-btn>
     <v-dialog v-model="isLoginFormShown" max-width="40em">

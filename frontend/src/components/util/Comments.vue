@@ -63,9 +63,10 @@ export default {
   data() {
     return {
       commentList: [],
-      pageSize: 10,
+      pageSize: 1,
       currentPage: 1,
       totalPages: 0,
+      isLowestToHighestRating: null,
     };
   },
   components: {
@@ -75,7 +76,7 @@ export default {
     async getCommentList(pageNum, pageSize) {
       if (this.type === "hostel") {
         HostelRequest.getCommentList(
-          this.$route.params.hostelId,
+          this.$route.params.id,
           pageNum,
           pageSize
         )
@@ -88,7 +89,7 @@ export default {
           });
       } else if (this.type === "stall") {
         StallRequest.getCommentList(
-          this.$route.params.stallId,
+          this.$route.params.id,
           pageNum,
           pageSize
         )
@@ -105,13 +106,20 @@ export default {
     },
     async updatePage(pageNumber) {
       this.currentPage = pageNumber;
-      await this.getCommentList(pageNumber - 1, this.pageSize);
+      if (this.isLowestToHighestRating !== null) {
+        await this.sortCommentsFromLowestToHighestRating(this.isLowestToHighestRating);
+      } else {
+        await this.getCommentList(pageNumber - 1, this.pageSize);
+      }
     },
 
     async sortCommentsFromLowestToHighestRating(isLowToHigh) {
+      console.log(this.currentPage);
+      console.log("pageNum: " + this.currentPage);
+      this.isLowestToHighestRating = isLowToHigh;
       if (this.type === "hostel") {
         HostelRequest.sortCommentsByRating(
-          this.$route.params.hostelId,
+          this.$route.params.id,
           isLowToHigh,
           this.currentPage - 1,
           this.pageSize
@@ -126,7 +134,7 @@ export default {
           });
       } else if (this.type === "stall") {
         StallRequest.sortCommentsByRating(
-          this.$route.params.stallId,
+          this.$route.params.id,
           isLowToHigh,
           this.currentPage - 1,
           this.pageSize

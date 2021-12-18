@@ -24,11 +24,11 @@ const routes = [
     }
   },
   {
-    path: '/canteens',
-    name: 'Canteens',
+    path: '/stalls',
+    name: 'Stalls',
     component: Canteens,
     meta: {
-      title: "Canteens",
+      title: "Stalls",
     }
   },
   {
@@ -40,7 +40,7 @@ const routes = [
     }
   },
   {
-    path: '/hostels/:hostelId',
+    path: '/hostels/:id',
     name: 'HostelViewMore',
     component: ItemViewMore,
     props: {
@@ -51,7 +51,7 @@ const routes = [
     }
   },
   {
-    path: '/stalls/:stallId',
+    path: '/stalls/:id',
     name: 'StallViewMore',
     component: ItemViewMore,
     props: {

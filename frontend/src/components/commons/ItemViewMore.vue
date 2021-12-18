@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     getIndividualHostel() {
-      HostelRequest.getIndividualHostel(this.$route.params.hostelId)
+      HostelRequest.getIndividualHostel(this.$route.params.id)
         .then((response) => {
           console.log(response.data);
           this.item = response.data;
@@ -88,7 +88,7 @@ export default {
         });
     },
     getIndividualStall() {
-      StallRequest.getIndividualStall(this.$route.params.stallId)
+      StallRequest.getIndividualStall(this.$route.params.id)
         .then((response) => {
           console.log(response.data);
           this.item = response.data;

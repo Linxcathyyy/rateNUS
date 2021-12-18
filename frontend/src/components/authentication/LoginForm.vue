@@ -5,6 +5,7 @@
         Login Failed. Please check your username and password.
       </v-alert>
       <v-text-field
+        color="orange accent-4"
         v-model="username"
         :rules="nameRules"
         label="Username"
@@ -12,6 +13,7 @@
         v-on:keydown.enter="submitLoginCredentials"
       ></v-text-field>
       <v-text-field
+        color="orange accent-4"
         v-model="password"
         :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="[rules.required]"
@@ -22,8 +24,10 @@
         v-on:keydown.enter="submitLoginCredentials"
       ></v-text-field>
       <v-btn
+        depressed
+        outlined
         :disabled="!valid"
-        color="success"
+        color="orange accent-4"
         class="mr-4"
         @click="this.submitLoginCredentials"
       >
