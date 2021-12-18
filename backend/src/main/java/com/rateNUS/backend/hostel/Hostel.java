@@ -77,8 +77,36 @@ public class Hostel {
         this.facilities = facilities;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<String> getImageUrl() {
+        return imageUrl;
+    }
+
+    public List<Facility> getFacilities() {
+        return facilities;
     }
 
     public void addComment(int newRating) {
