@@ -5,7 +5,7 @@ const COMMENT_API_BASE_URL = "http://localhost:8080/comment";
 const COMMENT_SORT_API_BASE_URL = "http://localhost:8080/comment/hostel";
 
 class HostelRequest {
-  // Get a partial list of hostels base on startIndex and endIndex
+  // Get a partial list of hostels based on startIndex and endIndex
   async getHostelList(pageNum, pageSize) {
     return await axios.post(HOSTEL_API_BASE_URL, {
       orderBy: "id",
