@@ -7,7 +7,7 @@
           <v-card-text>You have added a comment successfully!</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="white darken-1" text @click="refreshPage"> Ok </v-btn>
+            <v-btn color="orange accent-4" text @click="refreshPage"> Ok </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
