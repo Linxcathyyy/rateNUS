@@ -7,7 +7,16 @@
           <v-card-text>You have added a comment successfully!</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="white darken-1" text @click="refreshPage"> Ok </v-btn>
+            <v-btn
+              color="darken-1"
+              class="orange accent-4"
+              dark
+              rounded
+              text
+              @click="refreshPage"
+            >
+              Ok
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -22,14 +31,13 @@
             <label class="rating-label"> Rating: </label>
             {{ rating }} / 5
             <div class="rating-display">
-              <input
-                class="rating"
-                max="5"
-                step="1"
-                type="range"
-                value="3"
+              <v-rating
+                color="orange accent-4"
+                background-color="grey"
+                hover
+                length="5"
                 v-model="rating"
-              />
+              ></v-rating>
             </div>
           </div>
           <ValidationObserver ref="addCommentObserver">
@@ -52,7 +60,13 @@
             </ValidationProvider>
 
             <div class="submit">
-              <button @click="handleSubmit(comment, rating)">Submit</button>
+              <v-btn
+                @click="handleSubmit(comment, rating)"
+                class="orange accent-4"
+                dark
+                rounded
+                >Submit</v-btn
+              >
             </div>
           </ValidationObserver>
         </v-form>
@@ -103,6 +117,7 @@ export default {
       location.reload();
     },
     async handleSubmit(comment, rating) {
+      console.log("handleSubmit#rating: ", rating);
       const isValidated = await this.validate();
       var id = this.$route.params.hostelId;
       if (isValidated) {
@@ -163,23 +178,5 @@ label {
 
 .submit {
   text-align: center;
-}
-
-button {
-  background: #428dff;
-  border: 0;
-  padding: 10px 20px;
-  margin-top: 20px;
-  color: white;
-  border-radius: 20px;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-}
-
-button:hover {
-  background: #569aff;
-}
-
-button:active {
-  background: #2c80ff;
 }
 </style>
