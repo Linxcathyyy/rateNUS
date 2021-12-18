@@ -14,10 +14,10 @@
 
     <v-img
       height="400"
-      :src="hostel.imageUrl[0]"
+      :src="item.imageUrl[0]"
     ></v-img>
 
-    <v-card-title>{{ hostel.name }}</v-card-title>
+    <v-card-title>{{ item.name }}</v-card-title>
 
     <v-card-text>
       <v-row
@@ -25,7 +25,7 @@
         class="mx-0"
       >
         <v-rating
-          :value="hostel.rating"
+          :value="item.rating"
           color="amber"
           dense
           half-increments
@@ -34,19 +34,25 @@
         ></v-rating>
 
         <div class="grey--text ms-4">
-          {{ hostel.rating.toPrecision(2) }} ({{ hostel.commentCount }} reviews)
+          {{ getRating }} {{ getCommentCount }}
+        </div>
+      </v-row>
+
+      <v-row align="center" class="mt-5">
+        <div v-if="type=='stall'" class="black--text font-weight-bold ms-4 text-subtitle-1">
+          ${{ item.lowestPrice }} - ${{ item.highestPrice}}
         </div>
       </v-row>
 
         <v-row align="center" class="mx-0">
           <v-icon class="icon">mdi-map-marker</v-icon>
           <div class="my-4 text-subtitle-1">
-              {{ hostel.location }}
+              {{ item.location }}
           </div>
         </v-row>
         <v-row align="center" class="mx-0">
             <div class="mb-4 text-left">
-                {{ hostel.description}}
+                {{ item.description}}
             </div>
         </v-row>
     </v-card-text>
@@ -57,7 +63,8 @@
 <script>
   export default {
     props: {
-        hostel: Object,
+        type: String,
+        item: Object,
     },
     data: () => ({
       loading: false,
@@ -66,9 +73,24 @@
     methods: {
       reserve () {
         this.loading = true
-
         setTimeout(() => (this.loading = false), 2000)
       },
     },
+    computed: {
+      getRating() {
+        if (this.item.rating === -1) {
+          return "No rating";
+        } else {
+          return this.item.rating.toPrecision(2);
+        }
+      },
+      getCommentCount() {
+        if (this.item.commentCount <= 1) {
+          return `(${this.item.commentCount} review)`;
+        } else {
+          return `(${this.item.commentCount} reviews)`;
+        }
+      }
+    }
   }
 </script>

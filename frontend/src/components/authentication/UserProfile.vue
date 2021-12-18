@@ -2,7 +2,7 @@
   <v-menu bottom min-width="200px" rounded offset-y>
     <template v-slot:activator="{ on }">
       <v-btn icon x-large v-on="on">
-        <v-avatar class="blue accent-4" size="48">
+        <v-avatar :color="profileColor" size="48">
           <span class="white--text text-h5">{{ initials }}</span>
         </v-avatar>
       </v-btn>
@@ -10,13 +10,15 @@
     <v-card>
       <v-list-item-content class="justify-center">
         <div class="mx-auto text-center">
-          <v-avatar class="blue accent-4">
+          <v-avatar :color="profileColor">
             <span class="white--text text-h5">{{ initials }}</span>
           </v-avatar>
-          <h3>{{ fullName }}</h3>
-          <p class="text-caption mt-1">
+          <v-container>
+            <h3>{{ fullName }}</h3>
+          </v-container>
+          <h4 class="text-caption mt-1">
             {{ email }}
-          </p>
+          </h4>
           <v-divider class="my-3"></v-divider>
           <v-btn depressed rounded text> Edit Account </v-btn>
           <v-divider class="my-3"></v-divider>
@@ -37,6 +39,7 @@ export default defineComponent({
     initials: String,
     fullName: String,
     email: String,
+    profileColor: String,
   },
   methods: {
     logout() {

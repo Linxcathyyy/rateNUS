@@ -3,20 +3,41 @@
     <v-main>
       <div id="app">
         <header>
-          <h1 id="ratenus">Rate NUS!</h1>
-          <LoginButton
-            v-if="!this.$store.getters.isLoggedIn"
-            id="login-button"
-            class="login-component"
-          />
+          <div @click="goToMainPage">
+            <h1 id="ratenus">RateNUS</h1>
+          </div>
+          <div v-if="!this.$store.getters.isLoggedIn" class="login-component">
+            <v-row class="show-on-desktop">
+              <LoginButton class="button" />
+              <SignUpButton class="button" />
+            </v-row>
+
+            <div class="show-on-mobile">
+              <v-app-bar-nav-icon
+                @click.stop="menu = !menu"
+              ></v-app-bar-nav-icon>
+            </div>
+          </div>
           <UserProfile
             v-else
             :initials="this.$store.getters.initials"
             :fullName="this.$store.getters.fullName"
             :email="this.$store.getters.email"
+            :profileColor="this.$store.getters.defaultProfileColor"
             class="login-component"
           />
         </header>
+        <div>
+          <v-dialog v-model="menu" width="15em">
+            <v-card>
+              <v-card-title> Welcome! </v-card-title>
+              <v-col align-content="space-around">
+                <LoginButton class="button" />
+                <SignUpButton class="button" />
+              </v-col>
+            </v-card>
+          </v-dialog>
+        </div>
         <div id="nav-router-view">
           <Navigation id="navigation" />
           <div class="mx-4">
@@ -29,8 +50,9 @@
 </template>
 
 <script>
-import Navigation from "./components/Navigation.vue";
+import Navigation from "./components/util/Navigation.vue";
 import LoginButton from "./components/authentication/LoginButton.vue";
+import SignUpButton from "./components/authentication/SignUpButton.vue";
 import UserProfile from "./components/authentication/UserProfile.vue";
 
 export default {
@@ -38,23 +60,46 @@ export default {
   components: {
     Navigation,
     LoginButton,
+    SignUpButton,
     UserProfile,
   },
   data() {
-    return {};
+    return {
+      menu: false,
+    };
   },
-  methods: {},
+  methods: {
+    goToMainPage() {
+      this.$router.push("/hostels");
+    }
+  },
+  watch: {
+  $route(to) {
+     document.title = `${to.meta.title} - RateNUS`;
+  }
+}
 };
 </script>
 
 <style>
+@media (min-width: 761px) {
+  .show-on-mobile {
+    display: none !important;
+  }
+}
+@media (max-width: 760px) {
+  .show-on-desktop {
+    display: none !important;
+  }
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 4rem;
+  margin-top: 2rem;
 }
 
 header {
@@ -73,9 +118,16 @@ header {
 }
 #ratenus {
   padding: 15px;
+  color: #FF6D00;
+}
+#ratenus:hover {
+  cursor: pointer;
 }
 .login-component {
   padding: 15px;
+}
+.button {
+  padding: 5px;
 }
 #navigation {
   margin-top: 4rem;

@@ -1,11 +1,10 @@
 <template>
   <div>
-    <v-form ref="form" v-model="valid" lazy-validation>
+    <v-form ref="login_form" v-model="valid" lazy-validation>
       <v-alert dense outlined type="error" v-if="isErrorVisible">
         Login Failed
       </v-alert>
       <v-text-field
-        autofocus
         v-model="username"
         :rules="nameRules"
         label="Username"
@@ -41,7 +40,7 @@ import AuthenticationUtil from "./AuthenticationUtil";
 export default {
   name: "LoginForm",
   data: () => ({
-    valid: true,
+    valid: false,
     username: "",
     nameRules: [(v) => !!v || "UserName is required"],
     password: "",
@@ -53,11 +52,7 @@ export default {
   }),
   methods: {
     validate() {
-      return this.$refs.form.validate();
-    },
-
-    showSubmissionError() {
-      this.isErrorVisible = true;
+      return this.$refs.login_form.validate();
     },
 
     async submitLoginCredentials() {
@@ -72,20 +67,28 @@ export default {
             var token = AuthenticationUtil.parseJWTToken(
               response.headers["authorization"]
             );
-            console.log(name, email, token);
             this.$store.commit("changeName", name);
             this.$store.commit("changeEmail", email);
             this.$store.commit("updateJwtToken", token);
             this.$store.commit("logIn");
+            this.$store.commit("updateDefaultProfileColor");
+
+            return response;
           })
-          .catch(function (response) {
+          .catch(function (err) {
             //handle error
             console.log("error occurred");
-            console.log(response);
+            console.log("error occurred: " + err);
+            return err.response;
             //return response;
           })
-          .then(() => {
-            this.showSubmissionError();
+          .then((response) => {
+            if (response.status != 200) {
+              this.isErrorVisible = true;
+            } else {
+              this.isErrorVisible = false;
+              location.reload();
+            }
           });
       }
     },

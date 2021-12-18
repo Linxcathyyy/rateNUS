@@ -124,8 +124,56 @@ Gradle > Tasks > application > bootRun
                 "pageSize": 5
               }
               ```
+    * Get Comment by user ID
+      * Give: `@PathVariable("userId") long userId`
+        , `@RequestBody Map<String, Object> jsonInput`
+        ```
+        {
+          "orderBy": "rating",
+          "isLowToHigh": true,
+          "pageNum": 1,
+          "pageSize": 2
+        }
+        ```
+      * Path: `comment/user/{userId}`
+      * Note:
+          * Page number starts from 0
+          * If not specified, the default values are:
+            ```
+            {
+              "orderBy": "timestamp",
+              "isLowToHigh": false,
+              "pageNum": 0,
+              "pageSize": 5
+            }
+            ```
     * Add Comment
         * Give: `@RequestBody Comment comment`
-        * Path:
+        * Path: `comment`
             * role == "USER": `comment`
-            * role != "USER": `auth/login`
+    * Edit Comment
+        * Give: `@PathVariable("commentId") long commentId`, `@RequestBody Comment comment`
+        * Path: `comment/{commentId}`
+    * Delete Comment
+        * Give: `@PathVariable("commentId") long commentId`
+        * Path: `comment/{commentId}`
+* Authentication
+    * Post login request
+        * Give: `@RequestBody LoginRequest loginRequest`
+          ```
+          {
+            "username": "user1",
+            "password": "Password123!"
+          }
+          ```
+        * Path: `login`
+    * Post signup request
+        * Give: `@RequestBody SignupRequest signupRequest`
+          ```
+          {
+            "username": "user",
+            "email": "user.success@gmail.com",
+            "password": "Password123!"
+          }
+          ```
+        * Path: `signup`
