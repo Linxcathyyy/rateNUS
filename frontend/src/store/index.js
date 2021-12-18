@@ -18,6 +18,7 @@ export default new Vuex.Store({
     state: {
         isLoggedIn: false,
         user: {
+            id: "",
             fullName: "",
             initials: "",
             email: "",
@@ -28,6 +29,9 @@ export default new Vuex.Store({
     //Vuex getter properties are available to components on the store.getters object.
     //console.log(this.$store.getters.firstName);
     getters: {
+        id: state => {
+            return state.user.id;
+        },
         fullName: state => {
             return state.user.fullName;
         },
@@ -50,6 +54,9 @@ export default new Vuex.Store({
     mutations: {
         //call this method from our component using the store.commit method, with our payload as the second argument.
         //this.$store.commit("changeName", "New Name");
+        changeId(state, id) {
+            state.user.id = id;
+        },
         changeName(state, payload) {
             state.user.fullName = payload;
             state.user.initials = UserUtil.getInitials(payload);

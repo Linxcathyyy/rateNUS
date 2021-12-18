@@ -115,8 +115,9 @@ export default {
       var id = this.$route.params.hostelId;
       if (isValidated) {
         var jwtToken = this.$store.getters.jwtToken;
-        console.log("jwtToken", jwtToken);
-        HostelRequest.postHostelComment(id, comment, rating, jwtToken)
+        var userId = this.$store.getters.id;
+        
+        HostelRequest.postHostelComment(id, comment, rating, jwtToken, userId)
           .then(() => {
             this.successDialog = true;
             console.log(this.successDialog);
