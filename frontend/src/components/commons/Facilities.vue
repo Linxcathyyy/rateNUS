@@ -1,5 +1,5 @@
 <template>
-  <v-card flat class="my-4">
+  <v-card flat class="mb-5">
     <v-card-title>Facilities</v-card-title>
     <v-card-text>
       <v-row align="center" class="mx-0">

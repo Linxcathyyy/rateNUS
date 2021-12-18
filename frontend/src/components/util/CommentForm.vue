@@ -21,16 +21,16 @@
           <div>
             <label class="rating-label"> Rating: </label>
             {{ rating }} / 5
-            <div class="rating-display">
-              <input
-                class="rating"
-                max="5"
-                step="1"
-                type="range"
-                value="3"
-                v-model="rating"
-              />
-            </div>
+
+            <v-rating
+              v-model="rating"
+              background-color="grey"
+              color="amber"
+              dense
+              half-increments
+              hover
+              size="18"
+            ></v-rating>
           </div>
           <ValidationObserver ref="addCommentObserver">
             <ValidationProvider
@@ -47,13 +47,21 @@
                 :min-height="30"
                 :max-height="350"
                 auto-grow
+                outlined
+                color="orange accent-4"
                 :error-messages="errors"
               />
             </ValidationProvider>
-
-            <div class="submit">
-              <button @click="handleSubmit(comment, rating)">Submit</button>
-            </div>
+            <v-layout>
+              <v-spacer></v-spacer>
+              <v-btn
+                outlined
+                color="orange accent-4"
+                @click="handleSubmit(comment, rating)"
+              >
+                Submit
+              </v-btn>
+            </v-layout>
           </ValidationObserver>
         </v-form>
       </div>
@@ -159,27 +167,5 @@ label {
 
 .rating {
   max-width: 300px;
-}
-
-.submit {
-  text-align: center;
-}
-
-button {
-  background: #428dff;
-  border: 0;
-  padding: 10px 20px;
-  margin-top: 20px;
-  color: white;
-  border-radius: 20px;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-}
-
-button:hover {
-  background: #569aff;
-}
-
-button:active {
-  background: #2c80ff;
 }
 </style>
