@@ -8,7 +8,7 @@
         <v-card-title>
           <span>Login</span>
         </v-card-title>
-        <v-container>
+        <v-container class="px-6">
           <LoginForm />
         </v-container>
       </v-card>
