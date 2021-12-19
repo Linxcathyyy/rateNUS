@@ -78,6 +78,9 @@
 
 <script>
 import HostelRequest from "../../httpRequests/HostelRequest";
+import StallRequest from "../../httpRequests/StallRequest";
+import StudyAreaRequest from "../../httpRequests/StudyAreaRequest";
+
 import {
   ValidationProvider,
   extend,
@@ -94,6 +97,9 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver,
+  },
+  props: {
+    type: String,
   },
   data() {
     return {
@@ -126,7 +132,7 @@ export default {
         var jwtToken = this.$store.getters.jwtToken;
         var userId = this.$store.getters.id;
 
-        HostelRequest.postHostelComment(id, comment, rating, jwtToken, userId)
+        this.submitHelper(id, comment, rating, jwtToken, userId)
           .then(() => {
             this.successDialog = true;
             console.log(this.successDialog);
@@ -145,6 +151,33 @@ export default {
             this.failureSnackbar = true;
             setTimeout(() => (this.failureSnackbar = false), 5000);
           });
+      }
+    },
+
+    async submitHelper(id, comment, rating, jwtToken, userId) {
+      switch (this.type) {
+        case "hostel":
+          await HostelRequest.postHostelComment(
+            id,
+            comment,
+            rating,
+            jwtToken,
+            userId
+          );
+          break;
+        case "stall":
+          await StallRequest.postStallComment(id, comment, rating, jwtToken, userId);
+          break;
+        case "studyArea":
+          await StudyAreaRequest.postStudyAreaComment(
+            id,
+            comment,
+            rating,
+            jwtToken,
+            userId
+          );
+          break;
+        default:
       }
     },
   },

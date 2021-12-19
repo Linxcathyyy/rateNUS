@@ -62,6 +62,17 @@ const routes = [
     }
   },
   {
+    path: '/studyAreas/:id',
+    name: 'StudyAreaViewMore',
+    component: ItemViewMore,
+    props: {
+      type: "studyArea"
+    },
+    meta: {
+      title: `studyArea`,
+    }
+  },
+  {
     path: '/login',
     beforeEnter() {
       window.location.href = BACKEND_BASE_URL + "/login";

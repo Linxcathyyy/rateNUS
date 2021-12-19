@@ -54,6 +54,7 @@
 <script>
 import HostelRequest from "../../httpRequests/HostelRequest";
 import StallRequest from "../../httpRequests/StallRequest";
+import StudyAreaRequest from "../../httpRequests/StudyAreaRequest";
 import Comment from "./Comment.vue";
 
 export default {
@@ -100,8 +101,19 @@ export default {
           .catch((error) => {
             console.log(error);
           });
-      } else {
-        // study area
+      } else if (this.type === "studyArea") {
+         StudyAreaRequest.getCommentList(
+          this.$route.params.id,
+          pageNum,
+          pageSize
+        )
+          .then((response) => {
+            this.commentList = response.data.content;
+            this.totalPages = response.data.totalPages;
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       }
     },
     async updatePage(pageNumber) {

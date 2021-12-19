@@ -45,7 +45,7 @@
       <Facilities :facilities="this.item.facilities" />
       <v-divider></v-divider>
     </div>
-    <CommentForm />
+    <CommentForm :type="type"/>
     <v-divider></v-divider>
     <Comments :type="type" />
   </div>
@@ -54,6 +54,7 @@
 <script>
 import HostelRequest from "../../httpRequests/HostelRequest";
 import StallRequest from "../../httpRequests/StallRequest";
+import StudyAreaRequest from "../../httpRequests/StudyAreaRequest";
 import Comments from "../util/Comments.vue";
 import Facilities from "./Facilities.vue";
 import CommentForm from "../util/CommentForm.vue";
@@ -97,6 +98,16 @@ export default {
           console.log(error);
         });
     },
+    getIndividualStudyArea() {
+      StudyAreaRequest.getIndividualStudyArea(this.$route.params.id)
+        .then((response) => {
+          console.log(response.data);
+          this.item = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 
   computed: {
@@ -121,9 +132,9 @@ export default {
       this.getIndividualHostel();
     } else if (this.type === "stall") {
       this.getIndividualStall();
-    } else {
-      // study area
-    }
+    } else if (this.type === "studyArea"){
+      this.getIndividualStudyArea();
+    } 
   },
 };
 </script>
