@@ -153,8 +153,21 @@ export default {
           .catch((error) => {
             console.log(error.response.data);
           });
-      } else {
-        // study area
+      } else if (this.type === "studyArea") {
+        StudyAreaRequest.sortCommentsByRating(
+          this.$route.params.id,
+          isLowToHigh,
+          this.currentPage - 1,
+          this.pageSize
+        )
+          .then((response) => {
+            console.log(response.data);
+            this.commentList = response.data.content;
+            this.totalPages = response.data.totalPages;
+          })
+          .catch((error) => {
+            console.log(error.response.data);
+          });
       }
     },
   },
