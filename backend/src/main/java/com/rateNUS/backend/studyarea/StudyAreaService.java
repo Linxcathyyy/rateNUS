@@ -1,9 +1,7 @@
 package com.rateNUS.backend.studyarea;
 
-import java.util.List;
-
-import javax.transaction.Transactional;
-
+import com.rateNUS.backend.exception.TypeNotFoundException;
+import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -11,8 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import com.rateNUS.backend.exception.TypeNotFoundException;
-import com.rateNUS.backend.util.Type;
+import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Provides the services required by {@code StudyAreaService}.

@@ -1,6 +1,6 @@
 package com.rateNUS.backend.studyarea;
 
-import java.util.List;
+import com.rateNUS.backend.util.CommentUtil;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -12,8 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import com.rateNUS.backend.util.CommentUtil;
+import java.util.List;
 
 @Entity
 @Table
