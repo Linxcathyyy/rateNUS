@@ -4,15 +4,19 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 import com.rateNUS.backend.util.CommentUtil;
 
+@Entity
+@Table
 public class StudyArea {
     @Id
     @SequenceGenerator(name = "study_area_sequence", sequenceName = "study_area_sequence", allocationSize = 1)
