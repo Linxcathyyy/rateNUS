@@ -3,6 +3,7 @@ package com.rateNUS.backend.util;
 import com.rateNUS.backend.comment.Comment;
 import com.rateNUS.backend.hostel.Hostel;
 import com.rateNUS.backend.stall.Stall;
+import com.rateNUS.backend.studyarea.StudyArea;
 import com.rateNUS.backend.user.User;
 
 import java.util.List;
@@ -94,6 +95,27 @@ public class DummyData {
             6.50
     );
 
+    public static StudyArea sa1 = new StudyArea(
+            "Central Library",
+            "Central Library",
+            List.of("https://blog.nus.edu.sg/linus/files/2018/05/renovation_masterplan_page_library_artist_impression-1zm153z.jpg",
+                    "https://blog.nus.edu.sg/linus/files/2021/02/photomania-630f01939d1f02bbefa829f2847238c1-1.jpg",
+                    "https://blog.nus.edu.sg/linus/files/2021/02/Chinese-Library-Study-Area-1.jpg")
+    );
+
+    public static StudyArea sa2 = new StudyArea(
+            "PGP study rooms",
+            "Prince George's Park",
+            List.of("https://nus.edu.sg/osa/images/default-source/pgp-house/facilities/reading-room.jpeg?sfvrsn=81d01ab3_2")
+    );
+
+    public static StudyArea sa3 = new StudyArea(
+            "Study Area outside Starbucks",
+            "Utown Starbucks",
+            List.of("https://thesmartlocal.com/reviews/wp-content/uploads/2013/11/u-town-national-university-of-singapore-78-1383555230.jpg",
+                    "https://miro.medium.com/proxy/0*PoVsXEStAHvJmoIp.jpg")
+    );
+
     public static Comment c1 = new Comment(3, 1, 4,
             "Cinnamon College: nice hostel :)",
             Type.hostel);
@@ -122,10 +144,15 @@ public class DummyData {
             "I dun wanna study alr...",
             Type.studyArea);
 
+    public static Comment c8 = new Comment(2, 1, 0,
+            "Needs pgp room card to access.",
+            Type.studyArea);
+
     public static User u1 = new User("user1", "user@example.email", "Password123!");
 
     public static List<Hostel> hostelList = List.of(h1, h2, h3);
     public static List<Stall> stallList = List.of(s1, s2, s3);
-    public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6, c7);
+    public static List<StudyArea> studyAreaList = List.of(sa1, sa2, sa3);
+    public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6, c7, c8);
     public static List<User> userList = List.of(u1);
 }

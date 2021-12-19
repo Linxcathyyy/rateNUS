@@ -1,12 +1,15 @@
 <template>
   <div v-if="item != null">
     <v-card flat class="my-4">
-      <v-card-title>{{ item.name }}</v-card-title>
+      <v-card-title style="word-break: break-word">{{
+        item.name
+      }}</v-card-title>
       <v-card-text>
         <v-row align="center" class="mx-0">
           <v-rating
             :value="item.rating"
             color="amber"
+            background-color="grey"
             dense
             half-increments
             readonly
@@ -37,10 +40,10 @@
         </v-row>
       </v-card-text>
     </v-card>
-    <v-divider class="mx-16"></v-divider>
+    <v-divider ></v-divider>
     <div v-if="type === 'hostel'">
       <Facilities :facilities="this.item.facilities" />
-      <v-divider class="mx-16"></v-divider>
+      <v-divider></v-divider>
     </div>
     <CommentForm />
     <v-divider></v-divider>
@@ -75,7 +78,7 @@ export default {
   },
   methods: {
     getIndividualHostel() {
-      HostelRequest.getIndividualHostel(this.$route.params.hostelId)
+      HostelRequest.getIndividualHostel(this.$route.params.id)
         .then((response) => {
           console.log(response.data);
           this.item = response.data;
@@ -85,7 +88,7 @@ export default {
         });
     },
     getIndividualStall() {
-      StallRequest.getIndividualStall(this.$route.params.stallId)
+      StallRequest.getIndividualStall(this.$route.params.id)
         .then((response) => {
           console.log(response.data);
           this.item = response.data;

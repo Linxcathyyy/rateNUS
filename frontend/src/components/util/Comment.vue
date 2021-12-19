@@ -1,14 +1,12 @@
 <template>
   <div :key="comment.id" class="comment">
     <div class="comment-info">
-        <Rating :score="comment.rating" />
-        <p>
-          Posted on: {{ date }} {{ time }}
-        </p>
+      <Rating :score="comment.rating" />
+      <p>Posted on: {{ date }} {{ time }}</p>
     </div>
     <p class="description">
       {{ comment.text }}
-    </p> 
+    </p>
   </div>
 </template>
 
@@ -32,12 +30,12 @@ export default {
   mounted() {
     this.date = new Date(this.comment.timestamp).toLocaleDateString();
     this.time = new Date(this.comment.timestamp).toLocaleTimeString();
+    // console.log("mounted: ", this.comment);
   },
 };
 </script>
 
 <style scoped>
-
 .description {
   text-align: left;
 }
@@ -51,5 +49,4 @@ export default {
   text-align: start;
   font-size: 0.83em;
 }
-
 </style>

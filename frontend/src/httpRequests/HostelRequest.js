@@ -5,7 +5,7 @@ const COMMENT_API_BASE_URL = "http://localhost:8080/comment";
 const COMMENT_SORT_API_BASE_URL = "http://localhost:8080/comment/hostel";
 
 class HostelRequest {
-  // Get a partial list of hostels base on startIndex and endIndex
+  // Get a partial list of hostels based on startIndex and endIndex
   async getHostelList(pageNum, pageSize) {
     return await axios.post(HOSTEL_API_BASE_URL, {
       orderBy: "id",
@@ -25,7 +25,7 @@ class HostelRequest {
   }
 
   // Post individual hostel comment to server
-  postHostelComment(hostelId, comment, rating, jwtToken) {
+  postHostelComment(hostelId, comment, rating, jwtToken, userId) {
     // below is temp implementation to see post content
     if (hostelId == undefined) {
       // check id is hostel id
@@ -43,6 +43,7 @@ class HostelRequest {
       rating: rating,
       text: comment,
       type: "hostel",
+      userId: userId
     };
     return axios.post(COMMENT_API_BASE_URL, req, {
       headers: headers,

@@ -44,7 +44,7 @@ export default {
     return {
       hostelList: [],
       currentPage: 1,
-      pageSize: 1,
+      pageSize: 3,
       totalPages: 0,
       currentKeyword: "",
       hasBeenSearched: false,

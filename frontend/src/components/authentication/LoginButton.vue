@@ -1,12 +1,14 @@
 <template>
   <div>
-    <v-btn color="primary" @click="showLoginDialog"> Login </v-btn>
+    <v-btn outlined depressed color="orange accent-4" @click="showLoginDialog">
+      Login
+    </v-btn>
     <v-dialog v-model="isLoginFormShown" max-width="40em">
       <v-card>
         <v-card-title>
           <span>Login</span>
         </v-card-title>
-        <v-container>
+        <v-container class="px-6">
           <LoginForm />
         </v-container>
       </v-card>

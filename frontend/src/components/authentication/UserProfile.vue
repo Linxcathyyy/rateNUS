@@ -1,7 +1,7 @@
 <template>
   <v-menu bottom min-width="200px" rounded offset-y>
     <template v-slot:activator="{ on }">
-      <v-btn icon x-large v-on="on">
+      <v-btn icon x-large v-on="on" class="mr-3">
         <v-avatar :color="profileColor" size="48">
           <span class="white--text text-h5">{{ initials }}</span>
         </v-avatar>

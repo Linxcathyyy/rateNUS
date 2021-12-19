@@ -2,6 +2,7 @@
   <v-rating
     :value="scoreTo2dp"
     color="amber"
+    background-color="grey"
     dense
     half-increments
     readonly
@@ -14,10 +15,10 @@ export default {
   props: ["score"],
   data() {
     return {
-      scoreTo2dp: Number(this.score.toPrecision(2))
-    }
-  }
-  };
+      scoreTo2dp: Number(this.score.toPrecision(2)),
+    };
+  },
+};
 </script>
 
 <style scope>
