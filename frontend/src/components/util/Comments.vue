@@ -76,11 +76,7 @@ export default {
   methods: {
     async getCommentList(pageNum, pageSize) {
       if (this.type === "hostel") {
-        HostelRequest.getCommentList(
-          this.$route.params.id,
-          pageNum,
-          pageSize
-        )
+        HostelRequest.getCommentList(this.$route.params.id, pageNum, pageSize)
           .then((response) => {
             this.commentList = response.data.content;
             this.totalPages = response.data.totalPages;
@@ -89,11 +85,7 @@ export default {
             console.log(error);
           });
       } else if (this.type === "stall") {
-        StallRequest.getCommentList(
-          this.$route.params.id,
-          pageNum,
-          pageSize
-        )
+        StallRequest.getCommentList(this.$route.params.id, pageNum, pageSize)
           .then((response) => {
             this.commentList = response.data.content;
             this.totalPages = response.data.totalPages;
@@ -102,7 +94,7 @@ export default {
             console.log(error);
           });
       } else if (this.type === "studyArea") {
-         StudyAreaRequest.getCommentList(
+        StudyAreaRequest.getCommentList(
           this.$route.params.id,
           pageNum,
           pageSize
@@ -119,7 +111,9 @@ export default {
     async updatePage(pageNumber) {
       this.currentPage = pageNumber;
       if (this.isLowestToHighestRating !== null) {
-        await this.sortCommentsFromLowestToHighestRating(this.isLowestToHighestRating);
+        await this.sortCommentsFromLowestToHighestRating(
+          this.isLowestToHighestRating
+        );
       } else {
         await this.getCommentList(pageNumber - 1, this.pageSize);
       }

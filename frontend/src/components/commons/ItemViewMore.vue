@@ -40,12 +40,12 @@
         </v-row>
       </v-card-text>
     </v-card>
-    <v-divider ></v-divider>
+    <v-divider></v-divider>
     <div v-if="type === 'hostel'">
       <Facilities :facilities="this.item.facilities" />
       <v-divider></v-divider>
     </div>
-    <CommentForm :type="type"/>
+    <CommentForm :type="type" />
     <v-divider></v-divider>
     <Comments :type="type" />
   </div>
@@ -132,9 +132,9 @@ export default {
       this.getIndividualHostel();
     } else if (this.type === "stall") {
       this.getIndividualStall();
-    } else if (this.type === "studyArea"){
+    } else if (this.type === "studyArea") {
       this.getIndividualStudyArea();
-    } 
+    }
   },
 };
 </script>

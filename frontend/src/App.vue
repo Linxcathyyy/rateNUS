@@ -74,13 +74,13 @@ export default {
       if (currentPath !== "/hostels") {
         this.$router.push("/hostels");
       }
-    }
+    },
   },
   watch: {
-  $route(to) {
-     document.title = `${to.meta.title} - RateNUS`;
-  }
-}
+    $route(to) {
+      document.title = `${to.meta.title} - RateNUS`;
+    },
+  },
 };
 </script>
 
@@ -120,11 +120,11 @@ header {
   z-index: 99; /* header stays on top */
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@700&display=swap");
 #ratenus {
   padding: 15px;
-  color: #FF6D00;
-  font-family: 'Exo 2';
+  color: #ff6d00;
+  font-family: "Exo 2";
 }
 #ratenus:hover {
   cursor: pointer;

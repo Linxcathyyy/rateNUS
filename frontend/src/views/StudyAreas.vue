@@ -1,7 +1,14 @@
 <template>
   <div class="studyAreas">
-    <SearchBar @handle-search="handleSearch" searchHint="Search for studyAreas" />
-    <div v-for="studyArea in studyAreaList" :key="studyArea.id" class="studyArea-list">
+    <SearchBar
+      @handle-search="handleSearch"
+      searchHint="Search for studyAreas"
+    />
+    <div
+      v-for="studyArea in studyAreaList"
+      :key="studyArea.id"
+      class="studyArea-list"
+    >
       <div @click="goToViewMorePage(studyArea.id)" id="studyArea-click">
         <ItemCard type="studyArea" :item="studyArea" />
       </div>
@@ -107,7 +114,7 @@ export default {
     await this.getStudyAreaList(this.currentPage - 1, this.pageSize);
   },
 
-  emits: ["handle-search"]
+  emits: ["handle-search"],
 };
 </script>
 

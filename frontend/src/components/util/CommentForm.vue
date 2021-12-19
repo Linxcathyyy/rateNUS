@@ -132,7 +132,7 @@ export default {
         var jwtToken = this.$store.getters.jwtToken;
         var userId = this.$store.getters.id;
 
-        this.submitHelper(id, comment, rating, jwtToken, userId)
+        this.submitByType(id, comment, rating, jwtToken, userId)
           .then(() => {
             this.successDialog = true;
             console.log(this.successDialog);
@@ -154,7 +154,7 @@ export default {
       }
     },
 
-    async submitHelper(id, comment, rating, jwtToken, userId) {
+    async submitByType(id, comment, rating, jwtToken, userId) {
       switch (this.type) {
         case "hostel":
           await HostelRequest.postHostelComment(
@@ -166,7 +166,13 @@ export default {
           );
           break;
         case "stall":
-          await StallRequest.postStallComment(id, comment, rating, jwtToken, userId);
+          await StallRequest.postStallComment(
+            id,
+            comment,
+            rating,
+            jwtToken,
+            userId
+          );
           break;
         case "studyArea":
           await StudyAreaRequest.postStudyAreaComment(
