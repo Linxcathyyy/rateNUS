@@ -3,6 +3,7 @@ package com.rateNUS.backend.comment;
 import com.rateNUS.backend.exception.TypeNotFoundException;
 import com.rateNUS.backend.hostel.HostelService;
 import com.rateNUS.backend.stall.StallService;
+import com.rateNUS.backend.studyarea.StudyAreaService;
 import com.rateNUS.backend.util.Config;
 import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +29,17 @@ public class CommentController {
     private final CommentService commentService;
     private final HostelService hostelService;
     private final StallService stallService;
+    private final StudyAreaService studyAreaService;
 
     @Autowired
     public CommentController(CommentService commentService,
                              HostelService hostelService,
-                             StallService stallService) {
+                             StallService stallService,
+                             StudyAreaService studyAreaService) {
         this.commentService = commentService;
         this.hostelService = hostelService;
         this.stallService = stallService;
+        this.studyAreaService = studyAreaService;
     }
 
     @PostMapping(path = "{type}/{targetId}")
@@ -75,7 +79,7 @@ public class CommentController {
                 break;
 
             case studyArea:
-                // studyAreaService.addComment(newComment.getTargetId(), newComment.getRating());
+                studyAreaService.addComment(newComment.getTargetId(), newComment.getRating());
                 break;
         }
     }
@@ -100,7 +104,7 @@ public class CommentController {
                 break;
 
             case studyArea:
-                // studyAreaService.updateComment(updatedComment.getTargetId(), oldRating, updatedComment.getRating());
+                studyAreaService.updateComment(updatedComment.getTargetId(), oldRating, updatedComment.getRating());
                 break;
         }
     }
@@ -119,7 +123,7 @@ public class CommentController {
                 break;
 
             case studyArea:
-                // studyAreaService.deleteComment(deletedComment.getTargetId(), deletedComment.getRating());
+                studyAreaService.deleteComment(deletedComment.getTargetId(), deletedComment.getRating());
                 break;
         }
     }
