@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,8 +16,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
-import org.springframework.beans.factory.annotation.Value;
-
 import com.rateNUS.backend.user.User;
 
 /**
@@ -25,8 +24,7 @@ import com.rateNUS.backend.user.User;
 @Entity
 @Table
 public class VerificationToken {
-    @Value("${ratenus.app.verificationToken.tokenExpirationMin}")
-    private int tokenExpirationMin;
+    private int tokenExpirationMin = 60 * 24;
 
     @Id
     @SequenceGenerator(name = "token_sequence", sequenceName = "token_sequence", allocationSize = 1)
@@ -38,11 +36,11 @@ public class VerificationToken {
     private String token;
 
     // Ensures a one-to-one relationship between user and token.
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
+    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(nullable = false, name = "user_id")
     private User user;
 
-    @Column(name = "expiryDate")
+    @Column(name = "expiryDate", updatable = false)
     private Date expiryDate;
 
     private Date calculateExpiryDate(int expiryTimeInMinutes) {
