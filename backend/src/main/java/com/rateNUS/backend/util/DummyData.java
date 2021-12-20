@@ -148,7 +148,8 @@ public class DummyData {
             "Needs pgp room card to access.",
             Type.studyArea);
 
-    public static User u1 = new User("user1", "user@example.email", "Password123!");
+    public static User u1 = new User(
+            "user1", "user@example.email", "Password123!", true);
 
     public static List<Hostel> hostelList = List.of(h1, h2, h3);
     public static List<Stall> stallList = List.of(s1, s2, s3);
