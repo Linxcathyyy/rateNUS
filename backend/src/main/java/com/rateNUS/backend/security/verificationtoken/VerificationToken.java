@@ -40,7 +40,6 @@ public class VerificationToken {
     // Ensures a one-to-one relationship between user and token.
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(nullable = false, name = "user_id")
-    @Column(name = "user")
     private User user;
 
     @Column(name = "expiryDate")
@@ -60,5 +59,37 @@ public class VerificationToken {
         this.token = token;
         this.user = user;
         this.expiryDate = calculateExpiryDate(tokenExpirationMin);
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Date getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(Date expiryDate) {
+        this.expiryDate = expiryDate;
     }
 }
