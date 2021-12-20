@@ -223,3 +223,6 @@ Gradle > Tasks > application > bootRun
           }
           ```
         * Path: `signup`
+    * Get request: confirm registration
+        * Give: `@RequestParam("token") String token` with empty body
+        * Path: `registrationConfirm`
