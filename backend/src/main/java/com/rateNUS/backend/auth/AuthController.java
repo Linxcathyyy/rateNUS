@@ -1,6 +1,6 @@
 package com.rateNUS.backend.auth;
 
-import com.rateNUS.backend.auth.registrationevent.RegistrationCompleteEvent;
+import com.rateNUS.backend.auth.registration_event.RegistrationCompleteEvent;
 import com.rateNUS.backend.security.ApplicationUserRole;
 import com.rateNUS.backend.security.UserDetailsImpl;
 import com.rateNUS.backend.security.jwt.JwtUtils;
