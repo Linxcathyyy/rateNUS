@@ -60,10 +60,7 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterAfter(jwtTokenVerifier, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/comment").authenticated()
-                .antMatchers("/comment/**").authenticated()
-                //.antMatchers("/comment/**").authenticated()
-                .anyRequest().permitAll();
+                .antMatchers("/comment").authenticated().anyRequest().permitAll();
     }
 
     @Bean
@@ -73,7 +70,7 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins(Config.frontendURL)
-                        .allowedMethods("GET", "POST", "OPTIONS", "PUT", "DELETE");
+                        .allowedMethods("GET", "POST", "OPTIONS");
             }
         };
     }
@@ -83,16 +80,9 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        config.addAllowedOrigin(Config.frontendURL);
-        config.setAllowedMethods(Arrays.asList(
-                HttpMethod.GET.name(),
-                HttpMethod.HEAD.name(),
-                HttpMethod.POST.name(),
-                HttpMethod.PUT.name(),
-                HttpMethod.DELETE.name(),
-                HttpMethod.OPTIONS.name()));
+        source.registerCorsConfiguration("/**", config.applyPermitDefaultValues());
         config.setExposedHeaders(List.of("Authorization"));
-        source.registerCorsConfiguration("/**", config);
+
         return source;
     }
 }
