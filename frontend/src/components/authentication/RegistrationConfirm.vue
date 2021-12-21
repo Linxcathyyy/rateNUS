@@ -34,7 +34,6 @@ export default defineComponent({
   },
   created() {
     this.token = this.$route.query.token;
-    console.log(this.token);
   },
   async mounted() {
     await AuthenticationRequest.sendConfirmationRequest(this.token)
@@ -55,7 +54,6 @@ export default defineComponent({
         this.$router.push("/hostels");
       })
       .catch((err) => {
-        console.log(err.response.data.message);
         this.errMessage = err.response.data.message;
         this.hasError = true;
       });
