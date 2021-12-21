@@ -9,16 +9,14 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Provides the services required by {@code CommentController}.
  */
 @Service
 public class CommentService {
-    private static final Logger logger = Logger.getLogger(CommentService.class.getName());
     private final CommentRepository commentRepository;
 
     @Autowired
@@ -34,26 +32,15 @@ public class CommentService {
                                      int numEntriesPerPage) {
         Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
         PageRequest pageRequest = PageRequest.of(pageNum, numEntriesPerPage, Sort.by(direction, orderBy));
-        Page<Comment> page = commentRepository.findByTargetIdAndType(targetId, type, pageRequest);
-
-        logger.log(Level.INFO, String.format("Found %d comments", page.getTotalElements()));
-
-        return page;
+        return commentRepository.findByTargetIdAndType(targetId, type, pageRequest);
     }
 
-    public Page<Comment> getCommentsOfUser(long userId, String orderBy, boolean isAscending, int pageNum,
-                                           int numEntriesPerPage) {
+    public List<Comment> getCommentsOfUser(long userId, String orderBy, boolean isAscending) {
         Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
-        PageRequest pageRequest = PageRequest.of(pageNum, numEntriesPerPage, Sort.by(direction, orderBy));
-        Page<Comment> page = commentRepository.findByUserId(userId, pageRequest);
-
-        logger.log(Level.INFO, String.format("Found %d comments", page.getTotalElements()));
-
-        return page;
+        return commentRepository.findByUserId(userId, Sort.by(direction, orderBy));
     }
 
     public Comment addComment(Comment comment) {
-        CommentService.logger.log(Level.INFO, "Added comment: " + comment);
         return commentRepository.save(comment);
     }
 

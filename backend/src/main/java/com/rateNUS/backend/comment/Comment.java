@@ -1,7 +1,7 @@
 package com.rateNUS.backend.comment;
 
 import com.rateNUS.backend.util.Type;
-import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -39,8 +39,8 @@ public class Comment {
     @Enumerated(EnumType.STRING)
     private Type type;
 
-    @Column(name = "timestamp", updatable = false)
-    @CreationTimestamp
+    @Column(name = "timestamp")
+    @UpdateTimestamp
     private Timestamp timestamp;
 
     public Comment() {}
