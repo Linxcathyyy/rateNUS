@@ -3,6 +3,8 @@ package com.rateNUS.backend.comment;
 import com.rateNUS.backend.exception.TypeNotFoundException;
 import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -26,9 +28,11 @@ public class CommentService {
         return commentRepository.findById(commentId);
     }
 
-    public List<Comment> getComments(long targetId, Type type, String orderBy, boolean isAscending) {
+    public Page<Comment> getComments(long targetId, Type type, String orderBy, boolean isAscending, int pageNum,
+                                     int numEntriesPerPage) {
         Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
-        return commentRepository.findByTargetIdAndType(targetId, type, Sort.by(direction, orderBy));
+        PageRequest pageRequest = PageRequest.of(pageNum, numEntriesPerPage, Sort.by(direction, orderBy));
+        return commentRepository.findByTargetIdAndType(targetId, type, pageRequest);
     }
 
     public List<Comment> getCommentsOfUser(long userId, String orderBy, boolean isAscending) {

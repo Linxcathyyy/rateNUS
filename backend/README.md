@@ -153,7 +153,9 @@ Gradle > Tasks > application > bootRun
           ```
           {
             "orderBy": "rating",
-            "isLowToHigh": true
+            "isLowToHigh": true,
+            "pageNum": 1,
+            "pageSize": 2
           }
           ```
         * Path: `comment/{type}/{targetId}`
@@ -163,7 +165,9 @@ Gradle > Tasks > application > bootRun
               ```
               {
                 "orderBy": "timestamp",
-                "isLowToHigh": false
+                "isLowToHigh": false,
+                "pageNum": 0,
+                "pageSize": 5
               }
               ```
     * Get Comment by user ID
