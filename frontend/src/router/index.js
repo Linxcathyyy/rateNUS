@@ -5,7 +5,7 @@ import Canteens from "../views/Canteens.vue";
 import StudyAreas from "../views/StudyAreas.vue";
 import ItemViewMore from "../components/commons/ItemViewMore.vue";
 import RegistrationConfirm from "../components/authentication/RegistrationConfirm.vue"
-// import store from '@/store/index.js';
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -61,11 +61,21 @@ const routes = [
     }
   },
   {
+    path: '/studyAreas/:id',
+    name: 'StudyAreaViewMore',
+    component: ItemViewMore,
+    props: {
+      type: "studyArea"
+    },
+    meta: {
+      title: `studyArea`,
+    }
+  },
+  {
     path: '/registrationConfirm',
     name: 'RegistrationConfirm',
     component: RegistrationConfirm,
   },
-
 ]
 
 const router = new VueRouter({
