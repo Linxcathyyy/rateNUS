@@ -69,8 +69,8 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins(Config.frontendURL)
-                        .allowedMethods("GET", "POST", "OPTIONS");
+                        .allowedOrigins(Config.frontendURL);
+//                        .allowedMethods("GET", "POST", "DELETE", "OPTIONS");
             }
         };
     }
@@ -79,6 +79,8 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
 
         source.registerCorsConfiguration("/**", config.applyPermitDefaultValues());
         config.setExposedHeaders(List.of("Authorization"));
