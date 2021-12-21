@@ -110,7 +110,7 @@ public class CommentController {
     }
 
     @DeleteMapping(path = "/{commentId}")
-    public void updateComment(@PathVariable("commentId") long commentId) {
+    public void deleteComment(@PathVariable("commentId") long commentId) {
         Comment deletedComment = commentService.deleteComment(commentId);
 
         switch (deletedComment.getType()) {
