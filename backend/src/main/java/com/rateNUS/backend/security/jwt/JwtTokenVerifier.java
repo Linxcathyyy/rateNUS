@@ -19,10 +19,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Component
 public class JwtTokenVerifier extends OncePerRequestFilter {
+    public static final Logger logger = Logger.getLogger(JwtTokenVerifier.class.getName());
     @Value("${ratenus.app.jwt.jwtSecret}")
     private String jwtSecret;
 
@@ -58,9 +61,9 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
                     "Authorization, x-xsrf-token, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, "
                             + "Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
         } catch (JwtException e) {
-            throw new IllegalStateException(String.format("token %s cannot be trusted", token));
+            logger.log(Level.WARNING, String.format("token %s cannot be trusted", token));
+        } finally {
+            filterChain.doFilter(request, response);
         }
-
-        filterChain.doFilter(request, response);
     }
 }

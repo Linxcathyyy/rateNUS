@@ -2,9 +2,10 @@
   <div>
     <v-form ref="login_form" v-model="valid" lazy-validation>
       <v-alert dense outlined type="error" v-if="isErrorVisible">
-        Login Failed
+        Login Failed. Please check your username and password.
       </v-alert>
       <v-text-field
+        color="orange accent-4"
         v-model="username"
         :rules="nameRules"
         label="Username"
@@ -12,6 +13,7 @@
         v-on:keydown.enter="submitLoginCredentials"
       ></v-text-field>
       <v-text-field
+        color="orange accent-4"
         v-model="password"
         :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
         :rules="[rules.required]"
@@ -22,8 +24,10 @@
         v-on:keydown.enter="submitLoginCredentials"
       ></v-text-field>
       <v-btn
+        depressed
+        outlined
         :disabled="!valid"
-        color="success"
+        color="orange accent-4"
         class="mr-4"
         @click="this.submitLoginCredentials"
       >
@@ -55,10 +59,6 @@ export default {
       return this.$refs.login_form.validate();
     },
 
-    showSubmissionError() {
-      this.isErrorVisible = true;
-    },
-
     async submitLoginCredentials() {
       if (this.validate()) {
         await AuthenticationRequest.loginWithCredentials(
@@ -66,25 +66,35 @@ export default {
           this.password
         )
           .then((response) => {
+            var id = response.data.id;
             var name = response.data.username;
             var email = response.data.email;
             var token = AuthenticationUtil.parseJWTToken(
               response.headers["authorization"]
             );
+            this.$store.commit("changeId", id);
             this.$store.commit("changeName", name);
             this.$store.commit("changeEmail", email);
             this.$store.commit("updateJwtToken", token);
             this.$store.commit("logIn");
             this.$store.commit("updateDefaultProfileColor");
+
+            return response;
           })
-          .catch(function (response) {
+          .catch(function (err) {
             //handle error
             console.log("error occurred");
-            console.log(response);
+            console.log("error occurred: " + err);
+            return err.response;
             //return response;
           })
-          .then(() => {
-            this.showSubmissionError();
+          .then((response) => {
+            if (response.status != 200) {
+              this.isErrorVisible = true;
+            } else {
+              this.isErrorVisible = false;
+              location.reload();
+            }
           });
       }
     },

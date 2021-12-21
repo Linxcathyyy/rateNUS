@@ -3,6 +3,7 @@ package com.rateNUS.backend.comment;
 import com.rateNUS.backend.exception.TypeNotFoundException;
 import com.rateNUS.backend.hostel.HostelService;
 import com.rateNUS.backend.stall.StallService;
+import com.rateNUS.backend.studyarea.StudyAreaService;
 import com.rateNUS.backend.util.Config;
 import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +29,17 @@ public class CommentController {
     private final CommentService commentService;
     private final HostelService hostelService;
     private final StallService stallService;
+    private final StudyAreaService studyAreaService;
 
     @Autowired
     public CommentController(CommentService commentService,
                              HostelService hostelService,
-                             StallService stallService) {
+                             StallService stallService,
+                             StudyAreaService studyAreaService) {
         this.commentService = commentService;
         this.hostelService = hostelService;
         this.stallService = stallService;
+        this.studyAreaService = studyAreaService;
     }
 
     @PostMapping(path = "{type}/{targetId}")
@@ -48,6 +52,17 @@ public class CommentController {
         int pageSize = (int) jsonInput.getOrDefault("pageSize", 5);
 
         return commentService.getComments(targetId, type, orderBy, isLowToHigh, pageNum, pageSize);
+    }
+
+    @PostMapping(path = "user/{userId}")
+    public Page<Comment> getCommentsOfUser(@PathVariable("userId") long userId,
+                                           @RequestBody Map<String, Object> jsonInput) {
+        String orderBy = (String) jsonInput.getOrDefault("orderBy", "timestamp");
+        boolean isLowToHigh = (boolean) jsonInput.getOrDefault("isLowToHigh", false);
+        int pageNum = (int) jsonInput.getOrDefault("pageNum", 0);
+        int pageSize = (int) jsonInput.getOrDefault("pageSize", 5);
+
+        return commentService.getCommentsOfUser(userId, orderBy, isLowToHigh, pageNum, pageSize);
     }
 
     @PostMapping
@@ -64,7 +79,7 @@ public class CommentController {
                 break;
 
             case studyArea:
-                // studyAreaService.addComment(newComment.getTargetId(), newComment.getRating());
+                studyAreaService.addComment(newComment.getTargetId(), newComment.getRating());
                 break;
         }
     }
@@ -89,7 +104,7 @@ public class CommentController {
                 break;
 
             case studyArea:
-                // studyAreaService.updateComment(updatedComment.getTargetId(), oldRating, updatedComment.getRating());
+                studyAreaService.updateComment(updatedComment.getTargetId(), oldRating, updatedComment.getRating());
                 break;
         }
     }
@@ -108,7 +123,7 @@ public class CommentController {
                 break;
 
             case studyArea:
-                // studyAreaService.deleteComment(deletedComment.getTargetId(), deletedComment.getRating());
+                studyAreaService.deleteComment(deletedComment.getTargetId(), deletedComment.getRating());
                 break;
         }
     }

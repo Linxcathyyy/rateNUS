@@ -77,8 +77,40 @@ public class Stall {
         this.highestPrice = highestPrice;
     }
 
+    public long getId() {
+        return id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public int getCommentCount() {
+        return commentCount;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public List<String> getImageUrl() {
+        return imageUrl;
+    }
+
+    public double getLowestPrice() {
+        return lowestPrice;
+    }
+
+    public double getHighestPrice() {
+        return highestPrice;
     }
 
     public void addComment(int newRating) {

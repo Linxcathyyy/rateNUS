@@ -1,7 +1,7 @@
 <template>
   <v-menu bottom min-width="200px" rounded offset-y>
     <template v-slot:activator="{ on }">
-      <v-btn icon x-large v-on="on">
+      <v-btn icon x-large v-on="on" class="mr-3">
         <v-avatar :color="profileColor" size="48">
           <span class="white--text text-h5">{{ initials }}</span>
         </v-avatar>
@@ -20,7 +20,7 @@
             {{ email }}
           </h4>
           <v-divider class="my-3"></v-divider>
-          <v-btn depressed rounded text> Edit Account </v-btn>
+          <v-btn depressed rounded text @click="goToMyComments"> My Comments </v-btn>
           <v-divider class="my-3"></v-divider>
           <v-btn depressed rounded text @click="logout"> Log Out </v-btn>
         </div>
@@ -45,6 +45,9 @@ export default defineComponent({
     logout() {
       this.$store.commit("logOut");
     },
+    goToMyComments() {
+      this.$router.push("/myComments");
+    }
   },
 });
 </script>

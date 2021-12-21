@@ -1,12 +1,15 @@
 <template>
   <div v-if="item != null">
     <v-card flat class="my-4">
-      <v-card-title>{{ item.name }}</v-card-title>
+      <v-card-title style="word-break: break-word">{{
+        item.name
+      }}</v-card-title>
       <v-card-text>
         <v-row align="center" class="mx-0">
           <v-rating
             :value="item.rating"
             color="amber"
+            background-color="grey"
             dense
             half-increments
             readonly
@@ -38,9 +41,11 @@
       </v-card-text>
     </v-card>
     <v-divider></v-divider>
-    <Facilities :facilities="this.item.facilities" />
-    <v-divider></v-divider>
-    <CommentForm />
+    <div v-if="type === 'hostel'">
+      <Facilities :facilities="this.item.facilities" />
+      <v-divider></v-divider>
+    </div>
+    <CommentForm :type="type" />
     <v-divider></v-divider>
     <Comments :type="type" />
   </div>
@@ -49,6 +54,7 @@
 <script>
 import HostelRequest from "../../httpRequests/HostelRequest";
 import StallRequest from "../../httpRequests/StallRequest";
+import StudyAreaRequest from "../../httpRequests/StudyAreaRequest";
 import Comments from "../util/Comments.vue";
 import Facilities from "./Facilities.vue";
 import CommentForm from "../util/CommentForm.vue";
@@ -73,7 +79,7 @@ export default {
   },
   methods: {
     getIndividualHostel() {
-      HostelRequest.getIndividualHostel(this.$route.params.hostelId)
+      HostelRequest.getIndividualHostel(this.$route.params.id)
         .then((response) => {
           console.log(response.data);
           this.item = response.data;
@@ -83,7 +89,17 @@ export default {
         });
     },
     getIndividualStall() {
-      StallRequest.getIndividualStall(this.$route.params.stallId)
+      StallRequest.getIndividualStall(this.$route.params.id)
+        .then((response) => {
+          console.log(response.data);
+          this.item = response.data;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    getIndividualStudyArea() {
+      StudyAreaRequest.getIndividualStudyArea(this.$route.params.id)
         .then((response) => {
           console.log(response.data);
           this.item = response.data;
@@ -116,8 +132,8 @@ export default {
       this.getIndividualHostel();
     } else if (this.type === "stall") {
       this.getIndividualStall();
-    } else {
-      // study area
+    } else if (this.type === "studyArea") {
+      this.getIndividualStudyArea();
     }
   },
 };

@@ -18,6 +18,7 @@
                 :length="totalPages"
                 prev-icon="mdi-menu-left"
                 next-icon="mdi-menu-right"
+                color="orange accent-4"
               ></v-pagination>
             </v-container>
           </v-col>
@@ -43,7 +44,7 @@ export default {
     return {
       hostelList: [],
       currentPage: 1,
-      pageSize: 1,
+      pageSize: 3,
       totalPages: 0,
       currentKeyword: "",
       hasBeenSearched: false,

@@ -3,12 +3,20 @@
     <v-main>
       <div id="app">
         <header>
-          <h1 id="ratenus">Rate NUS!</h1>
+          <div @click="goToMainPage">
+            <h1 id="ratenus">RateNUS</h1>
+          </div>
           <div v-if="!this.$store.getters.isLoggedIn" class="login-component">
-            <v-row>
+            <v-row class="show-on-desktop">
               <LoginButton class="button" />
               <SignUpButton class="button" />
             </v-row>
+
+            <div class="show-on-mobile">
+              <v-app-bar-nav-icon
+                @click.stop="menu = !menu"
+              ></v-app-bar-nav-icon>
+            </div>
           </div>
           <UserProfile
             v-else
@@ -19,6 +27,17 @@
             class="login-component"
           />
         </header>
+        <div>
+          <v-dialog v-model="menu" width="15em">
+            <v-card>
+              <v-card-title> Welcome! </v-card-title>
+              <v-col align-content="space-around">
+                <LoginButton class="button" />
+                <SignUpButton class="button" />
+              </v-col>
+            </v-card>
+          </v-dialog>
+        </div>
         <div id="nav-router-view">
           <Navigation id="navigation" />
           <div class="mx-4">
@@ -45,13 +64,38 @@ export default {
     UserProfile,
   },
   data() {
-    return {};
+    return {
+      menu: false,
+    };
   },
-  methods: {},
+  methods: {
+    goToMainPage() {
+      const currentPath = this.$router.history.current.path;
+      if (currentPath !== "/hostels") {
+        this.$router.push("/hostels");
+      }
+    },
+  },
+  watch: {
+    $route(to) {
+      document.title = `${to.meta.title} - RateNUS`;
+    },
+  },
 };
 </script>
 
 <style>
+@media (min-width: 761px) {
+  .show-on-mobile {
+    display: none !important;
+  }
+}
+@media (max-width: 760px) {
+  .show-on-desktop {
+    display: none !important;
+  }
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -75,8 +119,15 @@ header {
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   z-index: 99; /* header stays on top */
 }
+
+@import url("https://fonts.googleapis.com/css2?family=Exo+2:wght@700&display=swap");
 #ratenus {
   padding: 15px;
+  color: #ff6d00;
+  font-family: "Exo 2";
+}
+#ratenus:hover {
+  cursor: pointer;
 }
 .login-component {
   padding: 15px;

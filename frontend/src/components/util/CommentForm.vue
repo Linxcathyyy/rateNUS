@@ -7,7 +7,9 @@
           <v-card-text>You have added a comment successfully!</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="white darken-1" text @click="refreshPage"> Ok </v-btn>
+            <v-btn color="orange accent-4" text @click="refreshPage">
+              Ok
+            </v-btn>
           </v-card-actions>
         </v-card>
       </v-dialog>
@@ -15,22 +17,26 @@
     <v-snackbar top color="red" :value="failureSnackbar"
       >An unknown error has occured, please try again!</v-snackbar
     >
+    <v-snackbar top color="red" :value="notLoggedInSnackbar"
+      >You must be logged in to post comments. Please log in and try
+      again!</v-snackbar
+    >
     <v-card flat class="my-12">
       <div class="comment-form">
         <v-form>
           <div>
             <label class="rating-label"> Rating: </label>
             {{ rating }} / 5
-            <div class="rating-display">
-              <input
-                class="rating"
-                max="5"
-                step="1"
-                type="range"
-                value="3"
-                v-model="rating"
-              />
-            </div>
+
+            <v-rating
+              v-model="rating"
+              background-color="grey"
+              color="amber"
+              dense
+              half-increments
+              hover
+              size="30"
+            ></v-rating>
           </div>
           <ValidationObserver ref="addCommentObserver">
             <ValidationProvider
@@ -39,7 +45,7 @@
               v-slot="{ errors }"
             >
               <v-textarea
-                label="Comment"
+                :label="isCommentDisabled ? 'Log in to comment' : 'Comment'"
                 v-model="comment"
                 class="comment"
                 placeholder="Join the discussion..."
@@ -47,13 +53,22 @@
                 :min-height="30"
                 :max-height="350"
                 auto-grow
+                outlined
+                color="orange accent-4"
                 :error-messages="errors"
+                :disabled="isCommentDisabled"
               />
             </ValidationProvider>
-
-            <div class="submit">
-              <button @click="handleSubmit(comment, rating)">Submit</button>
-            </div>
+            <v-layout>
+              <v-spacer></v-spacer>
+              <v-btn
+                outlined
+                color="orange accent-4"
+                @click="handleSubmit(comment, rating)"
+              >
+                Submit
+              </v-btn>
+            </v-layout>
           </ValidationObserver>
         </v-form>
       </div>
@@ -63,6 +78,9 @@
 
 <script>
 import HostelRequest from "../../httpRequests/HostelRequest";
+import StallRequest from "../../httpRequests/StallRequest";
+import StudyAreaRequest from "../../httpRequests/StudyAreaRequest";
+
 import {
   ValidationProvider,
   extend,
@@ -80,6 +98,9 @@ export default {
     ValidationProvider,
     ValidationObserver,
   },
+  props: {
+    type: String,
+  },
   data() {
     return {
       comment: "",
@@ -88,6 +109,8 @@ export default {
       isExpanded: false,
       successDialog: false,
       failureSnackbar: false,
+      notLoggedInSnackbar: false,
+      isCommentDisabled: false, // should be changed to true if not logged in
     };
   },
   methods: {
@@ -104,20 +127,63 @@ export default {
     },
     async handleSubmit(comment, rating) {
       const isValidated = await this.validate();
-      var id = this.$route.params.hostelId;
+      var id = this.$route.params.id;
       if (isValidated) {
         var jwtToken = this.$store.getters.jwtToken;
-        console.log("jwtToken", jwtToken);
-        HostelRequest.postHostelComment(id, comment, rating, jwtToken)
+        var userId = this.$store.getters.id;
+
+        this.submitByType(id, comment, rating, jwtToken, userId)
           .then(() => {
             this.successDialog = true;
             console.log(this.successDialog);
           })
           .catch((error) => {
-            console.log(error);
+            var errorStatus = error.response.status;
+
+            if (errorStatus == 403) {
+              // user is not logged in
+              this.notLoggedInSnackbar = true;
+              setTimeout(() => (this.failureSnackbar = false), 5000);
+              return;
+            }
+
+            // other errors
             this.failureSnackbar = true;
             setTimeout(() => (this.failureSnackbar = false), 5000);
           });
+      }
+    },
+
+    async submitByType(id, comment, rating, jwtToken, userId) {
+      switch (this.type) {
+        case "hostel":
+          await HostelRequest.postHostelComment(
+            id,
+            comment,
+            rating,
+            jwtToken,
+            userId
+          );
+          break;
+        case "stall":
+          await StallRequest.postStallComment(
+            id,
+            comment,
+            rating,
+            jwtToken,
+            userId
+          );
+          break;
+        case "studyArea":
+          await StudyAreaRequest.postStudyAreaComment(
+            id,
+            comment,
+            rating,
+            jwtToken,
+            userId
+          );
+          break;
+        default:
       }
     },
   },
@@ -159,27 +225,5 @@ label {
 
 .rating {
   max-width: 300px;
-}
-
-.submit {
-  text-align: center;
-}
-
-button {
-  background: #428dff;
-  border: 0;
-  padding: 10px 20px;
-  margin-top: 20px;
-  color: white;
-  border-radius: 20px;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-}
-
-button:hover {
-  background: #569aff;
-}
-
-button:active {
-  background: #2c80ff;
 }
 </style>

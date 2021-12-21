@@ -1,13 +1,10 @@
-package com.rateNUS.backend.hostel;
+package com.rateNUS.backend.studyarea;
 
 import com.rateNUS.backend.util.CommentUtil;
-import com.rateNUS.backend.util.Facility;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,10 +16,10 @@ import java.util.List;
 
 @Entity
 @Table
-public class Hostel {
+public class StudyArea {
     @Id
-    @SequenceGenerator(name = "hostel_sequence", sequenceName = "hostel_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "hostel_sequence")
+    @SequenceGenerator(name = "study_area_sequence", sequenceName = "study_area_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "study_area_sequence")
     @Column(name = "id", updatable = false)
     private long id;
 
@@ -38,75 +35,77 @@ public class Hostel {
     @Column(name = "location", nullable = false, columnDefinition = "TEXT")
     private String location;
 
-    @Column(name = "description", nullable = false, columnDefinition = "TEXT")
-    private String description;
-
     @ElementCollection
-    @JoinTable(name = "hostelImages", joinColumns = @JoinColumn(name = "hostel_id"))
+    @JoinTable(name = "studyAreaImages", joinColumns = @JoinColumn(name = "study_area_id"))
     @Column(name = "imageUrl", nullable = false)
     private List<String> imageUrl;
 
-    @ElementCollection(targetClass = Facility.class)
-    @JoinTable(name = "facilities", joinColumns = @JoinColumn(name = "hostel_id"))
-    @Column(name = "facility", nullable = false)
-    @Enumerated(EnumType.STRING)
-    private List<Facility> facilities;
-
-    public Hostel() {}
-
-    // For dummy data
-    public Hostel(String name, String location, String description, List<String> imageUrl, List<Facility> facilities) {
-        this.name = name;
-        this.rating = -1;
-        this.location = location;
-        this.description = description;
-        this.imageUrl = imageUrl;
-        this.facilities = facilities;
+    public StudyArea() {
     }
 
-    // For HostelRepository
-    public Hostel(long id, String name, double rating, int commentCount, String location, String description,
-                  List<String> imageUrl, List<Facility> facilities) {
+    // For dummy data
+    public StudyArea(String name, String location, List<String> imageUrl) {
+        this.name = name;
+        this.location = location;
+        this.imageUrl = imageUrl;
+    }
+
+    // For StudyAreaRepository
+    public StudyArea(long id, String name, double rating, int commentCount, String location, List<String> imageUrl) {
         this.id = id;
         this.name = name;
         this.rating = rating;
         this.commentCount = commentCount;
         this.location = location;
-        this.description = description;
         this.imageUrl = imageUrl;
-        this.facilities = facilities;
     }
 
     public long getId() {
         return id;
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public double getRating() {
         return rating;
     }
 
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
     public int getCommentCount() {
         return commentCount;
+    }
+
+    public void setCommentCount(int commentCount) {
+        this.commentCount = commentCount;
     }
 
     public String getLocation() {
         return location;
     }
 
-    public String getDescription() {
-        return description;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public List<String> getImageUrl() {
         return imageUrl;
     }
 
-    public List<Facility> getFacilities() {
-        return facilities;
+    public void setImageUrl(List<String> imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public void addComment(int newRating) {

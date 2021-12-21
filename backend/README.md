@@ -100,6 +100,52 @@ Gradle > Tasks > application > bootRun
               "pageSize": 5
             }
             ```
+* Study Area
+    * Get all Study Areas
+        * Give: `@RequestBody Map<String, Object> jsonInput`
+          ```
+          {
+            "orderBy": "rating",
+            "isLowToHigh": false,
+            "pageNum": 1,
+            "pageSize": 2
+          }
+          ```
+        * Path: `studyarea`
+        * Note:
+            * Page number starts from 0
+            * If not specified, the default values are:
+              ```
+              {
+                "orderBy": "id",
+                "isLowToHigh": true,
+                "pageNum": 0,
+                "pageSize": 5
+              }
+              ```
+    * Get Study Area by Study Area's ID
+        * Give: `@PathVariable("studyAreaId") long studyAreaId`
+        * Path: `studyarea/{studyAreaId}`
+    * Find Study Area by keyword
+        * Give: `@RequestBody Map<String, Object> jsonInput`
+          ```
+          {
+            "keyword": "study area 1",
+            "pageNum": 1,
+            "pageSize": 2
+          }
+          ```
+        * Path: `studyarea/search`
+        * Note:
+            * Page number starts from 0
+            * If not specified, the default values are:
+            ```
+            {
+              "keyword": "",
+              "pageNum": 0,
+              "pageSize": 5
+            }
+            ```
 * Comment
     * Get Comment by Type and Comment's target ID
         * Give: `@PathVariable("type") Type type`, `@PathVariable("targetId") long targetId`
@@ -113,6 +159,29 @@ Gradle > Tasks > application > bootRun
           }
           ```
         * Path: `comment/{type}/{targetId}`
+        * Note:
+            * Page number starts from 0
+            * If not specified, the default values are:
+              ```
+              {
+                "orderBy": "timestamp",
+                "isLowToHigh": false,
+                "pageNum": 0,
+                "pageSize": 5
+              }
+              ```
+    * Get Comment by user ID
+        * Give: `@PathVariable("userId") long userId`
+          , `@RequestBody Map<String, Object> jsonInput`
+          ```
+          {
+            "orderBy": "rating",
+            "isLowToHigh": true,
+            "pageNum": 1,
+            "pageSize": 2
+          }
+          ```
+        * Path: `comment/user/{userId}`
         * Note:
             * Page number starts from 0
             * If not specified, the default values are:
@@ -154,3 +223,6 @@ Gradle > Tasks > application > bootRun
           }
           ```
         * Path: `signup`
+    * Get request: confirm registration
+        * Give: `@RequestParam("token") String token` with empty body
+        * Path: `registrationConfirm`
