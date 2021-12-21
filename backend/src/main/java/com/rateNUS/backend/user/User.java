@@ -40,6 +40,9 @@ public class User {
     @Column(name = "password", nullable = false, columnDefinition = "TEXT")
     private String password;
 
+    @Column(name = "enabled")
+    private boolean enabled;
+
     @ElementCollection
     @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "roles", nullable = false)
@@ -48,11 +51,22 @@ public class User {
 
     public User() {}
 
+    // For dummy data
+    public User(String username, String email, String password, boolean enabled) {
+        this.username = username;
+        this.email = email;
+        this.password = new PasswordConfig().passwordEncoder().encode(password);
+        this.roles.add(ApplicationUserRole.USER);
+        this.enabled = enabled;
+    }
+
+    // For UserRepository
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
         this.password = new PasswordConfig().passwordEncoder().encode(password);
         this.roles.add(ApplicationUserRole.USER);
+        this.enabled = false;
     }
 
     public long getId() {
@@ -85,6 +99,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public Set<ApplicationUserRole> getRoles() {
