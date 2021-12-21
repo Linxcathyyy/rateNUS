@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -55,14 +56,12 @@ public class CommentController {
     }
 
     @PostMapping(path = "user/{userId}")
-    public Page<Comment> getCommentsOfUser(@PathVariable("userId") long userId,
+    public List<Comment> getCommentsOfUser(@PathVariable("userId") long userId,
                                            @RequestBody Map<String, Object> jsonInput) {
         String orderBy = (String) jsonInput.getOrDefault("orderBy", "timestamp");
         boolean isLowToHigh = (boolean) jsonInput.getOrDefault("isLowToHigh", false);
-        int pageNum = (int) jsonInput.getOrDefault("pageNum", 0);
-        int pageSize = (int) jsonInput.getOrDefault("pageSize", 5);
 
-        return commentService.getCommentsOfUser(userId, orderBy, isLowToHigh, pageNum, pageSize);
+        return commentService.getCommentsOfUser(userId, orderBy, isLowToHigh);
     }
 
     @PostMapping
@@ -110,7 +109,7 @@ public class CommentController {
     }
 
     @DeleteMapping(path = "/{commentId}")
-    public void updateComment(@PathVariable("commentId") long commentId) {
+    public void deleteComment(@PathVariable("commentId") long commentId) {
         Comment deletedComment = commentService.deleteComment(commentId);
 
         switch (deletedComment.getType()) {
