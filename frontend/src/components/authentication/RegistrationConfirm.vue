@@ -8,6 +8,7 @@
 <script>
 import { defineComponent } from "@vue/composition-api";
 import AuthenticationRequest from "../../httpRequests/AuthenticationRequest";
+import AuthenticationUtil from "../authentication/AuthenticationUtil";
 
 export default defineComponent({
   setup() {},
@@ -24,10 +25,20 @@ export default defineComponent({
   },
   async mounted() {
     await AuthenticationRequest.sendConfirmationRequest(this.token)
-      .then((res) => {
-        this.message = res.data.message;
+      .then((response) => {
+        var id = response.data.id;
+        var name = response.data.username;
+        var email = response.data.email;
+        var token = AuthenticationUtil.parseJWTToken(
+          response.headers["authorization"]
+        );
+        this.$store.commit("changeId", id);
+        this.$store.commit("changeName", name);
+        this.$store.commit("changeEmail", email);
+        this.$store.commit("updateJwtToken", token);
+        this.$store.commit("logIn");
+        this.$store.commit("updateDefaultProfileColor");
 
-        //redirect upon successful confirmation
         this.$router.push("/hostels");
       })
       .catch((err) => {
