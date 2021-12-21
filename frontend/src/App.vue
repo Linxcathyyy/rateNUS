@@ -41,7 +41,7 @@
         <div id="nav-router-view">
           <Navigation id="navigation" />
           <div class="mx-4">
-            <router-view id="router-view" />
+            <router-view id="router-view" @click.native="scrollToTop" />
           </div>
         </div>
       </div>
@@ -74,6 +74,9 @@ export default {
       if (currentPath !== "/hostels") {
         this.$router.push("/hostels");
       }
+    },
+    scrollToTop() {
+      window.scrollTo(0, 0);
     },
   },
   watch: {
