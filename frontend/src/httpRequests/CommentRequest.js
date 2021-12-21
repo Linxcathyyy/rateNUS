@@ -12,11 +12,14 @@ class CommentRequest {
     return await axios.post(COMMENT_USER_API_BASE_URL +"/" + userId, {
       orderBy: "id",
       isLowToHigh: true,
-    }, {headers: headers,});
+    }, { headers: headers });
   }
 
-  async editComment(commentId, commentObj) {
-    return await axios.put(COMMENT_API_BASE_URL + "/" + commentId, commentObj);
+  async editComment(commentId, comment, rating) {
+    return await axios.put(COMMENT_API_BASE_URL + "/" + commentId, {
+      text: comment, 
+      rating: rating
+    });
   }
 
   async deleteComment(commentId) {

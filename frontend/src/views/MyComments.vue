@@ -231,7 +231,7 @@ export default {
                 });
         },
         async updateCommentInDB(commentId, commentObj) {
-            await CommentRequest.editComment(commentId, commentObj)
+            await CommentRequest.editComment(commentId, commentObj.text, commentObj.rating)
                 .then(async (response) => {
                     console.log(response.data);
                 })
@@ -265,6 +265,7 @@ export default {
             this.deletedItem = null;
             this.loading = false;
             this.closeDelete();
+            await this.refreshPage();
         },
         close() {
             // reset error
@@ -298,9 +299,16 @@ export default {
                     console.log("fail");
                     console.log(error);
             });
-            this.close()
+            this.close();
+            await this.refreshPage();
           }
         },
+        async refreshPage() {
+          this.isDataReady = false;
+          this.getCurrentUser();
+          await this.getCommentsByUserId();
+          this.isDataReady = true;
+        }
     },
 
     watch: {
