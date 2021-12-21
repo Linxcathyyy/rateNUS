@@ -5,6 +5,7 @@ import com.rateNUS.backend.util.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -21,6 +22,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import java.net.http.HttpRequest;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -57,7 +60,10 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterAfter(jwtTokenVerifier, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/comment").authenticated().anyRequest().permitAll();
+                .antMatchers("/comment").authenticated()
+                .antMatchers("/comment/**").authenticated()
+                //.antMatchers("/comment/**").authenticated()
+                .anyRequest().permitAll();
     }
 
     @Bean
@@ -67,7 +73,7 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins(Config.frontendURL)
-                        .allowedMethods("GET", "POST", "OPTIONS");
+                        .allowedMethods("GET", "POST", "OPTIONS", "PUT", "DELETE");
             }
         };
     }
@@ -77,9 +83,16 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        source.registerCorsConfiguration("/**", config.applyPermitDefaultValues());
+        config.addAllowedOrigin(Config.frontendURL);
+        config.setAllowedMethods(Arrays.asList(
+                HttpMethod.GET.name(),
+                HttpMethod.HEAD.name(),
+                HttpMethod.POST.name(),
+                HttpMethod.PUT.name(),
+                HttpMethod.DELETE.name(),
+                HttpMethod.OPTIONS.name()));
         config.setExposedHeaders(List.of("Authorization"));
-
+        source.registerCorsConfiguration("/**", config);
         return source;
     }
 }
