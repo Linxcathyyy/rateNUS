@@ -45,9 +45,9 @@ export default {
 }
 
 .facility:hover {
-  background: #FF6D00;
+  background: #ff6d00;
   color: white;
-  border-color: #FF6D00;
+  border-color: #ff6d00;
   cursor: default;
 }
 </style>
