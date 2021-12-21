@@ -202,7 +202,8 @@ export default {
             this.userId = this.$store.getters.id;
         },
         async getCommentsByUserId() {
-            await CommentRequest.getCommentsByUserId(this.userId)
+            var jwtToken = this.$store.getters.jwtToken;
+            await CommentRequest.getCommentsByUserId(this.userId, jwtToken)
                 .then(async (response) => {
                     this.myComments = response.data;
                     this.myComments.forEach(this.formatTimestampOfComment);
