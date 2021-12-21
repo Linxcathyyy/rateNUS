@@ -7,7 +7,6 @@ import com.rateNUS.backend.studyarea.StudyAreaService;
 import com.rateNUS.backend.util.Config;
 import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -43,26 +43,22 @@ public class CommentController {
     }
 
     @PostMapping(path = "{type}/{targetId}")
-    public Page<Comment> getComments(@PathVariable("type") Type type,
+    public List<Comment> getComments(@PathVariable("type") Type type,
                                      @PathVariable("targetId") long targetId,
                                      @RequestBody Map<String, Object> jsonInput) {
         String orderBy = (String) jsonInput.getOrDefault("orderBy", "timestamp");
         boolean isLowToHigh = (boolean) jsonInput.getOrDefault("isLowToHigh", false);
-        int pageNum = (int) jsonInput.getOrDefault("pageNum", 0);
-        int pageSize = (int) jsonInput.getOrDefault("pageSize", 5);
 
-        return commentService.getComments(targetId, type, orderBy, isLowToHigh, pageNum, pageSize);
+        return commentService.getComments(targetId, type, orderBy, isLowToHigh);
     }
 
     @PostMapping(path = "user/{userId}")
-    public Page<Comment> getCommentsOfUser(@PathVariable("userId") long userId,
+    public List<Comment> getCommentsOfUser(@PathVariable("userId") long userId,
                                            @RequestBody Map<String, Object> jsonInput) {
         String orderBy = (String) jsonInput.getOrDefault("orderBy", "timestamp");
         boolean isLowToHigh = (boolean) jsonInput.getOrDefault("isLowToHigh", false);
-        int pageNum = (int) jsonInput.getOrDefault("pageNum", 0);
-        int pageSize = (int) jsonInput.getOrDefault("pageSize", 5);
 
-        return commentService.getCommentsOfUser(userId, orderBy, isLowToHigh, pageNum, pageSize);
+        return commentService.getCommentsOfUser(userId, orderBy, isLowToHigh);
     }
 
     @PostMapping
