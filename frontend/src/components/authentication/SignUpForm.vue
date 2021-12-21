@@ -3,15 +3,16 @@
     <v-dialog v-model="isSuccessDialogShown" persistent max-width="290">
       <v-card>
         <v-card-title class="text-h5"> Success </v-card-title>
-        <v-card-text
-          >
+        <v-card-text>
           {{ successMessage }}
-
-          </v-card-text
-        >
+        </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="orange accent-4" text @click="quitSuccessDialogAndReloadPage">
+          <v-btn
+            color="orange accent-4"
+            text
+            @click="quitSuccessDialogAndReloadPage"
+          >
             Ok
           </v-btn>
         </v-card-actions>
@@ -24,7 +25,9 @@
         <v-card-text> {{ errorMessage }} </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="orange accent-4" text @click="quitFailureDialog"> Ok </v-btn>
+          <v-btn color="orange accent-4" text @click="quitFailureDialog">
+            Ok
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -72,7 +75,7 @@
         @click:append="showPassword = !showPassword"
       ></v-text-field>
 
-      <v-btn 
+      <v-btn
         v-if="!this.isWaiting"
         depressed
         :disabled="!valid"
@@ -117,7 +120,7 @@ export default defineComponent({
     isSuccessDialogShown: false,
     successMessage: "",
     errorMessage: "",
-    isWaiting: false
+    isWaiting: false,
   }),
   computed: {
     passwordMatch() {
