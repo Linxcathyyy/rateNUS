@@ -1,9 +1,13 @@
 package com.rateNUS.backend.auth;
 
 import com.rateNUS.backend.auth.registration_event.RegistrationCompleteEvent;
+import com.rateNUS.backend.auth.reset_password_event.ResetPasswordEvent;
 import com.rateNUS.backend.security.ApplicationUserRole;
+import com.rateNUS.backend.security.PasswordConfig;
 import com.rateNUS.backend.security.UserDetailsImpl;
 import com.rateNUS.backend.security.jwt.JwtUtils;
+import com.rateNUS.backend.security.reset_password_token.ResetPasswordToken;
+import com.rateNUS.backend.security.reset_password_token.ResetPasswordTokenRepository;
 import com.rateNUS.backend.security.verification_token.VerificationToken;
 import com.rateNUS.backend.security.verification_token.VerificationTokenRepository;
 import com.rateNUS.backend.user.User;
@@ -46,7 +50,7 @@ public class AuthController {
     UserService userService;
 
     @Autowired
-    PasswordEncoder encoder;
+    PasswordConfig passwordConfig;
 
     @Autowired
     JwtUtils jwtUtils;
@@ -56,6 +60,9 @@ public class AuthController {
 
     @Autowired
     private VerificationTokenRepository verificationTokenRepository;
+
+    @Autowired
+    private ResetPasswordTokenRepository resetPasswordTokenRepository;
 
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
@@ -94,7 +101,7 @@ public class AuthController {
     public ResponseEntity<?> registerUser(@RequestBody SignupRequest signupRequest) {
         String username = signupRequest.getUsername();
         String email = signupRequest.getEmail();
-        String password = signupRequest.getPassword();
+        String password = passwordConfig.passwordEncoder().encode(signupRequest.getPassword());
 
         if (userService.existsByEmail(email)) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email has been registered."));
@@ -148,5 +155,42 @@ public class AuthController {
                 new JwtResponse(user.getId(), user.getUsername(), user.getEmail(), roles),
                 headers,
                 HttpStatus.OK);
+    }
+
+    @PostMapping(path = "/forgetPassword")
+    public ResponseEntity<?> forgetPassword(@RequestBody ForgetPasswordRequest forgetPasswordRequest) {
+        String email = forgetPasswordRequest.getEmail();
+        User user = userService.findByEmail(email);
+        if (user == null) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: user is not registered."));
+        }
+
+        // verify user's identity through email
+        eventPublisher.publishEvent(new ResetPasswordEvent(email));
+
+        return ResponseEntity.ok(new MessageResponse(
+                "Reset password in progress, waiting for user to verify identity through email."));
+    }
+
+    @PostMapping(path = "/resetPassword")
+    public ResponseEntity<?> resetPassword(@RequestParam("token") String token,
+                                           @RequestBody ResetPasswordRequest resetPasswordRequest) {
+        ResetPasswordToken resetPasswordToken = resetPasswordTokenRepository.findByToken(token);
+        if (resetPasswordToken == null) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Token is invalid."));
+        }
+
+        Calendar calendar = Calendar.getInstance();
+        if (resetPasswordToken.getExpiryDate().getTime() - calendar.getTime().getTime() <= 0) {
+            return ResponseEntity.badRequest().body(new MessageResponse("Error: Token has expired."));
+        }
+
+        // reset password
+        String email = resetPasswordToken.getEmail();
+        String password = passwordConfig.passwordEncoder().encode(resetPasswordRequest.getPassword());
+        User user = userService.findByEmail(email);
+        userService.updateUserPassword(user.getId(), password);
+
+        return ResponseEntity.ok(new MessageResponse("Reset password successfully."));
     }
 }

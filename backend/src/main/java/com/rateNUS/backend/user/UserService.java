@@ -29,6 +29,10 @@ public class UserService {
         return userRepository.findByUsername(username).orElse(null);
     }
 
+    public User findByEmail(String email) {
+        return userRepository.findByEmail(email).orElse(null);
+    }
+
     public void enableUser(User user) {
         user.setEnabled(true);
     }

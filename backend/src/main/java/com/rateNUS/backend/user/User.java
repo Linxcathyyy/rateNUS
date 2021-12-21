@@ -64,7 +64,8 @@ public class User {
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;
-        this.password = new PasswordConfig().passwordEncoder().encode(password);
+        // password is hashed in AuthController class
+        this.password = password;
         this.roles.add(ApplicationUserRole.USER);
         this.enabled = false;
     }
