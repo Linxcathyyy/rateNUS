@@ -222,3 +222,19 @@ Gradle > Tasks > application > bootRun
     * Get request: confirm registration
         * Give: `@RequestParam("token") String token` with empty body
         * Path: `registrationConfirm`
+    * Post request: forget password
+        * Give: `@RequestBody ForgetPasswordRequest forgetPasswordRequest`
+          ```
+          {
+            "email": "user.success@gmail.com"
+          }
+          ```
+        * Path: `forgetPassword`
+    * Post reset password request
+        * Give: `@RequestParam("token") String token, @RequestBody ResetPasswordRequest resetPasswordRequest`
+          ```
+          {
+            "password": "newPassword1!"
+          }
+          ```
+        * Path: `resetPassword`
