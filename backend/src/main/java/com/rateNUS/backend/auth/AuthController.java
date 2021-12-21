@@ -24,7 +24,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -133,7 +132,7 @@ public class AuthController {
         }
 
         // save user
-        User user = verificationToken.getUser();
+        User user = userService.findByUsername(verificationToken.getUsername());
         userService.enableUser(user);
         userService.addUser(user);
 
@@ -150,6 +149,9 @@ public class AuthController {
 
         MultiValueMap<String, String> headers = new HttpHeaders();
         headers.add("Authorization", "Bearer " + jwt);
+
+        // delete token from database
+        verificationTokenRepository.deleteByToken(token);
 
         return new ResponseEntity<>(
                 new JwtResponse(user.getId(), user.getUsername(), user.getEmail(), roles),
@@ -190,6 +192,9 @@ public class AuthController {
         String password = passwordConfig.passwordEncoder().encode(resetPasswordRequest.getPassword());
         User user = userService.findByEmail(email);
         userService.updateUserPassword(user.getId(), password);
+
+        // delete token from database
+        resetPasswordTokenRepository.deleteByToken(token);
 
         return ResponseEntity.ok(new MessageResponse("Reset password successfully."));
     }

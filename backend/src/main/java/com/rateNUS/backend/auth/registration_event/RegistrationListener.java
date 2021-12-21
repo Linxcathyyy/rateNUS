@@ -30,7 +30,7 @@ public class RegistrationListener implements ApplicationListener<RegistrationCom
         String tokenString = UUID.randomUUID().toString();
 
         // create verification token
-        VerificationToken verificationToken = new VerificationToken(tokenString, user);
+        VerificationToken verificationToken = new VerificationToken(tokenString, user.getUsername());
         verificationTokenRepository.save(verificationToken);
 
         // send confirmation email
