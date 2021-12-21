@@ -1,15 +1,18 @@
 <template>
   <div>
-    <v-dialog v-model="successDialog" persistent max-width="290">
+    <v-dialog v-model="isSuccessDialogShown" persistent max-width="290">
       <v-card>
         <v-card-title class="text-h5"> Success </v-card-title>
-        <v-card-text
-          >You have signed up successfully! Please proceed to log in with your
-          registered account.</v-card-text
-        >
+        <v-card-text>
+          {{ successMessage }}
+        </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="orange accent-4" text @click="quitSuccessDialogAndReloadPage">
+          <v-btn
+            color="orange accent-4"
+            text
+            @click="quitSuccessDialogAndReloadPage"
+          >
             Ok
           </v-btn>
         </v-card-actions>
@@ -22,7 +25,9 @@
         <v-card-text> {{ errorMessage }} </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="orange accent-4" text @click="quitFailureDialog"> Ok </v-btn>
+          <v-btn color="orange accent-4" text @click="quitFailureDialog">
+            Ok
+          </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -71,6 +76,7 @@
       ></v-text-field>
 
       <v-btn
+        v-if="!this.isWaiting"
         depressed
         :disabled="!valid"
         color="primary"
@@ -79,6 +85,11 @@
       >
         Sign Up
       </v-btn>
+      <v-progress-circular
+        v-else
+        indeterminate
+        color="orange accent-4"
+      ></v-progress-circular>
     </v-form>
   </div>
 </template>
@@ -106,8 +117,10 @@ export default defineComponent({
     showPassword: false,
     confirmPassword: "",
     isErrorVisible: false,
-    successDialog: false,
+    isSuccessDialogShown: false,
+    successMessage: "",
     errorMessage: "",
+    isWaiting: false,
   }),
   computed: {
     passwordMatch() {
@@ -146,7 +159,7 @@ export default defineComponent({
     },
 
     quitSuccessDialogAndReloadPage() {
-      this.successDialog = false;
+      this.isSuccessDialogShown = false;
       location.reload();
     },
 
@@ -155,6 +168,7 @@ export default defineComponent({
     },
     async submitSignUpCredentials() {
       if (this.validate()) {
+        this.isWaiting = true;
         await AuthenticationRequest.signUpWithCredentials(
           this.username,
           this.password,
@@ -162,7 +176,7 @@ export default defineComponent({
         )
           .then((response) => {
             //handle success
-            this.successDialog = true;
+            this.isSuccessDialogShown = true;
             return response;
           })
           .catch(function (err) {
@@ -172,12 +186,14 @@ export default defineComponent({
             //return response;
           })
           .then((response) => {
+            this.isWaiting = false;
             if (response.status != 200) {
               this.isErrorVisible = true;
               this.errorMessage = response.data.message;
             } else {
-              this.successDialog = true;
+              this.isSuccessDialogShown = true;
               this.isErrorVisible = false;
+              this.successMessage = response.data.message;
             }
           });
       }

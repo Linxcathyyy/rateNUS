@@ -2,7 +2,7 @@
   <div>
     <v-form ref="login_form" v-model="valid" lazy-validation>
       <v-alert dense outlined type="error" v-if="isErrorVisible">
-        Login Failed. Please check your username and password.
+        {{ errorMessage }}
       </v-alert>
       <v-text-field
         color="orange accent-4"
@@ -53,6 +53,7 @@ export default {
       required: (value) => !!value || "Password is required.",
     },
     isErrorVisible: false,
+    errorMessage: ""
   }),
   methods: {
     validate() {
@@ -91,6 +92,7 @@ export default {
           .then((response) => {
             if (response.status != 200) {
               this.isErrorVisible = true;
+              this.errorMessage = response.data.message;
             } else {
               this.isErrorVisible = false;
               location.reload();

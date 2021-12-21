@@ -109,7 +109,7 @@ public class AuthController {
         userRepository.save(user);
 
         return ResponseEntity.ok(
-                new MessageResponse("User registration is in progress, waiting for email confirmation."));
+                new MessageResponse("User registration is in progress, please check your registered email inbox for verification."));
     }
 
     @GetMapping(path = "/registrationConfirm")
