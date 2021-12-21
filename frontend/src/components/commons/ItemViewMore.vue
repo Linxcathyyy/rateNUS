@@ -108,6 +108,9 @@ export default {
           console.log(error);
         });
     },
+    scrollToTop() {
+      window.scrollTo(0, 0);
+    },
   },
 
   computed: {
@@ -135,6 +138,7 @@ export default {
     } else if (this.type === "studyArea") {
       this.getIndividualStudyArea();
     }
+    this.scrollToTop();
   },
 };
 </script>

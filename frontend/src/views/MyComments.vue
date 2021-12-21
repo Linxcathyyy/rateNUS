@@ -170,7 +170,7 @@ export default {
             headers: [
                 { text: 'Type', align: 'start', value: 'type' },
                 { text: 'Rating', value: 'rating' },
-                { text: 'Posted on', value: 'timestamp' },
+                { text: 'Posted on', value: 'dateTimeString' },
                 { text: 'Comment', value: 'text', sortable: false },
                 { text: 'Actions', value: 'actions', sortable: false },
             ],
@@ -199,12 +199,20 @@ export default {
         async getCommentsByUserId() {
             await CommentRequest.getCommentsByUserId(this.userId, 0, 20)
                 .then(async (response) => {
-                    console.log(response.data.content);
                     this.myComments = response.data.content;
+                    this.myComments.forEach(this.formatTimestampOfComment);
                 })
                 .catch((error) => {
                     console.log(error.response.data);
                 });
+        },
+        formatTimestampOfComment(comment) {
+          var dateTimeString = "";
+          var timestamp = comment.timestamp;
+          var dateString = new Date(timestamp).toLocaleDateString();
+          var timeString = new Date(timestamp).toLocaleTimeString();
+          dateTimeString = dateString + " " + timeString;
+          comment["dateTimeString"] = dateTimeString;
         },
         async deleteCommentFromDB(commentId) {
             await CommentRequest.deleteComment(commentId)
@@ -284,17 +292,12 @@ export default {
         },
     },
 
-    async created() {
-        this.getCurrentUser();
-        await this.getCommentsByUserId();
-        this.isDataReady = true;
-    },
-
+  async created() {
+    this.getCurrentUser();
+    await this.getCommentsByUserId();
+    this.isDataReady = true;
+  },
 };
 </script>
 
-<style scope>
-
-</style>
-
-
+<style scope></style>
