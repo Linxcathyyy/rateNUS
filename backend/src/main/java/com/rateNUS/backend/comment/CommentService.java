@@ -45,14 +45,17 @@ public class CommentService {
     }
 
     @Transactional
-    public Comment updateComment(long commentId, Comment newComment) {
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new TypeNotFoundException(Type.comment, commentId));
+    public void updateCommentRating(long commentId, int rating) {
+        commentRepository.findById(commentId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.comment, commentId))
+                .setRating(rating);
+    }
 
-        comment.setRating(newComment.getRating());
-        comment.setText(newComment.getText());
-
-        return comment;
+    @Transactional
+    public void updateCommentText(long commentId, String text) {
+        commentRepository.findById(commentId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.comment, commentId))
+                .setText(text);
     }
 
     public Comment deleteComment(long commentId) {

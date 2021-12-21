@@ -194,8 +194,18 @@ Gradle > Tasks > application > bootRun
         * Path: `comment`
             * role == "USER": `comment`
     * Edit Comment
-        * Give: `@PathVariable("commentId") long commentId`, `@RequestBody Comment comment`
+        * Give: `@PathVariable("commentId") long commentId`, `@RequestBody Map<String, Object> jsonInput`
+          ```
+          {
+            "text": "updated comment message"
+            "rating": 1
+          }
+          ```
         * Path: `comment/{commentId}`
+        * Note:
+            * Partial json is accepted (i.e. if only contains `text` then only `text` will be updated, same
+              for `rating`)
+            * If not specified, there is **no** default values! The field will just be not updated.
     * Delete Comment
         * Give: `@PathVariable("commentId") long commentId`
         * Path: `comment/{commentId}`
