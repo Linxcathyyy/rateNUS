@@ -4,11 +4,12 @@ import Hostels from "../views/Hostels.vue";
 import Canteens from "../views/Canteens.vue";
 import StudyAreas from "../views/StudyAreas.vue";
 import ItemViewMore from "../components/commons/ItemViewMore.vue";
+import RegistrationConfirm from "../components/authentication/RegistrationConfirm.vue"
 import MyComments from "../views/MyComments.vue"
 // import store from '@/store/index.js';
 Vue.use(VueRouter);
 
-const BACKEND_BASE_URL = "http://localhost:8080";
+Vue.use(VueRouter);
 
 const routes = [
   {
@@ -82,11 +83,10 @@ const routes = [
     }
   },
   {
-    path: '/login',
-    beforeEnter() {
-      window.location.href = BACKEND_BASE_URL + "/login";
-    }
-  }
+    path: '/registrationConfirm',
+    name: 'RegistrationConfirm',
+    component: RegistrationConfirm,
+  },
 ]
 
 const router = new VueRouter({

@@ -1,6 +1,7 @@
 package com.rateNUS.backend.auth;
 
 import com.rateNUS.backend.auth.registrationevent.RegistrationCompleteEvent;
+import com.rateNUS.backend.security.ApplicationUserRole;
 import com.rateNUS.backend.security.UserDetailsImpl;
 import com.rateNUS.backend.security.jwt.JwtUtils;
 import com.rateNUS.backend.security.verificationtoken.VerificationToken;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.util.MultiValueMap;
@@ -107,7 +109,7 @@ public class AuthController {
         userRepository.save(user);
 
         return ResponseEntity.ok(
-                new MessageResponse("User registration is in progress, waiting for email confirmation."));
+                new MessageResponse("User registration is in progress, please check your registered email inbox for verification."));
     }
 
     @GetMapping(path = "/registrationConfirm")
@@ -122,9 +124,28 @@ public class AuthController {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Verification token has expired."));
         }
 
+        // save user
         User user = verificationToken.getUser();
         user.setEnabled(true);
         userRepository.save(user);
-        return ResponseEntity.ok(new MessageResponse("User registration successful!"));
+
+        // authenticate user
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
+                AuthorityUtils.createAuthorityList(ApplicationUserRole.USER.name()));
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String jwt = jwtUtils.generateJwtToken(authentication);
+
+        List<String> roles = user.getRoles().stream()
+                .map(item -> item.name())
+                .collect(Collectors.toList());
+
+        MultiValueMap<String, String> headers = new HttpHeaders();
+        headers.add("Authorization", "Bearer " + jwt);
+
+        return new ResponseEntity<>(
+                new JwtResponse(user.getId(), user.getUsername(), user.getEmail(), roles),
+                headers,
+                HttpStatus.OK);
     }
 }

@@ -12,7 +12,7 @@ class CommentRequest {
     });
   }
 
-  async editComment(commentId, commentObj,) {
+  async editComment(commentId, commentObj) {
     return await axios.put(COMMENT_API_BASE_URL + "/" + commentId, commentObj);
   }
 
