@@ -1,4 +1,4 @@
-package com.rateNUS.backend.security.verificationtoken;
+package com.rateNUS.backend.security.verification_token;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

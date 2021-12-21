@@ -1,4 +1,4 @@
-package com.rateNUS.backend.security.verificationtoken;
+package com.rateNUS.backend.security.verification_token;
 
 import java.sql.Timestamp;
 import java.util.Calendar;

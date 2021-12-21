@@ -8,8 +8,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import com.rateNUS.backend.security.verificationtoken.VerificationToken;
-import com.rateNUS.backend.security.verificationtoken.VerificationTokenRepository;
+import com.rateNUS.backend.security.verification_token.VerificationToken;
+import com.rateNUS.backend.security.verification_token.VerificationTokenRepository;
 import com.rateNUS.backend.user.User;
 
 @Component

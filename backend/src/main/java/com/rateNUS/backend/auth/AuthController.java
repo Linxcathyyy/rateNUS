@@ -4,8 +4,8 @@ import com.rateNUS.backend.auth.registration_event.RegistrationCompleteEvent;
 import com.rateNUS.backend.security.ApplicationUserRole;
 import com.rateNUS.backend.security.UserDetailsImpl;
 import com.rateNUS.backend.security.jwt.JwtUtils;
-import com.rateNUS.backend.security.verificationtoken.VerificationToken;
-import com.rateNUS.backend.security.verificationtoken.VerificationTokenRepository;
+import com.rateNUS.backend.security.verification_token.VerificationToken;
+import com.rateNUS.backend.security.verification_token.VerificationTokenRepository;
 import com.rateNUS.backend.user.User;
 import com.rateNUS.backend.user.UserService;
 
