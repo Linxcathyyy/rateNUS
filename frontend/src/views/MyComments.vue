@@ -178,14 +178,16 @@ export default {
             editedIndex: -1,
             deletedItem: null,
             editedItem: {
+                id: '',
                 type: '',
-                rating: '',
+                rating: 5,
                 timestamp: '',
                 text: '',
             },
             defaultItem: {
+                id: '',
                 type: '',
-                rating: '',
+                rating: 5,
                 timestamp: '',
                 text: '',
             },
@@ -193,13 +195,16 @@ export default {
         };
     },
     methods: {
+        async validate() {
+          return this.$refs.editCommentObserver.validate();
+        },
         getCurrentUser() {
             this.userId = this.$store.getters.id;
         },
         async getCommentsByUserId() {
-            await CommentRequest.getCommentsByUserId(this.userId, 0, 20)
+            await CommentRequest.getCommentsByUserId(this.userId)
                 .then(async (response) => {
-                    this.myComments = response.data.content;
+                    this.myComments = response.data;
                     this.myComments.forEach(this.formatTimestampOfComment);
                 })
                 .catch((error) => {
@@ -215,6 +220,7 @@ export default {
           comment["dateTimeString"] = dateTimeString;
         },
         async deleteCommentFromDB(commentId) {
+          console.log("commentId: " + commentId);
             await CommentRequest.deleteComment(commentId)
                 .then(async (response) => {
                     console.log(response.data);
@@ -223,8 +229,8 @@ export default {
                     console.log(error);
                 });
         },
-        async updateCommentInDB(commentId) {
-            await CommentRequest.updateComment(commentId)
+        async updateCommentInDB(commentId, commentObj) {
+            await CommentRequest.editComment(commentId, commentObj)
                 .then(async (response) => {
                     console.log(response.data);
                 })
@@ -254,12 +260,14 @@ export default {
                 .catch((error) => {
                     console.log("fail");
                     console.log(error.response);
-                });
+            });
             this.deletedItem = null;
             this.loading = false;
             this.closeDelete();
         },
         close() {
+            // reset error
+            this.$refs.editCommentObserver.reset();
             this.dialog = false
             this.$nextTick(() => {
                 this.editedItem = Object.assign({}, this.defaultItem);
@@ -273,13 +281,24 @@ export default {
                 this.editedIndex = -1;
             })
         },
-        save() {
-            if (this.editedIndex > -1) {
-                Object.assign(this.myComments[this.editedIndex], this.editedItem);
-            } else {
-                this.myComments.push(this.editedItem);
-            }
+        async save() {
+          const isValidated = await this.validate();
+          if (isValidated) {
+            await this.updateCommentInDB(this.editedItem.id, this.editedItem.text)
+                .then(async () => {
+                    console.log("success");
+                    if (this.editedIndex > -1) {
+                        Object.assign(this.myComments[this.editedIndex], this.editedItem);
+                    } else {
+                        this.myComments.push(this.editedItem);
+                    }
+                })
+                .catch((error) => {
+                    console.log("fail");
+                    console.log(error);
+            });
             this.close()
+          }
         },
     },
 
