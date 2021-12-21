@@ -34,7 +34,7 @@ class StallRequest {
   }
 
   // Post individual stall comment to server
-  postStallComment(stallId, comment, rating, jwtToken) {
+  postStallComment(stallId, comment, rating, jwtToken, userId) {
     // below is temp implementation to see post content
     if (stallId == undefined) {
       // check id is stall id
@@ -52,6 +52,7 @@ class StallRequest {
       rating: rating,
       text: comment,
       type: "stall",
+      userId: userId
     };
     return axios.post(ADD_COMMENT_API_BASE_URL, req, {
       headers: headers,
