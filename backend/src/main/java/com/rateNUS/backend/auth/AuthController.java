@@ -7,7 +7,8 @@ import com.rateNUS.backend.security.jwt.JwtUtils;
 import com.rateNUS.backend.security.verificationtoken.VerificationToken;
 import com.rateNUS.backend.security.verificationtoken.VerificationTokenRepository;
 import com.rateNUS.backend.user.User;
-import com.rateNUS.backend.user.UserRepository;
+import com.rateNUS.backend.user.UserService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpHeaders;
@@ -42,7 +43,7 @@ public class AuthController {
     AuthenticationManager authenticateManager;
 
     @Autowired
-    UserRepository userRepository;
+    UserService userService;
 
     @Autowired
     PasswordEncoder encoder;
@@ -58,12 +59,12 @@ public class AuthController {
 
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
-        User user = userRepository.findByUsername(loginRequest.getUsername()).orElse(null);
+        User user = userService.findByUsername(loginRequest.getUsername());
         if (user == null) {
             return ResponseEntity.badRequest().body(new MessageResponse("User doesn't exist."));
         }
 
-        if (!user.isEnabled()) {
+        if (!userService.isEnabled(user)) {
             return ResponseEntity.badRequest().body(
                     new MessageResponse("User's email address hasn't been confirmed."));
         }
@@ -95,10 +96,10 @@ public class AuthController {
         String email = signupRequest.getEmail();
         String password = signupRequest.getPassword();
 
-        if (userRepository.existsByEmail(email)) {
+        if (userService.existsByEmail(email)) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Email has been registered."));
         }
-        if (userRepository.existsByUsername(username)) {
+        if (userService.existsByUsername(username)) {
             return ResponseEntity.badRequest().body(new MessageResponse("Error: Username has been registered."));
         }
 
@@ -106,7 +107,7 @@ public class AuthController {
         // email verification
         eventPublisher.publishEvent(new RegistrationCompleteEvent(user));
         // user account saved to database but cannot be used until email is verified.
-        userRepository.save(user);
+        userService.addUser(user);
 
         return ResponseEntity.ok(
                 new MessageResponse("User registration is in progress, waiting for email confirmation."));
@@ -126,8 +127,8 @@ public class AuthController {
 
         // save user
         User user = verificationToken.getUser();
-        user.setEnabled(true);
-        userRepository.save(user);
+        userService.enableUser(user);
+        userService.addUser(user);
 
         // authenticate user
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null,
