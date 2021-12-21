@@ -84,27 +84,35 @@ public class CommentController {
     }
 
     @PutMapping(path = "/{commentId}")
-    public void updateComment(@PathVariable("commentId") long commentId, @RequestBody Comment comment) {
-        Comment oldComment = commentService.getComment(commentId)
-                .orElseThrow(() -> new TypeNotFoundException(Type.comment, commentId));
+    public void updateComment(@PathVariable("commentId") long commentId, @RequestBody Map<String, Object> jsonInput) {
+        if (jsonInput.containsKey("text")) {
+            String text = (String) jsonInput.get("text");
+            commentService.updateCommentText(commentId, text);
+        }
 
-        // The old rating must be recorded before updateComment() is called
-        int oldRating = oldComment.getRating();
+        if (jsonInput.containsKey("rating")) {
+            Comment comment = commentService.getComment(commentId)
+                    .orElseThrow(() -> new TypeNotFoundException(Type.comment, commentId));
 
-        Comment updatedComment = commentService.updateComment(commentId, comment);
+            // The old rating must be recorded before updateCommentRating() is called
+            int oldRating = comment.getRating();
+            int newRating = (int) jsonInput.get("rating");
 
-        switch (updatedComment.getType()) {
-            case hostel:
-                hostelService.updateComment(updatedComment.getTargetId(), oldRating, updatedComment.getRating());
-                break;
+            commentService.updateCommentRating(commentId, newRating);
 
-            case stall:
-                stallService.updateComment(updatedComment.getTargetId(), oldRating, updatedComment.getRating());
-                break;
+            switch (comment.getType()) {
+                case hostel:
+                    hostelService.updateComment(comment.getTargetId(), oldRating, newRating);
+                    break;
 
-            case studyArea:
-                studyAreaService.updateComment(updatedComment.getTargetId(), oldRating, updatedComment.getRating());
-                break;
+                case stall:
+                    stallService.updateComment(comment.getTargetId(), oldRating, newRating);
+                    break;
+
+                case studyArea:
+                    studyAreaService.updateComment(comment.getTargetId(), oldRating, newRating);
+                    break;
+            }
         }
     }
 
