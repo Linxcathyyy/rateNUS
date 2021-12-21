@@ -4,6 +4,7 @@ import Hostels from "../views/Hostels.vue";
 import Canteens from "../views/Canteens.vue";
 import StudyAreas from "../views/StudyAreas.vue";
 import ItemViewMore from "../components/commons/ItemViewMore.vue";
+import MyComments from "../views/MyComments.vue"
 // import store from '@/store/index.js';
 Vue.use(VueRouter);
 
@@ -37,6 +38,14 @@ const routes = [
     component: StudyAreas,
     meta: {
       title: "Study Areas",
+    }
+  },
+  {
+    path: '/myComments',
+    name: 'MyComments',
+    component: MyComments,
+    meta: {
+      title: "My Comments",
     }
   },
   {
