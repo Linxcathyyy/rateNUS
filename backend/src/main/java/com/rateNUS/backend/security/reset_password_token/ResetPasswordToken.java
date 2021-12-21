@@ -21,8 +21,8 @@ public class ResetPasswordToken {
     private int tokenExpirationMin = 60 * 24;
 
     @Id
-    @SequenceGenerator(name = "token_sequence", sequenceName = "token_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "token_sequence")
+    @SequenceGenerator(name = "password_token_sequence", sequenceName = "password_token_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "password_token_sequence")
     @Column(name = "id", updatable = false)
     private long id;
 
