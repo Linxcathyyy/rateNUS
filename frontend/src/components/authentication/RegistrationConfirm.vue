@@ -1,7 +1,19 @@
 <template>
   <div>
-    <h1>Registration Confirmation</h1>
-    <p>{{ message }}</p>
+    <v-dialog v-model="hasError" width="40em">
+      <v-card>
+        <v-card-title>Error</v-card-title>
+        <v-card-content>
+          {{ errMessage }}
+        </v-card-content>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="orange accent-4" text @click="redirectToMainPage">
+            Ok
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
@@ -16,7 +28,8 @@ export default defineComponent({
   data() {
     return {
       token: "",
-      message: "",
+      errMessage: "",
+      hasError: false,
     };
   },
   created() {
@@ -42,8 +55,15 @@ export default defineComponent({
         this.$router.push("/hostels");
       })
       .catch((err) => {
-        this.message = err.response.data.message;
+        console.log(err.response.data.message);
+        this.errMessage = err.response.data.message;
+        this.hasError = true;
       });
+  },
+  methods: {
+    redirectToMainPage() {
+      this.$router.push("/hostels");
+    },
   },
 });
 </script>
