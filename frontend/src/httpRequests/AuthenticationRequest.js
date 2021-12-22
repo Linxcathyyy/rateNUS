@@ -72,10 +72,17 @@ class AuthenticationRequest {
         return res;
     }
 
-    async sendResetPasswordRequest(email) {
-        var res = await axios.post(BASE_URL + "/forgetPassword", {
+    async sendForgetPasswordRequest(email) {
+        var res = await axios.post(BASE_URL + "forgetPassword", {
             "email": email
         });
+        return res;
+    }
+
+    async sendResetPasswordRequest(newPassword, token) {
+        var res = await axios.post(BASE_URL + "resetPassword" + "?token=" + token, {
+            "password": newPassword
+        })
         return res;
     }
 
