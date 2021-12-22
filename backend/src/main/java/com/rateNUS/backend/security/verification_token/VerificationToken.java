@@ -1,22 +1,16 @@
-package com.rateNUS.backend.security.verificationtoken;
+package com.rateNUS.backend.security.verification_token;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import com.rateNUS.backend.user.User;
 
 /**
  * This class represents token generated during registration.
@@ -35,10 +29,8 @@ public class VerificationToken {
     @Column(name = "token", nullable = false, columnDefinition = "TEXT")
     private String token;
 
-    // Ensures a one-to-one relationship between user and token.
-    @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(nullable = false, name = "user_id")
-    private User user;
+    @Column(name = "username", nullable = false, columnDefinition = "TEXT")
+    private String username;
 
     @Column(name = "expiryDate", updatable = false)
     private Date expiryDate;
@@ -53,9 +45,9 @@ public class VerificationToken {
     public VerificationToken() {
     }
 
-    public VerificationToken(String token, User user) {
+    public VerificationToken(String token, String username) {
         this.token = token;
-        this.user = user;
+        this.username = username;
         this.expiryDate = calculateExpiryDate(tokenExpirationMin);
     }
 
@@ -75,12 +67,12 @@ public class VerificationToken {
         this.token = token;
     }
 
-    public User getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public Date getExpiryDate() {
