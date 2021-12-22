@@ -28,9 +28,17 @@ public class ResetPasswordListener implements ApplicationListener<ResetPasswordE
         String emailAddress = event.getEmail();
         String tokenString = UUID.randomUUID().toString();
 
-        // create token
-        ResetPasswordToken resetPasswordToken = new ResetPasswordToken(tokenString, emailAddress);
-        resetPasswordTokenRepository.save(resetPasswordToken);
+        Boolean tokenExists = resetPasswordTokenRepository.existsByEmail(emailAddress);
+        if (tokenExists) {
+            // update token
+            ResetPasswordToken resetPasswordToken = resetPasswordTokenRepository.findByEmail(emailAddress);
+            resetPasswordToken.setToken(tokenString);
+            resetPasswordTokenRepository.save(resetPasswordToken);
+        } else {
+            // create token
+            ResetPasswordToken resetPasswordToken = new ResetPasswordToken(tokenString, emailAddress);
+            resetPasswordTokenRepository.save(resetPasswordToken);
+        }
 
         // send email to check user's identity
         String destination = emailAddress;
