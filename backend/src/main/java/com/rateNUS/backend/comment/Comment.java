@@ -30,7 +30,7 @@ public class Comment {
     private long userId;
 
     @Column(name = "rating", nullable = false)
-    private int rating;
+    private double rating;
 
     @Column(name = "text", nullable = false, columnDefinition = "TEXT")
     private String text;
@@ -46,7 +46,7 @@ public class Comment {
     public Comment() {}
 
     // For dummy data
-    public Comment(long targetId, long userId, int rating, String text, Type type) {
+    public Comment(long targetId, long userId, double rating, String text, Type type) {
         this.targetId = targetId;
         this.userId = userId;
         this.rating = rating;
@@ -55,7 +55,7 @@ public class Comment {
     }
 
     // For CommentRepository
-    public Comment(long id, long targetId, long userId, int rating, String text, Type type) {
+    public Comment(long id, long targetId, long userId, double rating, String text, Type type) {
         this.id = id;
         this.targetId = targetId;
         this.userId = userId;
@@ -76,11 +76,11 @@ public class Comment {
         return userId;
     }
 
-    public int getRating() {
+    public double getRating() {
         return rating;
     }
 
-    public void setRating(int rating) {
+    public void setRating(double rating) {
         this.rating = rating;
     }
 

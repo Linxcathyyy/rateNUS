@@ -59,21 +59,21 @@ public class HostelService {
     }
 
     @Transactional
-    public void addComment(long hostelId, int rating) {
+    public void addComment(long hostelId, double rating) {
         hostelRepository.findById(hostelId)
                 .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
                 .addComment(rating);
     }
 
     @Transactional
-    public void updateComment(long hostelId, int oldRating, int newRating) {
+    public void updateComment(long hostelId, double oldRating, double newRating) {
         hostelRepository.findById(hostelId)
                 .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
                 .updateComment(oldRating, newRating);
     }
 
     @Transactional
-    public void deleteComment(long hostelId, int rating) {
+    public void deleteComment(long hostelId, double rating) {
         hostelRepository.findById(hostelId)
                 .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
                 .deleteComment(rating);
