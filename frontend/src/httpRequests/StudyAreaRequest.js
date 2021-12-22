@@ -34,7 +34,7 @@ class StudyAreaRequest {
     }
 
     // Post individual studyArea comment to server
-    postStudyAreaComment(studyAreaId, comment, rating, jwtToken) {
+    postStudyAreaComment(studyAreaId, comment, rating, jwtToken, userId) {
         // below is temp implementation to see post content
         if (studyAreaId == undefined) {
             // check id is studyArea id
@@ -52,6 +52,7 @@ class StudyAreaRequest {
             rating: rating,
             text: comment,
             type: "studyArea",
+            userId: userId
         };
         return axios.post(ADD_COMMENT_API_BASE_URL, req, {
             headers: headers,

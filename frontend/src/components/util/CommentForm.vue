@@ -80,7 +80,6 @@
 import HostelRequest from "../../httpRequests/HostelRequest";
 import StallRequest from "../../httpRequests/StallRequest";
 import StudyAreaRequest from "../../httpRequests/StudyAreaRequest";
-
 import {
   ValidationProvider,
   extend,

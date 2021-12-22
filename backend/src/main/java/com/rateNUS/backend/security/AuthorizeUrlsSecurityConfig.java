@@ -5,6 +5,7 @@ import com.rateNUS.backend.util.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -21,6 +22,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import java.net.http.HttpRequest;
+import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -66,8 +69,8 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins(Config.frontendURL)
-                        .allowedMethods("GET", "POST", "OPTIONS");
+                        .allowedOrigins(Config.frontendURL);
+//                        .allowedMethods("GET", "POST", "DELETE", "OPTIONS");
             }
         };
     }
@@ -76,6 +79,8 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
     CorsConfigurationSource corsConfigurationSource() {
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
+        config.setAllowedMethods(List.of("GET","POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedHeaders(List.of("*"));
 
         source.registerCorsConfiguration("/**", config.applyPermitDefaultValues());
         config.setExposedHeaders(List.of("Authorization"));
