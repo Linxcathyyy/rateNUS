@@ -17,10 +17,11 @@
           ></v-text-field>
         </v-container>
       </v-form>
-
+        <v-alert v-if="this.hasError" type="error" outlined class="mx-4"> {{ errorMessage }} </v-alert>
+        <v-alert v-if="this.isSuccess" type="success" outlined class="mx-4"> {{ successMessage }} </v-alert>
       <v-card-actions>
         <v-spacer></v-spacer>
-        <v-btn text @click="sendResetPasswordReq"> Ok </v-btn>
+        <v-btn text @click="sendResetPasswordReq" :loading="this.loading"> Ok </v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -41,6 +42,11 @@ export default defineComponent({
         (v) => !!v || "E-mail is required",
         (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
       ],
+      hasError: false,
+      errorMessage: "An error has occurred, please try again",
+      loading: false,
+      successMessage: "Success",
+      isSuccess: false
     };
   },
   methods: {
@@ -49,12 +55,16 @@ export default defineComponent({
     },
     async sendResetPasswordReq() {
         if (this.validate()) {
+            this.loading = true;
             await AuthenticationRequest.sendResetPasswordRequest(this.email)
             .then((response) => {
-                
+                this.loading = false;
+                this.successMessage = response.data.message;
+                this.isSuccess = true;
             })
             .catch((err) => {
-                
+                this.hasError = true;
+                this.errorMessage = err.response.data.message;
             })
         }
     }
