@@ -102,6 +102,9 @@ export default defineComponent({
         this.password === this.confirmPassword
       );
     },
+    reset() {
+        this.$refs.reset_form.reset();
+    },
     async submitResetRequest() {
       this.hasError = false;
       if (this.validate()) {
@@ -113,6 +116,7 @@ export default defineComponent({
           .then((response) => {
             this.successMessage = response.data.message;
             this.isSuccess = true;
+            this.reset();
           })
           .catch((err) => {
             this.hasError = true;
