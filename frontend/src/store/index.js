@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import UserUtil from "../components/authentication/UserUtil";
 import createPersistedState from "vuex-persistedstate";
 import SecureLS from "secure-ls";
+import ColorPalette from "../components/util/ColorPalette";
 const ls = new SecureLS({ isCompression: false });
 
 Vue.use(Vuex);
@@ -25,7 +26,7 @@ export default new Vuex.Store({
       initials: "",
       email: "",
       jwtToken: "",
-      defaultProfileColor: "#dddddd",
+      defaultProfileColor: ColorPalette.getRandomColor(),
     },
   },
   //Vuex getter properties are available to components on the store.getters object.
@@ -77,8 +78,7 @@ export default new Vuex.Store({
       state.user.jwtToken = "";
     },
     updateDefaultProfileColor(state) {
-      state.defaultProfileColor =
-        "#" + Math.floor(Math.random() * 16777215).toString(16);
+      state.defaultProfileColor = ColorPalette.getRandomColor();
     },
   },
   actions: {},
