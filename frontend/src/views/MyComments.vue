@@ -329,7 +329,7 @@ export default {
                 })
                 .catch((error) => {
                     console.log("fail");
-                    this.$refs.saveError.innerHTML = "An un expected error occurred, please try again";
+                    this.$refs.saveError.innerHTML = "Failed to update this comment, please try again";
                     console.log(error);
             });
             this.loading = false;
