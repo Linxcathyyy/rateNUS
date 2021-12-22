@@ -1,12 +1,29 @@
 <template>
     <div>
         <v-snackbar top color="success" :value="successSnackbar">Success!</v-snackbar>
-        <v-data-table :headers="headers" :items="myComments" sort-by="calories" class="elevation-1" :loading="!isDataReady">
+        <v-data-table 
+          :headers="headers" 
+          :items="myComments" 
+          sort-by="calories" 
+          class="elevation-1" 
+          :loading="!isDataReady"
+        >
+        <v-progress-linear 
+          v-show="!isDataReady" 
+          slot="progress" 
+          color="orange accent-4" 
+          indeterminate>
+        </v-progress-linear>
+            <template #item.text="{ value }">
+                <div class="text-truncate" style="max-width: 400px">
+                {{ value }}
+                </div>
+            </template>
             <template v-slot:top>
               <v-toolbar
                 flat
               >
-                <v-toolbar-title>
+                <v-toolbar-title class="my-comments-title">
                   <h3>
                     My Comments
                   </h3>
@@ -18,8 +35,8 @@
                 >
                   <ValidationObserver ref="editCommentObserver">
                     <v-card>
-                      <v-card-title>
-                        <span class="text-h5" >Edit Comment</span>
+                      <v-card-title class="my-comments-title">
+                        <span><h4>Edit Comment </h4></span>
                       </v-card-title>
           
                       <v-card-text>
@@ -67,6 +84,7 @@
                         </v-container>
                       </v-card-text>
           
+                      <p ref="saveError" class="error--text"></p>
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn
@@ -100,7 +118,7 @@
                           </p>
                         </v-col>
                         <v-col cols="12">
-                          <p ref="errorDelete" class="error--text my-2 text-center"></p>
+                          <p ref="deleteError" class="error--text my-2 text-center"></p>
                         </v-col>
                         <v-btn color="orange accent-4" outlined @click="closeDelete" class="mx-2">Cancel</v-btn>
                         <v-btn
@@ -132,7 +150,7 @@
         <h4>No comments, start adding one now!</h4>
     </div>
 </template>
-  </v-data-table>
+</v-data-table>
 </div>
 </template>
 
@@ -206,6 +224,7 @@ export default {
             await CommentRequest.getCommentsByUserId(this.userId, jwtToken)
                 .then(async (response) => {
                     this.myComments = response.data;
+                    console.log(this.myComments);
                     this.myComments.forEach(this.formatTimestampOfComment);
                 })
                 .catch((error) => {
@@ -230,14 +249,11 @@ export default {
                     console.log(error);
                 });
         },
-        async updateCommentInDB(commentId, commentObj) {
-            await CommentRequest.editComment(commentId, commentObj.text, commentObj.rating)
-                .then(async (response) => {
-                    console.log(response.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+        async updateCommentInDB(commentId, comment, rating) {
+          console.log(comment);
+          console.log(rating);
+          const result = await CommentRequest.editComment(commentId, comment, rating);
+          return result.status;
         },
         editItem(item) {
             this.editedIndex = this.myComments.indexOf(item);
@@ -256,20 +272,24 @@ export default {
             await this.deleteCommentFromDB(this.deletedItem.id)
                 .then(async () => {
                     console.log("success");
+                    this.successSnackbar = true;
                     this.myComments.splice(this.editedIndex, 1);
+                    setTimeout(() => (this.successSnackbar = false), 1000);
+                    this.closeDelete();
+                    await this.refreshPage();
                 })
                 .catch((error) => {
                     console.log("fail");
-                    console.log(error.response);
+                    console.log(error);
+                    this.$refs.deleteError.innerHTML = "Failed to delete this comment, please try again";
             });
             this.deletedItem = null;
             this.loading = false;
-            this.closeDelete();
-            await this.refreshPage();
         },
         close() {
             // reset error
             this.$refs.editCommentObserver.reset();
+            this.$refs.saveError.innerHTML = "";
             this.dialog = false
             this.$nextTick(() => {
                 this.editedItem = Object.assign({}, this.defaultItem);
@@ -277,6 +297,7 @@ export default {
             })
         },
         closeDelete() {
+            this.$refs.deleteError.innerHTML = "";
             this.dialogDelete = false;
             this.$nextTick(() => {
                 this.editedItem = Object.assign({}, this.defaultItem);
@@ -284,23 +305,34 @@ export default {
             })
         },
         async save() {
+          // start loading
+          this.loading = true;
           const isValidated = await this.validate();
           if (isValidated) {
-            await this.updateCommentInDB(this.editedItem.id, this.editedItem.text)
-                .then(async () => {
+            await this.updateCommentInDB(this.editedItem.id, this.editedItem.text, this.editedItem.rating)
+                .then(async (response) => {
+                  if (response === 200) {
                     console.log("success");
                     if (this.editedIndex > -1) {
                         Object.assign(this.myComments[this.editedIndex], this.editedItem);
                     } else {
                         this.myComments.push(this.editedItem);
                     }
+                    this.close();
+                    this.successSnackbar = true;
+                    setTimeout(() => (this.successSnackbar = false), 1000);
+                    await this.refreshPage();
+                  } else {
+                    console.log("fail");
+                    this.$refs.saveError.innerHTML = "Failed to update this comment, please try again";
+                  }
                 })
                 .catch((error) => {
                     console.log("fail");
+                    this.$refs.saveError.innerHTML = "An un expected error occurred, please try again";
                     console.log(error);
             });
-            this.close();
-            await this.refreshPage();
+            this.loading = false;
           }
         },
         async refreshPage() {
@@ -328,4 +360,8 @@ export default {
 };
 </script>
 
-<style scope></style>
+<style scope>
+.my-comments-title {
+  color: #ff6d00;
+}
+</style>

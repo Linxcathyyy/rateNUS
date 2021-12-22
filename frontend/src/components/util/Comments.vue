@@ -2,7 +2,7 @@
   <v-card flat class="my-12">
     <div class="comment-list">
       <div class="comment-title">Comments</div>
-      <v-layout justify-end>
+      <v-layout justify-end v-if="!isCommentListEmpty">
         <v-btn
           icon
           color="orange accent-4"
@@ -23,12 +23,15 @@
         </v-btn>
       </v-layout>
 
-      <div class="comments">
+      <div class="comments" v-if="!isCommentListEmpty">
         <div v-for="comment in commentList" :key="comment.id">
           <Comment :comment="comment" />
         </div>
       </div>
-      <div class="comments text-center">
+      <div class="comments" v-if="isCommentListEmpty">
+        <h4>No comments, start adding one now!</h4>
+      </div>
+      <div class="comments text-center" v-if="!isCommentListEmpty">
         <v-container>
           <v-row justify="center">
             <v-col cols="8">
@@ -88,6 +91,7 @@ export default {
         StallRequest.getCommentList(this.$route.params.id, pageNum, pageSize)
           .then((response) => {
             this.commentList = response.data.content;
+            console.log(this.commentList);
             this.totalPages = response.data.totalPages;
           })
           .catch((error) => {
@@ -174,6 +178,11 @@ export default {
   async mounted() {
     await this.getCommentList(this.currentPage - 1, this.pageSize);
   },
+  computed: {
+    isCommentListEmpty() {
+      return this.commentList.length === 0;
+    }
+  }
 };
 </script>
 
