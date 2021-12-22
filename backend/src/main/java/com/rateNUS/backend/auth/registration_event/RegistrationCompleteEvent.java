@@ -1,4 +1,4 @@
-package com.rateNUS.backend.auth.registrationevent;
+package com.rateNUS.backend.auth.registration_event;
 
 import org.springframework.context.ApplicationEvent;
 

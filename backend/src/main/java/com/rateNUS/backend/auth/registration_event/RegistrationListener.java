@@ -1,4 +1,4 @@
-package com.rateNUS.backend.auth.registrationevent;
+package com.rateNUS.backend.auth.registration_event;
 
 import java.util.UUID;
 
@@ -9,8 +9,8 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import com.rateNUS.backend.security.verificationtoken.VerificationToken;
-import com.rateNUS.backend.security.verificationtoken.VerificationTokenRepository;
+import com.rateNUS.backend.security.verification_token.VerificationToken;
+import com.rateNUS.backend.security.verification_token.VerificationTokenRepository;
 import com.rateNUS.backend.user.User;
 
 @Component
@@ -31,7 +31,7 @@ public class RegistrationListener implements ApplicationListener<RegistrationCom
         String tokenString = UUID.randomUUID().toString();
 
         // create verification token
-        VerificationToken verificationToken = new VerificationToken(tokenString, user);
+        VerificationToken verificationToken = new VerificationToken(tokenString, user.getUsername());
         verificationTokenRepository.save(verificationToken);
 
         // send confirmation email

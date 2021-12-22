@@ -44,6 +44,7 @@ export default defineComponent({
   methods: {
     logout() {
       this.$store.commit("logOut");
+      this.$router.push("/hostels");
     },
     goToMyComments() {
       this.$router.push("/myComments");
