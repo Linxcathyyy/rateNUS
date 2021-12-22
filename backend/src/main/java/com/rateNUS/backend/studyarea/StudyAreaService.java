@@ -59,21 +59,21 @@ public class StudyAreaService {
     }
 
     @Transactional
-    public void addComment(long studyAreaId, int rating) {
+    public void addComment(long studyAreaId, double rating) {
         studyAreaRepository.findById(studyAreaId)
                 .orElseThrow(() -> new TypeNotFoundException(Type.studyArea, studyAreaId))
                 .addComment(rating);
     }
 
     @Transactional
-    public void updateComment(long studyAreaId, int oldRating, int newRating) {
+    public void updateComment(long studyAreaId, double oldRating, double newRating) {
         studyAreaRepository.findById(studyAreaId)
                 .orElseThrow(() -> new TypeNotFoundException(Type.studyArea, studyAreaId))
                 .updateComment(oldRating, newRating);
     }
 
     @Transactional
-    public void deleteComment(long studyAreaId, int rating) {
+    public void deleteComment(long studyAreaId, double rating) {
         studyAreaRepository.findById(studyAreaId)
                 .orElseThrow(() -> new TypeNotFoundException(Type.studyArea, studyAreaId))
                 .deleteComment(rating);

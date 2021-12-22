@@ -59,21 +59,21 @@ public class StallService {
     }
 
     @Transactional
-    public void addComment(long stallId, int rating) {
+    public void addComment(long stallId, double rating) {
         stallRepository.findById(stallId)
                 .orElseThrow(() -> new TypeNotFoundException(Type.stall, stallId))
                 .addComment(rating);
     }
 
     @Transactional
-    public void updateComment(long stallId, int oldRating, int newRating) {
+    public void updateComment(long stallId, double oldRating, double newRating) {
         stallRepository.findById(stallId)
                 .orElseThrow(() -> new TypeNotFoundException(Type.stall, stallId))
                 .updateComment(oldRating, newRating);
     }
 
     @Transactional
-    public void deleteComment(long stallId, int rating) {
+    public void deleteComment(long stallId, double rating) {
         stallRepository.findById(stallId)
                 .orElseThrow(() -> new TypeNotFoundException(Type.stall, stallId))
                 .deleteComment(rating);

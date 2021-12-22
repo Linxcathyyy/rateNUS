@@ -95,8 +95,8 @@ public class CommentController {
                     .orElseThrow(() -> new TypeNotFoundException(Type.comment, commentId));
 
             // The old rating must be recorded before updateCommentRating() is called
-            int oldRating = comment.getRating();
-            int newRating = (int) jsonInput.get("rating");
+            double oldRating = comment.getRating();
+            double newRating = (double) jsonInput.get("rating");
 
             commentService.updateCommentRating(commentId, newRating);
 

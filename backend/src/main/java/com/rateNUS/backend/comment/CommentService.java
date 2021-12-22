@@ -45,7 +45,7 @@ public class CommentService {
     }
 
     @Transactional
-    public void updateCommentRating(long commentId, int rating) {
+    public void updateCommentRating(long commentId, double rating) {
         commentRepository.findById(commentId)
                 .orElseThrow(() -> new TypeNotFoundException(Type.comment, commentId))
                 .setRating(rating);

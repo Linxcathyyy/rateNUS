@@ -113,16 +113,16 @@ public class Stall {
         return highestPrice;
     }
 
-    public void addComment(int newRating) {
+    public void addComment(double newRating) {
         rating = CommentUtil.addComment(rating, commentCount, newRating);
         commentCount++;
     }
 
-    public void updateComment(int oldRating, int newRating) {
+    public void updateComment(double oldRating, double newRating) {
         rating = CommentUtil.updateComment(rating, commentCount, oldRating, newRating);
     }
 
-    public void deleteComment(int ratingToRemove) {
+    public void deleteComment(double ratingToRemove) {
         rating = CommentUtil.deleteComment(rating, commentCount, ratingToRemove);
         commentCount--;
     }
