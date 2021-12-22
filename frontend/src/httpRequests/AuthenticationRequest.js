@@ -72,6 +72,10 @@ class AuthenticationRequest {
         return res;
     }
 
+    async sendResetPasswordRequest(email) {
+        console.log(email);
+    }
+
 }
 
 export default new AuthenticationRequest();

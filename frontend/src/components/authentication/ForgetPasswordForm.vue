@@ -13,6 +13,7 @@
             label="Email*"
             :rules="emailRules"
             required
+            v-model="email"
           ></v-text-field>
         </v-container>
       </v-form>
@@ -27,6 +28,7 @@
 
 <script>
 import { defineComponent } from "@vue/composition-api";
+import AuthenticationRequest from "../../httpRequests/AuthenticationRequest";
 
 export default defineComponent({
   setup() {},
@@ -34,6 +36,7 @@ export default defineComponent({
   data() {
     return {
       valid: false,
+      email: "",
       emailRules: [
         (v) => !!v || "E-mail is required",
         (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
@@ -42,12 +45,17 @@ export default defineComponent({
   },
   methods: {
     validate() {
-      
       return this.$refs.forget_form.validate();
     },
     async sendResetPasswordReq() {
         if (this.validate()) {
-            console.log("send req");
+            await AuthenticationRequest.sendResetPasswordRequest(this.email)
+            .then((response) => {
+                
+            })
+            .catch((err) => {
+                
+            })
         }
     }
   },
