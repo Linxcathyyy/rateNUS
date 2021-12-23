@@ -2,6 +2,7 @@ package com.rateNUS.backend.auth.reset_password_event;
 
 import java.util.UUID;
 
+import com.rateNUS.backend.util.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.mail.SimpleMailMessage;
@@ -49,7 +50,7 @@ public class ResetPasswordListener implements ApplicationListener<ResetPasswordE
         SimpleMailMessage email = new SimpleMailMessage();
         email.setTo(destination);
         email.setSubject(subject);
-        email.setText(message + "\r\n" + "http://localhost:8080" + confirmationUrl);
+        email.setText(message + "\r\n" + Config.frontendURL + "/#" + confirmationUrl);
 
         mailSender.send(email);
     }

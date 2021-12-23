@@ -2,7 +2,7 @@ import axios from "axios";
 const LOGIN_URL = "http://localhost:8080/login"
 const SIGNUP_URL = "http://localhost:8080/signup"
 const CONFIRM_URL = "http://localhost:8080/registrationConfirm"
-
+const BASE_URL = "http://localhost:8080/"
 class AuthenticationRequest {
 
     // async sendLoginRequest() {
@@ -69,6 +69,20 @@ class AuthenticationRequest {
 
     async sendConfirmationRequest(token) {
         var res = await axios.get(CONFIRM_URL + "?token=" + token);
+        return res;
+    }
+
+    async sendForgetPasswordRequest(email) {
+        var res = await axios.post(BASE_URL + "forgetPassword", {
+            "email": email
+        });
+        return res;
+    }
+
+    async sendResetPasswordRequest(newPassword, token) {
+        var res = await axios.post(BASE_URL + "resetPassword" + "?token=" + token, {
+            "password": newPassword
+        })
         return res;
     }
 

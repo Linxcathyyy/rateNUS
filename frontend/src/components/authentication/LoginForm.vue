@@ -23,6 +23,7 @@
         @click:append="showPassword = !showPassword"
         v-on:keydown.enter="submitLoginCredentials"
       ></v-text-field>
+
       <v-btn
         depressed
         outlined
@@ -33,7 +34,10 @@
       >
         Log In
       </v-btn>
+      
     </v-form>
+    <v-spacer></v-spacer>
+    <v-btn class="mt-4" small text @click="forgetPassword"> Forget Password? </v-btn>
   </div>
 </template>
 
@@ -53,7 +57,7 @@ export default {
       required: (value) => !!value || "Password is required.",
     },
     isErrorVisible: false,
-    errorMessage: ""
+    errorMessage: "",
   }),
   methods: {
     validate() {
@@ -84,10 +88,8 @@ export default {
           })
           .catch(function (err) {
             //handle error
-            console.log("error occurred");
             console.log("error occurred: " + err);
             return err.response;
-            //return response;
           })
           .then((response) => {
             if (response.status != 200) {
@@ -100,6 +102,9 @@ export default {
           });
       }
     },
+    forgetPassword() {
+      this.$emit('forget-password');
+    }
   },
 };
 </script>

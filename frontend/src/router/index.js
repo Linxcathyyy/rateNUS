@@ -6,8 +6,7 @@ import StudyAreas from "../views/StudyAreas.vue";
 import ItemViewMore from "../components/commons/ItemViewMore.vue";
 import RegistrationConfirm from "../components/authentication/RegistrationConfirm.vue"
 import MyComments from "../views/MyComments.vue"
-// import store from '@/store/index.js';
-Vue.use(VueRouter);
+import ResetPassword from "../components/authentication/ResetPassword.vue"
 
 Vue.use(VueRouter);
 
@@ -87,6 +86,11 @@ const routes = [
     name: 'RegistrationConfirm',
     component: RegistrationConfirm,
   },
+  {
+    path: "/resetPassword",
+    name: "ResetPassword",
+    component: ResetPassword
+  }
 ]
 
 const router = new VueRouter({
