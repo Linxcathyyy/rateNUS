@@ -179,7 +179,8 @@ public class AuthController {
                                            @RequestBody ResetPasswordRequest resetPasswordRequest) {
         ResetPasswordToken resetPasswordToken = resetPasswordTokenRepository.findByToken(token);
         if (resetPasswordToken == null) {
-            return ResponseEntity.badRequest().body(new MessageResponse("Error: Token is invalid."));
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse("Error: Token is invalid. Please use the latest link you received."));
         }
 
         Calendar calendar = Calendar.getInstance();
