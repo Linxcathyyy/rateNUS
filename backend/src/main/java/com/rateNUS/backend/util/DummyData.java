@@ -8,44 +8,101 @@ import com.rateNUS.backend.stall.Stall;
 import com.rateNUS.backend.studyarea.StudyArea;
 import com.rateNUS.backend.user.User;
 
+import java.io.IOException;
 import java.util.List;
 
 public class DummyData {
 
-    public static Image i1 = new Image(
-            "utown1",
-            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/12/Screen-Shot-2018-12-03-at-9.51.14-AM.png",
-            ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/12/Screen-Shot-2018-12-03-at-9.51.14-AM.png"));
+    public static Image i1;
 
-    public static Image i2 = new Image(
-            "utown2",
-            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/08/fr0g1ut2about.jpg",
-            ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/08/fr0g1ut2about.jpg"));
+    static {
+        try {
+            i1 = new Image(
+                    "utown1",
+                    "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/12/Screen-Shot-2018-12-03-at-9.51.14-AM.png",
+                    ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/12/Screen-Shot-2018-12-03-at-9.51.14-AM.png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-    public static Image i3 = new Image(
-            "utown3",
-            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2020/05/UTown-Single-Room.jpg",
-            ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2020/05/UTown-Single-Room.jpg"));
+    public static Image i2;
 
-    public static Image i4 = new Image(
-            "pgp1",
-            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr01.jpg",
-            ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr01.jpg"));
+    static {
+        try {
+            i2 = new Image(
+                    "utown2",
+                    "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/08/fr0g1ut2about.jpg",
+                    ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/08/fr0g1ut2about.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-    public static Image i5 = new Image(
-            "pgp2",
-            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr04.jpg",
-            ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr04.jpg"));
+    public static Image i3;
 
-    public static Image i6 = new Image(
-            "pgp3",
-            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr11.jpg",
-            ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr11.jpg"));
+    static {
+        try {
+            i3 = new Image(
+                    "utown3",
+                    "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2020/05/UTown-Single-Room.jpg",
+                    ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2020/05/UTown-Single-Room.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-    public static Image i7 = new Image(
-            "cinna1",
-            "https://www.usp.nus.edu.sg/wp-content/uploads/2019/07/Cinnamon-College.jpg",
-            ImageUtil.ImageUrlToByteArray("https://www.usp.nus.edu.sg/wp-content/uploads/2019/07/Cinnamon-College.jpg"));
+    public static Image i4;
+
+    static {
+        try {
+            i4 = new Image(
+                    "pgp1",
+                    "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr01.jpg",
+                    ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr01.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Image i5;
+
+    static {
+        try {
+            i5 = new Image(
+                    "pgp2",
+                    "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr04.jpg",
+                    ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr04.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Image i6;
+
+    static {
+        try {
+            i6 = new Image(
+                    "pgp3",
+                    "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr11.jpg",
+                    ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr11.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static Image i7;
+
+    static {
+        try {
+            i7 = new Image(
+                    "cinna1",
+                    "https://www.usp.nus.edu.sg/wp-content/uploads/2019/07/Cinnamon-College.jpg",
+                    ImageUtil.ImageUrlToByteArray("https://www.usp.nus.edu.sg/wp-content/uploads/2019/07/Cinnamon-College.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public static Hostel h1 = new Hostel(
             "UTown Residence",

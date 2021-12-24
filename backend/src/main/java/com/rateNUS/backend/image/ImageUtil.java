@@ -1,5 +1,8 @@
 package com.rateNUS.backend.image;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,27 +11,31 @@ import java.net.URL;
 import java.util.Arrays;
 
 public class ImageUtil {
-    public static byte[] ImageUrlToByteArray(String urlString)  {
+    public static byte[] ImageUrlToByteArray(String urlString) throws IOException {
         URL url = null;
         try {
             url = new URL(urlString);
         } catch (MalformedURLException malformedURLException) {
             malformedURLException.printStackTrace();
         }
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
 
-        assert (url != null);
-        try (InputStream inputStream = url.openStream()) {
-            int n = 0;
-            byte[] buffer = new byte[1024];
-            while (-1 != (n = inputStream.read(buffer))) {
-                bos.write(buffer, 0, n);
+        assert url != null;
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        InputStream is = null;
+        try {
+            is = new BufferedInputStream(url.openStream());
+            byte[] byteChunk = new byte[4096];
+            int n;
+            while ( (n = is.read(byteChunk)) > 0 ) {
+                baos.write(byteChunk, 0, n);
             }
-        }  catch (IOException exception) {
-           exception.printStackTrace();
+            return baos.toByteArray();
         }
-        byte[] data = bos.toByteArray();
-        System.out.println("image data: " + Arrays.toString(data));
-        return data;
+        catch (IOException e) {e.printStackTrace ();}
+        finally {
+            if (is != null) { is.close(); }
+        }
+        return null;
     }
 }

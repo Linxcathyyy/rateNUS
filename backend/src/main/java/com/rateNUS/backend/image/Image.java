@@ -36,6 +36,7 @@ public class Image {
 
     @Lob
     @Column(name = "data")
+    @Type(type = "org.hibernate.type.ImageType")
     private byte[] data;
 
     public Image() {

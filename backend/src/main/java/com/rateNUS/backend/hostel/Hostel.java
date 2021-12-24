@@ -44,8 +44,8 @@ public class Hostel {
     private String description;
 
     @ElementCollection
-//    @JoinTable(name = "image", joinColumns = @JoinColumn(name = "hostel_id"))
-    @Column(name = "images", nullable = false)
+    @JoinTable(name = "hostel_image", joinColumns = @JoinColumn(name = "hostel_id"))
+    @Column(name = "image", nullable = false)
     private List<Image> images;
 
     @ElementCollection(targetClass = Facility.class)
