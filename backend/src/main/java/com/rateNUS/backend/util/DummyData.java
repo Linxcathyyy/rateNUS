@@ -2,6 +2,8 @@ package com.rateNUS.backend.util;
 
 import com.rateNUS.backend.comment.Comment;
 import com.rateNUS.backend.hostel.Hostel;
+import com.rateNUS.backend.image.Image;
+import com.rateNUS.backend.image.ImageUtil;
 import com.rateNUS.backend.stall.Stall;
 import com.rateNUS.backend.studyarea.StudyArea;
 import com.rateNUS.backend.user.User;
@@ -9,6 +11,42 @@ import com.rateNUS.backend.user.User;
 import java.util.List;
 
 public class DummyData {
+
+    public static Image i1 = new Image(
+            "utown1",
+            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/12/Screen-Shot-2018-12-03-at-9.51.14-AM.png",
+            ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/12/Screen-Shot-2018-12-03-at-9.51.14-AM.png"));
+
+    public static Image i2 = new Image(
+            "utown2",
+            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/08/fr0g1ut2about.jpg",
+            ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/08/fr0g1ut2about.jpg"));
+
+    public static Image i3 = new Image(
+            "utown3",
+            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2020/05/UTown-Single-Room.jpg",
+            ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2020/05/UTown-Single-Room.jpg"));
+
+    public static Image i4 = new Image(
+            "pgp1",
+            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr01.jpg",
+            ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr01.jpg"));
+
+    public static Image i5 = new Image(
+            "pgp2",
+            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr04.jpg",
+            ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr04.jpg"));
+
+    public static Image i6 = new Image(
+            "pgp3",
+            "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr11.jpg",
+            ImageUtil.ImageUrlToByteArray("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr11.jpg"));
+
+    public static Image i7 = new Image(
+            "cinna1",
+            "https://www.usp.nus.edu.sg/wp-content/uploads/2019/07/Cinnamon-College.jpg",
+            ImageUtil.ImageUrlToByteArray("https://www.usp.nus.edu.sg/wp-content/uploads/2019/07/Cinnamon-College.jpg"));
+
     public static Hostel h1 = new Hostel(
             "UTown Residence",
             "NUS University Town",
@@ -17,9 +55,7 @@ public class DummyData {
                     "fosters a sense of community and cross-disciplinary discussion. Resident ADvisors (RADs) will " +
                     "also be living alongside the graduate residents. The UTown Residence is equipped with seminar " +
                     "rooms and student lounges.",
-            List.of("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/12/Screen-Shot-2018-12-03-at-9.51.14-AM.png",
-                    "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/08/fr0g1ut2about.jpg",
-                    "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2020/05/UTown-Single-Room.jpg"),
+            List.of(i1, i2, i3),
             List.of(Facility.campusSecurity, Facility.laundry, Facility.lounge, Facility.swimmingPool, Facility.wifi)
     );
 
@@ -31,9 +67,7 @@ public class DummyData {
                     "interaction amongst its residents. The single rooms are grouped into clusters of 15, and every " +
                     "resident in the cluster is entrusted with collective responsibility for shared facilities such " +
                     "as a kitchen, dining area, and bathroom facilities.",
-            List.of("https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr01.jpg",
-                    "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr04.jpg",
-                    "https://uci.nus.edu.sg/ohs/wp-content/uploads/sites/3/2018/07/pgpr11.jpg"),
+            List.of(i4, i5, i6),
             List.of(Facility.basketballCourt, Facility.carPark, Facility.campusSecurity, Facility.convenienceStore,
                     Facility.fitnessCentre, Facility.laundry, Facility.lounge, Facility.multipurposeHall,
                     Facility.musicRoom, Facility.wifi)
@@ -49,7 +83,7 @@ public class DummyData {
                     "professors, and sometimes, alumni too; they play sports and organise events in the halls; and " +
                     "they hold numerous thoughtful discussions in the Master’s Commons, floors lounges, suites and " +
                     "their common lounge – fondly known as Chatterbox.",
-            List.of("https://www.usp.nus.edu.sg/wp-content/uploads/2019/07/Cinnamon-College.jpg"),
+            List.of(i7),
             List.of(Facility.laundry, Facility.lounge)
     );
 
@@ -156,4 +190,5 @@ public class DummyData {
     public static List<StudyArea> studyAreaList = List.of(sa1, sa2, sa3);
     public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6, c7, c8);
     public static List<User> userList = List.of(u1);
+    public static List<Image> imageList = List.of(i1, i2, i3, i4, i5, i6, i7);
 }

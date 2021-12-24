@@ -1,5 +1,6 @@
 package com.rateNUS.backend.hostel;
 
+import com.rateNUS.backend.image.Image;
 import com.rateNUS.backend.util.CommentUtil;
 import com.rateNUS.backend.util.Facility;
 
@@ -13,6 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.List;
@@ -42,9 +44,9 @@ public class Hostel {
     private String description;
 
     @ElementCollection
-    @JoinTable(name = "hostelImages", joinColumns = @JoinColumn(name = "hostel_id"))
-    @Column(name = "imageUrl", nullable = false)
-    private List<String> imageUrl;
+//    @JoinTable(name = "image", joinColumns = @JoinColumn(name = "hostel_id"))
+    @Column(name = "images", nullable = false)
+    private List<Image> images;
 
     @ElementCollection(targetClass = Facility.class)
     @JoinTable(name = "facilities", joinColumns = @JoinColumn(name = "hostel_id"))
@@ -55,25 +57,25 @@ public class Hostel {
     public Hostel() {}
 
     // For dummy data
-    public Hostel(String name, String location, String description, List<String> imageUrl, List<Facility> facilities) {
+    public Hostel(String name, String location, String description, List<Image> images, List<Facility> facilities) {
         this.name = name;
         this.rating = -1;
         this.location = location;
         this.description = description;
-        this.imageUrl = imageUrl;
+        this.images = images;
         this.facilities = facilities;
     }
 
     // For HostelRepository
     public Hostel(long id, String name, double rating, int commentCount, String location, String description,
-                  List<String> imageUrl, List<Facility> facilities) {
+                  List<Image> images, List<Facility> facilities) {
         this.id = id;
         this.name = name;
         this.rating = rating;
         this.commentCount = commentCount;
         this.location = location;
         this.description = description;
-        this.imageUrl = imageUrl;
+        this.images = images;
         this.facilities = facilities;
     }
 
@@ -101,8 +103,8 @@ public class Hostel {
         return description;
     }
 
-    public List<String> getImageUrl() {
-        return imageUrl;
+    public List<Image> getImages() {
+        return images;
     }
 
     public List<Facility> getFacilities() {
