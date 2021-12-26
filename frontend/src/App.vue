@@ -43,8 +43,8 @@
           <div class="mx-4">
             <router-view id="router-view" />
           </div>
+          <Footer> </Footer>
         </div>
-        <Footer> </Footer>
       </div>
     </v-main>
   </v-app>
@@ -147,5 +147,6 @@ header {
 }
 #router-view {
   width: 100%;
+  margin-bottom: 10rem;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-  <v-footer dark class="orange px-4 py-12">
+  <v-footer absolute dark class="orange px-4 py-12">
     <v-container>
       <v-row id="footer-link-row">
         <div>GitHub</div>
