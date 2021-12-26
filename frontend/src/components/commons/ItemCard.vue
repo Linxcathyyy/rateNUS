@@ -8,7 +8,7 @@
       ></v-progress-linear>
     </template>
 
-    <v-img height="400" :src="item.imageUrl[0]"></v-img>
+    <v-img :height="imageHeight" :src="item.imageUrl[0]"></v-img>
 
     <v-card-title style="word-break: break-word">{{ item.name }}</v-card-title>
 
@@ -80,6 +80,22 @@ export default {
         return `(${this.item.commentCount} review)`;
       } else {
         return `(${this.item.commentCount} reviews)`;
+      }
+    },
+    imageHeight() {
+      switch (this.$vuetify.breakpoint.name) {
+        case "xs":
+          return 200;
+        case "sm":
+          return 250;
+        case "md":
+          return 300;
+        case "lg":
+          return 300;
+        case "xl":
+          return 300;
+        default:
+          return 300;
       }
     },
   },

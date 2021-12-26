@@ -30,7 +30,7 @@
       </v-card-text>
     </v-card>
     <v-container>
-      <v-carousel cycle show-arrows-on-hover :height="imageHeight">
+      <v-carousel delimiter-icon="mdi-minus" hide-delimiter-background cycle show-arrows-on-hover :height="imageHeight">
         <v-carousel-item
           v-for="imgURL in item.imageUrl"
           :key="imgURL"
@@ -139,10 +139,10 @@ export default {
         switch (this.$vuetify.breakpoint.name) {
           case 'xs': return 200
           case 'sm': return 300
-          case 'md': return 400
+          case 'md': return 350
           case 'lg': return 400
-          case 'xl': return 400
-          default: return 400
+          case 'xl': return 500
+          default: return 500
         }
       },
   },
