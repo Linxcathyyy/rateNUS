@@ -210,7 +210,7 @@ Gradle > Tasks > application > bootRun
             * If not specified, there is **no** default values! The field will just be not updated.
     * Delete Comment
         * Header: `Authorization` header needed with value: `"Bearer " + jwtToken`
-        * Give: `@PathVariable("commentId") long commentId`, , `@RequestParam(name = "token") String token`, `@RequestParam(name = "username") String username`
+        * Give: `@PathVariable("commentId") long commentId`, `@RequestParam(name = "token") String token`, `@RequestParam(name = "username") String username`
         * Path: `comment/{commentId}`
 * Authentication
     * Post login request

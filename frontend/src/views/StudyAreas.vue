@@ -4,33 +4,39 @@
       @handle-search="handleSearch"
       searchHint="Search for studyAreas"
     />
-    <div
-      v-for="studyArea in studyAreaList"
-      :key="studyArea.id"
-      class="studyArea-list"
-    >
-      <div @click="goToViewMorePage(studyArea.id)" id="studyArea-click">
-        <ItemCard type="studyArea" :item="studyArea" />
+    <div v-if="hasResultResult">
+      <div
+        v-for="studyArea in studyAreaList"
+        :key="studyArea.id"
+        class="studyArea-list"
+      >
+        <div @click="goToViewMorePage(studyArea.id)" id="studyArea-click">
+          <ItemCard type="studyArea" :item="studyArea" />
+        </div>
+      </div>
+      <div class="text-center">
+        <v-container>
+          <v-row justify="center">
+            <v-col cols="8">
+              <v-container class="max-width">
+                <v-pagination
+                  @input="updatePage"
+                  v-model="currentPage"
+                  class="my-4"
+                  :length="totalPages"
+                  prev-icon="mdi-menu-left"
+                  next-icon="mdi-menu-right"
+                  color="orange accent-4"
+                ></v-pagination>
+              </v-container>
+            </v-col>
+          </v-row>
+        </v-container>
       </div>
     </div>
-    <div class="text-center">
-      <v-container>
-        <v-row justify="center">
-          <v-col cols="8">
-            <v-container class="max-width">
-              <v-pagination
-                @input="updatePage"
-                v-model="currentPage"
-                class="my-4"
-                :length="totalPages"
-                prev-icon="mdi-menu-left"
-                next-icon="mdi-menu-right"
-                color="orange accent-4"
-              ></v-pagination>
-            </v-container>
-          </v-col>
-        </v-row>
-      </v-container>
+    <div v-if="!hasResultResult">
+      <p>No results found for "{{this.currentKeyword}}"</p>
+      <p>Try searching "utown" or "library"</p>
     </div>
   </div>
 </template>
@@ -51,7 +57,7 @@ export default {
     return {
       studyAreaList: [],
       currentPage: 1,
-      pageSize: 1,
+      pageSize: 3,
       totalPages: 0,
       currentKeyword: "",
       hasBeenSearched: false,
@@ -112,6 +118,12 @@ export default {
 
   async created() {
     await this.getStudyAreaList(this.currentPage - 1, this.pageSize);
+  },
+
+  computed: {
+    hasResultResult() {
+      return this.studyAreaList.length > 0;
+    }
   },
 
   emits: ["handle-search"],
