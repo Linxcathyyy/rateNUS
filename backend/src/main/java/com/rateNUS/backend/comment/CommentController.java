@@ -2,12 +2,16 @@ package com.rateNUS.backend.comment;
 
 import com.rateNUS.backend.exception.TypeNotFoundException;
 import com.rateNUS.backend.hostel.HostelService;
+import com.rateNUS.backend.security.jwt.JwtUtils;
 import com.rateNUS.backend.stall.StallService;
 import com.rateNUS.backend.studyarea.StudyAreaService;
+import com.rateNUS.backend.user.UserService;
 import com.rateNUS.backend.util.Config;
 import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -31,16 +36,20 @@ public class CommentController {
     private final HostelService hostelService;
     private final StallService stallService;
     private final StudyAreaService studyAreaService;
+    private final JwtUtils jwtUtils;
+    private final UserService userService;
 
     @Autowired
     public CommentController(CommentService commentService,
                              HostelService hostelService,
                              StallService stallService,
-                             StudyAreaService studyAreaService) {
+                             StudyAreaService studyAreaService, JwtUtils jwtUtils, UserService userService) {
         this.commentService = commentService;
         this.hostelService = hostelService;
         this.stallService = stallService;
         this.studyAreaService = studyAreaService;
+        this.jwtUtils = jwtUtils;
+        this.userService = userService;
     }
 
     @PostMapping(path = "{type}/{targetId}")
@@ -66,25 +75,39 @@ public class CommentController {
 
     @PostMapping
     public void addComment(@RequestBody Comment comment) {
-        Comment newComment = commentService.addComment(comment);
+        long id = comment.getTargetId();
 
-        switch (newComment.getType()) {
+        switch (comment.getType()) {
             case hostel:
-                hostelService.addComment(newComment.getTargetId(), newComment.getRating());
+                comment.setTargetName(hostelService.getHostel(id).getName());
+                hostelService.addComment(id, comment.getRating());
                 break;
 
             case stall:
-                stallService.addComment(newComment.getTargetId(), newComment.getRating());
+                comment.setTargetName(stallService.getStall(id).getName());
+                stallService.addComment(id, comment.getRating());
                 break;
 
             case studyArea:
-                studyAreaService.addComment(newComment.getTargetId(), newComment.getRating());
+                comment.setTargetName(studyAreaService.getStudyArea(id).getName());
+                studyAreaService.addComment(id, comment.getRating());
                 break;
         }
+
+        commentService.addComment(comment);
     }
 
     @PutMapping(path = "/{commentId}")
-    public void updateComment(@PathVariable("commentId") long commentId, @RequestBody Map<String, Object> jsonInput) {
+    public ResponseEntity<?> updateComment(@PathVariable("commentId") long commentId,
+                              @RequestParam(name = "token") String token,
+                              @RequestParam(name = "username") String username,
+                              @RequestBody Map<String, Object> jsonInput) {
+
+        assert (token != null && username != null);
+        if (!jwtUtils.tokenBelongsToUser(token, username) || !userService.userHasComment(username, commentId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
         if (jsonInput.containsKey("text")) {
             String text = (String) jsonInput.get("text");
             commentService.updateCommentText(commentId, text);
@@ -114,10 +137,18 @@ public class CommentController {
                     break;
             }
         }
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping(path = "/{commentId}")
-    public void deleteComment(@PathVariable("commentId") long commentId) {
+    public ResponseEntity<?>  deleteComment(@PathVariable("commentId") long commentId,
+                              @RequestParam(name = "token") String token,
+                              @RequestParam(name = "username") String username) {
+        assert (token != null && username != null);
+        if (!jwtUtils.tokenBelongsToUser(token, username)  || !userService.userHasComment(username, commentId)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
         Comment deletedComment = commentService.deleteComment(commentId);
 
         switch (deletedComment.getType()) {
@@ -133,5 +164,6 @@ public class CommentController {
                 studyAreaService.deleteComment(deletedComment.getTargetId(), deletedComment.getRating());
                 break;
         }
+        return ResponseEntity.ok().build();
     }
 }

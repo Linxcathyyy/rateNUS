@@ -190,11 +190,13 @@ Gradle > Tasks > application > bootRun
               }
               ```
     * Add Comment
+        * Header: `Authorization` header needed with value: `"Bearer " + jwtToken`
         * Give: `@RequestBody Comment comment`
         * Path: `comment`
             * role == "USER": `comment`
     * Edit Comment
-        * Give: `@PathVariable("commentId") long commentId`, `@RequestBody Map<String, Object> jsonInput`
+        * Header: `Authorization` header needed with value: `"Bearer " + jwtToken`
+        * Give: `@PathVariable("commentId") long commentId`, `@RequestBody Map<String, Object> jsonInput`, `@RequestParam(name = "token") String token`, `@RequestParam(name = "username") String username`
           ```
           {
             "text": "updated comment message"
@@ -207,7 +209,8 @@ Gradle > Tasks > application > bootRun
               for `rating`)
             * If not specified, there is **no** default values! The field will just be not updated.
     * Delete Comment
-        * Give: `@PathVariable("commentId") long commentId`
+        * Header: `Authorization` header needed with value: `"Bearer " + jwtToken`
+        * Give: `@PathVariable("commentId") long commentId`, `@RequestParam(name = "token") String token`, `@RequestParam(name = "username") String username`
         * Path: `comment/{commentId}`
 * Authentication
     * Post login request

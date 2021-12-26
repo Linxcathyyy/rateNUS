@@ -14,10 +14,10 @@
         </v-card>
       </v-dialog>
     </v-row>
-    <v-snackbar top color="red" :value="failureSnackbar"
+    <v-snackbar top color="red" v-model="failureSnackbar"
       >An unknown error has occured, please try again!</v-snackbar
     >
-    <v-snackbar top color="red" :value="notLoggedInSnackbar"
+    <v-snackbar top color="red" v-model="notLoggedInSnackbar"
       >You must be logged in to post comments. Please log in and try
       again!</v-snackbar
     >
@@ -134,7 +134,6 @@ export default {
         this.submitByType(id, comment, rating, jwtToken, userId)
           .then(() => {
             this.successDialog = true;
-            console.log(this.successDialog);
           })
           .catch((error) => {
             var errorStatus = error.response.status;
@@ -142,13 +141,13 @@ export default {
             if (errorStatus == 403) {
               // user is not logged in
               this.notLoggedInSnackbar = true;
-              setTimeout(() => (this.failureSnackbar = false), 5000);
+              setTimeout(() => (this.failureSnackbar = false), 2000);
               return;
             }
 
             // other errors
             this.failureSnackbar = true;
-            setTimeout(() => (this.failureSnackbar = false), 5000);
+            setTimeout(() => (this.failureSnackbar = false), 2000);
           });
       }
     },

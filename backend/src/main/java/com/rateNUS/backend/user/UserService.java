@@ -2,19 +2,25 @@ package com.rateNUS.backend.user;
 
 import javax.transaction.Transactional;
 
+import com.rateNUS.backend.comment.Comment;
+import com.rateNUS.backend.comment.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.rateNUS.backend.exception.TypeNotFoundException;
 import com.rateNUS.backend.util.Type;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final CommentService commentService;
 
     @Autowired
-    public UserService(UserRepository userRepository) {
+    public UserService(UserRepository userRepository, CommentService commentService) {
         this.userRepository = userRepository;
+        this.commentService = commentService;
     }
 
     public boolean existsByUsername(String username) {
@@ -51,5 +57,13 @@ public class UserService {
                 .orElseThrow(() -> new TypeNotFoundException(Type.user, userId));
         user.setPassword(password);
         return user;
+    }
+
+    public boolean userHasComment(String username, long commentId) {
+        Optional<Comment> comment = commentService.getComment(commentId);
+        long commentUserId = comment.orElseThrow().getUserId();
+        User user = this.findByUsername(username);
+        assert (user != null);
+        return commentUserId == user.getId();
     }
 }
