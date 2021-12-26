@@ -12,18 +12,32 @@ class CommentRequest {
     return await axios.post(COMMENT_USER_API_BASE_URL +"/" + userId, {
       orderBy: "id",
       isLowToHigh: true,
-    }, { headers: headers });
-  }
-
-  async editComment(commentId, comment, rating) {
-    return await axios.put(COMMENT_API_BASE_URL + "/" + commentId, {
-      text: comment, 
-      rating: rating
+    }, {
+      headers: headers,
     });
   }
 
-  async deleteComment(commentId) {
-    return await axios.delete(COMMENT_API_BASE_URL + "/" + commentId);
+  async editComment(commentId, comment, rating, jwtToken, username) {
+    const headers = {
+      Authorization: "Bearer " + jwtToken,
+    };
+    const url = `${COMMENT_API_BASE_URL}/${commentId}?token=${jwtToken}&username=${username}`
+    return await axios.put(url, {
+      text: comment, 
+      rating: rating
+    }, {
+      headers: headers,
+    });
+  }
+
+  async deleteComment(commentId, jwtToken, username) {
+    const headers = {
+      Authorization: "Bearer " + jwtToken,
+    };
+    const url = `${COMMENT_API_BASE_URL}/${commentId}?token=${jwtToken}&username=${username}`
+    return await axios.delete(url,{
+      headers: headers,
+    });
   }
 }
 

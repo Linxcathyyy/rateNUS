@@ -124,7 +124,7 @@
                         <v-btn
                           color="warning" 
                           depressed
-                          @click="deleteItemConfirm"
+                          @click="deleteCommentFromDB"
                           :disabled="successSnackbar"
                           :loading="loading"
                           >Confirm</v-btn
@@ -220,7 +220,7 @@ export default {
             this.userId = this.$store.getters.id;
         },
         async getCommentsByUserId() {
-            var jwtToken = this.$store.getters.jwtToken;
+            const jwtToken = this.$store.getters.jwtToken;
             await CommentRequest.getCommentsByUserId(this.userId, jwtToken)
                 .then(async (response) => {
                     this.myComments = response.data;
@@ -239,20 +239,10 @@ export default {
           dateTimeString = dateString + " " + timeString;
           comment["dateTimeString"] = dateTimeString;
         },
-        async deleteCommentFromDB(commentId) {
-          console.log("commentId: " + commentId);
-            await CommentRequest.deleteComment(commentId)
-                .then(async (response) => {
-                    console.log(response.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        },
         async updateCommentInDB(commentId, comment, rating) {
-          console.log(comment);
-          console.log(rating);
-          const result = await CommentRequest.editComment(commentId, comment, rating);
+          const jwtToken = this.$store.getters.jwtToken;
+          const username = this.$store.getters.fullName;
+          const result = await CommentRequest.editComment(commentId, comment, rating, jwtToken, username);
           return result.status;
         },
         editItem(item) {
@@ -266,24 +256,27 @@ export default {
             this.dialogDelete = true;
             this.deletedItem = item;
         },
-        async deleteItemConfirm() {
+        async deleteCommentFromDB() {
             // start loading
             this.loading = true;
-            await this.deleteCommentFromDB(this.deletedItem.id)
-                .then(async () => {
+            const jwtToken = this.$store.getters.jwtToken;
+            const username = this.$store.getters.fullName;
+            await CommentRequest.deleteComment(this.deletedItem.id, jwtToken, username)
+                .then(async (response) => {
+                    console.log(response);
                     console.log("success");
                     this.successSnackbar = true;
                     this.myComments.splice(this.editedIndex, 1);
                     setTimeout(() => (this.successSnackbar = false), 1000);
+                    this.deletedItem = null;
                     this.closeDelete();
                     await this.refreshPage();
                 })
                 .catch((error) => {
                     console.log("fail");
-                    console.log(error);
+                    console.log(error.toString());
                     this.$refs.deleteError.innerHTML = "Failed to delete this comment, please try again";
-            });
-            this.deletedItem = null;
+                });
             this.loading = false;
         },
         close() {
