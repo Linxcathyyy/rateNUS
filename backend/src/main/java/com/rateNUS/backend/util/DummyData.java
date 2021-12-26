@@ -280,6 +280,7 @@ public class DummyData {
             6.50
     );
 
+    // source: https://blog.nus.edu.sg/
     public static StudyArea sa1 = new StudyArea(
             "Central Library",
             "Central Library",
@@ -288,19 +289,135 @@ public class DummyData {
                     "https://blog.nus.edu.sg/linus/files/2021/02/Chinese-Library-Study-Area-1.jpg")
     );
 
+    // source: https://nus.edu.sg/osa/
     public static StudyArea sa2 = new StudyArea(
             "PGP study rooms",
             "Prince George's Park",
             List.of("https://nus.edu.sg/osa/images/default-source/pgp-house/facilities/reading-room.jpeg?sfvrsn=81d01ab3_2")
     );
 
+    // source: https://blog.nus.edu.sg/reslife/2015/04/12/exam-special-seven-great-study-spots-in-nus/
     public static StudyArea sa3 = new StudyArea(
-            "Study Area outside Starbucks",
-            "Utown Starbucks",
+            "Education Resource Centre (ERC)",
+            "Utown",
             List.of("https://thesmartlocal.com/reviews/wp-content/uploads/2013/11/u-town-national-university-of-singapore-78-1383555230.jpg",
-                    "https://miro.medium.com/proxy/0*PoVsXEStAHvJmoIp.jpg")
+                    "https://miro.medium.com/proxy/0*PoVsXEStAHvJmoIp.jpg",
+                    "https://blog.nus.edu.sg/reslife/files/2015/04/the-fan-2lml4cp.jpg",
+                    "https://cpb-us-w2.wpmucdn.com/blog.nus.edu.sg/dist/2/4803/files/2015/04/image-about-erc-study-clusters-rfnsw1.jpg")
     );
 
+    // source: https://blog.nus.edu.sg/reslife/2015/04/12/exam-special-seven-great-study-spots-in-nus/
+    public static StudyArea sa4 = new StudyArea(
+            "YIH Study Room",
+            "Yusof Ishak House",
+            List.of("https://blog.nus.edu.sg/reslife/files/2015/04/YIH-study-room-ywxh2f.jpg")
+    );
+
+    // source: https://blog.nus.edu.sg/reslife/2015/04/12/exam-special-seven-great-study-spots-in-nus/
+    public static StudyArea sa5 = new StudyArea(
+            "Town Plaza desks",
+            "Utown",
+            List.of("https://cpb-us-w2.wpmucdn.com/blog.nus.edu.sg/dist/2/4803/files/2015/04/utown-plaza-1pmejy7-1024x741.jpg")
+    );
+
+    // source: https://blog.nus.edu.sg/reslife/2015/04/12/exam-special-seven-great-study-spots-in-nus/
+    public static StudyArea sa6 = new StudyArea(
+            "Kuok Foundation House rooftop benches",
+            "21 Kent Ridge Crescent",
+            List.of("https://cpb-us-w2.wpmucdn.com/blog.nus.edu.sg/dist/2/4803/files/2015/04/viewKFH1-2hevdf0.jpg",
+                    "https://cpb-us-w2.wpmucdn.com/blog.nus.edu.sg/dist/2/4803/files/2015/04/view-KFH2-1ot0ark.jpg")
+    );
+
+    // source: https://nus.edu.sg/nuslibraries/spaces/our-libraries/c-j-koh-law-library
+    public static StudyArea sa7 = new StudyArea(
+            "CJ Koh Law Library",
+            "Bukit Timah Campus",
+            List.of("https://nus.edu.sg/nuslibraries/images/default-source/library-details/c-j-koh-law-library/cjkoh_law_library.jpg?sfvrsn=f10fc54b_3",
+                    "https://nus.edu.sg/nuslibraries/images/default-source/default-album/our-collections-item-1.png?sfvrsn=55cc952f_5",
+                    "https://allabout.city/singapore/wp-content/uploads/2020/06/C-J-Koh-Law-Library.jpg",
+                    "https://blog.nus.edu.sg/linus/files/2011/12/lawextension-23cot2j.jpg")
+    );
+
+    // source: https://nus.edu.sg/nuslibraries/
+    public static StudyArea sa8 = new StudyArea(
+            "Wan Boo Sow Chinese Library",
+            "Wan Boo Sow Chinese Library",
+            List.of("https://nus.edu.sg/nuslibraries/images/default-source/library-details/chinese-library/chinese_library_banner.jpg?sfvrsn=77ecdf3a_3",
+                    "https://fastly.4sqi.net/img/general/600x600/23455879_fsJ68DWbBEVUFvA1h5czRTFMkos_ZBkfNyRHWfmEv6I.jpg")
+    );
+
+    // source: https://nus.edu.sg/nuslibraries/
+    public static StudyArea sa9 = new StudyArea(
+            "Hon Sui Sen Memorial Library",
+            "NUS Business School",
+            List.of("https://allabout.city/singapore/wp-content/uploads/2020/06/Hon-Sui-Sen-Memorial-Library.jpg",
+                    "https://www.sqfeed.com/wp-content/uploads/2021/05/NUS-Hon-Sui-Sen-Memorial-Room.png")
+    );
+
+    // source: https://nus.edu.sg/nuslibraries/
+    public static StudyArea sa10 = new StudyArea(
+            "Medical library",
+            "MD6",
+            List.of("https://blog.nus.edu.sg/linus/files/2011/10/CTM.jpg",
+                    "https://nus.edu.sg/nuslibraries/images/default-source/comms/megamenu-images/20200115_083003.png?sfvrsn=943c1dae_3",
+                    "https://nus.edu.sg/nuslibraries/images/default-source/library-details/medical-library/training-room-(1).jpg?sfvrsn=7e4e4969_3")
+    );
+
+    // source: https://nus.edu.sg/nuslibraries/
+    public static StudyArea sa11 = new StudyArea(
+            "Music library",
+            "Yong Siew Toh Conservatory of Music building",
+            List.of("https://upload.wikimedia.org/wikipedia/commons/f/fc/Yong_Siew_Toh_Conservatory_of_Music%2C_National_University_of_Singapore_-_20070108.jpg",
+                    "https://nus.edu.sg/nuslibraries/images/default-source/library-details/music-library/img_4448.jpg?sfvrsn=e5b644ce_3",
+                    "https://nus.edu.sg/nuslibraries/images/default-source/library-details/music-library/img_4438.jpg?sfvrsn=b6fea632_3")
+    );
+
+    // source: https://nus.edu.sg/nuslibraries/
+    public static StudyArea sa12 = new StudyArea(
+            "Science library",
+            "block S6",
+            List.of("https://upload.wikimedia.org/wikipedia/commons/f/fc/Yong_Siew_Toh_Conservatory_of_Music%2C_National_University_of_Singapore_-_20070108.jpg",
+                    "https://nus.edu.sg/nuslibraries/images/default-source/library-details/music-library/img_4448.jpg?sfvrsn=e5b644ce_3",
+                    "https://nus.edu.sg/nuslibraries/images/default-source/library-details/music-library/img_4438.jpg?sfvrsn=b6fea632_3")
+    );
+
+    // source: https://nus.edu.sg/nuslibraries/
+    public static StudyArea sa13 = new StudyArea(
+            "Yale-NUS Library",
+            "Yale-NUS",
+            List.of("https://www.yale-nus.edu.sg/wp-content/uploads/2015/07/3-Lib-Study-Area-1024x732.png",
+                    "https://i2.wp.com/theoctant.org/wp-content/uploads/2015/11/first-pic-library-BY-PELLI-CLARKE-PELLI-ARCHITECTS.png?ssl=1",
+                    "https://live.staticflickr.com/4496/37893664542_731d6ca054_b.jpg")
+    );
+
+    // source: https://nus.edu.sg/nuslibraries/
+    public static StudyArea sa14 = new StudyArea(
+            "Mac Commons",
+            "Utown",
+            List.of("https://uci.nus.edu.sg/suu/wp-content/uploads/sites/5/2019/12/20120113_NUS036.jpg")
+    );
+
+    // source: https://nus.edu.sg/nuslibraries/
+    public static StudyArea sa15 = new StudyArea(
+            "Benches at COM2",
+            "School of Computing",
+            List.of("https://www.comp.nus.edu.sg/images/resources/content/mapsvenues/LT19.jpg")
+    );
+
+    // source: https://nus.edu.sg/nuslibraries/
+    public static StudyArea sa16 = new StudyArea(
+            "Engineering Building",
+            "Faculty of Engineering",
+            List.of("https://www.comfortfurniture.com.sg/image/catalog/Portfolio/Educational%20Institutions/NUS%20Faculty%20of%20Engineering/NUS-EA-Block-Atrium-Hanoi-Chair-Oakland-Dining-Table-06.jpg",
+                    "https://www.comfortfurniture.com.sg/image/catalog/Portfolio/Educational%20Institutions/NUS%20Faculty%20of%20Engineering/NUS-EA-Block-Atrium-9.jpg")
+    );
+    // source: https://nus.edu.sg/nuslibraries/
+    public static StudyArea sa17 = new StudyArea(
+            "FASS Building",
+            "Faculty of Arts and Social Science",
+            List.of("https://uci.nus.edu.sg/ofm/wp-content/uploads/sites/6/2019/02/fass-space-1024x367.png",
+                    "https://uci.nus.edu.sg/ofm/wp-content/uploads/sites/6/2019/02/fass-space2-1024x768.png")
+    );
     public static Comment c1 = new Comment(3, 1, 4,
             "Nice hostel :)",
             Type.hostel);
@@ -350,7 +467,7 @@ public class DummyData {
 
     public static List<Hostel> hostelList = List.of(h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14);
     public static List<Stall> stallList = List.of(s1, s2, s3);
-    public static List<StudyArea> studyAreaList = List.of(sa1, sa2, sa3);
+    public static List<StudyArea> studyAreaList = List.of(sa1, sa2, sa3, sa4,sa5, sa6, sa7, sa8, sa9, sa10, sa11, sa12, sa13, sa14, sa15, sa16, sa17);
     public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11);
     public static List<User> userList = List.of(u1);
 }
