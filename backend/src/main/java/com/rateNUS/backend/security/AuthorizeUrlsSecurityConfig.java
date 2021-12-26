@@ -60,7 +60,8 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterAfter(jwtTokenVerifier, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
-                .antMatchers("/comment").authenticated().anyRequest().permitAll();
+                .antMatchers("/comment").authenticated()
+                .antMatchers("/comment/**").authenticated().anyRequest().permitAll();
     }
 
     @Bean

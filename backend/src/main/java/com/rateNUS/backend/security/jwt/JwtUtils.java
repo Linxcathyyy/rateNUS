@@ -1,5 +1,6 @@
 package com.rateNUS.backend.security.jwt;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.beans.factory.annotation.Value;
@@ -24,5 +25,14 @@ public class JwtUtils {
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
+    }
+
+    public boolean tokenBelongsToUser(String token, String username) {
+        String toBeVerified = Jwts.parser()
+                .setSigningKey(jwtSecret)
+                .parseClaimsJws(token)
+                .getBody().getSubject();
+        System.out.println("to be verified: " + toBeVerified);
+        return username.equals(toBeVerified);
     }
 }
