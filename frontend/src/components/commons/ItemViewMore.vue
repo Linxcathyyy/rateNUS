@@ -29,8 +29,17 @@
         </v-row>
       </v-card-text>
     </v-card>
+    <v-container>
+      <v-carousel v-model="model" cycle show-arrows-on-hover class="mx-4">
+        <v-carousel-item
+          v-for="imgURL in item.imageUrl"
+          :key="imgURL"
+          :src="imgURL"
+        >
+        </v-carousel-item>
+      </v-carousel>
+    </v-container>
 
-    <ImageSlideShow :imageUrls="item.imageUrl" />
     <v-card flat class="my-4">
       <v-card-text>
         <v-row align="center" class="mx-0">
@@ -58,7 +67,6 @@ import StudyAreaRequest from "../../httpRequests/StudyAreaRequest";
 import Comments from "../util/Comments.vue";
 import Facilities from "./Facilities.vue";
 import CommentForm from "../util/CommentForm.vue";
-import ImageSlideShow from "../util/ImageSlideShow.vue";
 
 export default {
   name: "ItemViewMore",
@@ -66,7 +74,6 @@ export default {
     Comments,
     CommentForm,
     Facilities,
-    ImageSlideShow,
   },
   props: {
     type: String,
