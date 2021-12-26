@@ -26,6 +26,9 @@ public class Comment {
     @Column(name = "targetId", nullable = false, updatable = false)
     private long targetId;
 
+    @Column(name = "targetName", nullable = false, columnDefinition = "TEXT")
+    private String targetName;
+
     @Column(name = "userId", nullable = false, updatable = false)
     private long userId;
 
@@ -70,6 +73,14 @@ public class Comment {
 
     public long getTargetId() {
         return targetId;
+    }
+
+    public String getTargetName() {
+        return targetName;
+    }
+
+    public void setTargetName(String targetName) {
+        this.targetName = targetName;
     }
 
     public long getUserId() {
