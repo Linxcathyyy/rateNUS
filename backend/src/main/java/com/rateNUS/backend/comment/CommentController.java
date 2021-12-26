@@ -66,21 +66,26 @@ public class CommentController {
 
     @PostMapping
     public void addComment(@RequestBody Comment comment) {
-        Comment newComment = commentService.addComment(comment);
+        long id = comment.getTargetId();
 
-        switch (newComment.getType()) {
+        switch (comment.getType()) {
             case hostel:
-                hostelService.addComment(newComment.getTargetId(), newComment.getRating());
+                comment.setTargetName(hostelService.getHostel(id).getName());
+                hostelService.addComment(id, comment.getRating());
                 break;
 
             case stall:
-                stallService.addComment(newComment.getTargetId(), newComment.getRating());
+                comment.setTargetName(stallService.getStall(id).getName());
+                stallService.addComment(id, comment.getRating());
                 break;
 
             case studyArea:
-                studyAreaService.addComment(newComment.getTargetId(), newComment.getRating());
+                comment.setTargetName(studyAreaService.getStudyArea(id).getName());
+                studyAreaService.addComment(id, comment.getRating());
                 break;
         }
+
+        commentService.addComment(comment);
     }
 
     @PutMapping(path = "/{commentId}")
