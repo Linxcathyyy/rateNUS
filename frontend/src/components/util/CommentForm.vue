@@ -134,7 +134,6 @@ export default {
         this.submitByType(id, comment, rating, jwtToken, userId)
           .then(() => {
             this.successDialog = true;
-            console.log(this.successDialog);
           })
           .catch((error) => {
             var errorStatus = error.response.status;
@@ -142,7 +141,6 @@ export default {
             if (errorStatus == 403) {
               // user is not logged in
               this.notLoggedInSnackbar = true;
-              console.log(this.notLoggedInSnackbar);
               setTimeout(() => (this.failureSnackbar = false), 2000);
               return;
             }
