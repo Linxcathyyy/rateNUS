@@ -44,6 +44,7 @@
             <router-view id="router-view" />
           </div>
         </div>
+        <Footer> </Footer>
       </div>
     </v-main>
   </v-app>
@@ -54,6 +55,7 @@ import Navigation from "./components/util/Navigation.vue";
 import LoginButton from "./components/authentication/LoginButton.vue";
 import SignUpButton from "./components/authentication/SignUpButton.vue";
 import UserProfile from "./components/authentication/UserProfile.vue";
+import Footer from "./components/util/Footer.vue";
 
 export default {
   name: "App",
@@ -62,6 +64,7 @@ export default {
     LoginButton,
     SignUpButton,
     UserProfile,
+    Footer,
   },
   data() {
     return {
