@@ -50,7 +50,7 @@ export default {
     return {
       stallList: [],
       currentPage: 1,
-      pageSize: 1,
+      pageSize: 3,
       totalPages: 0,
       currentKeyword: "",
       hasBeenSearched: false,
