@@ -42,7 +42,7 @@
                       <v-card-text>
                         <v-container>
                           <v-row>
-                            <v-col cols="12">{{ editedItem.type }}</v-col>
+                            <v-col cols="12"><h3>{{ editedItem.type }} : {{ editedItem.targetName }}</h3></v-col>
                           </v-row>
                           <v-row>
                             <v-col cols="12">
@@ -187,6 +187,7 @@ export default {
             dialogDelete: false,
             headers: [
                 { text: 'Type', align: 'start', value: 'type' },
+                { text: 'name', value: 'targetName' },
                 { text: 'Rating', value: 'rating' },
                 { text: 'Posted on', value: 'dateTimeString' },
                 { text: 'Comment', value: 'text', sortable: false },
@@ -201,6 +202,7 @@ export default {
                 rating: 5,
                 timestamp: '',
                 text: '',
+                targetName: '',
             },
             defaultItem: {
                 id: '',
@@ -208,6 +210,7 @@ export default {
                 rating: 5,
                 timestamp: '',
                 text: '',
+                targetName: '',
             },
 
         };
@@ -226,10 +229,20 @@ export default {
                     this.myComments = response.data;
                     console.log(this.myComments);
                     this.myComments.forEach(this.formatTimestampOfComment);
+                    this.myComments.forEach(this.formatType);
                 })
                 .catch((error) => {
                     console.log(error.response.data);
                 });
+        },
+        formatType(comment) {
+          if (comment.type == "hostel") {
+              comment["type"] = "Hostel";
+          } else if (comment.type == "stall") {
+              comment["type"] = "Food";
+          } else {
+              comment["type"] = "Study Area";
+          }
         },
         formatTimestampOfComment(comment) {
           var dateTimeString = "";
