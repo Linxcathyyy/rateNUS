@@ -30,7 +30,7 @@
       </v-card-text>
     </v-card>
     <v-container>
-      <v-carousel v-model="model" cycle show-arrows-on-hover class="mx-4">
+      <v-carousel cycle show-arrows-on-hover :height="imageHeight">
         <v-carousel-item
           v-for="imgURL in item.imageUrl"
           :key="imgURL"
@@ -135,6 +135,16 @@ export default {
         return `(${this.item.commentCount} reviews)`;
       }
     },
+    imageHeight () {
+        switch (this.$vuetify.breakpoint.name) {
+          case 'xs': return 200
+          case 'sm': return 300
+          case 'md': return 400
+          case 'lg': return 400
+          case 'xl': return 400
+          default: return 400
+        }
+      },
   },
 
   mounted() {
