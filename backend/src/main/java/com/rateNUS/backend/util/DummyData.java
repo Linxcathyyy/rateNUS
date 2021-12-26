@@ -283,16 +283,203 @@ public class DummyData {
     public static Stall s4 = new Stall(
             "Techno Edge Canteen",
             "Faculty of Engineering",
-            "Seating Capacity: 9\n" +
-                    "Term Time Operating Hours:\n" +
-                    "Mon-Sat, 11.00am – 8.00pm\n" +
-                    "Sun/PH closed\n" +
+            "Term Time Operating Hours:\n" +
+                    "Mon-Fri, 7.30am – 8.00pm\n" +
+                    "Sat/Sun/PH closed\n",
+            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2021/01/Techno-Frontage.jpg",
+                    "https://nus.edu.sg/alumnet//images/librariesprovider2/issue-125/canteen-1",
+                    "https://nus.edu.sg/alumnet//images/librariesprovider2/issue-125/canteen-2"),
+            5,
+            15
+    );
+
+    public static Stall s5 = new Stall(
+            "Fine Food",
+            "Town Plaza",
+            "Seating Capacity: 410\n" +
+                    "Number of Stalls: 14\n" +
+                    "Term Time &amp; Vacation Operating Hours:\n" +
+                    "Mon-Sun, 7.00am-10.00pm",
+            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/Fine-Food-1-1024x684.jpg",
+                    "https://static.wixstatic.com/media/4ce202_f31dec1bdbb74c01878976b59c61c1ef~mv2.jpg/v1/fill/w_925,h_520,al_c,q_90/4ce202_f31dec1bdbb74c01878976b59c61c1ef~mv2.webp"
+                    ),
+            5,
+            15
+    );
+
+    public static Stall s6 = new Stall(
+            "Flavours @ UTown",
+            "UTown Stephen Riady Centre",
+            "Seating Capacity: 700\n" +
+                    "Number of Stalls: 11\n" +
+                    "Term Time & Vacation Operating Hours:\n" +
+                    "Mon-Sun: 7.30am to 8.30pm",
+            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/Flavours-Edited-1024x684.jpg",
+                    "https://static.wixstatic.com/media/4ce202_f31dec1bdbb74c01878976b59c61c1ef~mv2.jpg/v1/fill/w_925,h_520,al_c,q_90/4ce202_f31dec1bdbb74c01878976b59c61c1ef~mv2.webp"
+            ),
+            5,
+            15
+    );
+
+    public static Stall s7 = new Stall(
+            "Waa Cow",
+            "Stephen Riady Centre (SRC)",
+            "Term Time Operating Hours:\n" +
+                    "Mon-Fri, 11.30am-8.30pm\n" +
+                    "Sat/Sun/PH, 12.00pm-8.30pm\n" +
                     "Vacation Operating Hours:\n" +
-                    "Mon-Sat, 11.00am – 3.00pm\n" +
+                    "Mon-Fri, 11.30am-8.30pm\n" +
+                    "Sat/Sun/PH, 12.00pm-8.30pm\n" +
+                    "Contact: 82230550\n" +
+                    "Nearest Carpark: Stephen Riady Centre",
+            List.of("https://d1sag4ddilekf6.azureedge.net/compressed/merchants/SGDD05734/hero/upload-photo-Hero_Photo_2d3a73cd6cb547e188212eea47290397_1555990865579303246.jpeg",
+                    "https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/Waa-Cow-1-1024x684.jpg"),
+            5,
+            30
+    );
+
+    public static Stall s8 = new Stall(
+            "Hwang’s Korean Restaurant",
+            "Town Plaza",
+            "Seating Capacity: 114\n" +
+                    "Term Time & Vacation Operating Hours:\n" +
+                    "Mon-Sat, 10.00am-9.00pm\n" +
+                    "Sun closed\n" +
+                    "Contact No: 9833 0603\n" +
+                    "Nearest Carpark: CREATE Tower",
+            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/Hwangs-UTown-1024x684.jpg",
+                    "http://mrfoodnotes.files.wordpress.com/2012/06/img_3275.jpg?w=640"),
+            5,
+            20
+    );
+
+    public static Stall s9 = new Stall(
+            "Sapore Italian Restaurant",
+            "Town Plaza",
+            "Seating Capacity: 122\n" +
+                    "Term Time & Vacation Operating Hours:\n" +
+                    "Mon-Sun, 11.00am-10.00pm\n" +
+                    "Contact No: 6262 0287\n" +
+                    "Nearest Carpark: CREATE Tower",
+            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/Sapore-1024x684.jpg",
+                   // "https://scontent-xsp1-2.xx.fbcdn.net/v/t1.6435-9/p180x540/66294486_2232221860224887_8097445153322565632_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=e3f864&_nc_ohc=t7AVjAXKIF0AX9pzn9A&_nc_ht=scontent-xsp1-2.xx&oh=00_AT-8QDLV5eArvhivN2zISOLuWiy7ujYnG1HPB9H2t7_yow&oe=61EC5DF4",
+                    "https://theridge.sg/wp-content/uploads/2014/09/ST_20120822_WSALCOHOL22_3263737e.jpg"),
+            5,
+            20
+    );
+
+    public static Stall s10 = new Stall(
+            "The Royals Bistro",
+            "Town Plaza",
+            "Seating Capacity: 60\n" +
+                    "Halal Certified\n" +
+                    "Term Time & Vacation Operating Hours:\n" +
+                    "Mon-Sat, 11.00am-8.00pm\n" +
+                    "Sun/PH closed\n" +
+                    "Contact: 97771353\n" +
+                    "Nearest Carpark: CREATE Tower",
+            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/The-Royals-Cafe-1024x684.jpg",
+                    "https://www.staffany.com/wp-content/uploads/2020/10/9EEA8589-9036-43A5-A779-FEFEF54C3CB1-1-1024x764.jpg"
+                    ),
+            5,
+            20
+    );
+
+    public static Stall s11 = new Stall(
+            "Reedz Cafe",
+            "The Thinking Corner @ BTC Li Ka Shing Building",
+            "Seating Capacity: 20\n" +
+                    "Term Time & Vacation Operating Hours:\n" +
+                    "Mon-Fri, 8.30am-4.00pm\n" +
+                    "Sat/Sun/PH closed",
+            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/reedz-1024x684.jpg",
+                    "https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/Reedz-BTC-1024x684.jpg"
+            ),
+            5,
+            20
+    );
+
+    public static Stall s12 = new Stall(
+            "Supersnacks",
+            "PGPR",
+            "Seating Capacity: 80\n" +
+                    "Term Time & Vacation Operating Hours:\n" +
+                    "Mon-Fri, 11.00am-2.00am\n" +
+                    "Sat/Sun/PH, 6.00pm-2.00am",
+            List.of("https://platform-cdn.yqueue.tech/4581/conversions/21-Spicy-Fries-processed.jpg",
+                    "https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/Supersnacks-1-1024x684.jpg"
+            ),
+            5,
+            20
+    );
+
+    public static Stall s13 = new Stall(
+            "Central Square",
+            "Yusof Ishak House Level 2",
+            "Seating Capacity: 363\n" +
+                    "Number of stalls: 11\n" +
+                    "Term Time & Vacation Operating Hours:\n" +
+                    "Mon-Fri, 8.00am-8.00pm\n" +
+                    "Sat, 8.00am-3.00pm\n" +
                     "Sun/PH closed",
-            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2021/02/Nine-Fresh-1-1024x684.jpg"),
-            3.00,
-            6.50
+            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/Central-Square-1-1024x684.jpg"),
+            5,
+            20
+    );
+
+    public static Stall s14 = new Stall(
+            "PGPR Non Aircon Canteen",
+            "PGPR",
+            "Seating Capacity: 318\n" +
+                    "Number of Stalls: 13\n" +
+                    "Term Time &amp; Vacation Operating Hours:\n" +
+                    "Mon-Sun, 7.00am-9.30pm",
+            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/Foodclique.jpg"),
+            5,
+            10
+    );
+
+    public static Stall s15 = new Stall(
+            "PGPR Aircon Food Court",
+            "PGPR",
+            "Seating Capacity: 308\n" +
+                    "Term Time &amp; Vacation Operating Hours:\n" +
+                    "Mon-Fri, 7.00am-8.30pm\n" +
+                    "Sat, 8.00am-8.30pm\n" +
+                    "Sun/PH, 8.00am-8.00pm",
+            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/PGPR.jpg"),
+            5,
+            10
+    );
+
+    public static Stall s16 = new Stall(
+            "Frontier Canteen",
+            "Faculty of Science",
+            "Seating Capacity: 700\n" +
+                    "Number of Stalls: 15\n" +
+                    "Term Time & Vacation Operating Hours:\n" +
+                    "Mon-Fri, 7.30am-4.00pm/8.00pm*\n" +
+                    "Sat, 7.30-am-3.00pm\n" +
+                    "Sun/PH closed\n" +
+                    "*Some stalls, during term time only",
+            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/Frontier-Canteen-1024x684.jpg"),
+            5,
+            10
+    );
+
+    public static Stall s17 = new Stall(
+            "The Deck",
+            "Faculty of Arts & Social Sciences",
+            "Seating Capacity: 1018\n" +
+                    "Number of Stalls: 13\n" +
+                    "Term Time & Vacation Operating Hours:\n" +
+                    "Mon-Fri, 7.30am-4.00pm/8.00pm*\n" +
+                    "Sat,7.30am-3.00pm\n" +
+                    "Sun/PH closed\n" +
+                    "*Some stalls, during term time only",
+            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/deck.jpg"),
+            5,
+            10
     );
 
     public static StudyArea sa1 = new StudyArea(
@@ -364,7 +551,7 @@ public class DummyData {
             "user1", "user@example.email", "Password123!", true);
 
     public static List<Hostel> hostelList = List.of(h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14);
-    public static List<Stall> stallList = List.of(s1, s2, s3);
+    public static List<Stall> stallList = List.of(s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17);
     public static List<StudyArea> studyAreaList = List.of(sa1, sa2, sa3);
     public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11);
     public static List<User> userList = List.of(u1);
