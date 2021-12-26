@@ -302,34 +302,46 @@ public class DummyData {
     );
 
     public static Comment c1 = new Comment(3, 1, 4,
-            "Cinnamon College: nice hostel :)",
+            "Nice hostel :)",
             Type.hostel);
 
-    public static Comment c2 = new Comment(2, 1, 5,
-            "Prince George's Park Residences: close to bus station, buildings are a bit old.",
+    public static Comment c2 = new Comment(13, 1, 4,
+            "Close to bus station, buildings are a bit old.",
             Type.hostel);
 
-    public static Comment c3 = new Comment(1, 1, 5,
-            "UTown: Many food here.",
+    public static Comment c3 = new Comment(14, 1, 5,
+            "Many food here.",
             Type.hostel);
 
     public static Comment c4 = new Comment(2, 1, 5,
-            "Prince George's Park Residences: Very chill residence, not much hustle",
+            "Very chill residence, not much hustle",
             Type.hostel);
 
-    public static Comment c5 = new Comment(3, 1, 4,
-            "Cinnamon College: Near StarBucks, where I can go study.",
+    public static Comment c5 = new Comment(14, 1, 4,
+            "Near StarBucks, where I can go study.",
             Type.hostel);
 
-    public static Comment c6 = new Comment(1, 1, 3,
+    public static Comment c6 = new Comment(6, 1, 5,
+            "Close to COM2 building.",
+            Type.hostel);
+
+    public static Comment c7 = new Comment(4, 1, 4,
+            "Perfect hostel, giving a rating of 4 bc they didn't let me stay for another year :>",
+            Type.hostel);
+
+    public static Comment c8 = new Comment(9, 1, 5,
+            "Lots of sport activities going on.",
+            Type.hostel);
+
+    public static Comment c9 = new Comment(1, 1, 3,
             "Dummy canteen comment",
             Type.stall);
 
-    public static Comment c7 = new Comment(1, 1, 0,
+    public static Comment c10 = new Comment(1, 1, 0,
             "I dun wanna study alr...",
             Type.studyArea);
 
-    public static Comment c8 = new Comment(2, 1, 0,
+    public static Comment c11 = new Comment(2, 1, 0,
             "Needs pgp room card to access.",
             Type.studyArea);
 
@@ -339,6 +351,6 @@ public class DummyData {
     public static List<Hostel> hostelList = List.of(h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14);
     public static List<Stall> stallList = List.of(s1, s2, s3);
     public static List<StudyArea> studyAreaList = List.of(sa1, sa2, sa3);
-    public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6, c7, c8);
+    public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11);
     public static List<User> userList = List.of(u1);
 }
