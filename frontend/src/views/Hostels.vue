@@ -1,30 +1,36 @@
 <template>
   <div class="hostels">
     <SearchBar @handle-search="handleSearch" searchHint="Search for hostels" />
-    <div v-for="hostel in hostelList" :key="hostel.id" class="hostel-list">
-      <div @click="goToViewMorePage(hostel.id)" id="hostel-click">
-        <ItemCard type="hostel" :item="hostel" />
+    <div v-if="hasResultResult">
+      <div v-for="hostel in hostelList" :key="hostel.id" class="hostel-list">
+        <div @click="goToViewMorePage(hostel.id)" id="hostel-click">
+          <ItemCard type="hostel" :item="hostel" />
+        </div>
+      </div>
+      <div class="text-center">
+        <v-container>
+          <v-row justify="center">
+            <v-col cols="8">
+              <v-container class="max-width">
+                <v-pagination
+                  @input="updatePage"
+                  v-model="currentPage"
+                  class="my-4"
+                  :length="totalPages"
+                  prev-icon="mdi-menu-left"
+                  next-icon="mdi-menu-right"
+                  color="orange accent-4"
+                ></v-pagination>
+              </v-container>
+            </v-col>
+          </v-row>
+        </v-container>
       </div>
     </div>
-    <div class="text-center">
-      <v-container>
-        <v-row justify="center">
-          <v-col cols="8">
-            <v-container class="max-width">
-              <v-pagination
-                @input="updatePage"
-                v-model="currentPage"
-                class="my-4"
-                :length="totalPages"
-                prev-icon="mdi-menu-left"
-                next-icon="mdi-menu-right"
-                color="orange accent-4"
-              ></v-pagination>
-            </v-container>
-          </v-col>
-        </v-row>
-      </v-container>
-    </div>
+  <div v-if="!hasResultResult">
+    <p>No results found for "{{this.currentKeyword}}"</p>
+    <p>Try searching "hall" or "residence"</p>
+  </div>
   </div>
 </template>
 
@@ -105,6 +111,12 @@ export default {
 
   async created() {
     await this.getHostelList(this.currentPage - 1, this.pageSize);
+  },
+
+  computed: {
+    hasResultResult() {
+      return this.hostelList.length > 0;
+    }
   },
 
   emits: ["handle-search"],
