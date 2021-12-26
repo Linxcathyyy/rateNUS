@@ -1,29 +1,35 @@
 <template>
   <div class="stalls">
     <SearchBar @handle-search="handleSearch" searchHint="Search for stalls" />
-    <div v-for="stall in stallList" :key="stall.id" class="stall-list">
-      <div @click="goToViewMorePage(stall.id)" id="stall-click">
-        <ItemCard type="stall" :item="stall" />
+    <div v-if="hasResultResult">
+      <div v-for="stall in stallList" :key="stall.id" class="stall-list">
+        <div @click="goToViewMorePage(stall.id)" id="stall-click">
+          <ItemCard type="stall" :item="stall" />
+        </div>
+      </div>
+      <div class="text-center">
+        <v-container>
+          <v-row justify="center">
+            <v-col cols="8">
+              <v-container class="max-width">
+                <v-pagination
+                  @input="updatePage"
+                  v-model="currentPage"
+                  class="my-4"
+                  :length="totalPages"
+                  prev-icon="mdi-menu-left"
+                  next-icon="mdi-menu-right"
+                  color="orange accent-4"
+                ></v-pagination>
+              </v-container>
+            </v-col>
+          </v-row>
+        </v-container>
       </div>
     </div>
-    <div class="text-center">
-      <v-container>
-        <v-row justify="center">
-          <v-col cols="8">
-            <v-container class="max-width">
-              <v-pagination
-                @input="updatePage"
-                v-model="currentPage"
-                class="my-4"
-                :length="totalPages"
-                prev-icon="mdi-menu-left"
-                next-icon="mdi-menu-right"
-                color="orange accent-4"
-              ></v-pagination>
-            </v-container>
-          </v-col>
-        </v-row>
-      </v-container>
+    <div v-if="!hasResultResult">
+      <p>No results found for "{{this.currentKeyword}}"</p>
+      <p>Try searching "Techno Egde" or "Frontier"</p>
     </div>
   </div>
 </template>
@@ -105,6 +111,12 @@ export default {
 
   async created() {
     await this.getStallList(this.currentPage - 1, this.pageSize);
+  },
+
+  computed: {
+    hasResultResult() {
+      return this.stallList.length > 0;
+    }
   },
 
   emits: ["handle-search"]
