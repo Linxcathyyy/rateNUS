@@ -280,6 +280,21 @@ public class DummyData {
             6.50
     );
 
+    public static Stall s4 = new Stall(
+            "Techno Edge Canteen",
+            "Faculty of Engineering",
+            "Seating Capacity: 9\n" +
+                    "Term Time Operating Hours:\n" +
+                    "Mon-Sat, 11.00am – 8.00pm\n" +
+                    "Sun/PH closed\n" +
+                    "Vacation Operating Hours:\n" +
+                    "Mon-Sat, 11.00am – 3.00pm\n" +
+                    "Sun/PH closed",
+            List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2021/02/Nine-Fresh-1-1024x684.jpg"),
+            3.00,
+            6.50
+    );
+
     public static StudyArea sa1 = new StudyArea(
             "Central Library",
             "Central Library",
