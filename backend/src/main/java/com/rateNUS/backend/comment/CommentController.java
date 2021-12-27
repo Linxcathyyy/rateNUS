@@ -119,7 +119,7 @@ public class CommentController {
 
             // The old rating must be recorded before updateCommentRating() is called
             double oldRating = comment.getRating();
-            double newRating = (double) jsonInput.get("rating");
+            double newRating = ((Number) jsonInput.get("rating")).doubleValue();
 
             commentService.updateCommentRating(commentId, newRating);
 
