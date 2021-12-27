@@ -90,7 +90,7 @@ const routes = [
     path: "/resetPassword",
     name: "ResetPassword",
     component: ResetPassword
-  }
+  },
 ]
 
 const router = new VueRouter({
