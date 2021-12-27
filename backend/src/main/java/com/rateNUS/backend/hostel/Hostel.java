@@ -85,6 +85,10 @@ public class Hostel {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public double getRating() {
         return rating;
     }
@@ -97,16 +101,32 @@ public class Hostel {
         return location;
     }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<String> getImageUrl() {
         return imageUrl;
     }
 
+    public void setImageUrl(List<String> imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public List<Facility> getFacilities() {
         return facilities;
+    }
+
+    public void setFacilities(List<Facility> facilities) {
+        this.facilities = facilities;
     }
 
     public void addComment(double newRating) {

@@ -2,11 +2,13 @@ package com.rateNUS.backend.util;
 
 import com.rateNUS.backend.comment.Comment;
 import com.rateNUS.backend.hostel.Hostel;
+import com.rateNUS.backend.security.ApplicationUserRole;
 import com.rateNUS.backend.stall.Stall;
 import com.rateNUS.backend.studyarea.StudyArea;
 import com.rateNUS.backend.user.User;
 
 import java.util.List;
+import java.util.Set;
 
 public class DummyData {
     // source: https://nus.edu.sg/osa/eusoffhall/
@@ -665,11 +667,18 @@ public class DummyData {
             Type.studyArea);
 
     public static User u1 = new User(
-            "user1", "user@example.email", "Password123!", true);
+            "user1", "user@example.email", "Password123!", true,
+            Set.of(ApplicationUserRole.USER)
+    );
+
+    public static User u2 = new User(
+            "admin", "admin@example.email", "Password123!", true,
+            Set.of(ApplicationUserRole.USER, ApplicationUserRole.ADMIN)
+    );
 
     public static List<Hostel> hostelList = List.of(h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14);
     public static List<Stall> stallList = List.of(s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17);
     public static List<StudyArea> studyAreaList = List.of(sa1, sa2, sa3, sa4,sa5, sa6, sa7, sa8, sa9, sa10, sa11, sa12, sa13, sa14, sa15, sa16, sa17);
     public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11);
-    public static List<User> userList = List.of(u1);
+    public static List<User> userList = List.of(u1, u2);
 }
