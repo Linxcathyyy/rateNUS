@@ -71,7 +71,7 @@ const routes = [
       type: "stall",
     },
     meta: {
-      title: `stall`,
+      title: "stall",
     },
   },
   {
@@ -82,38 +82,56 @@ const routes = [
       type: "studyArea",
     },
     meta: {
-      title: `studyArea`,
+      title: "studyArea",
     },
   },
   {
     path: "/registrationConfirm",
     name: "RegistrationConfirm",
     component: RegistrationConfirm,
+    meta: {
+      title: "RegistrationConfirm",
+    },
   },
   {
     path: "/resetPassword",
     name: "ResetPassword",
     component: ResetPassword,
+    meta: {
+      title: "ResetPassword",
+    },
   },
   {
     path: "/faq",
     name: "FAQ",
     component: FAQ,
+    meta: {
+      title: "FAQ",
+    },
   },
   {
     path: "/team",
     name: "Team",
     component: Team,
+    meta: {
+      title: "Team",
+    },
   },
   {
     path: "/about",
     name: "About",
     component: About,
+    meta: {
+      title: "About",
+    },
   },
   {
     path: "/contribute",
     name: "Contribute",
     component: Contribute,
+    meta: {
+      title: "Contribute",
+    },
   },
 ];
 
