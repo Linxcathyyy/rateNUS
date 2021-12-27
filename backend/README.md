@@ -117,6 +117,24 @@ Gradle > Tasks > application > bootRun
               "pageSize": 5
             }
             ```
+    * Update Stall
+        * Give: `@PathVariable("stallId") long stallId, @RequestParam(name = "token") String token,
+          @RequestParam(name = "username") String username, @RequestBody Map<String, Object> jsonInput`
+          ```
+          {
+            "name": "Stall Name",
+            "location": "Stall Location",
+            "description": "Stall Description",
+            "imageUrl": [],
+            "lowestPrice": 1.00,
+            "highestPrice": 5.50
+          }
+          ```
+        * Path: `stall/update/{stallId}`
+    * Delete stall
+        * Give: `@PathVariable("stallId") long stallId, @RequestParam(name = "token") String token,
+          @RequestParam(name = "username") String username`
+        * Path: `stall/delete/{stallId}`
 * Study Area
     * Get all Study Areas
         * Give: `@RequestBody Map<String, Object> jsonInput`

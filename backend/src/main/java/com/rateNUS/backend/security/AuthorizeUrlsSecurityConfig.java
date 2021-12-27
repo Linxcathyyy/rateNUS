@@ -57,16 +57,25 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterAfter(jwtTokenVerifier, UsernamePasswordAuthenticationFilter.class)
                 .authorizeRequests()
+                // comment
                 .antMatchers("/comment/hostel/**").permitAll()
                 .antMatchers("/comment/stall/**").permitAll()
                 .antMatchers("/comment/studyArea/**").permitAll()
                 .antMatchers("/comment").authenticated()
                 .antMatchers("/comment/**").authenticated()
+                // hostel
                 .antMatchers("/hostel/**").permitAll()
                 .antMatchers("/hostel").permitAll()
                 .antMatchers("/hostel/search").permitAll()
                 .antMatchers("/hostel/update/**").authenticated()
-                .antMatchers("/hostel/delete/**").authenticated().anyRequest().permitAll();
+                .antMatchers("/hostel/delete/**").authenticated()
+                // stall
+                .antMatchers("/stall/**").permitAll()
+                .antMatchers("/stall").permitAll()
+                .antMatchers("/stall/search").permitAll()
+                .antMatchers("/stall/update/**").authenticated()
+                .antMatchers("/stall/delete/**").authenticated()
+                .anyRequest().permitAll();
     }
 
     @Bean
