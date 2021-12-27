@@ -28,6 +28,10 @@ public class CommentService {
         return commentRepository.findById(commentId);
     }
 
+    public List<Comment> getComments() {
+        return commentRepository.findAllByOrderByIdAsc();
+    }
+
     public Page<Comment> getComments(long targetId, Type type, String orderBy, boolean isAscending, int pageNum,
                                      int numEntriesPerPage) {
         Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
