@@ -20,6 +20,10 @@
             {{ email }}
           </h4>
           <v-divider class="my-3"></v-divider>
+          <v-btn depressed rounded text @click="goToMyComments"> Manage Items </v-btn>
+          <v-divider class="my-3"></v-divider>
+          <v-btn depressed rounded text @click="goToMyComments"> Manage Comments </v-btn>
+          <v-divider class="my-3"></v-divider>
           <v-btn depressed rounded text @click="goToMyComments"> My Comments </v-btn>
           <v-divider class="my-3"></v-divider>
           <v-btn depressed rounded text @click="logout"> Log Out </v-btn>

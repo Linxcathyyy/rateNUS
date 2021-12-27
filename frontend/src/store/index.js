@@ -26,6 +26,7 @@ export default new Vuex.Store({
       initials: "",
       email: "",
       jwtToken: "",
+      role: "",
       defaultProfileColor: ColorPalette.getRandomColor(),
     },
   },
@@ -46,6 +47,9 @@ export default new Vuex.Store({
     },
     jwtToken: (state) => {
       return state.user.jwtToken;
+    },
+    role: (state) => {
+      return state.user.role;
     },
     isLoggedIn: (state) => {
       return state.isLoggedIn;
@@ -69,6 +73,9 @@ export default new Vuex.Store({
     },
     updateJwtToken(state, token) {
       state.user.jwtToken = token;
+    },
+    changeRole(state, role) {
+      state.user.role = role
     },
     logIn(state) {
       state.isLoggedIn = true;
