@@ -147,6 +147,6 @@ header {
 }
 #router-view {
   width: 100%;
-  margin-bottom: 10rem;
+  margin-bottom: 15rem;
 }
 </style>

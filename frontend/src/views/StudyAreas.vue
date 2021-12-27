@@ -1,10 +1,17 @@
 <template>
-  <div class="studyAreas">
+<div>
+  <div v-if="loading">
+    <v-progress-circular
+      indeterminate
+       color="orange accent-4"
+    ></v-progress-circular>
+  </div>
+  <div v-if="!loading" class="studyAreas">
     <SearchBar
       @handle-search="handleSearch"
       searchHint="Search for studyAreas"
     />
-    <div v-if="hasResultResult">
+    <div v-if="!noResult">
       <div
         v-for="studyArea in studyAreaList"
         :key="studyArea.id"
@@ -34,11 +41,12 @@
         </v-container>
       </div>
     </div>
-    <div v-if="!hasResultResult">
+    <div v-if="noResult">
       <p>No results found for "{{this.currentKeyword}}"</p>
       <p>Try searching "utown" or "library"</p>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -61,10 +69,12 @@ export default {
       totalPages: 0,
       currentKeyword: "",
       hasBeenSearched: false,
+      loading: false,
     };
   },
   methods: {
     async getStudyAreaList(pageNum, pageSize) {
+      this.loading = true;
       await StudyAreaRequest.getStudyAreaList(pageNum, pageSize)
         .then(async (response) => {
           console.log(response.data.content);
@@ -74,6 +84,7 @@ export default {
         .catch((error) => {
           console.log(error.response.data);
         });
+      this.loading = false;
     },
 
     async updatePage(pageNumber) {
@@ -121,8 +132,8 @@ export default {
   },
 
   computed: {
-    hasResultResult() {
-      return this.studyAreaList.length > 0;
+    noResult() {
+      return this.studyAreaList.length == 0 && this.hasBeenSearched;
     }
   },
 

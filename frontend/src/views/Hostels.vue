@@ -1,7 +1,14 @@
 <template>
-  <div class="hostels">
+<div>
+  <div v-if="loading">
+    <v-progress-circular
+      indeterminate
+       color="orange accent-4"
+    ></v-progress-circular>
+  </div>
+  <div v-if="!loading" class="hostels">
     <SearchBar @handle-search="handleSearch" searchHint="Search for hostels" />
-    <div v-if="hasResultResult">
+    <div v-if="!noResult">
       <div v-for="hostel in hostelList" :key="hostel.id" class="hostel-list">
         <div @click="goToViewMorePage(hostel.id)" id="hostel-click">
           <ItemCard type="hostel" :item="hostel" />
@@ -27,11 +34,12 @@
         </v-container>
       </div>
     </div>
-  <div v-if="!hasResultResult">
+  <div v-if="noResult">
     <p>No results found for "{{this.currentKeyword}}"</p>
     <p>Try searching "hall" or "residence"</p>
   </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -54,10 +62,12 @@ export default {
       totalPages: 0,
       currentKeyword: "",
       hasBeenSearched: false,
+      loading: false,
     };
   },
   methods: {
     async getHostelList(pageNum, pageSize) {
+      this.loading = true;
       await HostelRequest.getHostelList(pageNum, pageSize)
         .then(async (response) => {
           console.log(response.data.content);
@@ -67,6 +77,7 @@ export default {
         .catch((error) => {
           console.log(error.response.data);
         });
+      this.loading = false;
     },
 
     async updatePage(pageNumber) {
@@ -114,8 +125,8 @@ export default {
   },
 
   computed: {
-    hasResultResult() {
-      return this.hostelList.length > 0;
+    noResult() {
+      return this.hostelList.length == 0 && this.hasBeenSearched;
     }
   },
 

@@ -1,7 +1,14 @@
 <template>
-  <div class="stalls">
+<div>
+  <div v-if="loading">
+    <v-progress-circular
+      indeterminate
+      color="orange accent-4"
+    ></v-progress-circular>
+  </div>
+  <div v-if="!loading" class="stalls">
     <SearchBar @handle-search="handleSearch" searchHint="Search for stalls" />
-    <div v-if="hasResultResult">
+    <div v-if="!noResult">
       <div v-for="stall in stallList" :key="stall.id" class="stall-list">
         <div @click="goToViewMorePage(stall.id)" id="stall-click">
           <ItemCard type="stall" :item="stall" />
@@ -27,11 +34,12 @@
         </v-container>
       </div>
     </div>
-    <div v-if="!hasResultResult">
+    <div v-if="noResult">
       <p>No results found for "{{this.currentKeyword}}"</p>
       <p>Try searching "Techno Egde" or "Frontier"</p>
     </div>
   </div>
+</div>
 </template>
 
 <script>
@@ -54,10 +62,12 @@ export default {
       totalPages: 0,
       currentKeyword: "",
       hasBeenSearched: false,
+      loading: false
     };
   },
   methods: {
     async getStallList(pageNum, pageSize) {
+      this.loading = true;
       await StallRequest.getStallList(pageNum, pageSize)
         .then(async (response) => {
           console.log(response.data.content);
@@ -67,6 +77,7 @@ export default {
         .catch((error) => {
           console.log(error.response.data);
         });
+      this.loading = false;
     },
 
     async updatePage(pageNumber) {
@@ -114,8 +125,8 @@ export default {
   },
 
   computed: {
-    hasResultResult() {
-      return this.stallList.length > 0;
+    noResult() {
+      return this.stallList.length == 0 && this.hasBeenSearched;
     }
   },
 

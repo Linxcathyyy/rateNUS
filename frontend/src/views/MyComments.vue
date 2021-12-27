@@ -1,35 +1,7 @@
 <template>
-    <div>
+    <div class="my-comments">
         <v-snackbar top color="success" :value="successSnackbar">Success!</v-snackbar>
-        <v-data-table 
-          :headers="headers" 
-          :items="myComments" 
-          sort-by="calories" 
-          class="elevation-1" 
-          :loading="!isDataReady"
-        >
-        <v-progress-linear 
-          v-show="!isDataReady" 
-          slot="progress" 
-          color="orange accent-4" 
-          indeterminate>
-        </v-progress-linear>
-            <template #item.text="{ value }">
-                <div class="text-truncate" style="max-width: 400px">
-                {{ value }}
-                </div>
-            </template>
-            <template v-slot:top>
-              <v-toolbar
-                flat
-              >
-                <v-toolbar-title class="my-comments-title">
-                  <h3>
-                    My Comments
-                  </h3>
-                </v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-dialog
+            <v-dialog
                   v-model="dialog"
                   max-width="500px"
                 >
@@ -105,8 +77,8 @@
                       </v-card-actions>
                     </v-card>
                   </ValidationObserver>
-                </v-dialog>
-                <v-dialog v-model="dialogDelete" max-width="500px">
+            </v-dialog>
+            <v-dialog v-model="dialogDelete" max-width="500px">
                   <v-card>
                     <v-card-title class="warning white--text">Warning</v-card-title>
                     <v-card-text class="pt-6">
@@ -132,26 +104,58 @@
                       </v-row>
                     </v-card-text>
                   </v-card>
-                </v-dialog>
+            </v-dialog>
+        <v-card>
+        <v-card-title class="primary--text">
+          <h3>My Comments</h3>
+        </v-card-title>
+        <v-data-table 
+          :headers="headers" 
+          :items="myComments" 
+          sort-by="calories" 
+          class="flat" 
+          :loading="!isDataReady"
+        >
+        <v-progress-linear 
+          v-show="!isDataReady" 
+          slot="progress" 
+          color="orange accent-4" 
+          indeterminate>
+        </v-progress-linear>
+            <template #item.text="{ value }">
+                <div class="text-truncate" :style="calculateWidth">
+                {{ value }}
+                </div>
+            </template>
+            <template>
+              <v-toolbar
+                flat
+              >
+                <v-toolbar-title class="my-comments-title">
+                  <h3>
+                    My Comments
+                  </h3>
+                </v-toolbar-title>
               </v-toolbar>
-</template>
+            </template>
 
-<template v-slot:item.actions="{ item }">
-    <v-icon small class="mr-2" @click="editItem(item)">
-        mdi-pencil
-    </v-icon>
-    <v-icon small @click="deleteItem(item)">
-        mdi-delete
-    </v-icon>
-</template>
+      <template v-slot:item.actions="{ item }">
+          <v-icon small class="mr-2" @click="editItem(item)">
+              mdi-pencil
+          </v-icon>
+          <v-icon small @click="deleteItem(item)">
+              mdi-delete
+          </v-icon>
+      </template>
 
-<template v-slot:no-data>
-    <div>
-        <h4>No comments, start adding one now!</h4>
-    </div>
-</template>
-</v-data-table>
-</div>
+        <template v-slot:no-data>
+            <div>
+                <h4>No comments, start adding one now!</h4>
+            </div>
+        </template>
+      </v-data-table>
+    </v-card>
+  </div>
 </template>
 
 <script>
@@ -349,6 +353,25 @@ export default {
         }
     },
 
+    computed: {
+      calculateWidth() {
+        switch (this.$vuetify.breakpoint.name) {
+          case "xs":
+            return "max-width: 150px"
+          case "sm":
+            return "max-width: 200px"
+          case "md":
+            return "max-width: 300px"
+          case "lg":
+            return "max-width: 300px"
+          case "xl":
+            return "max-width: 400px"
+          default:
+            return "max-width: 400px"
+        }
+      },
+    },
+
     watch: {
         dialog(val) {
             val || this.close()
@@ -367,6 +390,9 @@ export default {
 </script>
 
 <style scope>
+.my-comments {
+  /* margin-top: 4rem; */
+}
 .my-comments-title {
   color: #ff6d00;
 }
