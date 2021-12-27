@@ -3,13 +3,15 @@
     <v-container>
       <v-row id="footer-link-row">
         <div class="link" @click="redirectToGithubRepo()">GitHub</div>
-        <div class="link">About</div>
-        <div class="link">Team</div>
+        <div class="link" @click="redirectToAbout()">About</div>
+        <div class="link" @click="redirectToTeam()">Team</div>
         <div class="link" @click="redirectToGithubContributors()">
           Contributors
         </div>
-        <div class="link">FAQ</div>
-        <div class="link">Contribute to RateNUS</div>
+        <div class="link" @click="redirectToFaq()">FAQ</div>
+        <div class="link" @click="redirectToContribute()">
+          Contribute to RateNUS
+        </div>
       </v-row>
       <v-row>
         <div class="ml-2 my-4 data">
@@ -47,6 +49,18 @@ export default {
     },
     redirectToGithubContributors() {
       window.open(GithubRequest.getContributorsUrl());
+    },
+    redirectToFaq() {
+      this.$router.push("/faq");
+    },
+    redirectToTeam() {
+      this.$router.push("/team");
+    },
+    redirectToAbout() {
+      this.$router.push("/about");
+    },
+    redirectToContribute() {
+      this.$router.push("/contribute");
     },
   },
   mounted() {
