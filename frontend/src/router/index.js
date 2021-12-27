@@ -15,11 +15,11 @@ import Contribute from "../views/Contribute.vue";
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: "/",
-    name: "Hostels",
-    component: Hostels,
-  },
+  // {
+  //   path: "/",
+  //   name: "Hostels",
+  //   component: Hostels,
+  // },
   {
     path: "/hostels",
     name: "Hostels",
@@ -99,6 +99,14 @@ const routes = [
     component: ResetPassword,
     meta: {
       title: "ResetPassword",
+    },
+  },
+  {
+    path: "/manageItems",
+    name: "ManageItems",
+    component: RegistrationConfirm,
+    meta: {
+      title: "ManageItems",
     },
   },
   {

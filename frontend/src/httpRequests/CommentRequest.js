@@ -39,6 +39,16 @@ class CommentRequest {
       headers: headers,
     });
   }
+
+  // Below is for admin
+  async getAllComments(jwtToken) {
+    const headers = {
+      Authorization: "Bearer " + jwtToken,
+    };
+    return axios.get(COMMENT_API_BASE_URL,{
+      headers: headers,
+    });
+  }
 }
 
 export default new CommentRequest();
