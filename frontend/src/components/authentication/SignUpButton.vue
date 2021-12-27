@@ -5,6 +5,7 @@
       class="orange accent-4"
       color="primary"
       @click="showSignUpDialog"
+      width="6.5em"
     >
       Sign Up
     </v-btn>
