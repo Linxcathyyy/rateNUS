@@ -5,7 +5,6 @@ import com.rateNUS.backend.util.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -22,8 +21,6 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
-import java.net.http.HttpRequest;
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -64,7 +61,11 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/comment/stall/**").permitAll()
                 .antMatchers("/comment/studyArea/**").permitAll()
                 .antMatchers("/comment").authenticated()
-                .antMatchers("/comment/**").authenticated().anyRequest().permitAll();
+                .antMatchers("/comment/**").authenticated()
+                .antMatchers("/hostel/**").permitAll()
+                .antMatchers("/hostel").permitAll()
+                .antMatchers("/hostel/search").permitAll()
+                .antMatchers("/hostel/update/**").authenticated().anyRequest().permitAll();
     }
 
     @Bean

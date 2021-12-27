@@ -54,6 +54,19 @@ Gradle > Tasks > application > bootRun
               "pageSize": 5
             }
             ```
+    * Update Hostel
+        * Give: `@PathVariable("hostelId") long hostelId, @RequestParam(name = "token") String token,
+          @RequestParam(name = "username") String username, @RequestBody Map<String, Object> jsonInput`
+          ```
+          {
+            "name": "Hostel Name",
+            "location": "Hostel Location",
+            "description": "Hostel Description",
+            "imageUrl": [],
+            "facilities": []
+          }
+          ```
+        * Path: `hostel/update/{hostelId}`
 * Stall
     * Get all Stalls
         * Give: `@RequestBody Map<String, Object> jsonInput`
