@@ -1,6 +1,7 @@
 package com.rateNUS.backend.hostel;
 
 import com.rateNUS.backend.exception.TypeNotFoundException;
+import com.rateNUS.backend.util.Facility;
 import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -77,5 +78,47 @@ public class HostelService {
         hostelRepository.findById(hostelId)
                 .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
                 .deleteComment(rating);
+    }
+
+    @Transactional
+    public void updateHostelName(long hostelId, String name) {
+        hostelRepository.findById(hostelId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
+                .setName(name);
+    }
+
+    @Transactional
+    public void updateHostelLocation(long hostelId, String location) {
+        hostelRepository.findById(hostelId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
+                .setLocation(location);
+    }
+
+    @Transactional
+    public void updateHostelDescription(long hostelId, String description) {
+        hostelRepository.findById(hostelId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
+                .setDescription(description);
+    }
+
+    @Transactional
+    public void updateHostelImageUrl(long hostelId, List<String> imageUrl) {
+        hostelRepository.findById(hostelId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
+                .setImageUrl(imageUrl);
+    }
+
+    @Transactional
+    public void updateHostelFacilities(long hostelId, List<Facility> facilities) {
+        hostelRepository.findById(hostelId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
+                .setFacilities(facilities);
+    }
+
+    public Hostel deleteHostel(long hostelId) {
+        Hostel hostel = hostelRepository.findById(hostelId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId));
+        hostelRepository.deleteById(hostelId);
+        return hostel;
     }
 }

@@ -52,11 +52,12 @@ public class User {
     public User() {}
 
     // For dummy data
-    public User(String username, String email, String password, boolean enabled) {
+    public User(String username, String email, String password, boolean enabled,
+                Set<ApplicationUserRole> roles) {
         this.username = username;
         this.email = email;
         this.password = new PasswordConfig().passwordEncoder().encode(password);
-        this.roles.add(ApplicationUserRole.USER);
+        this.roles.addAll(roles);
         this.enabled = enabled;
     }
 

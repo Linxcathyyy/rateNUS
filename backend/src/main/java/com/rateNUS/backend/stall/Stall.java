@@ -85,6 +85,10 @@ public class Stall {
         return name;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public double getRating() {
         return rating;
     }
@@ -97,20 +101,40 @@ public class Stall {
         return location;
     }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
     public String getDescription() {
         return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public List<String> getImageUrl() {
         return imageUrl;
     }
 
+    public void setImageUrl(List<String> imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
     public double getLowestPrice() {
         return lowestPrice;
     }
 
+    public void setLowestPrice(double lowestPrice) {
+        this.lowestPrice = lowestPrice;
+    }
+
     public double getHighestPrice() {
         return highestPrice;
+    }
+
+    public void setHighestPrice(double highestPrice) {
+        this.highestPrice = highestPrice;
     }
 
     public void addComment(double newRating) {

@@ -54,6 +54,23 @@ Gradle > Tasks > application > bootRun
               "pageSize": 5
             }
             ```
+    * Update Hostel
+        * Give: `@PathVariable("hostelId") long hostelId, @RequestParam(name = "token") String token,
+          @RequestParam(name = "username") String username, @RequestBody Map<String, Object> jsonInput`
+          ```
+          {
+            "name": "Hostel Name",
+            "location": "Hostel Location",
+            "description": "Hostel Description",
+            "imageUrl": [],
+            "facilities": []
+          }
+          ```
+        * Path: `hostel/update/{hostelId}`
+    * Delete Hostel
+        * Give: `@PathVariable("hostelId") long hostelId, @RequestParam(name = "token") String token,
+          @RequestParam(name = "username") String username`
+        * Path: `hostel/delete/{hostelId}`
 * Stall
     * Get all Stalls
         * Give: `@RequestBody Map<String, Object> jsonInput`
@@ -100,6 +117,24 @@ Gradle > Tasks > application > bootRun
               "pageSize": 5
             }
             ```
+    * Update Stall
+        * Give: `@PathVariable("stallId") long stallId, @RequestParam(name = "token") String token,
+          @RequestParam(name = "username") String username, @RequestBody Map<String, Object> jsonInput`
+          ```
+          {
+            "name": "Stall Name",
+            "location": "Stall Location",
+            "description": "Stall Description",
+            "imageUrl": [],
+            "lowestPrice": 1.00,
+            "highestPrice": 5.50
+          }
+          ```
+        * Path: `stall/update/{stallId}`
+    * Delete stall
+        * Give: `@PathVariable("stallId") long stallId, @RequestParam(name = "token") String token,
+          @RequestParam(name = "username") String username`
+        * Path: `stall/delete/{stallId}`
 * Study Area
     * Get all Study Areas
         * Give: `@RequestBody Map<String, Object> jsonInput`
@@ -146,6 +181,21 @@ Gradle > Tasks > application > bootRun
               "pageSize": 5
             }
             ```
+    * Update Study Area
+        * Give: `@PathVariable("studyAreaId") long studyAreaId, @RequestParam(name = "token") String token,
+          @RequestParam(name = "username") String username, @RequestBody Map<String, Object> jsonInput`
+          ```
+          {
+            "name": "Study Area Name",
+            "location": "Study Area Location",
+            "imageUrl": []
+          }
+          ```
+        * Path: `studyarea/update/{studyAreaId}`
+    * Delete Study Area
+        * Give: `@PathVariable("studyAreaId") long studyAreaId, @RequestParam(name = "token") String token,
+          @RequestParam(name = "username") String username`
+        * Path: `studyarea/delete/{studyAreaId}`
 * Comment
     * Get Comment by Type and Comment's target ID
         * Give: `@PathVariable("type") Type type`, `@PathVariable("targetId") long targetId`
