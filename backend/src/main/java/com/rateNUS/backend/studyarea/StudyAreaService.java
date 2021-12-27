@@ -78,4 +78,32 @@ public class StudyAreaService {
                 .orElseThrow(() -> new TypeNotFoundException(Type.studyArea, studyAreaId))
                 .deleteComment(rating);
     }
+
+    @Transactional
+    public void updateStudyAreaName(long studyAreaId, String name) {
+        studyAreaRepository.findById(studyAreaId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.studyArea, studyAreaId))
+                .setName(name);
+    }
+
+    @Transactional
+    public void updateStudyAreaLocation(long studyAreaId, String location) {
+        studyAreaRepository.findById(studyAreaId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.studyArea, studyAreaId))
+                .setLocation(location);
+    }
+
+    @Transactional
+    public void updateStudyAreaImageUrl(long studyAreaId, List<String> imageUrl) {
+        studyAreaRepository.findById(studyAreaId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.studyArea, studyAreaId))
+                .setImageUrl(imageUrl);
+    }
+
+    public StudyArea deleteStudyArea(long studyAreaId) {
+        StudyArea studyArea = studyAreaRepository.findById(studyAreaId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.studyArea, studyAreaId));
+        studyAreaRepository.deleteById(studyAreaId);
+        return studyArea;
+    }
 }

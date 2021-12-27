@@ -75,6 +75,12 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/stall/search").permitAll()
                 .antMatchers("/stall/update/**").authenticated()
                 .antMatchers("/stall/delete/**").authenticated()
+                // study area
+                .antMatchers("/studyarea/**").permitAll()
+                .antMatchers("/studyarea").permitAll()
+                .antMatchers("/studyarea/search").permitAll()
+                .antMatchers("/studyarea/update/**").authenticated()
+                .antMatchers("/studyarea/delete/**").authenticated()
                 .anyRequest().permitAll();
     }
 

@@ -181,6 +181,21 @@ Gradle > Tasks > application > bootRun
               "pageSize": 5
             }
             ```
+    * Update Study Area
+        * Give: `@PathVariable("studyAreaId") long studyAreaId, @RequestParam(name = "token") String token,
+          @RequestParam(name = "username") String username, @RequestBody Map<String, Object> jsonInput`
+          ```
+          {
+            "name": "Study Area Name",
+            "location": "Study Area Location",
+            "imageUrl": []
+          }
+          ```
+        * Path: `studyarea/update/{studyAreaId}`
+    * Delete Study Area
+        * Give: `@PathVariable("studyAreaId") long studyAreaId, @RequestParam(name = "token") String token,
+          @RequestParam(name = "username") String username`
+        * Path: `studyarea/delete/{studyAreaId}`
 * Comment
     * Get Comment by Type and Comment's target ID
         * Give: `@PathVariable("type") Type type`, `@PathVariable("targetId") long targetId`
