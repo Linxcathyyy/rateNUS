@@ -99,9 +99,9 @@ public class CommentController {
 
     @PutMapping(path = "/{commentId}")
     public ResponseEntity<?> updateComment(@PathVariable("commentId") long commentId,
-                              @RequestParam(name = "token") String token,
-                              @RequestParam(name = "username") String username,
-                              @RequestBody Map<String, Object> jsonInput) {
+                                           @RequestParam(name = "token") String token,
+                                           @RequestParam(name = "username") String username,
+                                           @RequestBody Map<String, Object> jsonInput) {
 
         assert (token != null && username != null);
         if (!jwtUtils.tokenBelongsToUser(token, username) || !userService.userHasComment(username, commentId)) {
@@ -119,7 +119,7 @@ public class CommentController {
 
             // The old rating must be recorded before updateCommentRating() is called
             double oldRating = comment.getRating();
-            double newRating = (double) jsonInput.get("rating");
+            double newRating = ((Number) jsonInput.get("rating")).doubleValue();
 
             commentService.updateCommentRating(commentId, newRating);
 
@@ -141,11 +141,11 @@ public class CommentController {
     }
 
     @DeleteMapping(path = "/{commentId}")
-    public ResponseEntity<?>  deleteComment(@PathVariable("commentId") long commentId,
-                              @RequestParam(name = "token") String token,
-                              @RequestParam(name = "username") String username) {
+    public ResponseEntity<?> deleteComment(@PathVariable("commentId") long commentId,
+                                           @RequestParam(name = "token") String token,
+                                           @RequestParam(name = "username") String username) {
         assert (token != null && username != null);
-        if (!jwtUtils.tokenBelongsToUser(token, username)  || !userService.userHasComment(username, commentId)) {
+        if (!jwtUtils.tokenBelongsToUser(token, username) || !userService.userHasComment(username, commentId)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
