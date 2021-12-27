@@ -67,6 +67,10 @@ Gradle > Tasks > application > bootRun
           }
           ```
         * Path: `hostel/update/{hostelId}`
+    * Delete Hostel
+        * Give: `@PathVariable("hostelId") long hostelId, @RequestParam(name = "token") String token,
+          @RequestParam(name = "username") String username`
+        * Path: `hostel/delete/{hostelId}`
 * Stall
     * Get all Stalls
         * Give: `@RequestBody Map<String, Object> jsonInput`

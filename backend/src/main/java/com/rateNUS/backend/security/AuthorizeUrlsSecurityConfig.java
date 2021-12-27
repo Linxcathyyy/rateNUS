@@ -65,7 +65,8 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/hostel/**").permitAll()
                 .antMatchers("/hostel").permitAll()
                 .antMatchers("/hostel/search").permitAll()
-                .antMatchers("/hostel/update/**").authenticated().anyRequest().permitAll();
+                .antMatchers("/hostel/update/**").authenticated()
+                .antMatchers("/hostel/delete/**").authenticated().anyRequest().permitAll();
     }
 
     @Bean

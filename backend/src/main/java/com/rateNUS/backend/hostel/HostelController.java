@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -118,5 +119,33 @@ public class HostelController {
         }
 
         return ResponseEntity.ok(new MessageResponse("Hostel updated successfully."));
+    }
+
+    // admin function
+    @DeleteMapping(path = "delete/{hostelId}")
+    public ResponseEntity<?> deleteHostel(@PathVariable("hostelId") long hostelId,
+                                          @RequestParam(name = "token") String token,
+                                          @RequestParam(name = "username") String username) {
+        if (!jwtUtils.tokenBelongsToUser(token, username)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        User user = userService.findByUsername(username);
+        if (user == null || !user.getRoles().contains(ApplicationUserRole.ADMIN)) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse("User doesn't have permission to delete hostel.")
+            );
+        }
+
+        Hostel hostel;
+        try {
+            hostel = hostelService.deleteHostel(hostelId);
+        } catch (TypeNotPresentException e) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse("Hostel with id: " + hostelId + " doesn't exist.")
+            );
+        }
+
+        return ResponseEntity.ok(new MessageResponse("Hostel deleted successfully."));
     }
 }

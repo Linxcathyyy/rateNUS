@@ -114,4 +114,11 @@ public class HostelService {
                 .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
                 .setFacilities(facilities);
     }
+
+    public Hostel deleteHostel(long hostelId) {
+        Hostel hostel = hostelRepository.findById(hostelId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId));
+        hostelRepository.deleteById(hostelId);
+        return hostel;
+    }
 }
