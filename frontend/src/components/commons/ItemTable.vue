@@ -523,8 +523,8 @@ export default {
                 facilities: facilities,
                 description: this.editedItem.description,
                 imageUrl: imageUrl,
-                ...(this.editedItem.lowestPrice && {lowestPrice: this.editedItem.lowestPrice}),
-                ...(this.editedItem.highestPrice && {highestPrice: this.editedItem.highestPrice})
+                ...(this.editedItem.lowestPrice && {lowestPrice: Number(this.editedItem.lowestPrice)}),
+                ...(this.editedItem.highestPrice && {highestPrice: Number(this.editedItem.highestPrice)})
             }
             
             await this.updateItemInDB(this.editedItem.id, data)
