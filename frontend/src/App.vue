@@ -14,7 +14,7 @@
 
             <div class="show-on-mobile">
               <v-app-bar-nav-icon @click.stop="menu = !menu">
-                <v-icon size="32px">mdi-account</v-icon>
+                <v-icon color="orange" large>mdi-account</v-icon>
               </v-app-bar-nav-icon>
             </div>
           </div>
