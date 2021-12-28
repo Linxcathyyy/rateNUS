@@ -126,6 +126,7 @@ public class StallController {
                     new MessageResponse(e.getMessage())
             );
         }
+        stallService.saveStall(stall);
 
         return ResponseEntity.ok(new MessageResponse("Stall updated successfully."));
     }
