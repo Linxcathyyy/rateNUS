@@ -80,39 +80,8 @@ public class HostelService {
                 .deleteComment(rating);
     }
 
-    @Transactional
-    public void updateHostelName(long hostelId, String name) {
-        hostelRepository.findById(hostelId)
-                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
-                .setName(name);
-    }
-
-    @Transactional
-    public void updateHostelLocation(long hostelId, String location) {
-        hostelRepository.findById(hostelId)
-                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
-                .setLocation(location);
-    }
-
-    @Transactional
-    public void updateHostelDescription(long hostelId, String description) {
-        hostelRepository.findById(hostelId)
-                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
-                .setDescription(description);
-    }
-
-    @Transactional
-    public void updateHostelImageUrl(long hostelId, List<String> imageUrl) {
-        hostelRepository.findById(hostelId)
-                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
-                .setImageUrl(imageUrl);
-    }
-
-    @Transactional
-    public void updateHostelFacilities(long hostelId, List<Facility> facilities) {
-        hostelRepository.findById(hostelId)
-                .orElseThrow(() -> new TypeNotFoundException(Type.hostel, hostelId))
-                .setFacilities(facilities);
+    public void saveHostel(Hostel hostel) {
+        hostelRepository.save(hostel);
     }
 
     public Hostel deleteHostel(long hostelId) {
