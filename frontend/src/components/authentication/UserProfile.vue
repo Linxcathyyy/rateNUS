@@ -19,8 +19,16 @@
           <h4 class="text-caption mt-1">
             {{ email }}
           </h4>
-          <v-divider class="my-3"></v-divider>
-          <v-btn depressed rounded text @click="goToMyComments"> My Comments </v-btn>
+          <div v-if="isCurrentUserAdmin">
+            <v-divider class="my-3"></v-divider>
+            <v-btn depressed rounded text @click="goToManageItems"> Manage Items </v-btn>
+            <v-divider class="my-3"></v-divider>
+            <v-btn depressed rounded text @click="goToMyComments"> Manage Comments </v-btn>
+          </div>
+          <div v-if="!isCurrentUserAdmin">
+            <v-divider class="my-3"></v-divider>
+            <v-btn depressed rounded text @click="goToMyComments"> My Comments </v-btn>
+          </div>
           <v-divider class="my-3"></v-divider>
           <v-btn depressed rounded text @click="logout"> Log Out </v-btn>
         </div>
@@ -48,7 +56,15 @@ export default defineComponent({
     },
     goToMyComments() {
       this.$router.push("/myComments");
-    }
+    },
+    goToManageItems() {
+      this.$router.push("/manageItems");
+    },
   },
+  computed: {
+    isCurrentUserAdmin() {
+      return this.$store.getters.role === "ADMIN";
+    }
+  }
 });
 </script>

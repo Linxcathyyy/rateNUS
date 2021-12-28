@@ -59,6 +59,23 @@ class StudyAreaRequest {
         });
     }
 
+    updateStudyArea(studyAreaId, jwtToken, username, data) {
+        return axios.put(STUDY_AREA_API_BASE_URL + "/update/" + studyAreaId, data, {
+          params: {
+            token: jwtToken,
+            username: username
+          },
+        });
+    }
+    
+      deleteStudyArea(studyAreaId, jwtToken, username) {
+        return axios.delete(STUDY_AREA_API_BASE_URL + "/delete/" + studyAreaId, {
+          params: {
+            token: jwtToken,
+            username: username
+          },
+        });
+    }
 
     // Get a partial list of comments base on startIndex and endIndex
     async getCommentList(studyAreaId, pageNum, pageSize) {

@@ -48,6 +48,7 @@ export default defineComponent({
         this.$store.commit("changeName", name);
         this.$store.commit("changeEmail", email);
         this.$store.commit("updateJwtToken", token);
+        this.$store.commit("changeRole", "USER");
         this.$store.commit("logIn");
         this.$store.commit("updateDefaultProfileColor");
 

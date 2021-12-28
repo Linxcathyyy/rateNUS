@@ -71,16 +71,25 @@ export default {
           this.password
         )
           .then((response) => {
+            console.log(response.data);
             var id = response.data.id;
             var name = response.data.username;
             var email = response.data.email;
             var token = AuthenticationUtil.parseJWTToken(
               response.headers["authorization"]
             );
+            var roles = response.data.roles;
+            var role = "USER";
+            for (let i in roles) {
+              if (roles[i] === "ADMIN") {
+                  role = "ADMIN";
+              }
+            }
             this.$store.commit("changeId", id);
             this.$store.commit("changeName", name);
             this.$store.commit("changeEmail", email);
             this.$store.commit("updateJwtToken", token);
+            this.$store.commit("changeRole", role);
             this.$store.commit("logIn");
             this.$store.commit("updateDefaultProfileColor");
 

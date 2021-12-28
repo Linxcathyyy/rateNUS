@@ -59,6 +59,24 @@ class StallRequest {
     });
   }
 
+  updateStall(stallId, jwtToken, username, data) {
+    return axios.put(STALL_API_BASE_URL + "/update/" + stallId, data, {
+      params: {
+        token: jwtToken,
+        username: username
+      },
+    });
+  }
+
+  deleteStall(stallId, jwtToken, username) {
+    return axios.delete(STALL_API_BASE_URL + "/delete/" + stallId, {
+      params: {
+        token: jwtToken,
+        username: username
+      },
+    });
+  }
+
 
   // Get a partial list of comments base on startIndex and endIndex
   async getCommentList(stallId, pageNum, pageSize) {

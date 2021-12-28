@@ -8,7 +8,7 @@
                   <ValidationObserver ref="editCommentObserver">
                     <v-card>
                       <v-card-title class="my-comments-title">
-                        <span><h4>Edit Comment </h4></span>
+                        <span><h4> Edit Comment </h4></span>
                       </v-card-title>
           
                       <v-card-text>
@@ -107,7 +107,7 @@
             </v-dialog>
         <v-card>
         <v-card-title class="primary--text">
-          <h3>My Comments</h3>
+          <h3>{{ getTitle }}</h3>
         </v-card-title>
         <v-data-table 
           :headers="headers" 
@@ -191,7 +191,7 @@ export default {
             dialogDelete: false,
             headers: [
                 { text: 'Type', align: 'start', value: 'type' },
-                { text: 'name', value: 'targetName' },
+                { text: 'Name', value: 'targetName' },
                 { text: 'Rating', value: 'rating' },
                 { text: 'Posted on', value: 'dateTimeString' },
                 { text: 'Comment', value: 'text', sortable: false },
@@ -222,6 +222,20 @@ export default {
     methods: {
         async validate() {
           return this.$refs.editCommentObserver.validate();
+        },
+        // for admin
+        async getAllComments() {
+          const jwtToken = this.$store.getters.jwtToken;
+          await CommentRequest.getAllComments(jwtToken)
+            .then((response) => {
+                this.myComments = response.data;
+                console.log(this.myComments);
+                this.myComments.forEach(this.formatTimestampOfComment);
+                this.myComments.forEach(this.formatType);
+            })
+            .catch((error) => {
+                console.log(error.response.data);
+            });
         },
         getCurrentUser() {
             this.userId = this.$store.getters.id;
@@ -348,12 +362,26 @@ export default {
         async refreshPage() {
           this.isDataReady = false;
           this.getCurrentUser();
-          await this.getCommentsByUserId();
+          if (this.isCurrentUserAdmin) {
+            await this.getAllComments();
+          } else {
+            await this.getCommentsByUserId();
+          }
           this.isDataReady = true;
         }
     },
 
     computed: {
+      isCurrentUserAdmin() {
+        return this.$store.getters.role === "ADMIN";
+      },
+      getTitle() {
+        if (this.$store.getters.role === "ADMIN") {
+          return "Manage Comments";
+        } else {
+          return "My Comments";
+        }
+      },
       calculateWidth() {
         switch (this.$vuetify.breakpoint.name) {
           case "xs":
@@ -383,16 +411,17 @@ export default {
 
   async created() {
     this.getCurrentUser();
-    await this.getCommentsByUserId();
+    if (this.isCurrentUserAdmin) {
+        await this.getAllComments();
+    } else {
+        await this.getCommentsByUserId();
+    }
     this.isDataReady = true;
   },
 };
 </script>
 
 <style scope>
-.my-comments {
-  /* margin-top: 4rem; */
-}
 .my-comments-title {
   color: #ff6d00;
 }
