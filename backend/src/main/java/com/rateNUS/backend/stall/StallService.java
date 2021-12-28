@@ -79,46 +79,8 @@ public class StallService {
                 .deleteComment(rating);
     }
 
-    @Transactional
-    public void updateStallName(long stallId, String name) {
-        stallRepository.findById(stallId)
-                .orElseThrow(() -> new TypeNotFoundException(Type.stall, stallId))
-                .setName(name);
-    }
-
-    @Transactional
-    public void updateStallLocation(long stallId, String location) {
-        stallRepository.findById(stallId)
-                .orElseThrow(() -> new TypeNotFoundException(Type.stall, stallId))
-                .setLocation(location);
-    }
-
-    @Transactional
-    public void updateStallDescription(long stallId, String description) {
-        stallRepository.findById(stallId)
-                .orElseThrow(() -> new TypeNotFoundException(Type.stall, stallId))
-                .setDescription(description);
-    }
-
-    @Transactional
-    public void updateStallImageUrl(long stallId, List<String> imageUrl) {
-        stallRepository.findById(stallId)
-                .orElseThrow(() -> new TypeNotFoundException(Type.stall, stallId))
-                .setImageUrl(imageUrl);
-    }
-
-    @Transactional
-    public void updateStallLowestPrice(long stallId, double lowestPrice) {
-        stallRepository.findById(stallId)
-                .orElseThrow(() -> new TypeNotFoundException(Type.stall, stallId))
-                .setLowestPrice(lowestPrice);
-    }
-
-    @Transactional
-    public void updateStallHighestPrice(long stallId, double highestPrice) {
-        stallRepository.findById(stallId)
-                .orElseThrow(() -> new TypeNotFoundException(Type.stall, stallId))
-                .setHighestPrice(highestPrice);
+    public void saveStall(Stall stall) {
+        stallRepository.save(stall);
     }
 
     public Stall deleteStall(long stallId) {
