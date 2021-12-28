@@ -114,11 +114,11 @@ public class StallController {
                 stall.setImageUrl(imageUrl);
             }
             if (jsonInput.containsKey("lowestPrice")) {
-                double lowestPrice = (double) jsonInput.get("lowestPrice");
+                double lowestPrice = ((Number) jsonInput.get("lowestPrice")).doubleValue();
                 stall.setLowestPrice(lowestPrice);
             }
             if (jsonInput.containsKey("highestPrice")) {
-                double highestPrice = (double) jsonInput.get("highestPrice");
+                double highestPrice = ((Number) jsonInput.get("highestPrice")).doubleValue();
                 stall.setHighestPrice(highestPrice);
             }
             stallService.saveStall(stall);
