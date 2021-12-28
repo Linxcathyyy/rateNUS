@@ -1,10 +1,13 @@
 package com.rateNUS.backend.comment;
 
+import com.rateNUS.backend.auth.MessageResponse;
 import com.rateNUS.backend.exception.TypeNotFoundException;
 import com.rateNUS.backend.hostel.HostelService;
+import com.rateNUS.backend.security.ApplicationUserRole;
 import com.rateNUS.backend.security.jwt.JwtUtils;
 import com.rateNUS.backend.stall.StallService;
 import com.rateNUS.backend.studyarea.StudyAreaService;
+import com.rateNUS.backend.user.User;
 import com.rateNUS.backend.user.UserService;
 import com.rateNUS.backend.util.Config;
 import com.rateNUS.backend.util.Type;
@@ -110,8 +113,26 @@ public class CommentController {
                                            @RequestBody Map<String, Object> jsonInput) {
 
         assert (token != null && username != null);
-        if (!jwtUtils.tokenBelongsToUser(token, username) || !userService.userHasComment(username, commentId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
+        User user = userService.findByUsername(username);
+        if (user == null) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse("User doesn't have permission to update comment.")
+            );
+        }
+
+        boolean isAdmin = user.getRoles().contains(ApplicationUserRole.ADMIN);
+
+        ResponseEntity<Object> forbiddenRes = ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
+        if (isAdmin) {
+            if (!jwtUtils.tokenBelongsToUser(token, username)) {
+                return forbiddenRes;
+            }
+        } else {
+            if (!jwtUtils.tokenBelongsToUser(token, username) || !userService.userHasComment(username, commentId)) {
+                return forbiddenRes;
+            }
         }
 
         if (jsonInput.containsKey("text")) {
@@ -151,8 +172,26 @@ public class CommentController {
                                            @RequestParam(name = "token") String token,
                                            @RequestParam(name = "username") String username) {
         assert (token != null && username != null);
-        if (!jwtUtils.tokenBelongsToUser(token, username) || !userService.userHasComment(username, commentId)) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
+        User user = userService.findByUsername(username);
+        if (user == null) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse("User doesn't have permission to delete comment.")
+            );
+        }
+
+        boolean isAdmin = user.getRoles().contains(ApplicationUserRole.ADMIN);
+
+        ResponseEntity<Object> forbiddenRes = ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+
+        if (isAdmin) {
+            if (!jwtUtils.tokenBelongsToUser(token, username)) {
+                return forbiddenRes;
+            }
+        } else {
+            if (!jwtUtils.tokenBelongsToUser(token, username) || !userService.userHasComment(username, commentId)) {
+                return forbiddenRes;
+            }
         }
 
         Comment deletedComment = commentService.deleteComment(commentId);
