@@ -8,32 +8,15 @@
                   <ValidationObserver ref="editCommentObserver">
                     <v-card>
                       <v-card-title class="my-comments-title">
-                        <span><h4> Edit Comment </h4></span>
+                        <span><h4> Edit {{ type }} </h4></span>
                       </v-card-title>
           
                       <v-card-text>
                         <v-container>
                           <v-row>
-                            <v-col cols="12"><h3>{{ editedItem.type }} : {{ editedItem.targetName }}</h3></v-col>
+                            <v-col cols="12"><h3>{{ editedItem.name }}</h3></v-col>
                           </v-row>
-                          <v-row>
-                            <v-col cols="12">
-                              <div>
-                                <label class="rating-label"> Rating: </label>
-                                {{ editedItem.rating }} / 5
-                                <v-rating
-                                  v-model="editedItem.rating"
-                                  background-color="grey"
-                                  color="amber"
-                                  dense
-                                  half-increments
-                                  hover
-                                  size="30"
-                                ></v-rating>
-                              </div>
-                            </v-col>
-                          </v-row>
-                            <ValidationProvider
+                          <ValidationProvider
                               name="Comment"
                               rules="required"
                               v-slot="{ errors }"
@@ -41,7 +24,7 @@
                             <v-col cols="12">
                               <v-textarea
                                 label="Comment"
-                                v-model="editedItem.text"
+                                v-model="editedItem.description"
                                 class="comment"
                                 type="text"
                                 :min-height="30"
@@ -52,7 +35,27 @@
                                 :error-messages="errors"
                               />
                             </v-col>
-                            </ValidationProvider>
+                          </ValidationProvider>
+                          <ValidationProvider
+                              name="Comment"
+                              rules="required"
+                              v-slot="{ errors }"
+                            >
+                            <v-col cols="12">
+                              <v-textarea
+                                label="Comment"
+                                v-model="editedItem.description"
+                                class="comment"
+                                type="text"
+                                :min-height="30"
+                                :max-height="350"
+                                auto-grow
+                                outlined
+                                color="orange accent-4"
+                                :error-messages="errors"
+                              />
+                            </v-col>
+                          </ValidationProvider>
                         </v-container>
                       </v-card-text>
           
@@ -85,7 +88,7 @@
                       <v-row justify="center" align="center">
                         <v-col cols="12">
                           <p class="text--secondary text-center">
-                            Are you sure you want to delete this comment? <br>
+                            Are you sure you want to delete this item? <br>
                             This action is irreversible.
                           </p>
                         </v-col>
@@ -107,12 +110,12 @@
             </v-dialog>
         <v-card>
         <v-card-title class="primary--text">
-          <h3>{{ getTitle }}</h3>
+          <h3> Manage {{type}} </h3>
         </v-card-title>
         <v-data-table 
           :headers="headers" 
-          :items="myComments" 
-          sort-by="calories" 
+          :items="myItems" 
+          sort-by="name" 
           class="flat" 
           :loading="!isDataReady"
         >
@@ -127,17 +130,6 @@
                 {{ value }}
                 </div>
             </template>
-            <template>
-              <v-toolbar
-                flat
-              >
-                <v-toolbar-title class="my-comments-title">
-                  <h3>
-                    My Comments
-                  </h3>
-                </v-toolbar-title>
-              </v-toolbar>
-            </template>
 
       <template v-slot:item.actions="{ item }">
           <v-icon small class="mr-2" @click="editItem(item)">
@@ -150,7 +142,7 @@
 
         <template v-slot:no-data>
             <div>
-                <h4>No comments, start adding one now!</h4>
+                <h4>No {{ type }}, start adding one now!</h4>
             </div>
         </template>
       </v-data-table>
@@ -159,7 +151,10 @@
 </template>
 
 <script>
-import CommentRequest from "../httpRequests/CommentRequest";
+import CommentRequest from "../../httpRequests/CommentRequest";
+import HostelRequest from "../../httpRequests/HostelRequest";
+import StallRequest from "../../httpRequests/StallRequest";
+import StudyAreaRequest from "../../httpRequests/StudyAreaRequest";
 import {
   ValidationProvider,
   extend,
@@ -174,15 +169,18 @@ extend("required", {
 setInteractionMode("passive");
 
 export default {
-    name: "MyComments",
+    name: "ManageItems",
     components: {
       ValidationProvider,
       ValidationObserver,
     },
+    props: {
+        type: String,
+    },
 
     data() {
         return {
-            myComments: [],
+            myItems: [],
             userId: "",
             isDataReady: false,
             loading: false,
@@ -190,11 +188,10 @@ export default {
             dialog: false,
             dialogDelete: false,
             headers: [
-                { text: 'Type', align: 'start', value: 'type' },
-                { text: 'Name', value: 'targetName' },
+                { text: 'Name', align: 'start', value: 'name' },
                 { text: 'Rating', value: 'rating' },
-                { text: 'Posted on', value: 'dateTimeString' },
-                { text: 'Comment', value: 'text', sortable: false },
+                { text: 'Location', value: 'location' },
+                { text: 'Comment Count', value: 'commentCount'},
                 { text: 'Actions', value: 'actions', sortable: false },
             ],
             desserts: [],
@@ -202,19 +199,23 @@ export default {
             deletedItem: null,
             editedItem: {
                 id: '',
-                type: '',
-                rating: 5,
+                name: '',
+                rating: -1,
                 timestamp: '',
-                text: '',
-                targetName: '',
+                location: '',
+                facilities: '',
+                description: '',
+                imageUrl: ''
             },
             defaultItem: {
                 id: '',
-                type: '',
-                rating: 5,
+                name: '',
+                rating: -1,
                 timestamp: '',
-                text: '',
-                targetName: '',
+                location: '',
+                facilities: '',
+                description: '',
+                imageUrl: ''
             },
 
         };
@@ -224,51 +225,43 @@ export default {
           return this.$refs.editCommentObserver.validate();
         },
         // for admin
-        async getAllComments() {
-          const jwtToken = this.$store.getters.jwtToken;
-          await CommentRequest.getAllComments(jwtToken)
-            .then((response) => {
-                this.myComments = response.data;
-                console.log(this.myComments);
-                this.myComments.forEach(this.formatTimestampOfComment);
-                this.myComments.forEach(this.formatType);
-            })
-            .catch((error) => {
-                console.log(error.response.data);
-            });
+        async getAllItems() {
+            switch (this.type) {
+                case "Hostel":
+                    await HostelRequest.getHostelList(0, 5)
+                        .then(async (response) => {
+                            this.myItems = response.data.content;
+                            console.log(this.myItems);
+                        })
+                        .catch((error) => {
+                            console.log(error.response.data);
+                    });
+                    break;
+                case "Stall":
+                    await StallRequest.getStallList(0, 5)
+                        .then(async (response) => {
+                            this.myItems = response.data.content;
+                            console.log(this.myItems);
+                        })
+                        .catch((error) => {
+                            console.log(error.response.data);
+                    });
+                    break;
+                case "Study Area":
+                    await StudyAreaRequest.getStudyAreaList(0, 5)
+                        .then(async (response) => {
+                            this.myItems = response.data.content;
+                            console.log(this.myItems);
+                        })
+                        .catch((error) => {
+                            console.log(error.response.data);
+                    });
+                    break;
+            }
+
         },
         getCurrentUser() {
             this.userId = this.$store.getters.id;
-        },
-        async getCommentsByUserId() {
-            const jwtToken = this.$store.getters.jwtToken;
-            await CommentRequest.getCommentsByUserId(this.userId, jwtToken)
-                .then(async (response) => {
-                    this.myComments = response.data;
-                    console.log(this.myComments);
-                    this.myComments.forEach(this.formatTimestampOfComment);
-                    this.myComments.forEach(this.formatType);
-                })
-                .catch((error) => {
-                    console.log(error.response.data);
-                });
-        },
-        formatType(comment) {
-          if (comment.type == "hostel") {
-              comment["type"] = "Hostel";
-          } else if (comment.type == "stall") {
-              comment["type"] = "Food";
-          } else {
-              comment["type"] = "Study Area";
-          }
-        },
-        formatTimestampOfComment(comment) {
-          var dateTimeString = "";
-          var timestamp = comment.timestamp;
-          var dateString = new Date(timestamp).toLocaleDateString();
-          var timeString = new Date(timestamp).toLocaleTimeString();
-          dateTimeString = dateString + " " + timeString;
-          comment["dateTimeString"] = dateTimeString;
         },
         async updateCommentInDB(commentId, comment, rating) {
           const jwtToken = this.$store.getters.jwtToken;
@@ -277,7 +270,7 @@ export default {
           return result.status;
         },
         editItem(item) {
-            this.editedIndex = this.myComments.indexOf(item);
+            this.editedIndex = this.myItems.indexOf(item);
             this.editedItem = Object.assign({}, item);
             this.dialog = true;
         },
@@ -297,7 +290,7 @@ export default {
                     console.log(response);
                     console.log("success");
                     this.successSnackbar = true;
-                    this.myComments.splice(this.editedIndex, 1);
+                    this.myItems.splice(this.editedIndex, 1);
                     setTimeout(() => (this.successSnackbar = false), 1000);
                     this.deletedItem = null;
                     this.closeDelete();
@@ -338,9 +331,9 @@ export default {
                   if (response === 200) {
                     console.log("success");
                     if (this.editedIndex > -1) {
-                        Object.assign(this.myComments[this.editedIndex], this.editedItem);
+                        Object.assign(this.myItems[this.editedIndex], this.editedItem);
                     } else {
-                        this.myComments.push(this.editedItem);
+                        this.myItems.push(this.editedItem);
                     }
                     this.close();
                     this.successSnackbar = true;
@@ -362,26 +355,12 @@ export default {
         async refreshPage() {
           this.isDataReady = false;
           this.getCurrentUser();
-          if (this.isCurrentUserAdmin) {
-            await this.getAllComments();
-          } else {
-            await this.getCommentsByUserId();
-          }
+          await this.getAllItems();
           this.isDataReady = true;
         }
     },
 
     computed: {
-      isCurrentUserAdmin() {
-        return this.$store.getters.role === "ADMIN";
-      },
-      getTitle() {
-        if (this.$store.getters.role === "ADMIN") {
-          return "Manage Comments";
-        } else {
-          return "My Comments";
-        }
-      },
       calculateWidth() {
         switch (this.$vuetify.breakpoint.name) {
           case "xs":
@@ -411,11 +390,7 @@ export default {
 
   async created() {
     this.getCurrentUser();
-    if (this.isCurrentUserAdmin) {
-        await this.getAllComments();
-    } else {
-        await this.getCommentsByUserId();
-    }
+    await this.getAllItems();
     this.isDataReady = true;
   },
 };

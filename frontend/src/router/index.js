@@ -11,6 +11,7 @@ import FAQ from "../views/FAQ.vue";
 import Team from "../views/Team.vue";
 import About from "../views/About.vue";
 import Contribute from "../views/Contribute.vue";
+import ManageItems from "../views/ManageItems.vue";
 
 Vue.use(VueRouter);
 
@@ -104,9 +105,9 @@ const routes = [
   {
     path: "/manageItems",
     name: "ManageItems",
-    component: RegistrationConfirm,
+    component: ManageItems,
     meta: {
-      title: "ManageItems",
+      title: "Manage Items",
     },
   },
   {
