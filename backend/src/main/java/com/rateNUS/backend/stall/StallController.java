@@ -121,12 +121,12 @@ public class StallController {
                 double highestPrice = (double) jsonInput.get("highestPrice");
                 stall.setHighestPrice(highestPrice);
             }
+            stallService.saveStall(stall);
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(
                     new MessageResponse(e.getMessage())
             );
         }
-        stallService.saveStall(stall);
 
         return ResponseEntity.ok(new MessageResponse("Stall updated successfully."));
     }

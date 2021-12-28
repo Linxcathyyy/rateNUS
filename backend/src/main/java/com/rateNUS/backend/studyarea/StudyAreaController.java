@@ -109,12 +109,12 @@ public class StudyAreaController {
                 List<String> imageUrl = (List<String>) jsonInput.get("imageUrl");
                 studyArea.setImageUrl(imageUrl);
             }
+            studyAreaService.saveStudyArea(studyArea);
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(
                     new MessageResponse(e.getMessage())
             );
         }
-        studyAreaService.saveStudyArea(studyArea);
 
         return ResponseEntity.ok(new MessageResponse("Study Area updated successfully."));
     }
