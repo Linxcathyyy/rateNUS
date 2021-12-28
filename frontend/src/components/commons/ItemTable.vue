@@ -65,6 +65,39 @@
                                 </v-row>
                             </ValidationProvider>
                           </div>
+                          <div v-if="type == 'Stall'">
+                                <v-row no-gutters>
+                                    <v-col cols="5">
+                                        <ValidationProvider
+                                            name="Lowest Price"
+                                            rules="required"
+                                            v-slot="{ errors }"
+                                        >
+                                            <v-text-field
+                                            label="Lowest Price"
+                                            v-model="editedItem.lowestPrice"
+                                            type="number"
+                                            :error-messages="errors"
+                                            ></v-text-field>
+                                        </ValidationProvider>
+                                    </v-col>
+                                    <v-spacer></v-spacer>
+                                    <v-col cols="5">
+                                        <ValidationProvider
+                                            name="Highest Price"
+                                            rules="required"
+                                            v-slot="{ errors }"
+                                        >
+                                            <v-text-field
+                                            label="Highest Price"
+                                            v-model="editedItem.highestPrice"
+                                            type="number"
+                                            :error-messages="errors"
+                                            ></v-text-field>
+                                        </ValidationProvider>
+                                    </v-col>
+                                </v-row>
+                         </div>
                          <ValidationProvider
                               name="ImageUrl"
                               rules="required"
@@ -86,27 +119,29 @@
                                 </v-col>
                             </v-row>
                           </ValidationProvider>
-                          <ValidationProvider
-                              name="Description"
-                              rules="required"
-                              v-slot="{ errors }"
-                            >
-                            <v-row no-gutters>
-                                <v-col cols="12">
-                                <v-textarea
-                                    label="Description"
-                                    v-model="editedItem.description"
-                                    type="text"
-                                    :min-height="30"
-                                    :max-height="350"
-                                    auto-grow
-                                    outlined
-                                    color="orange accent-4"
-                                    :error-messages="errors"
-                                />
-                                </v-col>
-                            </v-row>
-                          </ValidationProvider>
+                          <div v-if="type != 'Study Area'">
+                            <ValidationProvider
+                                name="Description"
+                                rules="required"
+                                v-slot="{ errors }"
+                                >
+                                <v-row>
+                                    <v-col cols="12">
+                                    <v-textarea
+                                        label="Description"
+                                        v-model="editedItem.description"
+                                        type="text"
+                                        :min-height="30"
+                                        :max-height="350"
+                                        auto-grow
+                                        outlined
+                                        color="orange accent-4"
+                                        :error-messages="errors"
+                                    />
+                                    </v-col>
+                                </v-row>
+                            </ValidationProvider>
+                          </div>
                         </v-container>
                       </v-card-text>
           
@@ -261,8 +296,8 @@ export default {
                 facilities: [],
                 description: '',
                 imageUrl: [],
-                lowestPrice: -1,
-                highestPrice: -1,
+                lowestPrice: null,
+                highestPrice: null,
             },
             defaultItem: {
                 id: '',
@@ -272,8 +307,8 @@ export default {
                 facilities: [],
                 description: '',
                 imageUrl: [],
-                lowestPrice: -1,
-                highestPrice: -1,
+                lowestPrice: null,
+                highestPrice: null,
             },
 
         };
@@ -357,7 +392,18 @@ export default {
         async updateItemInDB(itemId, data) {
           const jwtToken = this.$store.getters.jwtToken;
           const username = this.$store.getters.fullName;
-          const result = await HostelRequest.updateHostel(itemId, jwtToken, username, data);
+          var result;
+          switch (this.type) {
+              case "Hostel":
+                    result = await HostelRequest.updateHostel(itemId, jwtToken, username, data);
+                    break;
+              case "Stall":
+                    result = await StallRequest.updateStall(itemId, jwtToken, username, data);
+                    break;
+              case "Study Area":
+                    result = await StudyAreaRequest.updateStudyArea(itemId, jwtToken, username, data);
+                    break;
+          }
           return result.status;
         },
         editItem(item) {
@@ -466,19 +512,19 @@ export default {
         },
         async save() {
           // start loading
-          this.loading = true;
           const isValidated = await this.validate();
           if (isValidated) {
+            this.loading = true;
             const imageUrl = this.editedItem.imageUrl.toString().split(",");
-            const facilities = this.editedItem.facilities.toString().split(",");
-            console.log("imageUrl: " + imageUrl[0]);
-            console.log("facilities: " + facilities[2]);
+            const facilities = this.editedItem.facilities ? this.editedItem.facilities.toString().split(",") : [];
             const data = {
                 name: this.editedItem.name,
                 location: this.editedItem.location,
-                // facilities: facilities,
+                facilities: facilities,
                 description: this.editedItem.description,
                 imageUrl: imageUrl,
+                ...(this.editedItem.lowestPrice && {lowestPrice: this.editedItem.lowestPrice}),
+                ...(this.editedItem.highestPrice && {highestPrice: this.editedItem.highestPrice})
             }
             
             await this.updateItemInDB(this.editedItem.id, data)
