@@ -1,7 +1,8 @@
 <template>
     <div class="my-comments">
       <ItemTable type="Hostel" />
-      <!-- <ItemTable type="Stall" /> -->
+      <ItemTable type="Stall" />
+      <ItemTable type="Study Area" />
   </div>
 </template>
 
