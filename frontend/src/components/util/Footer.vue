@@ -1,5 +1,5 @@
 <template>
-  <v-footer absolute dark class="grey lighten-3 px-4 py-12">
+  <v-footer absolute dark class="grey lighten-3 px-4 py-8">
     <v-container>
       <v-row id="footer-link-row">
         <div class="link" @click="redirectToGithubRepo()">GitHub</div>
@@ -66,7 +66,6 @@ export default {
   mounted() {
     // get website update time from git repo
     GithubRequest.getLatestCommitTimestamp().then((timestamp) => {
-      console.log(timestamp);
       this.dateTime = new Date(timestamp);
     });
   },
