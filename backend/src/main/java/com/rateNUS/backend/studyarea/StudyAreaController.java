@@ -96,17 +96,24 @@ public class StudyAreaController {
             );
         }
 
-        if (jsonInput.containsKey("name")) {
-            String name = (String) jsonInput.get("name");
-            studyAreaService.updateStudyAreaName(studyAreaId, name);
-        }
-        if (jsonInput.containsKey("location")) {
-            String location = (String) jsonInput.get("location");
-            studyAreaService.updateStudyAreaLocation(studyAreaId, location);
-        }
-        if (jsonInput.containsKey("imageUrl")) {
-            List<String> imageUrl = (List<String>) jsonInput.get("imageUrl");
-            studyAreaService.updateStudyAreaImageUrl(studyAreaId, imageUrl);
+        try {
+            if (jsonInput.containsKey("name")) {
+                String name = (String) jsonInput.get("name");
+                studyArea.setName(name);
+            }
+            if (jsonInput.containsKey("location")) {
+                String location = (String) jsonInput.get("location");
+                studyArea.setLocation(location);
+            }
+            if (jsonInput.containsKey("imageUrl")) {
+                List<String> imageUrl = (List<String>) jsonInput.get("imageUrl");
+                studyArea.setImageUrl(imageUrl);
+            }
+            studyAreaService.saveStudyArea(studyArea);
+        } catch (ClassCastException e) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse(e.getMessage())
+            );
         }
 
         return ResponseEntity.ok(new MessageResponse("Study Area updated successfully."));

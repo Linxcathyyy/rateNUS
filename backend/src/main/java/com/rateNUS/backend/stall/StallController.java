@@ -96,29 +96,36 @@ public class StallController {
             );
         }
 
-        if (jsonInput.containsKey("name")) {
-            String name = (String) jsonInput.get("name");
-            stallService.updateStallName(stallId, name);
-        }
-        if (jsonInput.containsKey("location")) {
-            String location = (String) jsonInput.get("location");
-            stallService.updateStallLocation(stallId, location);
-        }
-        if (jsonInput.containsKey("description")) {
-            String description = (String) jsonInput.get("description");
-            stallService.updateStallDescription(stallId, description);
-        }
-        if (jsonInput.containsKey("imageUrl")) {
-            List<String> imageUrl = (List<String>) jsonInput.get("imageUrl");
-            stallService.updateStallImageUrl(stallId, imageUrl);
-        }
-        if (jsonInput.containsKey("lowestPrice")) {
-            double lowestPrice = (double) jsonInput.get("lowestPrice");
-            stallService.updateStallLowestPrice(stallId, lowestPrice);
-        }
-        if (jsonInput.containsKey("highestPrice")) {
-            double highestPrice = (double) jsonInput.get("highestPrice");
-            stallService.updateStallHighestPrice(stallId, highestPrice);
+        try {
+            if (jsonInput.containsKey("name")) {
+                String name = (String) jsonInput.get("name");
+                stall.setName(name);
+            }
+            if (jsonInput.containsKey("location")) {
+                String location = (String) jsonInput.get("location");
+                stall.setLocation(location);
+            }
+            if (jsonInput.containsKey("description")) {
+                String description = (String) jsonInput.get("description");
+                stall.setDescription(description);
+            }
+            if (jsonInput.containsKey("imageUrl")) {
+                List<String> imageUrl = (List<String>) jsonInput.get("imageUrl");
+                stall.setImageUrl(imageUrl);
+            }
+            if (jsonInput.containsKey("lowestPrice")) {
+                double lowestPrice = (double) jsonInput.get("lowestPrice");
+                stall.setLowestPrice(lowestPrice);
+            }
+            if (jsonInput.containsKey("highestPrice")) {
+                double highestPrice = (double) jsonInput.get("highestPrice");
+                stall.setHighestPrice(highestPrice);
+            }
+            stallService.saveStall(stall);
+        } catch (ClassCastException e) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse(e.getMessage())
+            );
         }
 
         return ResponseEntity.ok(new MessageResponse("Stall updated successfully."));
