@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -115,7 +116,8 @@ public class HostelController {
                 hostel.setImageUrl(imageUrl);
             }
             if (jsonInput.containsKey("facilities")) {
-                List<Facility> facilities = (List<Facility>) jsonInput.get("facilities");
+                List<String> input = (List<String>) jsonInput.get("facilities");
+                List<Facility> facilities = parseFacilities(input);
                 hostel.setFacilities(facilities);
             }
             hostelService.saveHostel(hostel);
@@ -126,6 +128,15 @@ public class HostelController {
         }
 
         return ResponseEntity.ok(new MessageResponse("Hostel updated successfully."));
+    }
+
+    private List<Facility> parseFacilities(List<String> input) {
+        List<Facility> facilities = new ArrayList<>();
+        int len = input.size();
+        for (int i = 0; i < len; i++) {
+            facilities.add(Facility.valueOf(input.get(i)));
+        }
+        return facilities;
     }
 
     // admin function
