@@ -7,7 +7,6 @@ import com.rateNUS.backend.user.User;
 import com.rateNUS.backend.user.UserService;
 import com.rateNUS.backend.util.Config;
 import com.rateNUS.backend.util.Facility;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -72,7 +71,70 @@ public class HostelController {
         return hostelService.findHostel(keyword, pageNum, pageSize);
     }
 
-    // admin function
+    // ======================================== Admin Functions ========================================
+
+    @PutMapping(path = "new")
+    public ResponseEntity<?> addHostel(@RequestParam(name = "token") String token,
+                                       @RequestParam(name = "username") String username,
+                                       @RequestBody Map<String, Object> jsonInput) {
+        if (!jwtUtils.tokenBelongsToUser(token, username)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        User user = userService.findByUsername(username);
+        if (user == null || !user.getRoles().contains(ApplicationUserRole.ADMIN)) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse("User doesn't have permission to add hostel.")
+            );
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            Hostel hostel = new Hostel();
+
+            if (jsonInput.containsKey("name")) {
+                hostel.setName((String) jsonInput.get("name"));
+            } else {
+                stringBuilder.append("name ");
+            }
+
+            if (jsonInput.containsKey("location")) {
+                hostel.setLocation((String) jsonInput.get("location"));
+            } else {
+                stringBuilder.append("location ");
+            }
+
+            if (jsonInput.containsKey("description")) {
+                hostel.setDescription((String) jsonInput.get("description"));
+            } else {
+                stringBuilder.append("description ");
+            }
+
+            if (jsonInput.containsKey("imageUrl")) {
+                hostel.setImageUrl((List<String>) jsonInput.get("imageUrl"));
+            } else {
+                stringBuilder.append("imageUrl ");
+            }
+
+            if (jsonInput.containsKey("facilities")) {
+                hostel.setFacilities(parseFacilities((List<String>) jsonInput.get("facilities")));
+            } else {
+                stringBuilder.append("facilities ");
+            }
+
+            hostelService.saveHostel(hostel);
+        } catch (ClassCastException e) {
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+
+        if (stringBuilder.length() > 0) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse("Missing param(s): " + stringBuilder.toString().trim()));
+        }
+
+        return ResponseEntity.ok(new MessageResponse("Hostel added successfully."));
+    }
+
     @PutMapping(path = "update/{hostelId}")
     public ResponseEntity<?> updateHostel(@PathVariable("hostelId") long hostelId,
                                           @RequestParam(name = "token") String token,
@@ -139,7 +201,6 @@ public class HostelController {
         return facilities;
     }
 
-    // admin function
     @DeleteMapping(path = "delete/{hostelId}")
     public ResponseEntity<?> deleteHostel(@PathVariable("hostelId") long hostelId,
                                           @RequestParam(name = "token") String token,
