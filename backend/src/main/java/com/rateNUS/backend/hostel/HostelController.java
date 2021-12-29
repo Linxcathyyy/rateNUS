@@ -73,7 +73,7 @@ public class HostelController {
 
     // ======================================== Admin Functions ========================================
 
-    @PutMapping(path = "new")
+    @PostMapping(path = "new")
     public ResponseEntity<?> addHostel(@RequestParam(name = "token") String token,
                                        @RequestParam(name = "username") String username,
                                        @RequestBody Map<String, Object> jsonInput) {
@@ -89,9 +89,9 @@ public class HostelController {
         }
 
         StringBuilder stringBuilder = new StringBuilder();
-        try {
-            Hostel hostel = new Hostel();
+        Hostel hostel = new Hostel();
 
+        try {
             if (jsonInput.containsKey("name")) {
                 hostel.setName((String) jsonInput.get("name"));
             } else {
@@ -121,8 +121,6 @@ public class HostelController {
             } else {
                 stringBuilder.append("facilities ");
             }
-
-            hostelService.saveHostel(hostel);
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
@@ -130,9 +128,10 @@ public class HostelController {
         if (stringBuilder.length() > 0) {
             return ResponseEntity.badRequest().body(
                     new MessageResponse("Missing param(s): " + stringBuilder.toString().trim()));
+        } else {
+            hostelService.saveHostel(hostel);
+            return ResponseEntity.ok(new MessageResponse("Hostel added successfully."));
         }
-
-        return ResponseEntity.ok(new MessageResponse("Hostel added successfully."));
     }
 
     @PutMapping(path = "update/{hostelId}")

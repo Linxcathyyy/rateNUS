@@ -87,9 +87,9 @@ public class StudyAreaController {
         }
 
         StringBuilder stringBuilder = new StringBuilder();
-        try {
-            StudyArea studyArea = new StudyArea();
+        StudyArea studyArea = new StudyArea();
 
+        try {
             if (jsonInput.containsKey("name")) {
                 studyArea.setName((String) jsonInput.get("name"));
             } else {
@@ -108,7 +108,6 @@ public class StudyAreaController {
                 stringBuilder.append("imageUrl ");
             }
 
-            studyAreaService.saveStudyArea(studyArea);
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
@@ -116,9 +115,10 @@ public class StudyAreaController {
         if (stringBuilder.length() > 0) {
             return ResponseEntity.badRequest().body(
                     new MessageResponse("Missing param(s): " + stringBuilder.toString().trim()));
+        } else {
+            studyAreaService.saveStudyArea(studyArea);
+            return ResponseEntity.ok(new MessageResponse("Study Area added successfully."));
         }
-
-        return ResponseEntity.ok(new MessageResponse("Study Area added successfully."));
     }
 
     @PutMapping(path = "update/{studyAreaId}")

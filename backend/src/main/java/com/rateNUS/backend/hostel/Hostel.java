@@ -30,7 +30,7 @@ public class Hostel {
     private String name;
 
     @Column(name = "rating")
-    private double rating;
+    private double rating = -1;
 
     @Column(name = "commentCount")
     private int commentCount;
@@ -57,7 +57,6 @@ public class Hostel {
     // For dummy data
     public Hostel(String name, String location, String description, List<String> imageUrl, List<Facility> facilities) {
         this.name = name;
-        this.rating = -1;
         this.location = location;
         this.description = description;
         this.imageUrl = imageUrl;
