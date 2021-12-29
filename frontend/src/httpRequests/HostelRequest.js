@@ -78,7 +78,7 @@ class HostelRequest {
   }
 
   addHostel(jwtToken, username, data) {
-    return axios.put(HOSTEL_API_BASE_URL + "/new", data, {
+    return axios.post(HOSTEL_API_BASE_URL + "/new", data, {
       params: {
         token: jwtToken,
         username: username

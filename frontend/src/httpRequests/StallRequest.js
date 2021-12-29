@@ -78,7 +78,7 @@ class StallRequest {
   }
 
   addStall(jwtToken, username, data) {
-    return axios.put(STALL_API_BASE_URL + "/new", data, {
+    return axios.post(STALL_API_BASE_URL + "/new", data, {
       params: {
         token: jwtToken,
         username: username
