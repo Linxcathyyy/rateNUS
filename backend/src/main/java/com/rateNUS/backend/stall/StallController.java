@@ -88,9 +88,9 @@ public class StallController {
         }
 
         StringBuilder stringBuilder = new StringBuilder();
-        try {
-            Stall stall = new Stall();
+        Stall stall = new Stall();
 
+        try {
             if (jsonInput.containsKey("name")) {
                 stall.setName((String) jsonInput.get("name"));
             } else {
@@ -126,8 +126,6 @@ public class StallController {
             } else {
                 stringBuilder.append("highestPrice ");
             }
-
-            stallService.saveStall(stall);
         } catch (ClassCastException e) {
             return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
         }
@@ -135,9 +133,10 @@ public class StallController {
         if (stringBuilder.length() > 0) {
             return ResponseEntity.badRequest().body(
                     new MessageResponse("Missing param(s): " + stringBuilder.toString().trim()));
+        } else {
+            stallService.saveStall(stall);
+            return ResponseEntity.ok(new MessageResponse("Stall added successfully."));
         }
-
-        return ResponseEntity.ok(new MessageResponse("Stall added successfully."));
     }
 
     @PutMapping(path = "update/{stallId}")
