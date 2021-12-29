@@ -66,7 +66,7 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
         } catch (JwtException e) {
             logger.log(Level.WARNING, String.format("token %s cannot be trusted: %s", token, e.getClass().getName()));
             if (e instanceof ExpiredJwtException) {
-                response.sendError(HttpStatus.UNAUTHORIZED.value(), "Login Timeout");
+                response.sendError(440, "Login Timeout");
             } else {
                 response.sendError(HttpStatus.FORBIDDEN.value(), "invalid token");
             }
