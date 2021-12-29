@@ -2,9 +2,11 @@ package com.rateNUS.backend.security.jwt;
 
 import com.google.common.base.Strings;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -60,10 +62,14 @@ public class JwtTokenVerifier extends OncePerRequestFilter {
                     "Access-Control-Allow-Headers",
                     "Authorization, x-xsrf-token, Access-Control-Allow-Headers, Origin, Accept, X-Requested-With, "
                             + "Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers");
-        } catch (JwtException e) {
-            logger.log(Level.WARNING, String.format("token %s cannot be trusted", token));
-        } finally {
             filterChain.doFilter(request, response);
+        } catch (JwtException e) {
+            logger.log(Level.WARNING, String.format("token %s cannot be trusted: %s", token, e.getClass().getName()));
+            if (e instanceof ExpiredJwtException) {
+                response.sendError(HttpStatus.UNAUTHORIZED.value(), "Login Timeout");
+            } else {
+                response.sendError(HttpStatus.FORBIDDEN.value(), "invalid token");
+            }
         }
     }
 }
