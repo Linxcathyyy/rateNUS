@@ -54,9 +54,22 @@ Gradle > Tasks > application > bootRun
               "pageSize": 5
             }
             ```
+    * Add Hostel
+        * Give: `@RequestParam(name = "token") String token`, `@RequestParam(name = "username") String username`
+          , `@RequestBody Map<String, Object> jsonInput`
+          ```
+          {
+            "name": "Hostel Name",
+            "location": "Hostel Location",
+            "description": "Hostel Description",
+            "imageUrl": [],
+            "facilities": []
+          }
+          ```
+        * Path: `hostel/new`
     * Update Hostel
-        * Give: `@PathVariable("hostelId") long hostelId, @RequestParam(name = "token") String token,
-          @RequestParam(name = "username") String username, @RequestBody Map<String, Object> jsonInput`
+        * Give: `@PathVariable("hostelId") long hostelId`, `@RequestParam(name = "token") String token`
+          , `@RequestParam(name = "username") String username`, `@RequestBody Map<String, Object> jsonInput`
           ```
           {
             "name": "Hostel Name",
@@ -68,8 +81,8 @@ Gradle > Tasks > application > bootRun
           ```
         * Path: `hostel/update/{hostelId}`
     * Delete Hostel
-        * Give: `@PathVariable("hostelId") long hostelId, @RequestParam(name = "token") String token,
-          @RequestParam(name = "username") String username`
+        * Give: `@PathVariable("hostelId") long hostelId`, `@RequestParam(name = "token") String token`
+          , `@RequestParam(name = "username") String username`
         * Path: `hostel/delete/{hostelId}`
 * Stall
     * Get all Stalls
@@ -117,9 +130,23 @@ Gradle > Tasks > application > bootRun
               "pageSize": 5
             }
             ```
+    * Add Stall
+        * Give: `@RequestParam(name = "token") String token`, `@RequestParam(name = "username") String username`
+          , `@RequestBody Map<String, Object> jsonInput`
+          ```
+          {
+            "name": "Stall Name",
+            "location": "Stall Location",
+            "description": "Stall Description",
+            "imageUrl": [],
+            "lowestPrice": 1.00,
+            "highestPrice": 5.50
+          }
+          ```
+        * Path: `stall/new`
     * Update Stall
-        * Give: `@PathVariable("stallId") long stallId, @RequestParam(name = "token") String token,
-          @RequestParam(name = "username") String username, @RequestBody Map<String, Object> jsonInput`
+        * Give: `@PathVariable("stallId") long stallId`, `@RequestParam(name = "token") String token`
+          , `@RequestParam(name = "username") String username`, `@RequestBody Map<String, Object> jsonInput`
           ```
           {
             "name": "Stall Name",
@@ -132,8 +159,8 @@ Gradle > Tasks > application > bootRun
           ```
         * Path: `stall/update/{stallId}`
     * Delete stall
-        * Give: `@PathVariable("stallId") long stallId, @RequestParam(name = "token") String token,
-          @RequestParam(name = "username") String username`
+        * Give: `@PathVariable("stallId") long stallId`, `@RequestParam(name = "token") String token`
+          , `@RequestParam(name = "username") String username`
         * Path: `stall/delete/{stallId}`
 * Study Area
     * Get all Study Areas
@@ -181,9 +208,20 @@ Gradle > Tasks > application > bootRun
               "pageSize": 5
             }
             ```
+    * Add Study Area
+        * Give: `@RequestParam(name = "token") String token`, `@RequestParam(name = "username") String username`
+          , `@RequestBody Map<String, Object> jsonInput`
+          ```
+          {
+            "name": "Study Area Name",
+            "location": "Study Area Location",
+            "imageUrl": []
+          }
+          ```
+        * Path: `studyarea/new`
     * Update Study Area
-        * Give: `@PathVariable("studyAreaId") long studyAreaId, @RequestParam(name = "token") String token,
-          @RequestParam(name = "username") String username, @RequestBody Map<String, Object> jsonInput`
+        * Give: `@PathVariable("studyAreaId") long studyAreaId`, `@RequestParam(name = "token") String token`
+          , `@RequestParam(name = "username") String username`, `@RequestBody Map<String, Object> jsonInput`
           ```
           {
             "name": "Study Area Name",
@@ -193,8 +231,8 @@ Gradle > Tasks > application > bootRun
           ```
         * Path: `studyarea/update/{studyAreaId}`
     * Delete Study Area
-        * Give: `@PathVariable("studyAreaId") long studyAreaId, @RequestParam(name = "token") String token,
-          @RequestParam(name = "username") String username`
+        * Give: `@PathVariable("studyAreaId") long studyAreaId`, `@RequestParam(name = "token") String token`
+          , `@RequestParam(name = "username") String username`
         * Path: `studyarea/delete/{studyAreaId}`
 * Comment
     * Get Comment by Type and Comment's target ID
