@@ -73,7 +73,7 @@ public class HostelController {
 
     // ======================================== Admin Functions ========================================
 
-    @PutMapping(path = "new")
+    @PostMapping(path = "new")
     public ResponseEntity<?> addHostel(@RequestParam(name = "token") String token,
                                        @RequestParam(name = "username") String username,
                                        @RequestBody Map<String, Object> jsonInput) {

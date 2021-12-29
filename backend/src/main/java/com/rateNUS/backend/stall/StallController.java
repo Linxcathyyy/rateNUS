@@ -72,7 +72,7 @@ public class StallController {
 
     // ======================================== Admin Functions ========================================
 
-    @PutMapping(path = "new")
+    @PostMapping(path = "new")
     public ResponseEntity<?> addStall(@RequestParam(name = "token") String token,
                                       @RequestParam(name = "username") String username,
                                       @RequestBody Map<String, Object> jsonInput) {
