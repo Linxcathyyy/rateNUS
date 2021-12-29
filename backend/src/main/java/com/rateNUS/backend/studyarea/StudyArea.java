@@ -27,7 +27,7 @@ public class StudyArea {
     private String name;
 
     @Column(name = "rating")
-    private double rating;
+    private double rating = -1;
 
     @Column(name = "commentCount")
     private int commentCount;
