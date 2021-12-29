@@ -27,7 +27,7 @@ public class Stall {
     private String name;
 
     @Column(name = "rating")
-    private double rating;
+    private double rating = -1;
 
     @Column(name = "commentCount")
     private int commentCount;
@@ -55,7 +55,6 @@ public class Stall {
     public Stall(String name, String location, String description, List<String> imageUrl, double lowestPrice,
                  double highestPrice) {
         this.name = name;
-        this.rating = -1;
         this.location = location;
         this.description = description;
         this.imageUrl = imageUrl;
