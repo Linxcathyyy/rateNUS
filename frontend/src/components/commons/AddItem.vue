@@ -252,7 +252,6 @@ export default {
                 ...(this.item.lowestPrice && {lowestPrice: Number(this.item.lowestPrice)}),
                 ...(this.item.highestPrice && {highestPrice: Number(this.item.highestPrice)})
             }
-            console.log(this.item.lowestPrice);
             
             await this.addItemInDB(data)
                 .then(async (response) => {
