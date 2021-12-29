@@ -70,7 +70,76 @@ public class StallController {
         return stallService.findStall(keyword, pageNum, pageSize);
     }
 
-    // admin function
+    // ======================================== Admin Functions ========================================
+
+    @PutMapping(path = "new")
+    public ResponseEntity<?> addStall(@RequestParam(name = "token") String token,
+                                      @RequestParam(name = "username") String username,
+                                      @RequestBody Map<String, Object> jsonInput) {
+        if (!jwtUtils.tokenBelongsToUser(token, username)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        User user = userService.findByUsername(username);
+        if (user == null || !user.getRoles().contains(ApplicationUserRole.ADMIN)) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse("User doesn't have permission to update stall.")
+            );
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            Stall stall = new Stall();
+
+            if (jsonInput.containsKey("name")) {
+                stall.setName((String) jsonInput.get("name"));
+            } else {
+                stringBuilder.append("name ");
+            }
+
+            if (jsonInput.containsKey("location")) {
+                stall.setLocation((String) jsonInput.get("location"));
+            } else {
+                stringBuilder.append("location ");
+            }
+
+            if (jsonInput.containsKey("description")) {
+                stall.setDescription((String) jsonInput.get("description"));
+            } else {
+                stringBuilder.append("description ");
+            }
+
+            if (jsonInput.containsKey("imageUrl")) {
+                stall.setImageUrl((List<String>) jsonInput.get("imageUrl"));
+            } else {
+                stringBuilder.append("imageUrl ");
+            }
+
+            if (jsonInput.containsKey("lowestPrice")) {
+                stall.setLowestPrice(((Number) jsonInput.get("lowestPrice")).doubleValue());
+            } else {
+                stringBuilder.append("lowestPrice ");
+            }
+
+            if (jsonInput.containsKey("highestPrice")) {
+                stall.setLowestPrice(((Number) jsonInput.get("highestPrice")).doubleValue());
+            } else {
+                stringBuilder.append("highestPrice ");
+            }
+
+            stallService.saveStall(stall);
+        } catch (ClassCastException e) {
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+
+        if (stringBuilder.length() > 0) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse("Missing param(s): " + stringBuilder.toString().trim()));
+        }
+
+        return ResponseEntity.ok(new MessageResponse("Stall added successfully."));
+    }
+
     @PutMapping(path = "update/{stallId}")
     public ResponseEntity<?> updateStall(@PathVariable("stallId") long stallId,
                                          @RequestParam(name = "token") String token,
@@ -96,35 +165,41 @@ public class StallController {
             );
         }
 
-        if (jsonInput.containsKey("name")) {
-            String name = (String) jsonInput.get("name");
-            stallService.updateStallName(stallId, name);
-        }
-        if (jsonInput.containsKey("location")) {
-            String location = (String) jsonInput.get("location");
-            stallService.updateStallLocation(stallId, location);
-        }
-        if (jsonInput.containsKey("description")) {
-            String description = (String) jsonInput.get("description");
-            stallService.updateStallDescription(stallId, description);
-        }
-        if (jsonInput.containsKey("imageUrl")) {
-            List<String> imageUrl = (List<String>) jsonInput.get("imageUrl");
-            stallService.updateStallImageUrl(stallId, imageUrl);
-        }
-        if (jsonInput.containsKey("lowestPrice")) {
-            double lowestPrice = (double) jsonInput.get("lowestPrice");
-            stallService.updateStallLowestPrice(stallId, lowestPrice);
-        }
-        if (jsonInput.containsKey("highestPrice")) {
-            double highestPrice = (double) jsonInput.get("highestPrice");
-            stallService.updateStallHighestPrice(stallId, highestPrice);
+        try {
+            if (jsonInput.containsKey("name")) {
+                String name = (String) jsonInput.get("name");
+                stall.setName(name);
+            }
+            if (jsonInput.containsKey("location")) {
+                String location = (String) jsonInput.get("location");
+                stall.setLocation(location);
+            }
+            if (jsonInput.containsKey("description")) {
+                String description = (String) jsonInput.get("description");
+                stall.setDescription(description);
+            }
+            if (jsonInput.containsKey("imageUrl")) {
+                List<String> imageUrl = (List<String>) jsonInput.get("imageUrl");
+                stall.setImageUrl(imageUrl);
+            }
+            if (jsonInput.containsKey("lowestPrice")) {
+                double lowestPrice = ((Number) jsonInput.get("lowestPrice")).doubleValue();
+                stall.setLowestPrice(lowestPrice);
+            }
+            if (jsonInput.containsKey("highestPrice")) {
+                double highestPrice = ((Number) jsonInput.get("highestPrice")).doubleValue();
+                stall.setHighestPrice(highestPrice);
+            }
+            stallService.saveStall(stall);
+        } catch (ClassCastException e) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse(e.getMessage())
+            );
         }
 
         return ResponseEntity.ok(new MessageResponse("Stall updated successfully."));
     }
 
-    // admin function
     @DeleteMapping(path = "delete/{stallId}")
     public ResponseEntity<?> deleteStall(@PathVariable("stallId") long stallId,
                                          @RequestParam(name = "token") String token,

@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" height="100%">
+  <v-card class="mx-auto">
     <v-navigation-drawer
       app
       class="orange accent-4"
@@ -71,5 +71,6 @@ export default {
 #side-nav {
   padding-top: 4rem;
   /* max-width: max-content; */
+  min-height: 100%;
 }
 </style>

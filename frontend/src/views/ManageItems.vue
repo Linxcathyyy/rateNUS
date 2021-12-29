@@ -1,7 +1,8 @@
 <template>
-    <div class="my-comments">
-      <ItemTable type="Hostel" />
-      <!-- <ItemTable type="Stall" /> -->
+  <div class="my-comments">
+    <ItemTable type="Hostel" />
+    <ItemTable type="Stall" />
+    <ItemTable type="Study Area" />
   </div>
 </template>
 
@@ -9,12 +10,11 @@
 import ItemTable from "../components/commons/ItemTable.vue";
 
 export default {
-    name: "ManageItems",
-    components: {
-      ItemTable,
-    },
+  name: "ManageItems",
+  components: {
+    ItemTable,
+  },
 };
 </script>
 
-<style scope>
-</style>
+<style scope></style>

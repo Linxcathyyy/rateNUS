@@ -13,9 +13,9 @@
             </v-row>
 
             <div class="show-on-mobile">
-              <v-app-bar-nav-icon
-                @click.stop="menu = !menu"
-              ></v-app-bar-nav-icon>
+              <v-app-bar-nav-icon @click.stop="menu = !menu">
+                <v-icon color="orange" large>mdi-account</v-icon>
+              </v-app-bar-nav-icon>
             </div>
           </div>
           <UserProfile
@@ -147,6 +147,6 @@ header {
 }
 #router-view {
   width: 100%;
-  margin-bottom: 15rem;
+  margin-bottom: 16rem;
 }
 </style>

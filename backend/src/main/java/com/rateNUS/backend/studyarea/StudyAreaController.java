@@ -6,7 +6,6 @@ import com.rateNUS.backend.security.jwt.JwtUtils;
 import com.rateNUS.backend.user.User;
 import com.rateNUS.backend.user.UserService;
 import com.rateNUS.backend.util.Config;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -70,12 +69,63 @@ public class StudyAreaController {
         return studyAreaService.findStudyArea(keyword, pageNum, pageSize);
     }
 
-    // admin function
-    @PutMapping(path = "update/{studyAreaId}")
-    public ResponseEntity<?> updateStudyArea(@PathVariable("studyAreaId") long studyAreaId,
-                                          @RequestParam(name = "token") String token,
+    // ======================================== Admin Functions ========================================
+
+    @PostMapping(path = "new")
+    public ResponseEntity<?> addStudyArea(@RequestParam(name = "token") String token,
                                           @RequestParam(name = "username") String username,
                                           @RequestBody Map<String, Object> jsonInput) {
+        if (!jwtUtils.tokenBelongsToUser(token, username)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        User user = userService.findByUsername(username);
+        if (user == null || !user.getRoles().contains(ApplicationUserRole.ADMIN)) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse("User doesn't have permission to add study area.")
+            );
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            StudyArea studyArea = new StudyArea();
+
+            if (jsonInput.containsKey("name")) {
+                studyArea.setName((String) jsonInput.get("name"));
+            } else {
+                stringBuilder.append("name ");
+            }
+
+            if (jsonInput.containsKey("location")) {
+                studyArea.setLocation((String) jsonInput.get("location"));
+            } else {
+                stringBuilder.append("location ");
+            }
+
+            if (jsonInput.containsKey("imageUrl")) {
+                studyArea.setImageUrl((List<String>) jsonInput.get("imageUrl"));
+            } else {
+                stringBuilder.append("imageUrl ");
+            }
+
+            studyAreaService.saveStudyArea(studyArea);
+        } catch (ClassCastException e) {
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+
+        if (stringBuilder.length() > 0) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse("Missing param(s): " + stringBuilder.toString().trim()));
+        }
+
+        return ResponseEntity.ok(new MessageResponse("Study Area added successfully."));
+    }
+
+    @PutMapping(path = "update/{studyAreaId}")
+    public ResponseEntity<?> updateStudyArea(@PathVariable("studyAreaId") long studyAreaId,
+                                             @RequestParam(name = "token") String token,
+                                             @RequestParam(name = "username") String username,
+                                             @RequestBody Map<String, Object> jsonInput) {
         if (!jwtUtils.tokenBelongsToUser(token, username)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
@@ -96,27 +146,33 @@ public class StudyAreaController {
             );
         }
 
-        if (jsonInput.containsKey("name")) {
-            String name = (String) jsonInput.get("name");
-            studyAreaService.updateStudyAreaName(studyAreaId, name);
-        }
-        if (jsonInput.containsKey("location")) {
-            String location = (String) jsonInput.get("location");
-            studyAreaService.updateStudyAreaLocation(studyAreaId, location);
-        }
-        if (jsonInput.containsKey("imageUrl")) {
-            List<String> imageUrl = (List<String>) jsonInput.get("imageUrl");
-            studyAreaService.updateStudyAreaImageUrl(studyAreaId, imageUrl);
+        try {
+            if (jsonInput.containsKey("name")) {
+                String name = (String) jsonInput.get("name");
+                studyArea.setName(name);
+            }
+            if (jsonInput.containsKey("location")) {
+                String location = (String) jsonInput.get("location");
+                studyArea.setLocation(location);
+            }
+            if (jsonInput.containsKey("imageUrl")) {
+                List<String> imageUrl = (List<String>) jsonInput.get("imageUrl");
+                studyArea.setImageUrl(imageUrl);
+            }
+            studyAreaService.saveStudyArea(studyArea);
+        } catch (ClassCastException e) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse(e.getMessage())
+            );
         }
 
         return ResponseEntity.ok(new MessageResponse("Study Area updated successfully."));
     }
 
-    // admin function
     @DeleteMapping(path = "delete/{studyAreaId}")
     public ResponseEntity<?> deleteStudyArea(@PathVariable("studyAreaId") long studyAreaId,
-                                          @RequestParam(name = "token") String token,
-                                          @RequestParam(name = "username") String username) {
+                                             @RequestParam(name = "token") String token,
+                                             @RequestParam(name = "username") String username) {
         if (!jwtUtils.tokenBelongsToUser(token, username)) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }

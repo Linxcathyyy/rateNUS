@@ -7,7 +7,6 @@ import com.rateNUS.backend.user.User;
 import com.rateNUS.backend.user.UserService;
 import com.rateNUS.backend.util.Config;
 import com.rateNUS.backend.util.Facility;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -23,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +71,70 @@ public class HostelController {
         return hostelService.findHostel(keyword, pageNum, pageSize);
     }
 
-    // admin function
+    // ======================================== Admin Functions ========================================
+
+    @PutMapping(path = "new")
+    public ResponseEntity<?> addHostel(@RequestParam(name = "token") String token,
+                                       @RequestParam(name = "username") String username,
+                                       @RequestBody Map<String, Object> jsonInput) {
+        if (!jwtUtils.tokenBelongsToUser(token, username)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        User user = userService.findByUsername(username);
+        if (user == null || !user.getRoles().contains(ApplicationUserRole.ADMIN)) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse("User doesn't have permission to add hostel.")
+            );
+        }
+
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            Hostel hostel = new Hostel();
+
+            if (jsonInput.containsKey("name")) {
+                hostel.setName((String) jsonInput.get("name"));
+            } else {
+                stringBuilder.append("name ");
+            }
+
+            if (jsonInput.containsKey("location")) {
+                hostel.setLocation((String) jsonInput.get("location"));
+            } else {
+                stringBuilder.append("location ");
+            }
+
+            if (jsonInput.containsKey("description")) {
+                hostel.setDescription((String) jsonInput.get("description"));
+            } else {
+                stringBuilder.append("description ");
+            }
+
+            if (jsonInput.containsKey("imageUrl")) {
+                hostel.setImageUrl((List<String>) jsonInput.get("imageUrl"));
+            } else {
+                stringBuilder.append("imageUrl ");
+            }
+
+            if (jsonInput.containsKey("facilities")) {
+                hostel.setFacilities(parseFacilities((List<String>) jsonInput.get("facilities")));
+            } else {
+                stringBuilder.append("facilities ");
+            }
+
+            hostelService.saveHostel(hostel);
+        } catch (ClassCastException e) {
+            return ResponseEntity.badRequest().body(new MessageResponse(e.getMessage()));
+        }
+
+        if (stringBuilder.length() > 0) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse("Missing param(s): " + stringBuilder.toString().trim()));
+        }
+
+        return ResponseEntity.ok(new MessageResponse("Hostel added successfully."));
+    }
+
     @PutMapping(path = "update/{hostelId}")
     public ResponseEntity<?> updateHostel(@PathVariable("hostelId") long hostelId,
                                           @RequestParam(name = "token") String token,
@@ -97,31 +160,47 @@ public class HostelController {
             );
         }
 
-        if (jsonInput.containsKey("name")) {
-            String name = (String) jsonInput.get("name");
-            hostelService.updateHostelName(hostelId, name);
-        }
-        if (jsonInput.containsKey("location")) {
-            String location = (String) jsonInput.get("location");
-            hostelService.updateHostelLocation(hostelId, location);
-        }
-        if (jsonInput.containsKey("description")) {
-            String description = (String) jsonInput.get("description");
-            hostelService.updateHostelDescription(hostelId, description);
-        }
-        if (jsonInput.containsKey("imageUrl")) {
-            List<String> imageUrl = (List<String>) jsonInput.get("imageUrl");
-            hostelService.updateHostelImageUrl(hostelId, imageUrl);
-        }
-        if (jsonInput.containsKey("facilities")) {
-            List<Facility> facilities = (List<Facility>) jsonInput.get("facilities");
-            hostelService.updateHostelFacilities(hostelId, facilities);
+        try {
+            if (jsonInput.containsKey("name")) {
+                String name = (String) jsonInput.get("name");
+                hostel.setName(name);
+            }
+            if (jsonInput.containsKey("location")) {
+                String location = (String) jsonInput.get("location");
+                hostel.setLocation(location);
+            }
+            if (jsonInput.containsKey("description")) {
+                String description = (String) jsonInput.get("description");
+                hostel.setDescription(description);
+            }
+            if (jsonInput.containsKey("imageUrl")) {
+                List<String> imageUrl = (List<String>) jsonInput.get("imageUrl");
+                hostel.setImageUrl(imageUrl);
+            }
+            if (jsonInput.containsKey("facilities")) {
+                List<String> input = (List<String>) jsonInput.get("facilities");
+                List<Facility> facilities = parseFacilities(input);
+                hostel.setFacilities(facilities);
+            }
+            hostelService.saveHostel(hostel);
+        } catch (ClassCastException e) {
+            return ResponseEntity.badRequest().body(
+                    new MessageResponse(e.getMessage())
+            );
         }
 
         return ResponseEntity.ok(new MessageResponse("Hostel updated successfully."));
     }
 
-    // admin function
+    private List<Facility> parseFacilities(List<String> input) {
+        List<Facility> facilities = new ArrayList<>();
+        int len = input.size();
+        for (int i = 0; i < len; i++) {
+            facilities.add(Facility.valueOf(input.get(i)));
+        }
+        return facilities;
+    }
+
     @DeleteMapping(path = "delete/{hostelId}")
     public ResponseEntity<?> deleteHostel(@PathVariable("hostelId") long hostelId,
                                           @RequestParam(name = "token") String token,

@@ -70,7 +70,7 @@ export default {
       this.loading = true;
       await HostelRequest.getHostelList(pageNum, pageSize)
         .then(async (response) => {
-          console.log(response.data.content);
+          console.log(response.data);
           this.hostelList = response.data.content;
           this.totalPages = response.data.totalPages;
         })
