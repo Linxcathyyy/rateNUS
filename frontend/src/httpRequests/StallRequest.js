@@ -77,6 +77,14 @@ class StallRequest {
     });
   }
 
+  addStall(jwtToken, username, data) {
+    return axios.post(STALL_API_BASE_URL + "/new", data, {
+      params: {
+        token: jwtToken,
+        username: username
+      },
+    });
+  }
 
   // Get a partial list of comments base on startIndex and endIndex
   async getCommentList(stallId, pageNum, pageSize) {

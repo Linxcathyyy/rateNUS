@@ -67,7 +67,7 @@ export default {
   data() {
     return {
       commentList: [],
-      pageSize: 1,
+      pageSize: 5,
       currentPage: 1,
       totalPages: 0,
       isLowestToHighestRating: null,

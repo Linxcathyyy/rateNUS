@@ -1,7 +1,7 @@
 <template>
     <div class="my-comments mt-6">
         <v-snackbar top color="success" :value="successSnackbar">Success!</v-snackbar>
-            <v-dialog
+        <v-dialog
                   v-model="dialog"
                   max-width="500px"
                 >
@@ -166,8 +166,8 @@
                       </v-card-actions>
                     </v-card>
                   </ValidationObserver>
-            </v-dialog>
-            <v-dialog v-model="dialogDelete" max-width="500px">
+        </v-dialog>
+        <v-dialog v-model="dialogDelete" max-width="500px">
                   <v-card>
                     <v-card-title class="warning white--text">Warning</v-card-title>
                     <v-card-text class="pt-6">
@@ -193,46 +193,68 @@
                       </v-row>
                     </v-card-text>
                   </v-card>
-            </v-dialog>
-        <v-card>
-        <v-card-title class="primary--text">
-          <h3> Manage {{type}} </h3>
-        </v-card-title>
-        <v-data-table 
-          :headers="headers" 
-          :items="myItems" 
-          sort-by="name" 
-          class="flat" 
-          :loading="!isDataReady"
+        </v-dialog>
+        <v-dialog
+        v-model="addItemDialog"
+        max-width="500px"
         >
-        <v-progress-linear 
-          v-show="!isDataReady" 
-          slot="progress" 
-          color="orange accent-4" 
-          indeterminate>
-        </v-progress-linear>
-            <template #item.text="{ value }">
-                <div class="text-truncate" :style="calculateWidth">
-                {{ value }}
-                </div>
-            </template>
+          <AddItem :type="type" @success="toggleSnackbar()" @closeAddDialog="addItemDialog=false"/>
+        </v-dialog>
+        <v-card>
+          <v-row>
+            <v-card-title class="primary--text ml-2">
+              <h3> Manage {{type}} </h3>
+            </v-card-title>
+            <v-spacer></v-spacer>
+            <v-btn
+              class="mr-10 my-4"
+              fab
+              dark
+              small
+              depressed
+              color="primary"
+              @click="addItemDialog = true"
+            >
+              <v-icon dark>
+                mdi-plus
+              </v-icon>
+            </v-btn>
+          </v-row>
+          <v-data-table 
+            :headers="headers" 
+            :items="myItems" 
+            sort-by="name" 
+            class="flat" 
+            :loading="!isDataReady"
+          >
+          <v-progress-linear 
+            v-show="!isDataReady" 
+            slot="progress" 
+            color="orange accent-4" 
+            indeterminate>
+          </v-progress-linear>
+              <template #item.text="{ value }">
+                  <div class="text-truncate" :style="calculateWidth">
+                  {{ value }}
+                  </div>
+              </template>
 
-      <template v-slot:item.actions="{ item }">
-          <v-icon small class="mr-2" @click="editItem(item)">
-              mdi-pencil
-          </v-icon>
-          <v-icon small @click="deleteItem(item)">
-              mdi-delete
-          </v-icon>
-      </template>
-
-        <template v-slot:no-data>
-            <div>
-                <h4>No {{ type }}, start adding one now!</h4>
-            </div>
+        <template v-slot:item.actions="{ item }">
+            <v-icon small class="mr-2" @click="editItem(item)">
+                mdi-pencil
+            </v-icon>
+            <v-icon small @click="deleteItem(item)">
+                mdi-delete
+            </v-icon>
         </template>
-      </v-data-table>
-    </v-card>
+
+          <template v-slot:no-data>
+              <div>
+                  <h4>No {{ type }}, start adding one now!</h4>
+              </div>
+          </template>
+          </v-data-table>
+        </v-card>
   </div>
 </template>
 
@@ -240,6 +262,7 @@
 import HostelRequest from "../../httpRequests/HostelRequest";
 import StallRequest from "../../httpRequests/StallRequest";
 import StudyAreaRequest from "../../httpRequests/StudyAreaRequest";
+import AddItem from "./AddItem.vue";
 import {
   ValidationProvider,
   extend,
@@ -258,6 +281,7 @@ export default {
     components: {
       ValidationProvider,
       ValidationObserver,
+      AddItem
     },
     props: {
         type: String,
@@ -288,6 +312,7 @@ export default {
             hostelCount: 0,
             stallCount: 0,
             studyAreaCount: 0,
+            addItemDialog: false,
             editedItem: {
                 id: '',
                 name: '',
@@ -502,6 +527,11 @@ export default {
                 this.editedIndex = -1;
             })
         },
+        async toggleSnackbar() {
+            this.successSnackbar = true;
+            setTimeout(() => (this.successSnackbar = false), 1000);
+            await this.refreshPage();
+        },
         closeDelete() {
             this.$refs.deleteError.innerHTML = "";
             this.dialogDelete = false;
@@ -520,9 +550,9 @@ export default {
             const data = {
                 name: this.editedItem.name,
                 location: this.editedItem.location,
-                facilities: facilities,
-                description: this.editedItem.description,
                 imageUrl: imageUrl,
+                ...(this.editedItem.facilities && {facilities: facilities}),
+                ...(this.editedItem.description && {description: this.editedItem.description}),
                 ...(this.editedItem.lowestPrice && {lowestPrice: Number(this.editedItem.lowestPrice)}),
                 ...(this.editedItem.highestPrice && {highestPrice: Number(this.editedItem.highestPrice)})
             }
@@ -542,12 +572,12 @@ export default {
                     // await this.refreshPage();
                   } else {
                     console.log("fail");
-                    this.$refs.saveError.innerHTML = "Failed to update this comment, please try again";
+                    this.$refs.saveError.innerHTML = "Failed to update this item, please try again";
                   }
                 })
                 .catch((error) => {
                     console.log("fail");
-                    this.$refs.saveError.innerHTML = "Failed to update this comment, please try again";
+                    this.$refs.saveError.innerHTML = "Failed to update this item, please try again";
                     console.log(error);
             });
             this.loading = false;

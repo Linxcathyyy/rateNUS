@@ -122,7 +122,7 @@ public class StallController {
             }
 
             if (jsonInput.containsKey("highestPrice")) {
-                stall.setLowestPrice(((Number) jsonInput.get("highestPrice")).doubleValue());
+                stall.setHighestPrice(((Number) jsonInput.get("highestPrice")).doubleValue());
             } else {
                 stringBuilder.append("highestPrice ");
             }

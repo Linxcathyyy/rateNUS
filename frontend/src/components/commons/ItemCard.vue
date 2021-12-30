@@ -44,7 +44,9 @@
       </v-row>
       <v-row align="center" class="mx-0">
         <div class="mb-4 text-left">
+          <p v-line-clamp:50="5">
           {{ item.description }}
+          </p>
         </div>
       </v-row>
     </v-card-text>

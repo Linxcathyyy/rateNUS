@@ -14,7 +14,7 @@
 
             <div class="show-on-mobile">
               <v-app-bar-nav-icon @click.stop="menu = !menu">
-                <v-icon color="orange" large>mdi-account</v-icon>
+                <v-icon color="orange accent-4" large>mdi-account-circle</v-icon>
               </v-app-bar-nav-icon>
             </div>
           </div>
@@ -30,7 +30,7 @@
         <div>
           <v-dialog v-model="menu" width="15em">
             <v-card>
-              <v-card-title> Welcome! </v-card-title>
+              <v-card-title class="primary--text justify-center" > Welcome! </v-card-title>
               <v-col align-content="space-around">
                 <LoginButton class="button" />
                 <SignUpButton class="button" />

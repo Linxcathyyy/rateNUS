@@ -52,7 +52,7 @@ class HostelRequest {
 
   // Find hostels based on keywords
   findHostels(keyword, pageNum, pageSize) {
-    return axios.put(HOSTEL_API_BASE_URL + "/search", {
+    return axios.post(HOSTEL_API_BASE_URL + "/search", {
       keyword: keyword,
       pageNum: pageNum,
       pageSize: pageSize,
@@ -70,6 +70,15 @@ class HostelRequest {
 
   deleteHostel(hostelId, jwtToken, username) {
     return axios.delete(HOSTEL_API_BASE_URL + "/delete/" + hostelId, {
+      params: {
+        token: jwtToken,
+        username: username
+      },
+    });
+  }
+
+  addHostel(jwtToken, username, data) {
+    return axios.post(HOSTEL_API_BASE_URL + "/new", data, {
       params: {
         token: jwtToken,
         username: username

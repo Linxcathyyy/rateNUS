@@ -18,7 +18,6 @@
         <v-container>
           <v-row justify="center">
             <v-col cols="8">
-              <v-container class="max-width">
                 <v-pagination
                   @input="updatePage"
                   v-model="currentPage"
@@ -28,7 +27,6 @@
                   next-icon="mdi-menu-right"
                   color="orange accent-4"
                 ></v-pagination>
-              </v-container>
             </v-col>
           </v-row>
         </v-container>
