@@ -16,11 +16,7 @@ import ManageItems from "../views/ManageItems.vue";
 Vue.use(VueRouter);
 
 const routes = [
-  // {
-  //   path: "/",
-  //   name: "Hostels",
-  //   component: Hostels,
-  // },
+
   {
     path: "/hostels",
     name: "Hostels",
