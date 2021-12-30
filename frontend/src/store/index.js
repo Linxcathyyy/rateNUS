@@ -82,7 +82,7 @@ export default new Vuex.Store({
     },
     logOut(state) {
       state.isLoggedIn = false;
-      
+
       var newUser = {
         id: "",
         fullName: "",

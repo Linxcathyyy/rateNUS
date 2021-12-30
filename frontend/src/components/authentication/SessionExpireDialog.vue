@@ -1,8 +1,9 @@
 <template>
   <v-dialog v-model="this.isSessionExpired" persistent max-width="290">
     <v-card>
-      <v-card-title  style="word-break: break-word">
-           Your Session Has Expired </v-card-title>
+      <v-card-title style="word-break: break-word">
+        Your Session Has Expired
+      </v-card-title>
       <v-card-text>Please log in again</v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
@@ -21,15 +22,9 @@ export default defineComponent({
   props: {
     isSessionExpired: Boolean,
   },
-  data() {
-    return {
-      dialog: true,
-    };
-  },
   methods: {
     logOut() {
       this.$store.commit("logOut");
-      this.dialog = false;
       location.reload();
     },
   },
