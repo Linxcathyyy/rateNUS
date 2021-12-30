@@ -81,6 +81,8 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/studyarea/search").permitAll()
                 .antMatchers("/studyarea/update/**").authenticated()
                 .antMatchers("/studyarea/delete/**").authenticated()
+                //session expiration
+                .antMatchers("/checkLogin").authenticated()
                 .anyRequest().permitAll();
     }
 

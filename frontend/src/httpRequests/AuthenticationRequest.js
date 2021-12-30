@@ -86,6 +86,16 @@ class AuthenticationRequest {
         return res;
     }
 
+    async checkLogin(jwtToken) {
+        const headers = {
+            Authorization: "Bearer " + jwtToken,
+        };
+        var res = await axios.get(BASE_URL + "checkLogin", {
+            headers: headers
+        });
+        return res;
+    }
+
 }
 
 export default new AuthenticationRequest();

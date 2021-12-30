@@ -63,6 +63,11 @@ public class AuthController {
     @Autowired
     private ResetPasswordTokenRepository resetPasswordTokenRepository;
 
+    @GetMapping( path = "checkLogin")
+    public ResponseEntity<?> dummyMethod() {
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping(path = "/login", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
         User user = userService.findByUsername(loginRequest.getUsername());
