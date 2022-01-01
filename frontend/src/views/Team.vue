@@ -9,7 +9,7 @@
     >
       <TeamCard
         :info="contributor"
-        description="Test Placeholder Description"
+        :description="getMemberDescriptionByName(contributor.login)"
       />
     </v-container>
   </div>
@@ -25,10 +25,24 @@ export default {
   data() {
     return {
       contributors: [],
+      descriptions: {
+        // add your descriptions here
+        // Format:
+        // {git id}: "{description}",
+        JeffZincatz: "Test descrption",
+      },
     };
   },
   async mounted() {
     this.contributors = await GithubRequest.getContributorsInfo();
+  },
+  methods: {
+    getMemberDescriptionByName(name) {
+      if (this.descriptions[name] == undefined) {
+        return "This member is lazy and did not provide any description.";
+      }
+      return this.descriptions[name];
+    },
   },
 };
 </script>
