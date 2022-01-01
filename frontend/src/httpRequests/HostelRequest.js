@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const HOSTEL_API_BASE_URL = "http://localhost:8080/hostel";
-const COMMENT_API_BASE_URL = "http://localhost:8080/comment";
-const COMMENT_SORT_API_BASE_URL = "http://localhost:8080/comment/hostel";
+const HOSTEL_API_BASE_URL = "http://3.142.45.139:8080/hostel";
+const COMMENT_API_BASE_URL = "http://3.142.45.139:8080/comment";
+const COMMENT_SORT_API_BASE_URL = "http://3.142.45.139:8080/comment/hostel";
 
 class HostelRequest {
   // Get a partial list of hostels based on startIndex and endIndex

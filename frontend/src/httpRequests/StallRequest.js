@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const STALL_API_BASE_URL = "http://localhost:8080/stall";
-const ADD_COMMENT_API_BASE_URL = "http://localhost:8080/comment";
-const GET_COMMENT_API_BASE_URL = "http://localhost:8080/comment/stall";
+const STALL_API_BASE_URL = "http://3.142.45.139:8080/stall";
+const ADD_COMMENT_API_BASE_URL = "http://3.142.45.139:8080/comment";
+const GET_COMMENT_API_BASE_URL = "http://3.142.45.139:8080/comment/stall";
 
 class StallRequest {
   // Get a partial list of stalls based on startIndex and endIndex
