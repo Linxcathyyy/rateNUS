@@ -52,7 +52,10 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.cors();
-        http.csrf().disable()
+        http
+                .requiresChannel().anyRequest().requiresSecure()
+                .and()
+                .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterAfter(jwtTokenVerifier, UsernamePasswordAuthenticationFilter.class)
