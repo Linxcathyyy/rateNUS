@@ -10,15 +10,20 @@
         <v-col class="mx-2" cols="3" id="avatar-col">
           <v-avatar size="90">
             <img
-              :src="avatarUrl"
-              :alt="name"
+              :src="info.avatar_url"
+              :alt="info.login"
               @click="redirectToUserPage()"
-              :title="name"
+              :title="info.login"
             />
           </v-avatar>
         </v-col>
         <v-col class="mx-2" id="info-col">
-          <v-card-title class="font-weight-bold">{{ name }} </v-card-title>
+          <v-card-title class="font-weight-bold"
+            >{{ info.login }}
+          </v-card-title>
+          <v-card-subtitle class="text-left orange--text text--darken-3"
+            >Contributions: {{ info.contributions }}</v-card-subtitle
+          >
           <v-card-text class="text-left text-body-1"
             >{{ description }}
           </v-card-text>
@@ -33,14 +38,14 @@
     >
       <v-avatar size="90">
         <img
-          :src="avatarUrl"
-          :alt="name"
+          :src="info.avatar_url"
+          :alt="info.login"
           @click="redirectToUserPage()"
-          :title="name"
+          :title="info.login"
         />
       </v-avatar>
       <v-card-title class="font-weight-bold justify-center"
-        >{{ name }}
+        >{{ info.login }}
       </v-card-title>
       <v-card-text class="text-body-1">{{ description }} </v-card-text>
     </v-card>
@@ -49,7 +54,7 @@
 
 <script>
 export default {
-  props: ["name", "avatarUrl", "description", "url"],
+  props: ["description", "info"],
   data() {
     return {
       screenWidth: 0,
@@ -58,7 +63,7 @@ export default {
   },
   methods: {
     redirectToUserPage() {
-      window.open(this.url);
+      window.open(this.info.html_url);
     },
     handleScreenResize() {
       this.screenWidth = window.innerWidth;
@@ -87,12 +92,4 @@ export default {
 img:hover {
   cursor: pointer;
 }
-
-/* #avatar-col {
-  background: lightblue;
-} */
-
-/* #info-col {
-  background: pink;
-} */
 </style>

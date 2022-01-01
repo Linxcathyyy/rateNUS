@@ -8,9 +8,7 @@
       :key="contributor.id"
     >
       <TeamCard
-        :name="contributor.login"
-        :avatarUrl="contributor.avatar_url"
-        :url="contributor.html_url"
+        :info="contributor"
         description="Test Placeholder Description"
       />
     </v-container>
