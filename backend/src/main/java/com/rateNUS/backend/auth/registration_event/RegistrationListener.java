@@ -1,7 +1,8 @@
 package com.rateNUS.backend.auth.registration_event;
 
-import java.util.UUID;
-
+import com.rateNUS.backend.security.verification_token.VerificationToken;
+import com.rateNUS.backend.security.verification_token.VerificationTokenRepository;
+import com.rateNUS.backend.user.User;
 import com.rateNUS.backend.util.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -9,9 +10,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
 
-import com.rateNUS.backend.security.verification_token.VerificationToken;
-import com.rateNUS.backend.security.verification_token.VerificationTokenRepository;
-import com.rateNUS.backend.user.User;
+import java.util.UUID;
 
 @Component
 public class RegistrationListener implements ApplicationListener<RegistrationCompleteEvent> {

@@ -12,7 +12,6 @@ import com.rateNUS.backend.security.verification_token.VerificationToken;
 import com.rateNUS.backend.security.verification_token.VerificationTokenRepository;
 import com.rateNUS.backend.user.User;
 import com.rateNUS.backend.user.UserService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpHeaders;
@@ -63,7 +62,7 @@ public class AuthController {
     @Autowired
     private ResetPasswordTokenRepository resetPasswordTokenRepository;
 
-    @GetMapping( path = "checkLogin")
+    @GetMapping(path = "checkLogin")
     public ResponseEntity<?> dummyMethod() {
         return ResponseEntity.ok().build();
     }
