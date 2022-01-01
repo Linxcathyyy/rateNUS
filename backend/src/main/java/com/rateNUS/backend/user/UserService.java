@@ -1,15 +1,13 @@
 package com.rateNUS.backend.user;
 
-import javax.transaction.Transactional;
-
 import com.rateNUS.backend.comment.Comment;
 import com.rateNUS.backend.comment.CommentService;
+import com.rateNUS.backend.exception.TypeNotFoundException;
+import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.rateNUS.backend.exception.TypeNotFoundException;
-import com.rateNUS.backend.util.Type;
-
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service

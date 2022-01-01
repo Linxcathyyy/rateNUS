@@ -1,8 +1,8 @@
 package com.rateNUS.backend.security.reset_password_token;
 
-import javax.transaction.Transactional;
-
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import javax.transaction.Transactional;
 
 public interface ResetPasswordTokenRepository extends JpaRepository<ResetPasswordToken, Long> {
     ResetPasswordToken findByToken(String token);

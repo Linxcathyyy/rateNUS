@@ -1,8 +1,7 @@
 package com.rateNUS.backend.auth.registration_event;
 
-import org.springframework.context.ApplicationEvent;
-
 import com.rateNUS.backend.user.User;
+import org.springframework.context.ApplicationEvent;
 
 public class RegistrationCompleteEvent extends ApplicationEvent {
     private User user;

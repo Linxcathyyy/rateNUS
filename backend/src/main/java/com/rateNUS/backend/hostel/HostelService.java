@@ -1,7 +1,6 @@
 package com.rateNUS.backend.hostel;
 
 import com.rateNUS.backend.exception.TypeNotFoundException;
-import com.rateNUS.backend.util.Facility;
 import com.rateNUS.backend.util.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
