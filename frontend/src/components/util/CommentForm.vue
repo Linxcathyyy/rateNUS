@@ -73,6 +73,7 @@
         </v-form>
       </div>
     </v-card>
+    <SessionExpireDialog :isSessionExpired="this.isSessionExpired" />
   </div>
 </template>
 
@@ -80,6 +81,7 @@
 import HostelRequest from "../../httpRequests/HostelRequest";
 import StallRequest from "../../httpRequests/StallRequest";
 import StudyAreaRequest from "../../httpRequests/StudyAreaRequest";
+import SessionExpireDialog from "../authentication/SessionExpireDialog.vue";
 import {
   ValidationProvider,
   extend,
@@ -96,6 +98,7 @@ export default {
   components: {
     ValidationProvider,
     ValidationObserver,
+    SessionExpireDialog,
   },
   props: {
     type: String,
@@ -109,7 +112,8 @@ export default {
       successDialog: false,
       failureSnackbar: false,
       notLoggedInSnackbar: false,
-      isCommentDisabled: false, // should be changed to true if not logged in
+      isCommentDisabled: false, // should be changed to true if not logged in,
+      isSessionExpired: false,
     };
   },
   methods: {
@@ -136,12 +140,18 @@ export default {
             this.successDialog = true;
           })
           .catch((error) => {
-            var errorStatus = error.response.status;
+            var errorStatus = error.response.data.status;
 
             if (errorStatus == 403) {
               // user is not logged in
               this.notLoggedInSnackbar = true;
               setTimeout(() => (this.failureSnackbar = false), 2000);
+              return;
+            }
+
+            if (errorStatus == 440) {
+              // user session timeout
+              this.isSessionExpired = true;
               return;
             }
 

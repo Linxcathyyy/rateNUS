@@ -82,7 +82,18 @@ export default new Vuex.Store({
     },
     logOut(state) {
       state.isLoggedIn = false;
-      state.user.jwtToken = "";
+
+      var newUser = {
+        id: "",
+        fullName: "",
+        initials: "",
+        email: "",
+        jwtToken: "",
+        role: "",
+        defaultProfileColor: ColorPalette.getRandomColor(),
+      };
+
+      state.user = newUser;
     },
     updateDefaultProfileColor(state) {
       state.defaultProfileColor = ColorPalette.getRandomColor();

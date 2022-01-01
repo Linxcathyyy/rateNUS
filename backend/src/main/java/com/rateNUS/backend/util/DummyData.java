@@ -305,7 +305,7 @@ public class DummyData {
                     "Mon-Sun, 7.00am-10.00pm",
             List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/Fine-Food-1-1024x684.jpg",
                     "https://static.wixstatic.com/media/4ce202_f31dec1bdbb74c01878976b59c61c1ef~mv2.jpg/v1/fill/w_925,h_520,al_c,q_90/4ce202_f31dec1bdbb74c01878976b59c61c1ef~mv2.webp"
-                    ),
+            ),
             5,
             15
     );
@@ -365,7 +365,7 @@ public class DummyData {
                     "Contact No: 6262 0287\n" +
                     "Nearest Carpark: CREATE Tower",
             List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/Sapore-1024x684.jpg",
-                   // "https://scontent-xsp1-2.xx.fbcdn.net/v/t1.6435-9/p180x540/66294486_2232221860224887_8097445153322565632_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=e3f864&_nc_ohc=t7AVjAXKIF0AX9pzn9A&_nc_ht=scontent-xsp1-2.xx&oh=00_AT-8QDLV5eArvhivN2zISOLuWiy7ujYnG1HPB9H2t7_yow&oe=61EC5DF4",
+                    // "https://scontent-xsp1-2.xx.fbcdn.net/v/t1.6435-9/p180x540/66294486_2232221860224887_8097445153322565632_n.jpg?_nc_cat=102&ccb=1-5&_nc_sid=e3f864&_nc_ohc=t7AVjAXKIF0AX9pzn9A&_nc_ht=scontent-xsp1-2.xx&oh=00_AT-8QDLV5eArvhivN2zISOLuWiy7ujYnG1HPB9H2t7_yow&oe=61EC5DF4",
                     "https://theridge.sg/wp-content/uploads/2014/09/ST_20120822_WSALCOHOL22_3263737e.jpg"),
             5,
             20
@@ -383,7 +383,7 @@ public class DummyData {
                     "Nearest Carpark: CREATE Tower",
             List.of("https://uci.nus.edu.sg/oca/wp-content/uploads/sites/9/2018/05/The-Royals-Cafe-1024x684.jpg",
                     "https://www.staffany.com/wp-content/uploads/2020/10/9EEA8589-9036-43A5-A779-FEFEF54C3CB1-1-1024x764.jpg"
-                    ),
+            ),
             5,
             20
     );
@@ -484,7 +484,7 @@ public class DummyData {
             5,
             10
     );
-  
+
     public static StudyArea sa1 = new StudyArea(
             "Central Library",
             "Central Library",
@@ -673,7 +673,7 @@ public class DummyData {
 
     public static List<Hostel> hostelList = List.of(h1, h2, h3, h4, h5, h6, h7, h8, h9, h10, h11, h12, h13, h14);
     public static List<Stall> stallList = List.of(s1, s2, s3, s4, s5, s6, s7, s8, s9, s10, s11, s12, s13, s14, s15, s16, s17);
-    public static List<StudyArea> studyAreaList = List.of(sa1, sa2, sa3, sa4,sa5, sa6, sa7, sa8, sa9, sa10, sa11, sa12, sa13, sa14, sa15, sa16, sa17);
+    public static List<StudyArea> studyAreaList = List.of(sa1, sa2, sa3, sa4, sa5, sa6, sa7, sa8, sa9, sa10, sa11, sa12, sa13, sa14, sa15, sa16, sa17);
     public static List<Comment> commentList = List.of(c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11);
     public static List<User> userList = List.of(u1);
 }

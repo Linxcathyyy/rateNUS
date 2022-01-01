@@ -46,6 +46,7 @@
           <Footer> </Footer>
         </div>
       </div>
+      <SessionExpireDialog :isSessionExpired="this.isSessionExpired" />
     </v-main>
   </v-app>
 </template>
@@ -55,6 +56,8 @@ import Navigation from "./components/util/Navigation.vue";
 import LoginButton from "./components/authentication/LoginButton.vue";
 import SignUpButton from "./components/authentication/SignUpButton.vue";
 import UserProfile from "./components/authentication/UserProfile.vue";
+import SessionExpireDialog from "./components/authentication/SessionExpireDialog.vue";
+import AuthenticationRequest from "./httpRequests/AuthenticationRequest";
 import Footer from "./components/util/Footer.vue";
 
 export default {
@@ -64,18 +67,37 @@ export default {
     LoginButton,
     SignUpButton,
     UserProfile,
+    SessionExpireDialog,
     Footer,
   },
   data() {
     return {
       menu: false,
+      isSessionExpired: false,
     };
+  },
+  async created() {
+    await this.checkLogin();
   },
   methods: {
     goToMainPage() {
       const currentPath = this.$router.history.current.path;
       if (currentPath !== "/hostels") {
         this.$router.push("/hostels");
+      }
+    },
+    async checkLogin() {
+      if (this.$store.getters.jwtToken != "") {
+        await AuthenticationRequest.checkLogin(this.$store.getters.jwtToken)
+          .then((res) => {
+            return res;
+          })
+          .catch((err) => {
+            var status = err.response.data.status;
+            if (status == 440) {
+              this.isSessionExpired = true;
+            }
+          });
       }
     },
   },
