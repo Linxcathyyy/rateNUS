@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class Config {
-    public static final String frontendURL = "http://localhost:8081/";
+    public static final String frontendURL = "http://ratenus.com/";
 
     @Bean
     CommandLineRunner commandLineRunner(HostelRepository hostelRepository,
