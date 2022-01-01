@@ -21,9 +21,9 @@
           <v-card-title class="font-weight-bold"
             >{{ info.login }}
           </v-card-title>
-          <v-card-subtitle class="text-left orange--text text--darken-3"
-            >Contributions: {{ info.contributions }}</v-card-subtitle
-          >
+          <v-card-subtitle class="text-left orange--text text--darken-3">
+            Contributions: {{ info.contributions }}
+          </v-card-subtitle>
           <v-card-text class="text-left text-body-1"
             >{{ description }}
           </v-card-text>
@@ -47,6 +47,9 @@
       <v-card-title class="font-weight-bold justify-center"
         >{{ info.login }}
       </v-card-title>
+      <v-card-subtitle class="orange--text text--darken-3">
+        Contributions: {{ info.contributions }}
+      </v-card-subtitle>
       <v-card-text class="text-body-1">{{ description }} </v-card-text>
     </v-card>
   </v-container>
