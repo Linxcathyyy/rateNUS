@@ -53,8 +53,8 @@ public class AuthorizeUrlsSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.cors();
         http
-                .requiresChannel().anyRequest().requiresSecure()
-                .and()
+//                .requiresChannel().anyRequest().requiresSecure()
+////                .and()
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
