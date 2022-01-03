@@ -1,8 +1,8 @@
 import axios from "axios";
-const LOGIN_URL = "https://3.142.45.139:8080/login"
-const SIGNUP_URL = "https://3.142.45.139:8080/signup"
-const CONFIRM_URL = "https://3.142.45.139:8080/registrationConfirm"
-const BASE_URL = "https://3.142.45.139:8080/"
+const LOGIN_URL = "https://www.ratenus.cyou:8080/login"
+const SIGNUP_URL = "https://www.ratenus.cyou:8080/signup"
+const CONFIRM_URL = "https://www.ratenus.cyou:8080/registrationConfirm"
+const BASE_URL = "https://www.ratenus.cyou:8080/"
 class AuthenticationRequest {
     async loginWithCredentials(username, password) {
         var response = await axios.post(LOGIN_URL, {
