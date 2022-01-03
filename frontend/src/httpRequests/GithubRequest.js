@@ -3,6 +3,8 @@ import axios from "axios";
 const GITHUB_REPO_BASE_URL = "https://github.com/Linxcathyyy/rateNUS";
 const GITHUB_API_URL =
   "https://api.github.com/repos/Linxcathyyy/rateNUS/commits";
+const GITHUB_API_CONTRIBUTORS_INFO =
+  "https://api.github.com/repos/Linxcathyyy/rateNUS/contributors";
 const GITHUB_CONTRIBUTORS_URL =
   "https://github.com/Linxcathyyy/rateNUS/graphs/contributors";
 
@@ -35,6 +37,10 @@ class GithubRequest {
 
   getContributorsUrl() {
     return GITHUB_CONTRIBUTORS_URL;
+  }
+
+  async getContributorsInfo() {
+    return (await axios.get(GITHUB_API_CONTRIBUTORS_INFO)).data;
   }
 }
 
