@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const STUDY_AREA_API_BASE_URL = "https://3.142.45.139:8080/studyarea";
-const ADD_COMMENT_API_BASE_URL = "https://3.142.45.139:8080/comment";
-const GET_COMMENT_API_BASE_URL = "https://3.142.45.139:8080/comment/studyArea";
+const STUDY_AREA_API_BASE_URL = "https://www.ratenus.cyou:8080/studyarea";
+const ADD_COMMENT_API_BASE_URL = "https://www.ratenus.cyou:8080/comment";
+const GET_COMMENT_API_BASE_URL = "https://www.ratenus.cyou:8080/comment/studyArea";
 
 class StudyAreaRequest {
     // Get a partial list of studyAreas based on startIndex and endIndex
