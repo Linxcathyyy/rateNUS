@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const COMMENT_API_BASE_URL = "https://3.142.45.139:8080/comment";
-const COMMENT_USER_API_BASE_URL = "https://3.142.45.139:8080/comment/user";
+const COMMENT_API_BASE_URL = "https://www.ratenus.cyou:8080/comment";
+const COMMENT_USER_API_BASE_URL = "https://www.ratenus.cyou:8080/comment/user";
 
 class CommentRequest {
   // Get a partial list of comments based on userId
