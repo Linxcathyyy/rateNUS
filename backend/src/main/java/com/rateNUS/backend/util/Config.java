@@ -1,7 +1,5 @@
 package com.rateNUS.backend.util;
 
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
@@ -10,9 +8,4 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class Config {
     public static final String frontendURL = "http://ratenus.com/";
-
-    @Bean
-    CommandLineRunner commandLineRunner() {
-        return args -> {};
-    }
 }
