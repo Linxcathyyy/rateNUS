@@ -343,5 +343,12 @@ Gradle > Tasks > application > bootRun
         * Path: `resetPassword`
 * User
     * Get username by userId
-        * Give: `@PathVariable("userId") long userId`
-        * Path: `user/name/{userId}`
+        * Give: `@RequestBody Map<String, List<Long>> jsonInput`
+          ```
+          {
+            "ids": [1, 3, 4, ...]
+          }
+          ```
+        * Path: `user/names`
+        * Note:
+            * If not specified, then an empty map will be returned

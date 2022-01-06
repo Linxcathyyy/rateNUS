@@ -1,6 +1,5 @@
 package com.rateNUS.backend.util;
 
-import com.rateNUS.backend.comment.Comment;
 import com.rateNUS.backend.hostel.Hostel;
 import com.rateNUS.backend.security.ApplicationUserRole;
 import com.rateNUS.backend.stall.Stall;
