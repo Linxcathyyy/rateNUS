@@ -1,13 +1,16 @@
 package com.rateNUS.backend.user;
 
+import com.rateNUS.backend.util.Config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.rateNUS.backend.util.Config;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Serves as the API layer for User.
@@ -23,9 +26,9 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(path = "name/{userId}")
-    public String getUserName(@PathVariable("userId") long userId) {
-        User user = userService.findById(userId);
-        return user.getUsername();
+    @PostMapping(path = "names")
+    public Map<Long, String> getUsernames(@RequestBody Map<String, List<Long>> jsonInput) {
+        List<Long> userIds = jsonInput.getOrDefault("ids", new ArrayList<>());
+        return userService.getUsernames(userIds);
     }
 }

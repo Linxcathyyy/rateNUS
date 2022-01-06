@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -27,11 +30,6 @@ public class UserService {
 
     public boolean existsByEmail(String email) {
         return userRepository.existsByEmail(email);
-    }
-
-    public User findById(long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new TypeNotFoundException(Type.user, userId));
     }
 
     public User findByUsername(String username) {
@@ -68,5 +66,15 @@ public class UserService {
         User user = this.findByUsername(username);
         assert (user != null);
         return commentUserId == user.getId();
+    }
+
+    public Map<Long, String> getUsernames(List<Long> ids) {
+        Map<Long, String> map = new HashMap<>();
+        ids.forEach(id -> {
+            User user = userRepository.findById(id).orElseThrow(() -> new TypeNotFoundException(Type.user, id));
+            map.put(id, user.getUsername());
+        });
+
+        return map;
     }
 }
