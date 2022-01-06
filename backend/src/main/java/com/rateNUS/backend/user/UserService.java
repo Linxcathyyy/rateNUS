@@ -29,6 +29,11 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
+    public User findById(long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> new TypeNotFoundException(Type.user, userId));
+    }
+
     public User findByUsername(String username) {
         return userRepository.findByUsername(username).orElse(null);
     }
