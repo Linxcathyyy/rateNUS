@@ -18,6 +18,7 @@
 <script>
 import TeamCard from "../components/commons/TeamCard.vue";
 import GithubRequest from "../httpRequests/GithubRequest.js";
+import TeamMemberDescription from "../components/util/TeamMemberDescriptions.js";
 export default {
   components: {
     TeamCard,
@@ -25,12 +26,6 @@ export default {
   data() {
     return {
       contributors: [],
-      descriptions: {
-        // add your descriptions here
-        // Format:
-        // {git id}: "{description}",
-        JeffZincatz: "Test descrption",
-      },
     };
   },
   async mounted() {
@@ -38,10 +33,11 @@ export default {
   },
   methods: {
     getMemberDescriptionByName(name) {
-      if (this.descriptions[name] == undefined) {
+      var memberDescription = TeamMemberDescription.getAllDescriptions()[name];
+      if (memberDescription == undefined) {
         return "This member is lazy and did not provide any description.";
       }
-      return this.descriptions[name];
+      return memberDescription;
     },
   },
 };
