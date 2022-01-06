@@ -16,7 +16,10 @@ import ManageItems from "../views/ManageItems.vue";
 Vue.use(VueRouter);
 
 const routes = [
-
+  {
+    path:"*",
+    redirect:"/hostels"
+  },
   {
     path: "/hostels",
     name: "Hostels",
