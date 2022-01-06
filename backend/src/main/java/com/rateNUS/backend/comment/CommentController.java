@@ -1,6 +1,7 @@
 package com.rateNUS.backend.comment;
 
 import com.rateNUS.backend.auth.MessageResponse;
+import com.rateNUS.backend.exception.ObjectAlreadyExistsException;
 import com.rateNUS.backend.exception.TypeNotFoundException;
 import com.rateNUS.backend.hostel.HostelService;
 import com.rateNUS.backend.security.ApplicationUserRole;
@@ -84,22 +85,28 @@ public class CommentController {
 
     @PostMapping
     public void addComment(@RequestBody Comment comment) {
-        long id = comment.getTargetId();
+        long targetId = comment.getTargetId();
+        long userId = comment.getUserId();
+        Type type = comment.getType();
+        List<Comment> commentsBySameUser = commentService.findCommentsByUserAndTarget(userId, targetId, type);
+        if (!commentsBySameUser.isEmpty()) {
+            throw new ObjectAlreadyExistsException(Type.comment, "userId: " + userId, "targetId: " + targetId);
+        }
 
-        switch (comment.getType()) {
+        switch (type) {
             case hostel:
-                comment.setTargetName(hostelService.getHostel(id).getName());
-                hostelService.addComment(id, comment.getRating());
+                comment.setTargetName(hostelService.getHostel(targetId).getName());
+                hostelService.addComment(targetId, comment.getRating());
                 break;
 
             case stall:
-                comment.setTargetName(stallService.getStall(id).getName());
-                stallService.addComment(id, comment.getRating());
+                comment.setTargetName(stallService.getStall(targetId).getName());
+                stallService.addComment(targetId, comment.getRating());
                 break;
 
             case studyArea:
-                comment.setTargetName(studyAreaService.getStudyArea(id).getName());
-                studyAreaService.addComment(id, comment.getRating());
+                comment.setTargetName(studyAreaService.getStudyArea(targetId).getName());
+                studyAreaService.addComment(targetId, comment.getRating());
                 break;
         }
 

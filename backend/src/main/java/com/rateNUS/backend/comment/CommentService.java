@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Provides the services required by {@code CommentController}.
@@ -42,6 +43,13 @@ public class CommentService {
     public List<Comment> getCommentsOfUser(long userId, String orderBy, boolean isAscending) {
         Sort.Direction direction = isAscending ? Sort.Direction.ASC : Sort.Direction.DESC;
         return commentRepository.findByUserId(userId, Sort.by(direction, orderBy));
+    }
+
+    public List<Comment> findCommentsByUserAndTarget(long userId, long targetId, Type type) {
+        return getCommentsOfUser(userId, "timestamp", false)
+                .stream()
+                .filter(comment -> comment.getType() == type && comment.getTargetId() == targetId)
+                .collect(Collectors.toList());
     }
 
     public Comment addComment(Comment comment) {
