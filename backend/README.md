@@ -341,3 +341,7 @@ Gradle > Tasks > application > bootRun
           }
           ```
         * Path: `resetPassword`
+* User
+    * Get username by userId
+        * Give: `@PathVariable("userId") long userId`
+        * Path: `user/name/{userId}`
