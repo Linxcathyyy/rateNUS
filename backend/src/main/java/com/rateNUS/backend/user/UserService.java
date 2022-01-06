@@ -70,10 +70,10 @@ public class UserService {
 
     public Map<Long, String> getUsernames(List<Long> ids) {
         Map<Long, String> map = new HashMap<>();
-        ids.forEach(id -> {
-            User user = userRepository.findById(id).orElseThrow(() -> new TypeNotFoundException(Type.user, id));
-            map.put(id, user.getUsername());
-        });
+        ids.forEach(id -> userRepository.findById(id).ifPresentOrElse(
+                user -> map.put(id, user.getUsername()),
+                () -> map.put(id, "Error 404 User Not Found")
+        ));
 
         return map;
     }
