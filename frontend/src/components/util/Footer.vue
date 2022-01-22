@@ -8,7 +8,6 @@
         <div class="link" @click="redirectToGithubContributors()">
           Contributors
         </div>
-        <div class="link" @click="redirectToFaq()">FAQ</div>
         <div class="link" @click="redirectToContribute()">
           Contribute to RateNUS
         </div>
