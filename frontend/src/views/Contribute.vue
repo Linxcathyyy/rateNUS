@@ -55,9 +55,8 @@
 
     <br>
     <br>
-    <a href="https://www.flaticon.com/free-icons/contact-us" title="contact us icons" class="attribute">Contact us icons created by alimasykurm - Flaticon</a>
-    <br>
-    <a href="https://www.flaticon.com/free-icons/code" title="code icons" class="attribute">Code icons created by prettycons - Flaticon</a>
+    <div class="attribute" @click="redirectToContactUsIcon()">Contact us icons created by alimasykurm - Flaticon</div>
+    <div class="attribute" @click="redirectToCodeIcon()">Code icons created by prettycons - Flaticon</div>
   </div>
 </template>
 
@@ -88,6 +87,12 @@ export default {
         },
         redirectToGitHubIssues() {
             window.open(GithubRequest.getIssuesUrl());
+        },
+        redirectToContactUsIcon() {
+            window.open("https://www.flaticon.com/free-icons/contact-us");
+        },
+        redirectToCodeIcon() {
+            window.open("https://www.flaticon.com/free-icons/code");
         }
     }
 };
@@ -99,6 +104,10 @@ export default {
         font-weight: bold
     }
     .attribute {
-        font-size: 0.8em
+        font-size: 0.7em
+    }
+    .attribute:hover {
+      color: #ff6d00;
+      cursor: pointer;
     }
 </style>
