@@ -7,6 +7,10 @@ const GITHUB_API_CONTRIBUTORS_INFO =
   "https://api.github.com/repos/Linxcathyyy/rateNUS/contributors";
 const GITHUB_CONTRIBUTORS_URL =
   "https://github.com/Linxcathyyy/rateNUS/graphs/contributors";
+const GITHUB_PR_URL =
+  "https://github.com/Linxcathyyy/rateNUS/pulls";
+const GITHUB_ISSUES_URL =
+  "https://github.com/Linxcathyyy/rateNUS/issues";
 
 class GithubRequest {
   getRepoBaseUrl() {
@@ -41,6 +45,14 @@ class GithubRequest {
 
   async getContributorsInfo() {
     return (await axios.get(GITHUB_API_CONTRIBUTORS_INFO)).data;
+  }
+
+  getPullRequestUrl() {
+    return GITHUB_PR_URL;
+  }
+
+  getIssuesUrl() {
+    return GITHUB_ISSUES_URL;
   }
 }
 
