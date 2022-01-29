@@ -82,6 +82,20 @@ export default {
         HostelRequest.getCommentList(this.$route.params.id, pageNum, pageSize)
           .then((response) => {
             this.commentList = response.data.content;
+
+            // request for comment user name
+            var userIds = {
+              ids: [],
+            };
+            this.commentList.forEach((comment) => {
+              userIds.ids.push(comment.userId);
+            });
+            HostelRequest.getUsernamesByUserIds(userIds).then((response) => {
+              this.commentList.forEach((comment) => {
+                comment["username"] = response.data[comment.userId];
+              });
+            });
+
             this.totalPages = response.data.totalPages;
           })
           .catch((error) => {
@@ -181,8 +195,8 @@ export default {
   computed: {
     isCommentListEmpty() {
       return this.commentList.length === 0;
-    }
-  }
+    },
+  },
 };
 </script>
 
