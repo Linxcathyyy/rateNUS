@@ -2,7 +2,12 @@
   <div :key="comment.id" class="comment">
     <div class="comment-info">
       <Rating :score="comment.rating" />
-      <p>Posted on: {{ date }} {{ time }}</p>
+      <p>
+        <span class="font-weight-bold text-subtitle-1">
+          {{ comment.username }}
+        </span>
+        Posted on: {{ date }} {{ time }}
+      </p>
     </div>
     <p class="description">
       {{ comment.text }}

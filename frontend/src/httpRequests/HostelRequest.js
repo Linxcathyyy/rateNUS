@@ -2,7 +2,9 @@ import axios from "axios";
 
 const HOSTEL_API_BASE_URL = "https://www.ratenus.cyou:8080/hostel";
 const COMMENT_API_BASE_URL = "https://www.ratenus.cyou:8080/comment";
-const COMMENT_SORT_API_BASE_URL = "https://www.ratenus.cyou:8080/comment/hostel";
+const COMMENT_SORT_API_BASE_URL =
+  "https://www.ratenus.cyou:8080/comment/hostel";
+const USER_ID_BASE_URL = "https://www.ratenus.cyou:8080/user/names";
 
 class HostelRequest {
   // Get a partial list of hostels based on startIndex and endIndex
@@ -43,7 +45,7 @@ class HostelRequest {
       rating: rating,
       text: comment,
       type: "hostel",
-      userId: userId
+      userId: userId,
     };
     return axios.post(COMMENT_API_BASE_URL, req, {
       headers: headers,
@@ -63,7 +65,7 @@ class HostelRequest {
     return axios.put(HOSTEL_API_BASE_URL + "/update/" + hostelId, data, {
       params: {
         token: jwtToken,
-        username: username
+        username: username,
       },
     });
   }
@@ -72,7 +74,7 @@ class HostelRequest {
     return axios.delete(HOSTEL_API_BASE_URL + "/delete/" + hostelId, {
       params: {
         token: jwtToken,
-        username: username
+        username: username,
       },
     });
   }
@@ -81,7 +83,7 @@ class HostelRequest {
     return axios.post(HOSTEL_API_BASE_URL + "/new", data, {
       params: {
         token: jwtToken,
-        username: username
+        username: username,
       },
     });
   }
@@ -103,6 +105,10 @@ class HostelRequest {
       pageNum: pageNum,
       pageSize: pageSize,
     });
+  }
+
+  async getUsernamesByUserIds(userIds) {
+    return await axios.post(USER_ID_BASE_URL, userIds);
   }
 }
 
