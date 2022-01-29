@@ -31,7 +31,7 @@ export default new Vuex.Store({
     },
   },
   //Vuex getter properties are available to components on the store.getters object.
-  //console.log(this.$store.getters.firstName);
+  // console.log(this.$store.getters.firstName);
   getters: {
     id: (state) => {
       return state.user.id;
@@ -75,7 +75,7 @@ export default new Vuex.Store({
       state.user.jwtToken = token;
     },
     changeRole(state, role) {
-      state.user.role = role
+      state.user.role = role;
     },
     logIn(state) {
       state.isLoggedIn = true;

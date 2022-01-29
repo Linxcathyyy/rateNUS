@@ -181,7 +181,6 @@ export default defineComponent({
           })
           .catch(function (err) {
             //handle error
-            console.log("error occurred");
             return err.response;
             //return response;
           })
