@@ -35,7 +35,7 @@ export default {
   mounted() {
     this.date = new Date(this.comment.timestamp).toLocaleDateString();
     this.time = new Date(this.comment.timestamp).toLocaleTimeString();
-    // console.log("mounted: ", this.comment);
+    // // console.log("mounted: ", this.comment);
   },
 };
 </script>

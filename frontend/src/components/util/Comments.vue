@@ -98,19 +98,15 @@ export default {
 
             this.totalPages = response.data.totalPages;
           })
-          .catch((error) => {
-            console.log(error);
-          });
+          .catch(() => {});
       } else if (this.type === "stall") {
         StallRequest.getCommentList(this.$route.params.id, pageNum, pageSize)
           .then((response) => {
             this.commentList = response.data.content;
-            console.log(this.commentList);
+            // console.log(this.commentList);
             this.totalPages = response.data.totalPages;
           })
-          .catch((error) => {
-            console.log(error);
-          });
+          .catch(() => {});
       } else if (this.type === "studyArea") {
         StudyAreaRequest.getCommentList(
           this.$route.params.id,
@@ -121,9 +117,7 @@ export default {
             this.commentList = response.data.content;
             this.totalPages = response.data.totalPages;
           })
-          .catch((error) => {
-            console.log(error);
-          });
+          .catch(() => {});
       }
     },
     async updatePage(pageNumber) {
@@ -138,8 +132,8 @@ export default {
     },
 
     async sortCommentsFromLowestToHighestRating(isLowToHigh) {
-      console.log(this.currentPage);
-      console.log("pageNum: " + this.currentPage);
+      // console.log(this.currentPage);
+      // console.log("pageNum: " + this.currentPage);
       this.isLowestToHighestRating = isLowToHigh;
       if (this.type === "hostel") {
         HostelRequest.sortCommentsByRating(
@@ -149,13 +143,11 @@ export default {
           this.pageSize
         )
           .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             this.commentList = response.data.content;
             this.totalPages = response.data.totalPages;
           })
-          .catch((error) => {
-            console.log(error.response.data);
-          });
+          .catch(() => {});
       } else if (this.type === "stall") {
         StallRequest.sortCommentsByRating(
           this.$route.params.id,
@@ -164,13 +156,11 @@ export default {
           this.pageSize
         )
           .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             this.commentList = response.data.content;
             this.totalPages = response.data.totalPages;
           })
-          .catch((error) => {
-            console.log(error.response.data);
-          });
+          .catch(() => {});
       } else if (this.type === "studyArea") {
         StudyAreaRequest.sortCommentsByRating(
           this.$route.params.id,
@@ -179,13 +169,11 @@ export default {
           this.pageSize
         )
           .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             this.commentList = response.data.content;
             this.totalPages = response.data.totalPages;
           })
-          .catch((error) => {
-            console.log(error.response.data);
-          });
+          .catch(() => {});
       }
     },
   },

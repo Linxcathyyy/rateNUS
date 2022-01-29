@@ -230,13 +230,11 @@ export default {
       await CommentRequest.getAllComments(jwtToken)
         .then((response) => {
           this.myComments = response.data;
-          console.log(this.myComments);
+          // console.log(this.myComments);
           this.myComments.forEach(this.formatTimestampOfComment);
           this.myComments.forEach(this.formatType);
         })
-        .catch((error) => {
-          console.log(error.response.data);
-        });
+        .catch(() => {});
     },
     getCurrentUser() {
       this.userId = this.$store.getters.id;
@@ -246,13 +244,11 @@ export default {
       await CommentRequest.getCommentsByUserId(this.userId, jwtToken)
         .then(async (response) => {
           this.myComments = response.data;
-          console.log(this.myComments);
+          // console.log(this.myComments);
           this.myComments.forEach(this.formatTimestampOfComment);
           this.myComments.forEach(this.formatType);
         })
-        .catch((error) => {
-          console.log(error.response.data);
-        });
+        .catch(() => {});
     },
     formatType(comment) {
       if (comment.type == "hostel") {
@@ -305,18 +301,19 @@ export default {
         username
       )
         .then(async (response) => {
-          console.log(response);
-          console.log("success");
+          // console.log(response);
+          // console.log("success");
           this.successSnackbar = true;
           this.myComments.splice(this.editedIndex, 1);
           setTimeout(() => (this.successSnackbar = false), 1000);
           this.deletedItem = null;
           this.closeDelete();
           await this.refreshPage();
+          return response.data;
         })
         .catch((error) => {
-          console.log("fail");
-          console.log(error.toString());
+          // console.log("fail");
+          // console.log(error.toString());
           var errorStatus = error.response.data.status;
           if (errorStatus == 440) {
             // user session timeout
@@ -358,7 +355,7 @@ export default {
         )
           .then(async (response) => {
             if (response === 200) {
-              console.log("success");
+              // console.log("success");
               if (this.editedIndex > -1) {
                 Object.assign(
                   this.myComments[this.editedIndex],
@@ -372,13 +369,13 @@ export default {
               setTimeout(() => (this.successSnackbar = false), 1000);
               await this.refreshPage();
             } else {
-              console.log("fail");
+              // console.log("fail");
               this.$refs.saveError.innerHTML =
                 "Failed to update this comment, please try again";
             }
           })
           .catch((error) => {
-            console.log("fail");
+            // console.log("fail");
             var errorStatus = error.response.data.status;
             if (errorStatus == 440) {
               // user session timeout
@@ -387,7 +384,7 @@ export default {
             }
             this.$refs.saveError.innerHTML =
               "Failed to update this comment, please try again";
-            console.log(error);
+            // console.log(error);
           });
         this.loading = false;
       }

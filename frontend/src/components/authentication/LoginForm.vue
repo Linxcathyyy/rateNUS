@@ -34,10 +34,11 @@
       >
         Log In
       </v-btn>
-      
     </v-form>
     <v-spacer></v-spacer>
-    <v-btn class="mt-4" small text @click="forgetPassword"> Forget Password? </v-btn>
+    <v-btn class="mt-4" small text @click="forgetPassword">
+      Forget Password?
+    </v-btn>
   </div>
 </template>
 
@@ -71,7 +72,7 @@ export default {
           this.password
         )
           .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
             var id = response.data.id;
             var name = response.data.username;
             var email = response.data.email;
@@ -82,7 +83,7 @@ export default {
             var role = "USER";
             for (let i in roles) {
               if (roles[i] === "ADMIN") {
-                  role = "ADMIN";
+                role = "ADMIN";
               }
             }
             this.$store.commit("changeId", id);
@@ -97,7 +98,6 @@ export default {
           })
           .catch(function (err) {
             //handle error
-            console.log("error occurred: " + err);
             return err.response;
           })
           .then((response) => {
@@ -112,8 +112,8 @@ export default {
       }
     },
     forgetPassword() {
-      this.$emit('forget-password');
-    }
+      this.$emit("forget-password");
+    },
   },
 };
 </script>
