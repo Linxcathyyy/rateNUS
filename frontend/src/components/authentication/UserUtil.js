@@ -1,3 +1,7 @@
+import axios from "axios";
+
+const USER_ID_BASE_URL = "https://www.ratenus.cyou:8080/user/names";
+
 class UserUtil {
   getInitials(name) {
     let initials = name.split(" ");
@@ -9,6 +13,9 @@ class UserUtil {
     }
 
     return initials.toUpperCase();
+  }
+  async getUsernamesByUserIds(userIds) {
+    return await axios.post(USER_ID_BASE_URL, userIds);
   }
 }
 

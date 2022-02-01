@@ -2,16 +2,14 @@
   <div :key="comment.id" class="comment">
     <div class="comment-info">
       <Rating :score="comment.rating" />
-      <p>
+      <div>
         <span class="font-weight-bold text-subtitle-1">
           {{ comment.username }}
         </span>
         Posted on: {{ date }} {{ time }}
-      </p>
+      </div>
     </div>
-    <p class="description">
-      {{ comment.text }}
-    </p>
+    <p class="description">{{ comment.text }}</p>
   </div>
 </template>
 
@@ -35,7 +33,7 @@ export default {
   mounted() {
     this.date = new Date(this.comment.timestamp).toLocaleDateString();
     this.time = new Date(this.comment.timestamp).toLocaleTimeString();
-    // // console.log("mounted: ", this.comment);
+    // console.log("mounted: ", this.comment);
   },
 };
 </script>
