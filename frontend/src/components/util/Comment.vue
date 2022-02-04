@@ -9,9 +9,7 @@
         Posted on: {{ date }} {{ time }}
       </p>
     </div>
-    <p class="description">
-      {{ comment.text }}
-    </p>
+    <p class="description">{{ comment.text }}</p>
   </div>
 </template>
 
@@ -35,7 +33,7 @@ export default {
   mounted() {
     this.date = new Date(this.comment.timestamp).toLocaleDateString();
     this.time = new Date(this.comment.timestamp).toLocaleTimeString();
-    // // console.log("mounted: ", this.comment);
+    // console.log("mounted: ", this.comment);
   },
 };
 </script>

@@ -4,7 +4,6 @@ const HOSTEL_API_BASE_URL = "https://www.ratenus.cyou:8080/hostel";
 const COMMENT_API_BASE_URL = "https://www.ratenus.cyou:8080/comment";
 const COMMENT_SORT_API_BASE_URL =
   "https://www.ratenus.cyou:8080/comment/hostel";
-const USER_ID_BASE_URL = "https://www.ratenus.cyou:8080/user/names";
 
 class HostelRequest {
   // Get a partial list of hostels based on startIndex and endIndex
@@ -105,10 +104,6 @@ class HostelRequest {
       pageNum: pageNum,
       pageSize: pageSize,
     });
-  }
-
-  async getUsernamesByUserIds(userIds) {
-    return await axios.post(USER_ID_BASE_URL, userIds);
   }
 }
 

@@ -58,6 +58,7 @@
 import HostelRequest from "../../httpRequests/HostelRequest";
 import StallRequest from "../../httpRequests/StallRequest";
 import StudyAreaRequest from "../../httpRequests/StudyAreaRequest";
+import UserUtil from "../authentication/UserUtil";
 import Comment from "./Comment.vue";
 
 export default {
@@ -80,27 +81,15 @@ export default {
     async getCommentList(pageNum, pageSize) {
       if (this.type === "hostel") {
         HostelRequest.getCommentList(this.$route.params.id, pageNum, pageSize)
+          .then((response) => this.addUsernameToComments(response))
           .then((response) => {
             this.commentList = response.data.content;
-
-            // request for comment user name
-            var userIds = {
-              ids: [],
-            };
-            this.commentList.forEach((comment) => {
-              userIds.ids.push(comment.userId);
-            });
-            HostelRequest.getUsernamesByUserIds(userIds).then((response) => {
-              this.commentList.forEach((comment) => {
-                comment["username"] = response.data[comment.userId];
-              });
-            });
-
             this.totalPages = response.data.totalPages;
           })
           .catch(() => {});
       } else if (this.type === "stall") {
         StallRequest.getCommentList(this.$route.params.id, pageNum, pageSize)
+          .then((response) => this.addUsernameToComments(response))
           .then((response) => {
             this.commentList = response.data.content;
             // console.log(this.commentList);
@@ -113,6 +102,7 @@ export default {
           pageNum,
           pageSize
         )
+          .then((response) => this.addUsernameToComments(response))
           .then((response) => {
             this.commentList = response.data.content;
             this.totalPages = response.data.totalPages;
@@ -175,6 +165,25 @@ export default {
           })
           .catch(() => {});
       }
+    },
+    async addUsernameToComments(response) {
+      // request for comment user name
+      var userIds = {
+        ids: [],
+      };
+      response.data.content.forEach((comment) => {
+        userIds.ids.push(comment.userId);
+      });
+      // console.log("userIds: ", userIds);
+      await UserUtil.getUsernamesByUserIds(userIds).then((res) => {
+        response.data.content.forEach((comment) => {
+          // console.log("usernames: ", res.data[comment.userId.toString()]);
+          comment["username"] = res.data[comment.userId.toString()];
+        });
+      });
+
+      // console.log(response.data.content);
+      return response;
     },
   },
   async mounted() {
