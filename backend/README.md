@@ -6,6 +6,12 @@
 Gradle > Tasks > application > bootRun
 ```
 
+## HTTPS Certificate on AWS
+
+Follow instructions [here](https://blog.mohitkrgupta.dev/2020/06/how-to-add-free-ssl-certificate-from.html) on how to generate and install SSL certifiacte onto server.
+
+SSL config info is in backend/src/main/resources/application.properties
+
 ## API
 
 * Hostel
