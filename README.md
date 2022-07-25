@@ -16,3 +16,5 @@
 - PostgreSQL
     - [Install](https://www.youtube.com/watch?v=BLH3s5eTL4Y&ab_channel=Amigoscode) for Windows
     - [Install](https://www.youtube.com/watch?v=wCMXbM5J0X8&ab_channel=Amigoscode) for Mac
+- `./deploy` executes a bash script that deploys backend to the remote server.
+    - Note that "path to ratenus key pair.pem" in the script need to be specified.
